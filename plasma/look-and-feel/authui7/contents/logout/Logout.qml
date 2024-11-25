@@ -1,72 +1,51 @@
-/*
-    SPDX-FileCopyrightText: 2014 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
-
-    SPDX-License-Identifier: GPL-2.0-or-later
-*/
-
 import QtQuick 2.2
 import QtQuick.Layouts 1.2
 import QtQuick.Controls 2.12 as QQC2
+import Qt5Compat.GraphicalEffects
 
+import org.kde.kirigami as Kirigami
+import org.kde.ksvg as KSvg
+import org.kde.plasma.plasma5support as Plasma5Support
 import org.kde.plasma.components 3.0 as PlasmaComponents
-import org.kde.coreaddons 1.0 as KCoreAddons
-import org.kde.kirigami 2.20 as Kirigami
-
-import org.kde.breeze.components
-import "timer.js" as AutoTriggerTimer
-
 import org.kde.plasma.private.sessions 2.0
 
-Item {
+Image {
     id: root
-    Kirigami.Theme.inherit: false
-    Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+
     height: screenGeometry.height
     width: screenGeometry.width
+
+    source: "/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg"
 
     signal logoutRequested()
     signal haltRequested()
     signal suspendRequested(int spdMethod)
     signal rebootRequested()
-    signal rebootRequested2(int opt)
     signal cancelRequested()
     signal lockScreenRequested()
-    signal cancelSoftwareUpdateRequested()
 
-    property alias backgroundColor: backgroundRect.color
-
-    function sleepRequested() {
-        root.suspendRequested(2);
+    SessionManagement {
+        id: sessMan
     }
 
-    function hibernateRequested() {
-        root.suspendRequested(4);
-    }
-
-    property real timeout: 30
-    property real remainingTime: root.timeout
-
-    property var currentAction: {
-        switch (sdtype) {
-        case ShutdownType.ShutdownTypeReboot:
-            return () => root.rebootRequested();
-        case ShutdownType.ShutdownTypeHalt:
-            return () => root.haltRequested();
-        default:
-            return () => root.logoutRequested();
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: {
+            var exitCode = data["exit code"]
+            var exitStatus = data["exit status"]
+            var stdout = data["stdout"]
+            var stderr = data["stderr"]
+            exited(sourceName, exitCode, exitStatus, stdout, stderr)
+            disconnectSource(sourceName)
         }
-    }
-
-    readonly property bool showAllOptions: sdtype === ShutdownType.ShutdownTypeDefault
-
-    KCoreAddons.KUser {
-        id: kuser
-    }
-
-    // For showing a "other users are logged in" hint
-    SessionsModel {
-        id: sessionsModel
-        includeUnusedSessions: false
+        function exec(cmd) {
+            if (cmd) {
+                connectSource(cmd)
+            }
+        }
+        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
     }
 
     QQC2.Action {
@@ -74,206 +53,488 @@ Item {
         shortcut: "Escape"
     }
 
-    onRemainingTimeChanged: {
-        if (remainingTime <= 0) {
-            (root.currentAction)();
-        }
-    }
-
-    Timer {
-        id: countDownTimer
-        running: !root.showAllOptions
-        repeat: true
-        interval: 1000
-        onTriggered: remainingTime--
-        Component.onCompleted: {
-            AutoTriggerTimer.addCancelAutoTriggerCallback(function() {
-                countDownTimer.running = false;
-            });
-        }
-    }
-
-    function isLightColor(color) {
-        return Math.max(color.r, color.g, color.b) > 0.5
-    }
-
-    Rectangle {
-        id: backgroundRect
+    Item {
         anchors.fill: parent
-        //use "black" because this is intended to look like a general darkening of the scene. a dark gray as normal background would just look too "washed out"
-        color: root.isLightColor(Kirigami.Theme.backgroundColor) ? Kirigami.Theme.backgroundColor : "black"
-        opacity: 0.5
-    }
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.cancelRequested()
-    }
-    UserDelegate {
-        width: Kirigami.Units.gridUnit * 8
-        height: Kirigami.Units.gridUnit * 9
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            bottom: parent.verticalCenter
-        }
-        constrainText: false
-        avatarPath: kuser.faceIconUrl
-        iconSource: "user-identity"
-        isCurrent: true
-        name: kuser.fullName
-    }
-    ColumnLayout {
-        id: column
 
-        anchors {
-            top: parent.verticalCenter
-            topMargin: Kirigami.Units.gridUnit * 2
-            horizontalCenter: parent.horizontalCenter
-        }
-        spacing: Kirigami.Units.largeSpacing
+        ColumnLayout {
+            id: mainColumn
+            anchors.centerIn: parent
+            anchors.verticalCenterOffset: Kirigami.Units.gridUnit*5 // use accurate values idk i just approximated this rq
+            spacing: 15
 
-        height: Math.max(implicitHeight, Kirigami.Units.gridUnit * 10)
-        width: Math.max(implicitWidth, Kirigami.Units.gridUnit * 16)
+            MouseArea {
+                Layout.preferredWidth: 190
+                Layout.preferredHeight: 30
 
-        PlasmaComponents.Label {
-            font.pointSize: Kirigami.Theme.defaultFont.pointSize + 1
-            Layout.alignment: Qt.AlignHCenter
-            //opacity, as visible would re-layout
-            opacity: countDownTimer.running ? 1 : 0
-            Behavior on opacity {
-                OpacityAnimator {
-                    duration: Kirigami.Units.longDuration
-                    easing.type: Easing.InOutQuad
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    lockArrow.source = "../images/command-hover.png"
+                }
+                onExited: {
+                    lockArrow.source = "../images/command.png"
+                }
+                onClicked: {
+                    root.lockScreenRequested()
+                }
+
+                KSvg.FrameSvgItem {
+                    anchors {
+                        right: lockcontent.right
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    imagePath: Qt.resolvedUrl("../svgs/command.svg");
+                    prefix: parent.containsMouse ? (parent.containsPress ? "pressed" : "hover") : ""
+                }
+                RowLayout {
+                    id: lockcontent
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 5
+
+                    Image {
+                        id: lockArrow
+
+                        source: "../images/command.png"
+                    }
+                    QQC2.Label {
+                        text: "Lock this computer"
+                        color: "white"
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                    Item {
+                        Layout.preferredWidth: 10
+                    }
                 }
             }
-            text: {
-                switch (sdtype) {
-                    case ShutdownType.ShutdownTypeReboot:
-                        return softwareUpdatePending ? i18ndp("plasma_lookandfeel_org.kde.lookandfeel", "Installing software updates and restarting in 1 second", "Installing software updates and restarting in %1 seconds", root.remainingTime)
-                        : i18ndp("plasma_lookandfeel_org.kde.lookandfeel", "Restarting in 1 second", "Restarting in %1 seconds", root.remainingTime);
-                    case ShutdownType.ShutdownTypeNone:
-                        return i18ndp("plasma_lookandfeel_org.kde.lookandfeel", "Logging out in 1 second", "Logging out in %1 seconds", root.remainingTime);
-                    case ShutdownType.ShutdownTypeHalt:
-                    default:
-                        return i18ndp("plasma_lookandfeel_org.kde.lookandfeel", "Shutting down in 1 second", "Shutting down in %1 seconds", root.remainingTime);
+
+            MouseArea {
+                Layout.preferredWidth: 190
+                Layout.preferredHeight: 30
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    switchArrow.source = "../images/command-hover.png"
+                }
+                onExited: {
+                    switchArrow.source = "../images/command.png"
+                }
+                onClicked: {
+                    sessMan.switchUser()
+                    root.cancelRequested()
+                }
+
+                KSvg.FrameSvgItem {
+                    anchors {
+                        right: switchcontent.right
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    imagePath: Qt.resolvedUrl("../svgs/command.svg");
+                    prefix: parent.containsMouse ? (parent.containsPress ? "pressed" : "hover") : ""
+                }
+                RowLayout {
+                    id: switchcontent
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 5
+
+                    Image {
+                        id: switchArrow
+
+                        source: "../images/command.png"
+                    }
+                    QQC2.Label {
+                        color: "white"
+                        text: "Switch User"
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                    Item {
+                        Layout.preferredWidth: 10
+                    }
                 }
             }
-            textFormat: Text.PlainText
-        }
 
-        PlasmaComponents.Label {
-            font.pointSize: Kirigami.Theme.defaultFont.pointSize + 1
-            Layout.maximumWidth: Math.max(Kirigami.Units.gridUnit * 16, logoutButtonsRow.implicitWidth)
-            Layout.alignment: Qt.AlignHCenter
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
-            font.italic: true
-            text: i18ndp("plasma_lookandfeel_org.kde.lookandfeel",
-                         "One other user is currently logged in. If the computer is shut down or restarted, that user may lose work.",
-                         "%1 other users are currently logged in. If the computer is shut down or restarted, those users may lose work.",
-                         sessionsModel.count - 1)
-            textFormat: Text.PlainText
-            visible: sessionsModel.count > 1
-        }
+            MouseArea {
+                Layout.preferredWidth: 190
+                Layout.preferredHeight: 30
 
-        PlasmaComponents.Label {
-            font.pointSize: Kirigami.Theme.defaultFont.pointSize + 1
-            Layout.maximumWidth: Math.max(Kirigami.Units.gridUnit * 16, logoutButtonsRow.implicitWidth)
-            Layout.alignment: Qt.AlignHCenter
-            Layout.fillWidth: true
-            horizontalAlignment: Text.AlignHCenter
-            wrapMode: Text.WordWrap
-            font.italic: true
-            text: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "When restarted, the computer will enter the firmware setup screen.")
-            textFormat: Text.PlainText
-            visible: rebootToFirmwareSetup
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    logArrow.source = "../images/command-hover.png"
+                }
+                onExited: {
+                    logArrow.source = "../images/command.png"
+                }
+                onClicked: {
+                    root.logoutRequested()
+                }
+
+                KSvg.FrameSvgItem {
+                    anchors {
+                        right: logcontent.right
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    imagePath: Qt.resolvedUrl("../svgs/command.svg");
+                    prefix: parent.containsMouse ? (parent.containsPress ? "pressed" : "hover") : ""
+                }
+                RowLayout {
+                    id: logcontent
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 5
+
+                    Image {
+                        id: logArrow
+
+                        source: "../images/command.png"
+                    }
+                    QQC2.Label {
+                        color: "white"
+                        text: "Log off"
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                    Item {
+                        Layout.preferredWidth: 10
+                    }
+                }
+            }
+
+            MouseArea {
+                Layout.preferredWidth: 190
+                Layout.preferredHeight: 30
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    changeArrow.source = "../images/command-hover.png"
+                }
+                onExited: {
+                    changeArrow.source = "../images/command.png"
+                }
+                onClicked: {
+                    root.cancelRequested()
+                    executable.exec("systemsettings kcm_users & disown")
+                }
+
+                KSvg.FrameSvgItem {
+                    anchors {
+                        right: changecontent.right
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    imagePath: Qt.resolvedUrl("../svgs/command.svg");
+                    prefix: parent.containsMouse ? (parent.containsPress ? "pressed" : "hover") : ""
+                }
+                RowLayout {
+                    id: changecontent
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 5
+
+                    Image {
+                        id: changeArrow
+
+                        source: "../images/command.png"
+                    }
+                    QQC2.Label {
+                        color: "white"
+                        text: "Change a password..."
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                    Item {
+                        Layout.preferredWidth: 10
+                    }
+                }
+            }
+            MouseArea {
+                Layout.preferredWidth: 190
+                Layout.preferredHeight: 30
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    taskmgrArrow.source = "../images/command-hover.png"
+
+                }
+                onExited: {
+                    taskmgrArrow.source = "../images/command.png"
+                }
+                onClicked: {
+                    root.cancelRequested()
+                    executable.exec("ksysguard")
+                }
+
+                KSvg.FrameSvgItem {
+                    anchors {
+                        right: taskmgrcontent.right
+                        left: parent.left
+                        top: parent.top
+                        bottom: parent.bottom
+                    }
+                    imagePath: Qt.resolvedUrl("../svgs/command.svg");
+                    prefix: parent.containsMouse ? (parent.containsPress ? "pressed" : "hover") : ""
+                }
+                RowLayout {
+                    id: taskmgrcontent
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: 5
+
+                    Image {
+                        id: taskmgrArrow
+
+                        source: "../images/command.png"
+                    }
+                    QQC2.Label {
+
+                        color: "white"
+                        text: "Start Task Manager"
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                    Item {
+                        Layout.preferredWidth: 10
+                    }
+                }
+            }
+
+            MouseArea {
+                Layout.preferredWidth: 115
+                Layout.preferredHeight: 25
+                Layout.topMargin: 35
+                Layout.alignment: Qt.AlignHCenter
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    cancelBackground.source = "../images/cancel-hover.png"
+                }
+                onExited: {
+                    cancelBackground.source = "../images/cancel.png"
+                }
+                onClicked: {
+                    root.cancelRequested()
+                }
+                onPressed: {
+                    cancelBackground.source = "../images/cancel-pressed.png"
+                }
+                Image {
+                    id: cancelBackground
+
+                    anchors.centerIn: parent
+                    source: "../images/cancel.png"
+
+                    QQC2.Label {
+                        anchors.centerIn: parent
+
+                        color: "white"
+                        text: "Cancel"
+                        font.pointSize: 12
+                        renderType: Text.NativeRendering
+                        font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: false
+
+                        layer.enabled: true
+                        layer.effect: DropShadow
+                        {
+                            verticalOffset: 1
+                            color: "#000"
+                            radius: 7
+                            samples: 20
+                        }
+                    }
+                }
+            }
         }
 
         RowLayout {
-            id: logoutButtonsRow
-            spacing: Kirigami.Units.gridUnit * 2
-            Layout.topMargin: Kirigami.Units.gridUnit * 2 - column.spacing
-            Layout.alignment: Qt.AlignHCenter
-            LogoutButton {
-                id: suspendButton
-                iconSource: "system-suspend"
-                text: root.showAllOptions ? i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Suspend to RAM", "Sleep")
-                                          : i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Suspend to RAM", "Sleep Now")
-                onClicked: root.sleepRequested()
-                KeyNavigation.left: cancelButton
-                KeyNavigation.right: hibernateButton.visible ? hibernateButton : (rebootButton.visible ? rebootButton : (shutdownButton.visible ? shutdownButton : (logoutButton.visible ? logoutButton : cancelButton)))
-                visible: spdMethods.SuspendState && root.showAllOptions
-            }
-            LogoutButton {
-                id: hibernateButton
-                iconSource: "system-suspend-hibernate"
-                text: root.showAllOptions ? i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Hibernate")
-                                          : i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Hibernate Now")
-                onClicked: root.hibernateRequested()
-                KeyNavigation.left: suspendButton.visible ? suspendButton : cancelButton
-                KeyNavigation.right: rebootButton.visible ? rebootButton : (shutdownButton.visible ? shutdownButton : (logoutButton.visible ? logoutButton : cancelButton))
-                visible: spdMethods.HibernateState && root.showAllOptions
-            }
-            LogoutButton {
-                id: rebootButton
-                iconSource: softwareUpdatePending ? "update-none" : "system-reboot"
-                text: {
-                    if (softwareUpdatePending) {
-                        return root.showAllOptions ? i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "@action:button Keep short", "Install Updates & Restart")
-                                                   : i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "@action:button Keep short", "Install Updates & Restart Now")
-                    } else {
-                        return root.showAllOptions ? i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Restart")
-                                                   : i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Restart Now")
+            anchors.rightMargin: 35
+            anchors.leftMargin: 35
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottomMargin: Kirigami.Units.gridUnit*2 // Same goes for here I just used Kirigami Units
+
+            MouseArea {
+                Layout.preferredWidth: 40
+                Layout.preferredHeight: 25
+                Layout.topMargin: 35
+                Layout.alignment: Qt.AlignHCenter
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    accessButton.source = "../images/accessButton-hover.png"
+                }
+                onExited: {
+                    accessButton.source = "../images/accessButton.png"
+                }
+                onClicked: {
+                    root.cancelRequested()
+                    executable.exec("systemsettings kcm_access")
+                }
+                onPressed: {
+                    accessButton.source = "../images/accessButton-pressed.png"
+                }
+                Image {
+                    id: accessButton
+
+                    width: 38
+                    source: "../images/accessButton.png"
+
+                    Image {
+                        anchors.centerIn: parent
+
+                        source: "../images/access.png"
                     }
                 }
-                onClicked: root.rebootRequested()
-                KeyNavigation.left: hibernateButton.visible ? hibernateButton : (suspendButton.visible ? suspendButton : cancelButton)
-                KeyNavigation.right: rebootWithoutUpdatesButton.visible ? rebootWithoutUpdatesButton : (shutdownButton.visible ? shutdownButton : (logoutButton.visible ? logoutButton : cancelButton))
-                focus: sdtype === ShutdownType.ShutdownTypeReboot
-                visible: maysd && (sdtype === ShutdownType.ShutdownTypeReboot || root.showAllOptions)
             }
-            LogoutButton {
-                id: rebootWithoutUpdatesButton
-                iconSource: "system-reboot"
-                text: root.showAllOptions ? i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Restart")
-                                          : i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Restart Now")
+
+            Item {
+                Layout.fillWidth: true
+            }
+            Item {
+                Layout.preferredWidth: 40
+            }
+
+            Image {
+                Layout.bottomMargin: -33
+                Layout.alignment: Qt.AlignRight
+
+                source: "../images/watermark.png"
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            MouseArea {
+                Layout.preferredWidth: 36
+                Layout.preferredHeight: 28
+                Layout.bottomMargin: -35
+                Layout.rightMargin: -3
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    power.source = "../images/halt-hover.png"
+                }
+                onExited: {
+                    power.source = "../images/halt.png"
+                }
                 onClicked: {
-                    root.cancelSoftwareUpdateRequested()
+                    root.haltRequested()
+                }
+                onPressed: {
+                    power.source = "../images/halt-pressed.png"
+                }
+                Image {
+                    id: power
+
+                    Layout.rightMargin: -5
+
+                    source: "../images/halt.png"
+
+                    Image {
+                        anchors.centerIn: parent
+
+                        source: "../images/halt-glyph.png"
+                    }
+                }
+            }
+            MouseArea {
+                Layout.preferredWidth: 33
+                Layout.preferredHeight: 28
+                Layout.bottomMargin: -35
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+                onEntered: {
+                    powerRIGHT.source = "../images/reboot-hover.png"
+                }
+                onExited: {
+                    powerRIGHT.source = "../images/reboot.png"
+                }
+                onClicked: {
                     root.rebootRequested()
                 }
-                KeyNavigation.left: rebootButton
-                KeyNavigation.right: shutdownButton.visible ? shutdownButton : (logoutButton.visible ? logoutButton : cancelButton)
-                visible: maysd && softwareUpdatePending && (sdtype === ShutdownType.ShutdownTypeReboot || root.showAllOptions)
-            }
-            LogoutButton {
-                id: shutdownButton
-                iconSource: "system-shutdown"
-                text: root.showAllOptions ? i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Shut Down")
-                                          : i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Shut Down Now")
-                onClicked: root.haltRequested()
-                KeyNavigation.left: rebootWithoutUpdatesButton.visible ? rebootWithoutUpdatesButton : (rebootButton.visible ? rebootButton : (hibernateButton.visible ? hibernateButton : (suspendButton.visible ? suspendButton : cancelButton)))
-                KeyNavigation.right: logoutButton.visible ? logoutButton : cancelButton
-                focus: sdtype === ShutdownType.ShutdownTypeHalt || root.showAllOptions
-                visible: maysd && (sdtype === ShutdownType.ShutdownTypeHalt || root.showAllOptions)
-            }
-            LogoutButton {
-                id: logoutButton
-                iconSource: "system-log-out"
-                text: root.showAllOptions ? i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Log Out")
-                                          : i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Log Out Now")
-                onClicked: root.logoutRequested()
-                KeyNavigation.left: shutdownButton.visible ? shutdownButton : (rebootWithoutUpdatesButton.visible ? rebootWithoutUpdatesButton : (rebootButton.visible ? rebootButton : (hibernateButton.visible ? hibernateButton : (suspendButton.visible ? suspendButton : cancelButton))))
-                KeyNavigation.right: cancelButton
-                focus: sdtype === ShutdownType.ShutdownTypeNone
-                visible: canLogout && (sdtype === ShutdownType.ShutdownTypeNone || root.showAllOptions)
-            }
-            LogoutButton {
-                id: cancelButton
-                iconSource: "dialog-cancel"
-                text: i18nd("plasma_lookandfeel_org.kde.lookandfeel", "Cancel")
-                onClicked: root.cancelRequested()
-                KeyNavigation.left: logoutButton.visible ? logoutButton : (shutdownButton.visible ? shutdownButton : (rebootWithoutUpdatesButton.visible ? rebootWithoutUpdatesButton : (rebootButton.visible ? rebootButton : (hibernateButton.visible ? hibernateButton : suspendButton))))
-                KeyNavigation.right: suspendButton.visible ? suspendButton : (hibernateButton.visible ? hibernateButton : rebootButton)
+                onPressed: {
+                    powerRIGHT.source = "../images/reboot-pressed.png"
+                }
+                Image {
+                    id: powerRIGHT
+
+                    source: "../images/reboot.png"
+
+                    Image {
+                        anchors.centerIn: parent
+
+                        source: "../images/reboot-glyph.png"
+                    }
+                }
             }
         }
     }

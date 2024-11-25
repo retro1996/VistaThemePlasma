@@ -32,7 +32,7 @@ Item {
     property int stage
 
     onStageChanged: {
-        if (stage == 5) {
+        if (stage == 6) {
             //lockSuccess.play();
 
             //fadeOut.running = true;
@@ -50,10 +50,13 @@ Item {
         anchors.fill: parent
     }
 
-    Image {
-        id: bgtexture
-        source: "../images/bgtexture.jpg"
+    property int framenumber: 1
+
+    Image
+    {
         anchors.fill: parent
+        fillMode: Image.Stretch
+        source: Qt.resolvedUrl("/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg")
     }
 
     Status {
