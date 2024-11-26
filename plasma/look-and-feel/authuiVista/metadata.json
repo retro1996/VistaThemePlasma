@@ -1,0 +1,28 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "wackyideas@disroot.org",
+                "Name": "wackyideas"
+            },
+            {
+                "Name": "dominichayesferen"
+            },
+            {
+                "Name": "catpswin56"
+            }
+        ],
+        "Category": "",
+        "Description": "Windows Vista styled splash screen",
+        "Icon": "user-desktop",
+        "Id": "authuiVista",
+        "License": "AGPLv3",
+        "Name": "Windows Vista style",
+        "Version": "2.0",
+        "Website": "https://gitgud.io/wackyideas/aerothemeplasma"
+    },
+    "Keywords": "",
+    "X-KDE-ParentApp": "org.kde.plasmashell",
+    "X-Plasma-APIVersion": "2"
+}

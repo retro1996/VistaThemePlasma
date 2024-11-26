@@ -5,6 +5,7 @@
  */
 
 .import org.kde.plasma.core as PlasmaCore
+.import org.kde.plasma.plasmoid as Plasmoid
 .import org.kde.kirigami 2.20 as Kirigami
 
 function itemPadding() { return Kirigami.Units.smallSpacing / 2; }
@@ -75,7 +76,8 @@ function preferredHeight()
 
 function minimumCellWidth()
 {
-  return 24
+  if(showLauncherNames) return 160
+      else return 24
 }
 
 function minimumCellHeight()

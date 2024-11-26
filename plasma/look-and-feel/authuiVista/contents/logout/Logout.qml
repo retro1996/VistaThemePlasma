@@ -106,14 +106,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                     Item {
                         Layout.preferredWidth: 10
@@ -166,14 +158,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                     Item {
                         Layout.preferredWidth: 10
@@ -225,14 +209,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                     Item {
                         Layout.preferredWidth: 10
@@ -285,14 +261,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                     Item {
                         Layout.preferredWidth: 10
@@ -346,14 +314,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                     Item {
                         Layout.preferredWidth: 10
@@ -396,15 +356,6 @@ Image {
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
                         font.kerning: false
-
-                        layer.enabled: true
-                        layer.effect: DropShadow
-                        {
-                            verticalOffset: 1
-                            color: "#000"
-                            radius: 7
-                            samples: 20
-                        }
                     }
                 }
             }

@@ -5,7 +5,7 @@ cursorTheme=aero-cursors
 ColorScheme=AeroColorScheme
 
 [kdeglobals][Icons]
-Theme=Windows 7 Aero
+Theme=Windows Vista Aero
 
 [kdeglobals][KDE]
 widgetStyle=kvantum
@@ -17,7 +17,7 @@ LayoutName=org.kde.breeze.desktop
 LayoutName=thumbnail_seven
 
 [plasmarc][Theme]
-name=Seven-Black
+name=Vista-Black
 
 [KSplash]
-Theme=authui7
+Theme=authuiVista

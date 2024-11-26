@@ -96,7 +96,7 @@ PlasmoidItem {
 
                 interactive: false
                 flow: horizontal ? GridView.FlowTopToBottom : GridView.FlowLeftToRight
-                cellWidth: 24
+                cellWidth: plasmoid.configuration.showLauncherNames ? 160 : 24
                 cellHeight: 26
                 visible: count
 

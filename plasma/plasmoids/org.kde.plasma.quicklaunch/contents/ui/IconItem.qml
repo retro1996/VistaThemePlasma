@@ -149,11 +149,11 @@ Item {
 
     DragAndDrop.DragArea {
         id: dragArea
-        width: Math.min(iconItem.width, iconItem.height)
-        height: width
-        enabled: !plasmoid.immutable
+        width: iconItem.width
+        height: iconItem.height
+        enabled: true
         defaultAction: Qt.MoveAction
-        supportedActions: Qt.IgnoreAction | Qt.MoveAction
+        supportedActions: Qt.MoveAction
         delegate: icon
 
         mimeData {
@@ -218,7 +218,11 @@ Item {
             Kirigami.Icon {
                 id: icon
 
-                anchors.centerIn: parent
+                anchors {
+                    left: parent.left
+                    leftMargin: 3
+                    verticalCenter: parent.verticalCenter
+                }
 
                 width: 16
                 height: width
@@ -229,14 +233,18 @@ Item {
                 id: label
 
                 anchors {
-                    bottom : parent.bottom
-                    right : parent.right
+                    left: icon.right
+                    leftMargin: 4
+                    verticalCenter: parent.verticalCenter
+                    verticalCenterOffset: -1
                 }
 
                 text: iconItem.launcher.applicationName
                 textFormat: Text.PlainText
                 maximumLineCount: 1
-                wrapMode: Text.Wrap
+                wrapMode: Text.NoWrap
+                elide: Text.ElideRight
+                width: 134
             }
 
             KSvg.FrameSvgItem {
@@ -370,14 +378,11 @@ Item {
             AnchorChanges {
                 target: label
                 anchors.top: undefined
-                anchors.left: label.parent.left
             }
 
             PropertyChanges {
                 target: label
-                horizontalAlignment: Text.AlignHCenter
                 visible: showLauncherNames
-                elide: Text.ElideNone
             }
         },
 
