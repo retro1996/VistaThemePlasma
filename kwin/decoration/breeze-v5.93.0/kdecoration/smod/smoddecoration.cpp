@@ -314,12 +314,12 @@ void Decoration::smodPaintTitleBar(QPainter *painter, const QRect &repaintRegion
 
 
         int captionHeight = captionRect.height() * 0.8;
-        QPixmap final_label(blurWidth, blurHeight*2);
+        QPixmap final_label(blurWidth, blurHeight+7);
         final_label.fill(QColor::fromRgb(0,0,0,0));
         QPainter *ptr = new QPainter(&final_label);
         QPainterPath path;
-        path.addRoundedRect(0, 0, blurWidth, blurHeight, 12,12);
-        ptr->fillPath(path, QColor::fromRgb(255,255,255, active ? 186 : 148));
+        path.addRoundedRect(0, 0, blurWidth, blurHeight-6, 12,12);
+        ptr->fillPath(path, QColor::fromRgb(255,255,255, active ? 245 : 215));
         delete ptr;
 
         if(!caption.trimmed().isEmpty())

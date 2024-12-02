@@ -31,7 +31,7 @@ protected:
 private:
   static QPixmap applyEffectToPixmap(QPixmap src, QGraphicsEffect *effect, int extent);
   int _extent = 5;
-  QColor _color = QColor(255, 255, 255);
+  QColor _color = QColor(255, 255, 255, 255);
   int _strength = 3;
   qreal _blurRadius = 5.0;
 };
