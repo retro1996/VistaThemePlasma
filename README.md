@@ -12,5 +12,3 @@ It is still in heavy development and testing. VTP has been tested on:
 3. 96 DPI scaling, single monitor
 
 See [INSTALL.md](./INSTALL.md) for a quick, almost unmodified ATP install guide.
-
-
