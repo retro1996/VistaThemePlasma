@@ -40,7 +40,7 @@
     </entry>
     <entry name="onlyGroupWhenFull" type="Bool">
       <label>Whether to group always or only when the widget runs out of space to show additional task buttons comfortably.</label>
-      <default>false</default>
+      <default>true</default>
     </entry>
     <entry name="groupingAppIdBlacklist" type="StringList">
       <label>The id's (usually .desktop file names) of applications that should not have their tasks grouped.</label>
@@ -119,6 +119,18 @@
     <entry name="jumplistArrow" type="Bool">
       <label>Whether to show a jumplist arrow on task items.</label>
       <default>true</default>
+    </entry>
+    <entry name="dragVista" type="Bool">
+      <label>Whether to enable dragging on Vista taskbar.</label>
+      <default>false</default>
+    </entry>
+    <entry name="enableAnimations" type="Bool">
+      <label>Whether to enable animations on the taskbar.</label>
+      <default>false</default>
+    </entry>
+    <entry name="showAppName" type="Bool">
+      <label>Whether to show the app name in task items.</label>
+      <default>false</default>
     </entry>
     <entry name="fill" type="Bool">
       <label>Whether task manager should occupy all available space.</label>

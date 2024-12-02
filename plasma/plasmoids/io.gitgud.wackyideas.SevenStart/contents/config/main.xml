@@ -81,12 +81,11 @@
       <default>muon-discover --application</default>
     </entry>
 
-
-    <entry name="accurateSearchBar" type="Bool">
-      <default>true</default>
-    </entry>
     <entry name="offsetFloatingOrb" type="Bool">
       <default>true</default>
+    </entry>
+    <entry name="fadeOrb" type="Bool">
+      <default>false</default>
     </entry>
 
     <entry name="favoritesPortedToKAstats" type="Bool">

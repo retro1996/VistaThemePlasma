@@ -52,6 +52,7 @@ KCM.SimpleKCM {
     property alias cfg_appNameFormat: appNameFormat.currentIndex
     property alias cfg_switchCategoriesOnHover: switchCategoriesOnHover.checked
     property alias cfg_stickOutOrb: stickOutOrb.checked
+    property alias cfg_fadeOrb: fadeOrb.checked
 
     property alias cfg_useExtraRunners: useExtraRunners.checked
 
@@ -182,6 +183,11 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: offsetFloatingOrb
                     text: i18n("Offset floating orb into the taskbar")
+                }
+                CheckBox {
+                    id: fadeOrb
+
+                    text: i18n("Enable fade animation for the orb")
                 }
             }
         }

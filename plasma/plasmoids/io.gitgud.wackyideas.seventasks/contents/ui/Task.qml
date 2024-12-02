@@ -55,32 +55,34 @@ PlasmaCore.ToolTipArea {
         }
     }
     Behavior on implicitWidth {
-        NumberAnimation { duration: 0; easing.type: Easing.OutQuad }
+        NumberAnimation { duration: animationDuration; easing.type: Easing.OutQuad }
     }
     Behavior on implicitHeight {
-        NumberAnimation { duration: 0; easing.type: Easing.OutQuad }
+        NumberAnimation { duration: animationDuration; easing.type: Easing.OutQuad }
     }
 
     SequentialAnimation {
         id: addLabelsAnimation
-        NumberAnimation { target: task; properties: "opacity"; to: 1; duration: 0; easing.type: Easing.OutQuad }
+        NumberAnimation { target: task; properties: "opacity"; to: 1; duration: animationDuration; easing.type: Easing.OutQuad }
         PropertyAction { target: task; property: "visible"; value: true }
         PropertyAction { target: task; property: "state"; value: "" }
     }
     SequentialAnimation {
         id: removeLabelsAnimation
-        NumberAnimation { target: task; properties: "width"; to: 0; duration: 0; easing.type: Easing.OutQuad }
+        NumberAnimation { target: task; properties: "width"; to: 0; duration: animationDuration; easing.type: Easing.OutQuad }
         PropertyAction { target: task; property: "ListView.delayRemove"; value: false }
     }
     SequentialAnimation {
         id: removeIconsAnimation
-        NumberAnimation { target: task; properties: "opacity"; to: 0; duration: 0; easing.type: Easing.OutQuad }
+        NumberAnimation { target: task; properties: "opacity"; to: 0; duration: animationDuration; easing.type: Easing.OutQuad }
         PropertyAction { target: task; property: "ListView.delayRemove"; value: false }
     }
 
     required property var model
     required property int index
     required property Item tasksRoot
+
+    readonly property int animationDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
 
     readonly property int pid: model.AppPid
     readonly property string appName: model.AppName
@@ -99,7 +101,7 @@ PlasmaCore.ToolTipArea {
     property bool jumpListOpen: jumpList !== null
     //property bool containsMouseFalsePositive: false
 
-    property bool hottrackingEnabled: !Plasmoid.configuration.disableHottracking && tasksRoot.milestone2Mode && !inPopup
+    readonly property bool hottrackingEnabled: !Plasmoid.configuration.disableHottracking && tasksRoot.milestone2Mode && !inPopup
 
     onJumpListOpenChanged: {
         if(jumpList !== null) {
@@ -1311,7 +1313,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 else return "";
             }
             property string baseSuffix: {
-                if(isHovered && !attentionIndicator.requiresAttention && !jumplistBtnMa.containsMouse) {
+                if(isHovered && !attentionIndicator.requiresAttention && !jumplistBtnMa.containsMouse && !hottrackingEnabled) {
                     return "-hover"
                 } else return ""
             }
@@ -1417,37 +1419,78 @@ TaskManagerApplet.SmartLauncherItem { }
 
             }
 
-            Components.Label {
-                id: label
-
-                visible: (inPopup || !iconsOnly && !model.IsLauncher
-                && (parent.width - iconBox.height - Kirigami.Units.smallSpacing) >= LayoutMetrics.spaceRequiredToShowText()) && !badge.visible
-                //Layout.leftMargin: ((dragArea.containsPress || dragArea.held) ? -1 : 0)
-                //Layout.rightMargin: ((dragArea.containsPress || dragArea.held) ? 1 : 0)
+            ColumnLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                wrapping: (maximumLineCount == 1) ? Text.NoWrap : Text.Wrap
-                // textFormat: Text.PlainText
-                // add support for this
-                alignmentV: Text.AlignVCenter
-                // maximumLineCount: 1//Plasmoid.configuration.maxTextLines || undefined
-                // aswell as this
-                foreground: "white"
+                spacing: 0
 
-                Accessible.ignored: true
+                PlasmaComponents3.Label {
+                    id: label
 
-                // use State to avoid unnecessary re-evaluation when the label is invisible
-                states: State {
-                    name: "labelVisible"
-                    when: label.visible
+                    visible: (inPopup || !iconsOnly && !model.IsLauncher
+                    && (parent.width) >= LayoutMetrics.spaceRequiredToShowText()) && !badge.visible
+                    //Layout.leftMargin: ((dragArea.containsPress || dragArea.held) ? -1 : 0)
+                    //Layout.rightMargin: ((dragArea.containsPress || dragArea.held) ? 1 : 0)
 
-                    PropertyChanges {
-                        target: label
-                        text: model.display
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    wrapMode: (maximumLineCount == 1) ? Text.NoWrap : Text.Wrap
+                    // textFormat: Text.PlainText
+                    // add support for this
+                    verticalAlignment: Text.AlignVCenter
+                    maximumLineCount: 1
+                    color: "white"
+                    elide: Text.ElideRight
+
+                    Accessible.ignored: true
+
+                    // use State to avoid unnecessary re-evaluation when the label is invisible
+                    states: State {
+                        name: "labelVisible"
+                        when: label.visible
+
+                        PropertyChanges {
+                            target: label
+                            text: model.display
+                        }
                     }
                 }
+                PlasmaComponents3.Label {
+                    id: appName
 
+                    visible: (inPopup || !iconsOnly && !model.IsLauncher
+                    && (parent.width) >= LayoutMetrics.spaceRequiredToShowText()) && !badge.visible && Plasmoid.configuration.showAppName
+                    //Layout.leftMargin: ((dragArea.containsPress || dragArea.held) ? -1 : 0)
+                    //Layout.rightMargin: ((dragArea.containsPress || dragArea.held) ? 1 : 0)
+
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    wrapMode: (maximumLineCount == 1) ? Text.NoWrap : Text.Wrap
+                    // textFormat: Text.PlainText
+                    // add support for this
+                    verticalAlignment: Text.AlignVCenter
+                    maximumLineCount: 1
+                    color: "white"
+                    opacity: 0.7
+                    elide: Text.ElideRight
+
+                    Accessible.ignored: true
+
+                    // use State to avoid unnecessary re-evaluation when the label is invisible
+                    states: State {
+                        name: "labelVisible"
+                        when: appName.visible
+
+                        PropertyChanges {
+                            target: appName
+                            text: model.AppName
+
+                        }
+                    }
+                }
             }
 
         }
@@ -1572,7 +1615,7 @@ TaskManagerApplet.SmartLauncherItem { }
         drag.minimumY: 0
         drag.maximumX: tasks.width - task.width
         drag.maximumY: tasks.height - task.height
-        drag.target: held && tasksRoot.milestone2Mode && !inPopup ? containerRect : undefined
+        drag.target: held && tasksRoot.milestone2Mode && !inPopup || Plasmoid.configuration.dragVista ? containerRect : undefined
         drag.axis: {
             var result = Drag.XAxis | Drag.YAxis
             return result;

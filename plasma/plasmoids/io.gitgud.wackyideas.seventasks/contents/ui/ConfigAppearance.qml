@@ -25,6 +25,10 @@ KCM.SimpleKCM {
     property alias cfg_showLabels: showLabels.checked
     property alias cfg_disableHottracking: disableHottracking.checked
     property alias cfg_disableJumplists: disableJumplists.checked
+    property alias cfg_dragVista: dragVista.checked
+    property alias cfg_enableAnimations: enableAnimations.checked
+    property alias cfg_showAppName: showAppName.checked
+
     property alias cfg_maxStripes: maxStripes.value
     property alias cfg_forceStripes: forceStripes.checked
     property int cfg_iconSpacing: 0
@@ -78,6 +82,18 @@ KCM.SimpleKCM {
         CheckBox {
             id: jumplistArrow
             text: i18n("Show jumplist arrow")
+        }
+        CheckBox {
+            id: dragVista
+            text: i18n("Enable dragging on Vista taskbar")
+        }
+        CheckBox {
+            id: enableAnimations
+            text: i18n("Enable animations")
+        }
+        CheckBox {
+            id: showAppName
+            text: i18n("Show app name")
         }
 
         CheckBox {

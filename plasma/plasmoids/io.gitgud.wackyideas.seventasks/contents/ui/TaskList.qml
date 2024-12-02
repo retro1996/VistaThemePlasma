@@ -27,20 +27,20 @@ ListView {
     interactive: false
     cacheBuffer: 9999
     spacing: 2
-    readonly property int transitionDuration: 0
+    readonly property int transitionDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
     property alias taskAnimation: taskAnimation
     property alias resetTransition: resetTransition
     property alias resetAddTransition: resetAddTransition
     Timer {
         id: resetTransition
-        interval: 0
+        interval: transitionDuration+50
         onTriggered: {
             taskList.displaced = taskList.taskAnimation;
         }
     }
     Timer {
         id: resetAddTransition
-        interval: 0
+        interval: 100
         onTriggered: {
             taskList.add = addAnimation;
         }

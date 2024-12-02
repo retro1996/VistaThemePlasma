@@ -83,15 +83,6 @@ KCM.SimpleKCM {
             text: i18n("The compositor does not support displaying windows side by side, so a textual list will be displayed instead.")
         }
 
-
-        CheckBox {
-            id: onlyGroupWhenFull
-            visible: false //!iconsOnly//(Plasmoid.pluginName !== "org.kde.plasma.icontasks")
-            text: i18n("Group only when the Task Manager is full")
-            enabled: groupingStrategy.currentIndex > 0 && groupPopups.checked
-            Accessible.onPressAction: toggle()
-        }
-
         Item {
             Kirigami.FormData.isSection: true
             visible: !iconsOnly //(Plasmoid.pluginName !== "org.kde.plasma.icontasks")
@@ -109,6 +100,13 @@ KCM.SimpleKCM {
             id: groupPopups
             //visible: !iconsOnly//(Plasmoid.pluginName !== "org.kde.plasma.icontasks")
             text: i18n("Group tasks together")
+        }
+        CheckBox {
+            id: onlyGroupWhenFull
+            visible: !iconsOnly // this was set to false idk why
+            text: i18n("Group only when the Task Manager is full")
+            enabled: groupingStrategy.currentIndex > 0 && groupPopups.checked
+            Accessible.onPressAction: toggle()
         }
         CheckBox {
             id: separateLaunchers
