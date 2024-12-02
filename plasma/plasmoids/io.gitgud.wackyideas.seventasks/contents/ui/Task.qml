@@ -101,7 +101,7 @@ PlasmaCore.ToolTipArea {
     property bool jumpListOpen: jumpList !== null
     //property bool containsMouseFalsePositive: false
 
-    readonly property bool hottrackingEnabled: !Plasmoid.configuration.disableHottracking && tasksRoot.milestone2Mode && !inPopup
+    readonly property bool hottrackingEnabled: !Plasmoid.configuration.disableHottracking && !inPopup
 
     onJumpListOpenChanged: {
         if(jumpList !== null) {
