@@ -145,7 +145,9 @@ Item {
         text: model.display == Plasmoid.configuration.defaultInternetApp && parent.isFavorites == true ? "Internet" :
              (model.display == Plasmoid.configuration.defaultEmailApp && parent.isFavorites == true? "E-Mail" : model.display)
 
-        font.bold: parent.isFavorites && !Plasmoid.configuration.disableBold ? true : (text == "Internet" || text == "E-Mail" ? true : false)
+        font.bold: parent.isFavorites && !Plasmoid.configuration.disableBold ? true :
+                  (text == "Internet" && parent.isFavorites || text == "E-Mail" && parent.isFavorites ? true : false)
+
         elide: Text.ElideRight
         horizontalAlignment: Text.AlignLeft
         color: "#000000"
