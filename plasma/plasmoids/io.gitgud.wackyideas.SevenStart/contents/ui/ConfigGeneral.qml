@@ -53,6 +53,7 @@ KCM.SimpleKCM {
     property alias cfg_switchCategoriesOnHover: switchCategoriesOnHover.checked
     property alias cfg_stickOutOrb: stickOutOrb.checked
     property alias cfg_fadeOrb: fadeOrb.checked
+    property alias cfg_disableBold: disableBold.checked
 
     property alias cfg_useExtraRunners: useExtraRunners.checked
 
@@ -188,6 +189,11 @@ KCM.SimpleKCM {
                     id: fadeOrb
 
                     text: i18n("Enable fade animation for the orb")
+                }
+                CheckBox {
+                    id: disableBold
+
+                    text: i18n("Disable bold text for pinned apps")
                 }
             }
         }
