@@ -51,7 +51,7 @@ PlasmaCore.ToolTipArea {
 
 
     location: {
-        if (inHiddenLayout) {
+        if (inHiddenLayout && root.milestone2Mode) {
             if (LayoutMirroring.enabled && Plasmoid.location !== PlasmaCore.Types.RightEdge) {
                 return PlasmaCore.Types.LeftEdge;
             } else if (Plasmoid.location !== PlasmaCore.Types.LeftEdge) {
@@ -174,7 +174,7 @@ PlasmaCore.ToolTipArea {
     ColumnLayout {
         id: icon
         anchors.fill: abstractItem
-        anchors.topMargin: abstractItem.inHiddenLayout ? 0 : 1
+        anchors.topMargin: abstractItem.inHiddenLayout && !root.milestone2Mode ? 0 : 1
         spacing: 0
 
         Drag.active: mouseArea.drag.active// && abstractItem.inHiddenLayout
