@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(io.gitgud.catpswin56.betatasks)
+project(io.gitgud.wackyideas.seventasks)
  
 find_package(ECM 1.4.0 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})

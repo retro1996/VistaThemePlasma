@@ -91,7 +91,7 @@ public:
         }
         w->setMouseGrabEnabled(arg);
     }
-    Q_INVOKABLE QPoint getPosition(QWindow* w)
+    Q_INVOKABLE QPointF getPosition(QQuickItem* w)
     {
         return w->mapFromGlobal(QCursor::pos());
     }

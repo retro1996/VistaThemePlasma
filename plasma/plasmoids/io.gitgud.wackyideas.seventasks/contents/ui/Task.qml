@@ -55,7 +55,7 @@ PlasmaCore.ToolTipArea {
         }
     }
     Behavior on implicitWidth {
-        NumberAnimation { duration: !tasksRoot.milestone2Mode ? 200 : animationDuration; easing.type: Easing.OutQuad }
+        NumberAnimation { duration: !tasksRoot.iconsOnly ? 200 : animationDuration; easing.type: Easing.OutQuad }
     }
     Behavior on implicitHeight {
         NumberAnimation { duration: animationDuration; easing.type: Easing.OutQuad }
@@ -69,7 +69,7 @@ PlasmaCore.ToolTipArea {
     }
     SequentialAnimation {
         id: removeLabelsAnimation
-        NumberAnimation { target: task; properties: "width"; to: 0; duration: !tasksRoot.milestone2Mode ? 0 : animationDuration; easing.type: Easing.OutQuad }
+        NumberAnimation { target: task; properties: "width"; to: 0; duration: !tasksRoot.iconsOnly && !Plasmoid.configuration.enableAnimations ? 0 : animationDuration; easing.type: Easing.OutQuad }
         PropertyAction { target: task; property: "ListView.delayRemove"; value: false }
     }
     SequentialAnimation {
@@ -82,7 +82,7 @@ PlasmaCore.ToolTipArea {
     required property int index
     required property Item tasksRoot
 
-    readonly property int animationDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
+    readonly property int animationDuration: Plasmoid.configuration.enableAnimations ? 200 : (!tasksRoot.iconsOnly ? 200 : 0)
 
     readonly property int pid: model.AppPid
     readonly property string appName: model.AppName
