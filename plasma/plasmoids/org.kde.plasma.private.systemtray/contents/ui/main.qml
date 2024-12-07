@@ -346,7 +346,7 @@ ContainmentItem {
             rowSpacing: 0
             columnSpacing: 0
             anchors.fill: parent
-            anchors.topMargin: root.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing*2
+            anchors.topMargin: root.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing*2 + Kirigami.Units.smallSpacing/2 - Kirigami.Units.smallSpacing/4
 
             flow: vertical ? GridLayout.TopToBottom : GridLayout.LeftToRight
 

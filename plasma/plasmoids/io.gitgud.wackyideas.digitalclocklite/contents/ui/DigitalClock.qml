@@ -615,7 +615,7 @@ Item {
         anchors.verticalCenter: main.verticalCenter
         anchors.horizontalCenter: main.horizontalCenter
         anchors.horizontalCenterOffset: main.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing
-        anchors.verticalCenterOffset: main.milestone2Mode ? -Kirigami.Units.smallSpacing/2 : 0
+        anchors.verticalCenterOffset: main.milestone2Mode ? -Kirigami.Units.smallSpacing/2 : -2
 
         Grid {
             id: labelsGrid
