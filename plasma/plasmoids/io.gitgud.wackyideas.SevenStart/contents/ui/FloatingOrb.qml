@@ -28,7 +28,21 @@ Item {
     property alias buttonIconHovered: buttonIconHovered
     property alias mouseArea: mouseArea
 
-    property string orbTexture: getResolvedUrl(Plasmoid.configuration.customButtonImage, "orbs/orb" + (stickOutOrb ? "_small" : "") + ".png")
+    property string location: {
+        switch (Plasmoid.location) {
+        case PlasmaCore.Types.LeftEdge:
+            return "horizontal";
+        case PlasmaCore.Types.RightEdge:
+            return "horizontal";
+        case PlasmaCore.Types.TopEdge:
+            return "top";
+        case PlasmaCore.Types.BottomEdge:
+            return "bottom";
+        }
+        return "";
+    }
+
+    property string orbTexture: getResolvedUrl(Plasmoid.configuration.customButtonImage, "orbs/orb_" + location + ".png")
     property int opacityDuration: Plasmoid.configuration.fadeOrb ? 350 : 0
 
     Image {

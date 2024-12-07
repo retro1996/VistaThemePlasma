@@ -72,9 +72,9 @@ Item {
         }
         orb.width = floatingOrbPanel.buttonIcon.implicitWidth
         orb.height = floatingOrbPanel.buttonIcon.implicitHeight;
-        if(orb.height === 30) {
-            pos.y += 2;
-        }
+        // if(orb.height === 30) {
+        //     pos.y += 2;
+        // }
 
         orb.x = pos.x;
         orb.y = pos.y;

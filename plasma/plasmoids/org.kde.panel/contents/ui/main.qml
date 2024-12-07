@@ -143,7 +143,7 @@ ContainmentItem {
                 leftMargin: parent.height == 40 ? darkPart1.width - 4 : 0
                 rightMargin: parent.height == 40 ? darkPart2.width + darkPart2.anchors.rightMargin - 4 : 0
             }
-            prefix: parent.height == 40 ? "supersouth" : "vistasouth"
+            prefix: parent.height == 40 ? "supersouth" : "vista" + plasmoidLocationString()
         }
         KSvg.FrameSvgItem {
             id: thickPanelSvg
@@ -410,7 +410,9 @@ ContainmentItem {
                 anchors.bottom: parent.bottom
                 anchors.top: parent.top
 
-                width: parent.sevenstartItem + parent.quicklaunchItem + Kirigami.Units.smallSpacing*3 - Kirigami.Units.smallSpacing/2
+                width: parent.sevenstartItem + parent.quicklaunchItem + fixSpacing
+
+                property int fixSpacing: (parent.quicklaunchItem != 0 ? Kirigami.Units.smallSpacing*3 : Kirigami.Units.smallSpacing*2) - Kirigami.Units.smallSpacing/2
 
                 imagePath: "widgets/panel-background"
                 visible: true

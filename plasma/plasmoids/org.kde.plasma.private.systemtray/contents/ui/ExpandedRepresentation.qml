@@ -183,7 +183,7 @@ Item {
         }
         Text {
             id: headingLabel
-            color: "#0066cc"
+            color: "#4465a2"
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
             Layout.bottomMargin: Kirigami.Units.smallSpacing
@@ -230,19 +230,27 @@ Item {
         //visible: container.appletHasFooter
         height: trayHeading.height + Kirigami.Units.smallSpacing / 2 //+ container.footerHeight + Kirigami.Units.smallSpacing
         //height: trayHeading.height + container.headingHeight + (container.headingHeight === 0 ? 0 : Kirigami.Units.smallSpacing/2)
-        color: "#f1f5fb"
+        color: "#f0f0f0"
         Rectangle {
-            id: plasmoidFooterBorder
+            id: plasmoidFooterBorder2
             anchors {
                 top: parent.top
                 left: parent.left
                 right: parent.right
             }
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: "#ccd9ea" }
-                GradientStop { position: 1.0; color: "#f1f5fb" }
+            color: "#dde0e2"
+            height: 2
+        }
+        Rectangle {
+            id: plasmoidFooterBorder1
+            anchors {
+                top: parent.top
+                topMargin: 1
+                left: parent.left
+                right: parent.right
             }
-            height: Kirigami.Units.smallSpacing
+            color: "white"
+            height: 1
         }
         z: -9999
     }

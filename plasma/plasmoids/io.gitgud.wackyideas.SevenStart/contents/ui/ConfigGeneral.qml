@@ -205,8 +205,7 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: enableShadow
                     text: i18n("Enable shadow")
-                    visible: false
-                    checked: true
+                    visible: true
                 }
             }
         }

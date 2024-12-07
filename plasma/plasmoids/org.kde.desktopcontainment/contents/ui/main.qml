@@ -76,6 +76,13 @@ ContainmentItem {
 
     onIconHeightChanged: updateGridSize()
 
+    Rectangle {
+        anchors.fill: parent
+        z: -1
+        color: "black"
+        visible: Plasmoid.configuration.watermarkTrueGenuine && Plasmoid.configuration.watermarkGenuine
+    }
+
     // We want to do this here rather than in the model because we don't always want
     // symbolic icons everywhere, but we do know that we always want them in this
     // specific representation right here
@@ -162,6 +169,8 @@ ContainmentItem {
             easing.type: Easing.InOutQuad
         }
     }
+
+
 
     KSvg.FrameSvgItem {
         id: highlightItemSvg

@@ -103,7 +103,6 @@ KCM.SimpleKCM {
         }
         CheckBox {
             id: onlyGroupWhenFull
-            visible: !iconsOnly // this was set to false idk why
             text: i18n("Group only when the Task Manager is full")
             enabled: groupingStrategy.currentIndex > 0 && groupPopups.checked
             Accessible.onPressAction: toggle()

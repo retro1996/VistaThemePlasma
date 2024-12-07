@@ -37,14 +37,13 @@ PlasmoidItem {
 
 	Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
 
-	Layout.minimumWidth: Kirigami.Units.iconSizes.medium
-	Layout.minimumHeight: Kirigami.Units.iconSizes.medium
+	Layout.fillHeight: true
 
-	Layout.maximumWidth: vertical ? Layout.minimumWidth : Math.max(1, Plasmoid.configuration.size)
-	Layout.maximumHeight: vertical ? Math.max(1, Plasmoid.configuration.size) : Layout.minimumHeight
+	Layout.maximumWidth: vertical ? Layout.minimumWidth : (height == 40 ? Math.max(1, Plasmoid.configuration.size) + Kirigami.Units.smallSpacing * 2 - Kirigami.Units.smallSpacing / 2 : 0)
+	Layout.maximumHeight: vertical ? Math.max(1, Plasmoid.configuration.size) : parent.height
 
-	Layout.preferredWidth: Layout.maximumWidth
-	Layout.preferredHeight: Layout.maximumHeight
+	Layout.preferredWidth: height == 40 ? Layout.maximumWidth : 0
+	Layout.preferredHeight: parent.height
 
 	Plasmoid.constraintHints: Plasmoid.CanFillArea
 
@@ -77,7 +76,8 @@ PlasmoidItem {
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
-		anchors.rightMargin: -Kirigami.Units.smallSpacing - Kirigami.Units.smallSpacing/2;
+
+		visible: parent.height == 40
 
 		activeFocusOnTab: true
 		hoverEnabled: true

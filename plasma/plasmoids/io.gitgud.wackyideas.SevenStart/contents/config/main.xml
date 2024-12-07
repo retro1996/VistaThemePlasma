@@ -56,7 +56,7 @@
     </entry>
 
     <entry name="favoriteApps" type="StringList">
-      <default></default>
+      <default>preferred://email,preferred://browser</default>
     </entry>
     <entry name="favoriteSystemActions" type="StringList">
       <default>logout,lock-screen,reboot,shutdown</default>

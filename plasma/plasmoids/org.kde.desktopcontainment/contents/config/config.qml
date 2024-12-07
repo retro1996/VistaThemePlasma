@@ -32,4 +32,11 @@ ConfigModel {
          source: "ConfigFilter.qml"
          visible: isFolder
     }
+
+    ConfigCategory {
+        name: i18n("Extras")
+        icon: "workspace-switcher"
+        source: "ConfigExtras.qml"
+        visible: isFolder
+    }
 }

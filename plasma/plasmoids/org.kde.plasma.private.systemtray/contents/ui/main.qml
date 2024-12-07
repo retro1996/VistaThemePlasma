@@ -346,16 +346,15 @@ ContainmentItem {
             rowSpacing: 0
             columnSpacing: 0
             anchors.fill: parent
-            anchors.topMargin: root.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing
+            anchors.topMargin: root.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing*2
 
             flow: vertical ? GridLayout.TopToBottom : GridLayout.LeftToRight
 
             ExpanderArrow {
                 id: expander
-                Layout.fillWidth: true
-                Layout.fillHeight: true
                 Layout.alignment: vertical ? Qt.AlignVCenter : Qt.AlignHCenter
-                Layout.topMargin: !vertical ? Kirigami.Units.smallSpacing/2 : 0
+                Layout.topMargin: !vertical ? Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2 : 0
+                Layout.rightMargin: -Kirigami.Units.smallSpacing*2 + Kirigami.Units.smallSpacing/2
                 visible: root.hiddenLayout.itemCount > 0 && !root.milestone2Mode
             }
             ExpanderArrowM2 {
@@ -535,7 +534,7 @@ ContainmentItem {
                 var screen = root.screenGeometry;
 
                 x = pos.x - width / 2 + (expandedRepresentation.hiddenLayout.visible ? flyoutMargin + Kirigami.Units.smallSpacing/2 : currentHighlight.width / 2);
-                y = pos.y - height;
+                y = pos.y - height + Kirigami.Units.smallSpacing*4;
 
                 if(x <= 0) x += flyoutMargin;
                 if((x + dialog.width - screen.x) >= availScreen.width) {

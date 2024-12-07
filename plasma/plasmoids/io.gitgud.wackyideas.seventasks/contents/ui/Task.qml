@@ -927,9 +927,22 @@ TaskManagerApplet.SmartLauncherItem { }
             opacity: 0
             radius: 3
         }
+        Rectangle {
+            id: bGJumplist
+            anchors.fill: frame
+            anchors.leftMargin: frame.width
+            anchors.rightMargin: -jumplistBtn.width + Kirigami.Units.smallSpacing/4
+            anchors.margins: 1
+            color: "transparent"
+            border.color: "red"
+            border.width: 2
+            opacity: 0
+            radius: 3
+        }
         RadialGradient {
             id: animationGlow
             anchors.fill: frame
+            anchors.rightMargin: -jumplistBtn.width
             anchors.margins: 2
             visible:  task.hottrackingEnabled
             //visible: model.IsStartup
@@ -951,6 +964,7 @@ TaskManagerApplet.SmartLauncherItem { }
         RadialGradient {
             id: glow
             anchors.fill: frame
+            anchors.rightMargin: -jumplistBtn.width
             anchors.margins: 2
             visible: !model.IsLauncher && task.hottrackingEnabled
             opacity: ((frame.isHovered && !dragArea.held && !(attentionFadeIn.running || attentionFadeOut.running)) ? 1 : 0) * canShow
@@ -994,6 +1008,43 @@ TaskManagerApplet.SmartLauncherItem { }
             id: borderGradientRender
             anchors.fill: borderGradient
             source: borderGradient
+            visible: !model.IsLauncher && task.hottrackingEnabled
+            opacity: (frame.isHovered && !dragArea.held && !(attentionFadeIn.running || attentionFadeOut.running)) ? 1 : 0
+            Behavior on opacity {
+                NumberAnimation { duration: 250; easing.type: Easing.Linear }
+            }
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: containerRect.glowColorCenter }
+                GradientStop { position: 0.5; color: containerRect.glowColor }
+                GradientStop { position: 1.0; color: containerRect.opacify(containerRect.glowColor, 0.1) }
+            }
+            verticalOffset: parent.height / 2
+            verticalRadius: task.height * 1.5
+            horizontalRadius: task.width * 1.5
+            horizontalOffset: dragArea.mouseX - task.width / 2
+        }
+        RadialGradient {
+            id: aBGJumplist
+            anchors.fill: bGJumplist
+            source: bGJumplist
+            visible: task.hottrackingEnabled
+            opacity: 0
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: containerRect.glowColorCenter }
+                GradientStop { position: 0.3; color: containerRect.glowColor }
+            }
+            Behavior on horizontalOffset {
+                NumberAnimation { duration: containerRect.state === "jumpListOpen" ? 250 : 0; easing.type: Easing.Linear }
+            }
+            verticalOffset: parent.height / 2
+            verticalRadius: task.height * 1.5
+            horizontalRadius: task.width * 1.5
+            horizontalOffset: 0//dragArea.mouseX - task.width / 2
+        }
+        RadialGradient {
+            id: bGRJumplist
+            anchors.fill: bGJumplist
+            source: bGJumplist
             visible: !model.IsLauncher && task.hottrackingEnabled
             opacity: (frame.isHovered && !dragArea.held && !(attentionFadeIn.running || attentionFadeOut.running)) ? 1 : 0
             Behavior on opacity {
@@ -1297,11 +1348,11 @@ TaskManagerApplet.SmartLauncherItem { }
             property bool isHovered: (task.highlighted && Plasmoid.configuration.taskHoverEffect)
             property bool isActive: model.IsActive || dragArea.containsPress || dragArea.held
 
-            // separate the prefix in 3 parts
+            // separate the prefix property of KSvg.FrameSvgItem in 3 parts
             property string basePrefix: {
                 if(jumplistBtn.visible && jumplistBtnEnabled) {
-                    if(jumplistBtnMa.containsMouse && !attentionIndicator.requiresAttention) return "jumphover-";
-                        else return "jumpbtn-";
+                    if(jumplistBtnMa.containsMouse && !attentionIndicator.requiresAttention && Plasmoid.configuration.disableHottracking) return "jumphover-";
+                        else return "";
                 } else return "";
             }
             property string base: {
@@ -1313,7 +1364,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 else return "";
             }
             property string baseSuffix: {
-                if(isHovered && !attentionIndicator.requiresAttention && !jumplistBtnMa.containsMouse && !hottrackingEnabled) {
+                if(isHovered && !jumplistBtnMa.containsMouse && !dragArea.held) {
                     return "-hover"
                 } else return ""
             }
@@ -1471,7 +1522,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 Components.Label {
                     id: appName
 
-                    visible: Plasmoid.configuration.showAppName && tasksRoot.milestone2Mode && !inPopup
+                    visible: Plasmoid.configuration.showAppName && tasksRoot.milestone2Mode && !inPopup && model.AppName != ""
                     //Layout.leftMargin: ((dragArea.containsPress || dragArea.held) ? -1 : 0)
                     //Layout.rightMargin: ((dragArea.containsPress || dragArea.held) ? 1 : 0)
 
@@ -1495,7 +1546,6 @@ TaskManagerApplet.SmartLauncherItem { }
                         PropertyChanges {
                             target: appName
                             text: model.AppName
-
                         }
                     }
                 }
@@ -1672,7 +1722,7 @@ TaskManagerApplet.SmartLauncherItem { }
         id: jumplistBtn
         imagePath: Qt.resolvedUrl("svgs/supertasks.svg")
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Plasmoid.configuration.bottomMargin ? 2 : Kirigami.Units.smallSpacing/4
+        anchors.bottomMargin: Kirigami.Units.smallSpacing/4
         anchors.top: parent.top
         anchors.topMargin: 4
         anchors.left: parent.right
@@ -1702,7 +1752,7 @@ TaskManagerApplet.SmartLauncherItem { }
 
             z: 1
 
-            onEntered: parent.prefix = "jumplist-hover";
+            onEntered: Plasmoid.configuration.disableHottracking ? parent.prefix = "jumplist-hover" : parent.prefix = "jumplist-normal";
             onExited: parent.prefix = "jumplist-normal";
             onPressed: parent.prefix = "jumplist-pressed";
             onReleased: parent.prefix = "jumplist-normal";

@@ -181,9 +181,13 @@ PlasmaCore.Dialog {
         Layout.minimumWidth: Math.max(397, root.cellWidth + Kirigami.Units.mediumSpacing + columnItems.width) + Kirigami.Units.mediumSpacing*2
 		Layout.maximumWidth: Math.max(397, root.cellWidth + Kirigami.Units.mediumSpacing + columnItems.width) + Kirigami.Units.mediumSpacing*2
 
+		property int extraPadding: (compositingEnabled
+		? (Plasmoid.location != PlasmaCore.Types.TopEdge ? Kirigami.Units.iconSizes.huge / 2 - Kirigami.Units.smallSpacing*4
+		: nonCompositingIcon.height) // top panel
+		: nonCompositingIcon.height); // no compositing
+
 		property int mainPanelHeight: leftSidebar.height + bottomControls.height
-		property int sidePanelHeight: backgroundBorderLine.height + searchBackground.height + columnItems.height + (compositingEnabled ? Kirigami.Units.iconSizes.huge / 2 + Kirigami.Units.smallSpacing : nonCompositingIcon.height + Kirigami.Units.smallSpacing);
-		//property bool sidePanelOverflow: mainPanelHeight <= sidePanelHeight;
+		property int sidePanelHeight: backgroundBorderLine.height + searchBackground.height + columnItems.height + extraPadding
 
         Layout.minimumHeight: Math.max(Math.max(mainPanelHeight, sidePanelHeight), 377) + Kirigami.Units.smallSpacing/2 + Kirigami.Units.mediumSpacing*2
         Layout.maximumHeight: Math.max(Math.max(mainPanelHeight, sidePanelHeight), 377) + Kirigami.Units.smallSpacing/2 + Kirigami.Units.mediumSpacing*2
@@ -192,7 +196,6 @@ PlasmaCore.Dialog {
 		clip: false
 
         KCoreAddons.KUser {   id: kuser  }  // Used for getting the username and icon.
-        //Logic {   id: logic }				// Probably useful.
         
         /*
 		 * The user icon is supposed to stick out of the start menu, so a separate dialog window
@@ -227,8 +230,6 @@ PlasmaCore.Dialog {
 		Item {
 			PlasmaCore.Dialog {
         		id: iconUser
-        		//flags: Qt.WindowStaysOnTopHint// | Qt.BypassWindowManagerHint  // To prevent the icon from animating its opacity when its visibility is changed
-        		//type: "Notification" // So that we don't have to rely on this
 				location: "Floating"
 
 				type: "Notification"
@@ -236,7 +237,6 @@ PlasmaCore.Dialog {
 				x: 0
 				y: 0
 				backgroundHints: PlasmaCore.Types.NoBackground // To prevent the dialog background SVG from being rendered, we want a fully transparent window.
-				//visualParent: root
 				visible: root.visible && compositingEnabled && Plasmoid.location != PlasmaCore.Types.TopEdge
 				opacity: iconUser.visible && firstTimePopup // To prevent even more NP-hard unpredictable behavior
 				mainItem: FloatingIcon {
@@ -932,7 +932,7 @@ PlasmaCore.Dialog {
             anchors{
                 left: leftSidebar.right
                 top: parent.top
-                bottomMargin: Kirigami.Units.largeSpacing
+                bottom: bottomControls.top
                 leftMargin: 5
                 topMargin: ((compositingEnabled && Plasmoid.location !== PlasmaCore.Types.TopEdge) ? Kirigami.Units.iconSizes.huge / 2 + Kirigami.Units.smallSpacing : 0) + Kirigami.Units.mediumSpacing
 
@@ -1100,6 +1100,17 @@ PlasmaCore.Dialog {
 						separator2.updateVisibility();
 					}
 					Layout.fillWidth: true
+					KSvg.SvgItem {
+						anchors.right: parent.right
+						anchors.rightMargin: Kirigami.Units.smallSpacing*2
+						anchors.verticalCenter: parent.verticalCenter
+
+						implicitWidth: 6
+						implicitHeight: 10
+
+						imagePath: Qt.resolvedUrl("svgs/arrows.svgz")
+						elementId: "group-expander-left"
+					}
 				}
 				SidePanelItemDelegate {
 					itemText: "Computer"
@@ -1114,7 +1125,18 @@ PlasmaCore.Dialog {
 				}
 				SidePanelItemDelegate {
 					itemText: "Network"
-					itemIcon: "folder-network"
+					itemIcon: "network"
+					executableString: folderDialog.getPath(8)
+					visible: Plasmoid.configuration.showNetworkSidepanel
+					onVisibleChanged: {
+						separator1.updateVisibility();
+						separator2.updateVisibility();
+					}
+					Layout.fillWidth: true
+				}
+				SidePanelItemDelegate {
+					itemText: "Connect To"
+					itemIcon: "connectto"
 					executableString: folderDialog.getPath(8)
 					visible: Plasmoid.configuration.showNetworkSidepanel
 					onVisibleChanged: {
@@ -1190,11 +1212,6 @@ PlasmaCore.Dialog {
 				}
 
 				//Used to space out the rest of the side panel, so that the shutdown button is at the bottom of the plasmoid
-                Item {
-					objectName: "PaddingItem"
-                    Layout.fillHeight: false
-                    visible: true
-                }
                 Item {
                     Layout.minimumWidth: cellWidthSide
                     Layout.fillWidth: true
