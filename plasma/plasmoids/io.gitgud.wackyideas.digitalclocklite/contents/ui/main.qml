@@ -54,7 +54,16 @@ PlasmoidItem {
         // add the dataengine TZ offset to it
         return new Date(msUTC + (data["Offset"] * 1000));
     }
-    property bool milestone2Mode: parent.height == 38
+    property bool milestone2Mode: {
+        // Code taken from VistaTasks
+        let item = this;
+        while (item.parent) {
+            item = item.parent;
+            if (item.milestone2Mode !== undefined) {
+                return item.milestone2Mode
+            }
+        }
+    }
 
     function initTimezones() {
         const tz = []

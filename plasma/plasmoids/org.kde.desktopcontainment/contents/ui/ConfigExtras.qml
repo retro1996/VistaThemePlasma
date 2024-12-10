@@ -84,8 +84,8 @@ Item {
                         enabled: watermarkVisible.checked
 
                         model: [
-                            "Windows Vista Beta 2",
-                            "AeroThemePlasma",
+                            "Windows Vista",
+                            "VistaThemePlasma",
                             "Custom"
                         ]
                     }
@@ -96,7 +96,7 @@ Item {
                     enabled: watermarkStyle.currentIndex === 2
                     Layout.fillWidth: true
 
-                    placeholderText: i18n("Windows 7")
+                    placeholderText: i18n("Windows Vista™")
 
                     text: root.cfg_customText1
 
@@ -113,7 +113,7 @@ Item {
                     enabled: watermarkStyle.currentIndex === 2
                     Layout.fillWidth: true
 
-                    placeholderText: i18n("Build 7601")
+                    placeholderText: i18n("Build 6002")
 
                     text: root.cfg_customText2
 

@@ -40,7 +40,16 @@ ContainmentItem {
     property bool showHidden: false
 
     // Milestone 2 mode settings
-    property bool milestone2Mode: parent.height == 38
+    property bool milestone2Mode: {
+        // Code taken from VistaTasks
+        let item = this;
+        while (item.parent) {
+            item = item.parent;
+            if (item.milestone2Mode !== undefined) {
+                return item.milestone2Mode
+            }
+        }
+    }
 
     KSvg.Svg {
         id: buttonIcons
@@ -249,11 +258,7 @@ ContainmentItem {
                     let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
                     var itemIdRole = KItemModels.KRoleNames.role("itemId");
                     let value2 = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), itemIdRole);
-                    if(root.milestone2Mode) {
-                        return value == PlasmaCore.Types.ActiveStatus
-                    } else {
-                        return (value == PlasmaCore.Types.ActiveStatus && !filterItemId(value2));
-                    }
+                    return (value == PlasmaCore.Types.ActiveStatus && !filterItemId(value2));
                 }
             }
             function determinePosition(item) {
@@ -401,7 +406,7 @@ ContainmentItem {
                     // console.log("!! !! SYSTEM MODEL !! !!");
                     // console.log("value = " + value);
                     // console.log("isAllowedToPass = " + (value == "org.kde.plasma.battery" || value == "org.kde.plasma.volume" || value == "org.kde.plasma.networkmanagement"));
-                    return value == "org.kde.plasma.battery" || value == "org.kde.plasma.volume" || value == "org.kde.plasma.networkmanagement"; // hopefully the missing items issue is only happening to me
+                    return value == "org.kde.plasma.battery" || value == "org.kde.plasma.volume" || value == "org.kde.plasma.networkmanagement";
                 }
             }
             function determinePosition(item) {
@@ -651,8 +656,6 @@ ContainmentItem {
                 }
 
                 model: systemModel
-
-                visible: !root.milestone2Mode
             }
         }
 

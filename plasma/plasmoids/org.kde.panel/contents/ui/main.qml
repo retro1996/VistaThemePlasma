@@ -27,17 +27,13 @@ ContainmentItem {
     Layout.preferredWidth: fixedWidth || currentLayout.implicitWidth + currentLayout.horizontalDisplacement
     Layout.preferredHeight: fixedHeight || currentLayout.implicitHeight + currentLayout.verticalDisplacement
 
-    property Item isShowDesktopApplet: {
-        if(currentLayout.visibleChildren.length === 0) return null;
-        var item = currentLayout.visibleChildren[currentLayout.visibleChildren.length-1];
-        if(item) {
-            if(typeof item.applet !== "undefined") {
-                if(item.applet.Plasmoid.pluginName === "io.gitgud.wackyideas.win7showdesktop") {
-                    return item;
-                }
+    property bool milestone2Mode: {
+        for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+            if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.m2tasks") {
+                return true;
             }
         }
-        return null;
+        return false
     }
     property Item toolBox
     property var layoutManager: LayoutManager
@@ -140,10 +136,10 @@ ContainmentItem {
             anchors {
                 fill: parent
 
-                leftMargin: parent.height == 40 ? darkPart1.width - 4 : 0
-                rightMargin: parent.height == 40 ? darkPart2.width + darkPart2.anchors.rightMargin - 4 : 0
+                leftMargin: milestone2Mode ? darkPart1.width - 4 : 0
+                rightMargin: milestone2Mode ? darkPart2.width + darkPart2.anchors.rightMargin - 4 : gradientRect.showDesktopItem
             }
-            prefix: parent.height == 40 ? "supersouth" : "vista" + plasmoidLocationString()
+            prefix: milestone2Mode ? "supersouth" : "vista" + plasmoidLocationString()
         }
         KSvg.FrameSvgItem {
             id: thickPanelSvg
@@ -436,7 +432,7 @@ ContainmentItem {
                 z: 1
             }
 
-            visible: root.height == 40 ? Kirigami.Units.smallSpacing : 0
+            visible: milestone2Mode
 
             property string tint: "red"
             property string gradColor: applet ? "transparent" : gradientRect.tint
@@ -528,7 +524,7 @@ ContainmentItem {
             // Sevenstart
             property int sevenstartItem: {
                 for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
-                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.wackyideas.SevenStart") {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.vistastart") {
                         return currentLayout.visibleChildren[i].applet.width;
                     }
                 }

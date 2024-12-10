@@ -1,0 +1,27 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "wackyideas@disroot.org",
+                "Name": "WackyIdeas"
+            },
+            {
+                "Name": "catpswin56"
+            }
+        ],
+        "Category": "Utilities",
+        "Description": "Classic Vista-style task manager",
+        "EnabledByDefault": true,
+        "Icon": "applications-system",
+        "Id": "io.gitgud.catpswin56.vistatasks",
+        "License": "LGPL-2.1+",
+        "Name": "VistaTasks",
+        "KPackageStructure": "Plasma/Applet",
+        "Version": "1.0",
+        "Website": "https://gitgud.io/catpswin56/vistathemeplasma"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-Provides": [
+        "org.kde.plasma.multitasking"
+    ]
+}
