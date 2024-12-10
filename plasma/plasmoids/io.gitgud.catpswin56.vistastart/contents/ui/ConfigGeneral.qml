@@ -48,6 +48,7 @@ KCM.SimpleKCM {
     
     property alias cfg_showRecentsView: showRecentsView.checked
     property alias cfg_offsetFloatingOrb: offsetFloatingOrb.checked
+    property alias cfg_useFullName: useFullName.checked
 
     property alias cfg_appNameFormat: appNameFormat.currentIndex
     property alias cfg_switchCategoriesOnHover: switchCategoriesOnHover.checked
@@ -189,23 +190,23 @@ KCM.SimpleKCM {
                 }
                 CheckBox {
                     id: fadeOrb
-
                     text: i18n("Enable fade animation for the orb")
                 }
                 CheckBox {
                     id: disableBold
-
                     text: i18n("Disable bold text for pinned apps")
                 }
                 CheckBox {
                     id: disableSleep
-
                     text: i18n("Show shutdown instead of sleep")
                 }
                 CheckBox {
                     id: enableShadow
                     text: i18n("Enable shadow")
-                    visible: true
+                }
+                CheckBox {
+                    id: useFullName
+                    text: i18n("Use full name instead of login name")
                 }
             }
         }

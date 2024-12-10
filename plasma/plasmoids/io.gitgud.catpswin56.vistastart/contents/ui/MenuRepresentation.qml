@@ -117,9 +117,7 @@ PlasmaCore.Dialog {
 			Plasmoid.syncBorders(Qt.rect(x, y, width, height), Plasmoid.location);
 
 			if(!firstTimeShadowSetup) {
-				Plasmoid.enableShadow(Plasmoid.configuration.enableShadow);
-				Plasmoid.syncBorders(Qt.rect(dashWindow.x, dashWindow.y, dashWindow.width, dashWindow.height), Plasmoid.location);
-				firstTimeShadowSetup = true;
+				shadow_fix.start()
 			}
         }
 		resetRecents(); // Resets the recents model to prevent errors and crashes.
@@ -194,6 +192,22 @@ PlasmaCore.Dialog {
         
         focus: true
 		clip: false
+
+		Timer {
+			id: shadow_fix
+			interval: 25
+			onTriggered: {
+				Plasmoid.enableShadow(Plasmoid.configuration.enableShadow);
+				Plasmoid.syncBorders(Qt.rect(dashWindow.x, dashWindow.y, dashWindow.width, dashWindow.height), Plasmoid.location);
+				firstTimeShadowSetup = true;
+			}
+		}
+		Timer { // Janky wayland problems require janky solutions
+			id: wayland_fix
+			interval: 25
+			onTriggered: root.hideOnWindowDeactivate = true;
+		}
+
 
         KCoreAddons.KUser {   id: kuser  }  // Used for getting the username and icon.
         
@@ -1008,7 +1022,7 @@ PlasmaCore.Dialog {
 					separator2.updateVisibility();
 				}
 				SidePanelItemDelegate {
-					itemText: kuser.loginName
+					itemText: Plasmoid.configuration.useFullName ? kuser.fullName : kuser.loginName
 					itemIcon: "user-home"
 					executableString: folderDialog.getPath(1)
 					visible: Plasmoid.configuration.showHomeSidepanel
