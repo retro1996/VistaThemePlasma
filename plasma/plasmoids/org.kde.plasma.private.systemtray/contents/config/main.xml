@@ -31,6 +31,15 @@
     <entry name="offsetIcons" type="bool">
       <default>true</default>
     </entry>
+    <entry name="batteryEnabled" type="bool">
+      <default>true</default>
+    </entry>
+    <entry name="networkEnabled" type="bool">
+      <default>true</default>
+    </entry>
+    <entry name="volumeEnabled" type="bool">
+      <default>true</default>
+    </entry>
     <entry name="knownItems" type="StringList" hidden="true">
       <default></default>
     </entry>

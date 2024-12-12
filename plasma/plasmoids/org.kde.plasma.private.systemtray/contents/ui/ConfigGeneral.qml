@@ -20,80 +20,173 @@ KCM.SimpleKCM {
     property alias cfg_trayGapSize: trayGapSize.value
     property alias cfg_offsetIcons: offsetIcons.checked
 
-    Kirigami.FormLayout {
-        Layout.fillHeight: true
+    property alias cfg_batteryEnabled: batteryEnabled.checked
+    property alias cfg_networkEnabled: networkEnabled.checked
+    property alias cfg_volumeEnabled: volumeEnabled.checked
 
-        QQC2.RadioButton {
-            Kirigami.FormData.label: i18nc("The arrangement of system tray icons in the Panel", "Panel icon size:")
-            enabled: !Kirigami.Settings.tabletMode
-            text: i18n("Small")
-            checked: cfg_scaleIconsToFit == false && !Kirigami.Settings.tabletMode
-            onToggled: cfg_scaleIconsToFit = !checked
+    component CustomGroupBox: QQC2.GroupBox {
+        id: gbox
+        label: QQC2.Label {
+            id: lbl
+            x: gbox.leftPadding + 2
+            y: lbl.implicitHeight/2-gbox.bottomPadding-1
+            width: lbl.implicitWidth
+            text: gbox.title
+            elide: Text.ElideRight
+            Rectangle {
+                anchors.fill: parent
+                anchors.leftMargin: -2
+                anchors.rightMargin: -2
+                color: Kirigami.Theme.backgroundColor
+                z: -1
+            }
         }
-        QQC2.RadioButton {
-            id: automaticRadioButton
-            enabled: !Kirigami.Settings.tabletMode
-            text: Plasmoid.formFactor === PlasmaCore.Types.Horizontal ? i18n("Scale with Panel height")
-                                                                      : i18n("Scale with Panel width")
-            checked: cfg_scaleIconsToFit == true || Kirigami.Settings.tabletMode
-            onToggled: cfg_scaleIconsToFit = checked
+        background: Rectangle {
+            y: gbox.topPadding - gbox.bottomPadding*2
+            width: parent.width
+            height: parent.height - gbox.topPadding + gbox.bottomPadding*2
+            color: "transparent"
+            border.color: "#d5dfe5"
+            radius: 3
         }
-        QQC2.Label {
-            visible: Kirigami.Settings.tabletMode
-            text: i18n("Automatically enabled when in Touch Mode")
-            font: Kirigami.Theme.smallFont
-        }
+    }
 
-        Item {
-            Kirigami.FormData.isSection: true
-        }
+    ColumnLayout {
+        CustomGroupBox {
+            id: iconSizeGroup
 
-        QQC2.ComboBox {
-            Kirigami.FormData.label: i18nc("@label:listbox The spacing between system tray icons in the Panel", "Panel icon spacing:")
-            model: [
-                {
-                    "label": i18nc("@item:inlistbox Icon spacing", "Small"),
-                    "spacing": 1
-                },
-                {
-                    "label": i18nc("@item:inlistbox Icon spacing", "Normal"),
-                    "spacing": 2
-                },
-                {
-                    "label": i18nc("@item:inlistbox Icon spacing", "Large"),
-                    "spacing": 6
+            Layout.fillWidth: true
+
+            title: i18n("Icon size")
+
+            ColumnLayout {
+                QQC2.RadioButton {
+                    enabled: !Kirigami.Settings.tabletMode
+                    text: i18n("Small")
+                    checked: cfg_scaleIconsToFit == false && !Kirigami.Settings.tabletMode
+                    onToggled: cfg_scaleIconsToFit = !checked
                 }
-            ]
-            textRole: "label"
-            enabled: !Kirigami.Settings.tabletMode
-
-            currentIndex: {
-                if (Kirigami.Settings.tabletMode) {
-                    return 2; // Large
+                QQC2.RadioButton {
+                    id: automaticRadioButton
+                    enabled: !Kirigami.Settings.tabletMode
+                    text: Plasmoid.formFactor === PlasmaCore.Types.Horizontal ? i18n("Scale with Panel height")
+                    : i18n("Scale with Panel width")
+                    checked: cfg_scaleIconsToFit == true || Kirigami.Settings.tabletMode
+                    onToggled: cfg_scaleIconsToFit = checked
                 }
+                QQC2.Label {
+                    visible: Kirigami.Settings.tabletMode
+                    text: i18n("Automatically enabled when in Touch Mode")
+                    font: Kirigami.Theme.smallFont
+                }
+                RowLayout {
+                    Text {
+                        text: i18nc("@label:listbox The spacing between system tray icons in the Panel", "Panel icon spacing:")
+                    }
+                    QQC2.ComboBox {
+                        model: [
+                            {
+                                "label": i18nc("@item:inlistbox Icon spacing", "Small"),
+                                "spacing": 1
+                            },
+                            {
+                                "label": i18nc("@item:inlistbox Icon spacing", "Normal"),
+                                "spacing": 2
+                            },
+                            {
+                                "label": i18nc("@item:inlistbox Icon spacing", "Large"),
+                                "spacing": 6
+                            }
+                        ]
+                        textRole: "label"
+                        enabled: !Kirigami.Settings.tabletMode
 
-                switch (cfg_iconSpacing) {
-                    case 1: return 0; // Small
-                    case 2: return 1; // Normal
-                    case 6: return 2; // Large
+                        currentIndex: {
+                            if (Kirigami.Settings.tabletMode) {
+                                return 2; // Large
+                            }
+
+                            switch (cfg_iconSpacing) {
+                                case 1: return 0; // Small
+                                case 2: return 1; // Normal
+                                case 6: return 2; // Large
+                            }
+                        }
+
+                        onActivated: cfg_iconSpacing = model[currentIndex]["spacing"];
+                    }
+                }
+                QQC2.Label {
+                    visible: Kirigami.Settings.tabletMode
+                    text: i18nc("@info:usagetip under a combobox when Touch Mode is on", "Automatically set to Large when in Touch Mode")
+                    font: Kirigami.Theme.smallFont
                 }
             }
 
-            onActivated: cfg_iconSpacing = model[currentIndex]["spacing"];
         }
-        QQC2.Label {
-            visible: Kirigami.Settings.tabletMode
-            text: i18nc("@info:usagetip under a combobox when Touch Mode is on", "Automatically set to Large when in Touch Mode")
-            font: Kirigami.Theme.smallFont
+
+        CustomGroupBox {
+            id: iconSettings
+
+            Layout.fillWidth: true
+
+            title: i18n("Icon settings")
+
+            ColumnLayout {
+                RowLayout {
+                    Text {
+                        text: i18n("Tray gap size:")
+                    }
+                    QQC2.SpinBox {
+                        id: trayGapSize
+                        from: 0
+                    }
+                }
+                RowLayout {
+                    QQC2.CheckBox {
+                        id: offsetIcons
+                        Kirigami.FormData.label: i18n("Offset icons:")
+                    }
+                    Text {
+                        text: i18n("Offset icons")
+                    }
+                }
+            }
         }
-        QQC2.SpinBox {
-            id: trayGapSize
-            Kirigami.FormData.label: i18n("Tray gap size:")
-            from: 0
-        }
-        QQC2.CheckBox {
-            id: offsetIcons
-            Kirigami.FormData.label: i18n("Offset icons:")
+
+        CustomGroupBox {
+            id: systemIcons
+
+            Layout.fillWidth: true
+
+            title: i18n("Enabled system icons")
+
+            ColumnLayout {
+                RowLayout {
+                    QQC2.CheckBox {
+                        id: batteryEnabled
+                    }
+                    Text {
+                        text: i18n("Battery")
+                    }
+                }
+                RowLayout {
+                    QQC2.CheckBox {
+                        id: networkEnabled
+                    }
+                    Text {
+                        text: i18n("Network")
+                    }
+                }
+                RowLayout {
+                    QQC2.CheckBox {
+                        id: volumeEnabled
+                    }
+                    Text {
+                        text: i18n("Volume")
+                    }
+                }
+            }
         }
     }
 }

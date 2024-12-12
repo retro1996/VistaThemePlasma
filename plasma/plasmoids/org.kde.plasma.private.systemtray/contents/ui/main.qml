@@ -415,12 +415,22 @@ ContainmentItem {
             model: KItemModels.KSortFilterProxyModel {
                 sourceModel: Plasmoid.systemTrayModel
                 filterRoleName: "itemId"
+                function isEnabled(item) {
+                    switch (item) {
+                        case ("org.kde.plasma.battery"):
+                            return Plasmoid.configuration.batteryEnabled;
+                            break;
+                        case ("org.kde.plasma.networkmanagement"):
+                            return Plasmoid.configuration.networkEnabled;
+                            break;
+                        case ("org.kde.plasma.volume"):
+                            return Plasmoid.configuration.volumeEnabled;
+                            break;
+                    }
+                }
                 filterRowCallback: (sourceRow, sourceParent) => {
                     let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
-                    // console.log("!! !! SYSTEM MODEL !! !!");
-                    // console.log("value = " + value);
-                    // console.log("isAllowedToPass = " + (value == "org.kde.plasma.battery" || value == "org.kde.plasma.volume" || value == "org.kde.plasma.networkmanagement"));
-                    return value == "org.kde.plasma.battery" || value == "org.kde.plasma.volume" || value == "org.kde.plasma.networkmanagement";
+                    return isEnabled(value);
                 }
             }
             function determinePosition(item) {
@@ -619,11 +629,14 @@ ContainmentItem {
 
                 model: activeModel
             }
+            Item {
+                id: trayGap
+                Layout.preferredWidth: root.milestone2Mode ? 0 : Plasmoid.configuration.trayGapSize
+            }
             GridView { // system icons
                 id: systemIconsGrid
 
                 Layout.alignment: Qt.AlignCenter
-                Layout.leftMargin: Plasmoid.configuration.trayGapSize
 
                 interactive: false //disable features we don't need
                 flow: vertical ? GridView.LeftToRight : GridView.TopToBottom
