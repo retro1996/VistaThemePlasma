@@ -53,6 +53,8 @@ SimpleKCM {
     property string cfg_dateFormat: "shortDate"
     property alias cfg_use24hFormat: use24hFormat.checkState
 
+    property alias cfg_offsetClock: offsetClock.checked
+
     onCfg_fontFamilyChanged: {
         // HACK by the time we populate our model and/or the ComboBox is finished the value is still undefined
         if (cfg_fontFamily) {
@@ -191,6 +193,10 @@ SimpleKCM {
                             }
                         }
                     }
+                }
+                QtControls.CheckBox {
+                    id: offsetClock
+                    text: i18n("Offset the clock")
                 }
             }
         }

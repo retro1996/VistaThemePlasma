@@ -615,7 +615,7 @@ Item {
         anchors.verticalCenter: main.verticalCenter
         anchors.horizontalCenter: main.horizontalCenter
         anchors.horizontalCenterOffset: main.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing
-        anchors.verticalCenterOffset: main.milestone2Mode ? -Kirigami.Units.smallSpacing/2 : -2
+        anchors.verticalCenterOffset: Plasmoid.configuration.offsetClock ? -Kirigami.Units.smallSpacing/2 : 0
 
         Grid {
             id: labelsGrid

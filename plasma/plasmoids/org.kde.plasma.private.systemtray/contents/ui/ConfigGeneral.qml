@@ -17,7 +17,8 @@ KCM.SimpleKCM {
     property bool cfg_scaleIconsToFit
     property int cfg_iconSpacing
 
-    property alias cfg_activeIconsOnly: activeIconsOnly.checked
+    property alias cfg_trayGapSize: trayGapSize.value
+    property alias cfg_offsetIcons: offsetIcons.checked
 
     Kirigami.FormLayout {
         Layout.fillHeight: true
@@ -85,9 +86,14 @@ KCM.SimpleKCM {
             text: i18nc("@info:usagetip under a combobox when Touch Mode is on", "Automatically set to Large when in Touch Mode")
             font: Kirigami.Theme.smallFont
         }
+        QQC2.SpinBox {
+            id: trayGapSize
+            Kirigami.FormData.label: i18n("Tray gap size:")
+            from: 0
+        }
         QQC2.CheckBox {
-            id: activeIconsOnly
-            Kirigami.FormData.label: i18n("Only show active icons:")
+            id: offsetIcons
+            Kirigami.FormData.label: i18n("Offset icons:")
         }
     }
 }

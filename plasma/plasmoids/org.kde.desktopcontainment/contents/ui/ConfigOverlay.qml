@@ -32,7 +32,9 @@ ContainmentLayoutManager.ConfigOverlayWithHandles {
         ScriptAction {
             script: {
                 appletContainer.applet.plasmoid.internalAction("remove").trigger();
+                sidebarContainer.applet.plasmoid.internalAction("remove").trigger();
                 appletContainer.editMode = false;
+                sidebarContainer.editMode = false;
             }
         }
     }

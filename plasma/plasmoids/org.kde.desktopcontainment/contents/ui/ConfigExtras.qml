@@ -26,6 +26,8 @@ Item {
     property string cfg_customText2
     property string cfg_customText3
 
+    property alias cfg_fakeSidebar: fakeSidebar.checked
+
     component CustomGroupBox: GroupBox {
         id: gbox
         label: Label {
@@ -153,6 +155,16 @@ Item {
                     visible: genuineVisible.checked
                     text: 'TRUE non-genuine copy'
                 }
+            }
+        }
+        CustomGroupBox {
+            Layout.fillWidth: true
+
+            title: "Fake Sidebar"
+
+            CheckBox {
+                id: fakeSidebar
+                text: "Enabled"
             }
         }
     }

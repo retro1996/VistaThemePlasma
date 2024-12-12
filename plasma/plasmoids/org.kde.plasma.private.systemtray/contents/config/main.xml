@@ -25,8 +25,11 @@
         <label>If true, all systray entries will be always in the main area, outside the popup.</label>
         <default>false</default>
     </entry>
-    <entry name="activeIconsOnly" type="Bool">
-      <default>false</default>
+    <entry name="trayGapSize" type="int">
+      <default>12</default>
+    </entry>
+    <entry name="offsetIcons" type="bool">
+      <default>true</default>
     </entry>
     <entry name="knownItems" type="StringList" hidden="true">
       <default></default>

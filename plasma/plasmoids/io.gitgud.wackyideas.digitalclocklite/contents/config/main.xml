@@ -21,6 +21,9 @@
     <entry name="shortTaskbarHideDate" type="Bool">
       <default>true</default>
     </entry>
+    <entry name="offsetClock" type="Bool">
+      <default>true</default>
+    </entry>
     <entry name="dateFormat" type="string">
       <label>The date format to display. Options are: shortDate, longDate or isoDate.</label>
       <default>shortDate</default>

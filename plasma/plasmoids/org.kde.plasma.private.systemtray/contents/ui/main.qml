@@ -246,21 +246,34 @@ ContainmentItem {
         }*/
         }
 
+        KItemModels.KSortFilterProxyModel {
+            id: nonFilteredActiveModel
+            sourceModel: Plasmoid.systemTrayModel
+            filterRoleName: "effectiveStatus"
+            filterRowCallback: (sourceRow, sourceParent) => {
+                let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
+                return value == PlasmaCore.Types.ActiveStatus;
+            }
+        }
+
+        KItemModels.KSortFilterProxyModel {
+            id: filteredActiveModel
+            sourceModel: Plasmoid.systemTrayModel
+            filterRoleName: "effectiveStatus"
+            function filterItemId(itemId) {
+                return !root.milestone2Mode && (itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "org.kde.plasma.volume")
+            }
+            filterRowCallback: (sourceRow, sourceParent) => {
+                let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
+                var itemIdRole = KItemModels.KRoleNames.role("itemId");
+                let value2 = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), itemIdRole);
+                return (value == PlasmaCore.Types.ActiveStatus && !filterItemId(value2));
+            }
+        }
+
         DelegateModel {
             id: activeModel
-            model: KItemModels.KSortFilterProxyModel {
-                sourceModel: Plasmoid.systemTrayModel
-                filterRoleName: "effectiveStatus"
-                function filterItemId(itemId) {
-                    return itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "org.kde.plasma.volume"
-                }
-                filterRowCallback: (sourceRow, sourceParent) => {
-                    let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
-                    var itemIdRole = KItemModels.KRoleNames.role("itemId");
-                    let value2 = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), itemIdRole);
-                    return (value == PlasmaCore.Types.ActiveStatus && !filterItemId(value2));
-                }
-            }
+            model: root.milestone2Mode ? nonFilteredActiveModel : filteredActiveModel
             function determinePosition(item) {
                 let lower = 0;
                 let upper = items.count
@@ -327,7 +340,8 @@ ContainmentItem {
                 sourceModel: Plasmoid.systemTrayModel
                 filterRoleName: "effectiveStatus"
                 function filterItemId(itemId) {
-                    return itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "org.kde.plasma.volume"
+                    if(root.milestone2Mode) return false
+                    else return itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "org.kde.plasma.volume"
                 }
                 filterRowCallback: (sourceRow, sourceParent) => {
                     let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
@@ -477,14 +491,15 @@ ContainmentItem {
             rowSpacing: 0
             columnSpacing: 0
             anchors.fill: parent
-            anchors.topMargin: root.milestone2Mode ? 0 : -Kirigami.Units.smallSpacing*2 + Kirigami.Units.smallSpacing/2 - Kirigami.Units.smallSpacing/4
+            anchors.topMargin: root.milestone2Mode ? 0
+                                                   : (Plasmoid.configuration.offsetIcons ? -Kirigami.Units.smallSpacing*2 + Kirigami.Units.smallSpacing/2 - Kirigami.Units.smallSpacing/4 : 0)
 
             flow: vertical ? GridLayout.TopToBottom : GridLayout.LeftToRight
 
             ExpanderArrow {
                 id: expander
                 Layout.alignment: vertical ? Qt.AlignVCenter : Qt.AlignHCenter
-                Layout.topMargin: !vertical ? Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2 : 0
+                Layout.topMargin: !vertical ? (Plasmoid.configuration.offsetIcons ? Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2 : 0) : 0
                 Layout.rightMargin: -Kirigami.Units.smallSpacing/2
                 visible: root.hiddenLayout.itemCount > 0 && !root.milestone2Mode
             }
@@ -608,7 +623,7 @@ ContainmentItem {
                 id: systemIconsGrid
 
                 Layout.alignment: Qt.AlignCenter
-                Layout.leftMargin: 12
+                Layout.leftMargin: Plasmoid.configuration.trayGapSize
 
                 interactive: false //disable features we don't need
                 flow: vertical ? GridView.LeftToRight : GridView.TopToBottom
@@ -656,6 +671,8 @@ ContainmentItem {
                 }
 
                 model: systemModel
+
+                visible: !root.milestone2Mode
             }
         }
 

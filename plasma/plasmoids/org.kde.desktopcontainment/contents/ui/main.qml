@@ -8,6 +8,7 @@
 
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
+import Qt5Compat.GraphicalEffects
 
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core as PlasmaCore
@@ -100,10 +101,10 @@ ContainmentItem {
         if (!toolBoxSvg) {
             return;
         }
-        appletsLayout.cellWidth = root.iconWidth + toolBoxSvg.elementSize("left").width + toolBoxSvg.elementSize("right").width;
-        appletsLayout.cellHeight = root.iconHeight + toolBoxSvg.elementSize("top").height + toolBoxSvg.elementSize("bottom").height;
-        appletsLayout.defaultItemWidth = appletsLayout.cellWidth * 6;
-        appletsLayout.defaultItemHeight = appletsLayout.cellHeight * 6;
+        appletsLayout.cellWidth = 150;
+        appletsLayout.cellHeight = appletsLayout.cellWidth/6;
+        appletsLayout.defaultItemWidth = appletsLayout.cellWidth;
+        appletsLayout.defaultItemHeight = appletsLayout.cellHeight;
     }
 
     function addLauncher(desktopUrl) {
@@ -306,9 +307,189 @@ ContainmentItem {
             }
         }
 
+        Loader {
+            id: folderViewLayer
+
+            anchors.fill: parent
+
+            property bool ready: status === Loader.Ready
+            property Item view: item?.view ?? null
+            property QtObject model: item?.model ?? null
+
+            focus: true
+
+            active: isFolder
+            asynchronous: false
+
+            source: "FolderViewLayer.qml"
+
+            onFocusChanged: {
+                if (!focus && model) {
+                    model.clearSelection();
+                }
+            }
+
+            Connections {
+                target: folderViewLayer.view
+
+                // `FolderViewDropArea` is not a FocusScope. We need to forward manually.
+                function onPressed() {
+                    folderViewLayer.forceActiveFocus();
+                }
+            }
+        }
+
+        Rectangle {
+            id: bg
+
+            anchors {
+                top: parent.top
+                right: parent.right
+                bottom: parent.bottom
+            }
+
+            width: 150
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 1.0; color: "black" }
+                GradientStop { position: 0.0; color: "transparent" }
+            }
+            opacity: 0.7
+
+            visible: Plasmoid.configuration.fakeSidebar
+
+            MouseArea {
+                id: bgMa
+                anchors.fill: parent
+
+                hoverEnabled: true
+                propagateComposedEvents: true
+            }
+
+            Item {
+                anchors.left: parent.left
+                height: parent.height
+                width: 2
+
+                opacity: bgMa.containsMouse ? 0.6 : 0
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 250 }
+                }
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 0
+                    Rectangle {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 1
+                        color: "black"
+                    }
+                    Rectangle {
+                        Layout.fillHeight: true
+                        Layout.preferredWidth: 1
+                        width: 1
+                        color: "white"
+                    }
+                }
+            }
+        }
+
+        Rectangle {
+            id: pillThingy
+
+            anchors {
+                top: bg.top
+                topMargin: Kirigami.Units.smallSpacing*2
+                right: bg.right
+                rightMargin: Kirigami.Units.smallSpacing*2
+            }
+
+            height: 22
+            width: 79
+
+            border.width: 1
+            border.color: "white"
+            radius: 12
+
+            color: "#214d72"
+
+            opacity: 0.6
+
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2
+                anchors.rightMargin: Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2
+
+                KSvg.SvgItem {
+                    Layout.preferredWidth: 16
+                    Layout.preferredHeight: 16
+                    imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                    elementId: "add"
+
+                    opacity: addMa.containsMouse ? 0.8 : 0.6
+
+                    Behavior on opacity {
+                        NumberAnimation { duration: 250 }
+                    }
+
+                    KSvg.SvgItem {
+                        anchors.fill: parent
+                        imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                        elementId: "hover"
+
+                        opacity: addMa.containsMouse ? 0.4 : 0.0
+
+                        Behavior on opacity {
+                            NumberAnimation { duration: 250 }
+                        }
+                    }
+
+                    MouseArea {
+                        id: addMa
+
+                        anchors.fill: parent
+
+                        hoverEnabled: true
+                        propagateComposedEvents: true
+
+                        onClicked: {
+                            if(appletsLayout.editMode) {
+                                appletsLayout.editMode = false;
+                            } else appletsLayout.editMode = true;
+                        }
+                    }
+                }
+
+                Rectangle {
+                    Layout.preferredHeight: 16
+                    Layout.preferredWidth: 1
+                    color: "white"
+                }
+
+                KSvg.SvgItem {
+                    Layout.preferredWidth: 16
+                    Layout.preferredHeight: 16
+                    imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                    elementId: "left"
+                    opacity: 0.2
+                }
+                KSvg.SvgItem {
+                    Layout.preferredWidth: 16
+                    Layout.preferredHeight: 16
+                    imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                    elementId: "right"
+                    opacity: 0.2
+                }
+            }
+
+            visible: Plasmoid.configuration.fakeSidebar
+        }
+
         ContainmentLayoutManager.AppletsLayout {
             id: appletsLayout
-            anchors.fill: parent
+            anchors.fill: Plasmoid.configuration.fakeSidebar ? bg : parent
+            anchors.topMargin:Plasmoid.configuration.fakeSidebar ? pillThingy.height + Kirigami.Units.smallSpacing*4 : 0
             relayoutLock: width !== root.availableScreenRect.width || height !== root.availableScreenRect.height
             // NOTE: use root.availableScreenRect and not own width and height as they are updated not atomically
             configKey: "ItemGeometries-" + Math.round(root.screenGeometry.width) + "x" + Math.round(root.screenGeometry.height)
@@ -359,38 +540,6 @@ ContainmentItem {
             }
 
             placeHolder: ContainmentLayoutManager.PlaceHolder {}
-
-            Loader {
-                id: folderViewLayer
-
-                anchors.fill: parent
-
-                property bool ready: status === Loader.Ready
-                property Item view: item?.view ?? null
-                property QtObject model: item?.model ?? null
-
-                focus: true
-
-                active: isFolder
-                asynchronous: false
-
-                source: "FolderViewLayer.qml"
-
-                onFocusChanged: {
-                    if (!focus && model) {
-                        model.clearSelection();
-                    }
-                }
-
-                Connections {
-                    target: folderViewLayer.view
-
-                    // `FolderViewDropArea` is not a FocusScope. We need to forward manually.
-                    function onPressed() {
-                        folderViewLayer.forceActiveFocus();
-                    }
-                }
-            }
         }
 
         PlasmaCore.Action {
