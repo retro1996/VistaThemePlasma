@@ -572,11 +572,11 @@ PlasmaCore.Dialog {
 				}
 				opacity: !searching
 				CrossFadeBehavior on textLabel {
-					fadeDuration: 200
+					fadeDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
 					easingType: "Linear"
 				}
 				CrossFadeBehavior on svgArrow {
-					fadeDuration: 200
+					fadeDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
 					easingType: "Linear"
 				}
 				Layout.fillWidth: true
