@@ -92,12 +92,16 @@ KSvg.FrameSvgItem {
 
     function updateHighlightedItem() {
         if (systemTrayState.expanded) {
-            if (systemTrayState.activeApplet && systemTrayState.activeApplet.parent && systemTrayState.activeApplet.parent.inVisibleLayout) {
+            if(root.milestone2Mode) {
+                if (systemTrayState.activeApplet && systemTrayState.activeApplet.parent && systemTrayState.activeApplet.parent.inVisibleLayout) {
+                    changeHighlightedItem(systemTrayState.activeApplet.parent.container, /*forceEdgeHighlight*/false);
+                } else { // 'Show hidden items' popup
+                    changeHighlightedItem(parent, /*forceEdgeHighlight*/true);
+                    width = 0;
+                    height = 0;
+                }
+            } else {
                 changeHighlightedItem(systemTrayState.activeApplet.parent.container, /*forceEdgeHighlight*/false);
-            } else { // 'Show hidden items' popup
-                changeHighlightedItem(parent, /*forceEdgeHighlight*/true);
-                width = 0;
-                height = 0;
             }
         } else {
             highlightedItem = null;

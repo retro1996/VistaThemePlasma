@@ -28,7 +28,7 @@ events:
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
       
       The C compiler identification is GNU, found in:
-        /home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/3.31.1/CompilerIdC/a.out
+        /home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/3.31.2/CompilerIdC/a.out
       
   -
     kind: "message-v1"
@@ -50,7 +50,7 @@ events:
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
       
       The CXX compiler identification is GNU, found in:
-        /home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/3.31.1/CompilerIdCXX/a.out
+        /home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/3.31.2/CompilerIdCXX/a.out
       
   -
     kind: "try_compile-v1"
@@ -61,8 +61,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -71,13 +71,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_51f49/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_51f49.dir/build.make CMakeFiles/cmTC_51f49.dir/build
-        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1'
-        Building C object CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_a7289/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_a7289.dir/build.make CMakeFiles/cmTC_a7289.dir/build
+        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7'
+        Building C object CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         Target: x86_64-pc-linux-gnu
@@ -85,8 +85,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.2.1 20240910 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_51f49.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccSwIHtQ.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a7289.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccXqCVdg.s
         GNU C17 (GCC) version 14.2.1 20240910 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 14.2.1 20240910, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -100,14 +100,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 91e980a230f7d2e39f93577991713edd
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/'
-         as -v --64 -o CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o /tmp/ccSwIHtQ.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/'
+         as -v --64 -o CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o /tmp/ccXqCVdg.s
         GNU assembler version 2.43.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.43.0
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_51f49
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51f49.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_a7289
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7289.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper
@@ -118,14 +118,14 @@ events:
         gcc version 14.2.1 20240910 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_51f49' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_51f49.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN1nldl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_51f49 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a7289' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a7289.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cci1uXJu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a7289 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
         collect2 version 14.2.1 20240910
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN1nldl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_51f49 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cci1uXJu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a7289 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.43.0
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_51f49' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_51f49.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -o cmTC_51f49
-        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a7289' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a7289.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -o cmTC_a7289
+        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7'
         
       exitCode: 0
   -
@@ -160,13 +160,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1']
+        ignore line: [Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_51f49/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_51f49.dir/build.make CMakeFiles/cmTC_51f49.dir/build]
-        ignore line: [make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-V16JA1']
-        ignore line: [Building C object CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_a7289/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_a7289.dir/build.make CMakeFiles/cmTC_a7289.dir/build]
+        ignore line: [make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-w0yLD7']
+        ignore line: [Building C object CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -174,8 +174,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.2.1 20240910 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_51f49.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccSwIHtQ.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_a7289.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/ccXqCVdg.s]
         ignore line: [GNU C17 (GCC) version 14.2.1 20240910 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.2.1 20240910  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -189,14 +189,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 91e980a230f7d2e39f93577991713edd]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o /tmp/ccSwIHtQ.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o /tmp/ccXqCVdg.s]
         ignore line: [GNU assembler version 2.43.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.43.0]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_51f49]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51f49.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_a7289]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a7289.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper]
@@ -207,13 +207,13 @@ events:
         ignore line: [gcc version 14.2.1 20240910 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_51f49' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_51f49.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN1nldl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_51f49 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a7289' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_a7289.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cci1uXJu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a7289 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccN1nldl.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cci1uXJu.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -228,7 +228,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_51f49] ==> ignore
+          arg [cmTC_a7289] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o]
@@ -238,7 +238,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -253,7 +253,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 14.2.1 20240910]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccN1nldl.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_51f49 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_51f49.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cci1uXJu.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_a7289 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_a7289.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -288,8 +288,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -299,13 +299,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c4585/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_c4585.dir/build.make CMakeFiles/cmTC_c4585.dir/build
-        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk'
-        Building CXX object CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_29f8a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_29f8a.dir/build.make CMakeFiles/cmTC_29f8a.dir/build
+        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc'
+        Building CXX object CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         Target: x86_64-pc-linux-gnu
@@ -313,8 +313,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 14.2.1 20240910 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c4585.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccUDpG6Z.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_29f8a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cciFhg3g.s
         GNU C++17 (GCC) version 14.2.1 20240910 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 14.2.1 20240910, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -331,14 +331,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: fce5a105c47978e141f61a441742cadf
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/'
-         as -v --64 -o CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUDpG6Z.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/'
+         as -v --64 -o CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o /tmp/cciFhg3g.s
         GNU assembler version 2.43.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.43.0
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_c4585
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c4585.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_29f8a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29f8a.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper
@@ -349,14 +349,14 @@ events:
         gcc version 14.2.1 20240910 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c4585' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c4585.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cccnxFt7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_c4585 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_29f8a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_29f8a.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVHK9Dl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_29f8a /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
         collect2 version 14.2.1 20240910
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cccnxFt7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_c4585 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVHK9Dl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_29f8a /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.43.0
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c4585' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c4585.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_c4585
-        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_29f8a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_29f8a.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_29f8a
+        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc'
         
       exitCode: 0
   -
@@ -397,13 +397,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
-        ignore line: [Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk']
+        ignore line: [Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_c4585/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_c4585.dir/build.make CMakeFiles/cmTC_c4585.dir/build]
-        ignore line: [make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-4Hr5gk']
-        ignore line: [Building CXX object CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_29f8a/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_29f8a.dir/build.make CMakeFiles/cmTC_29f8a.dir/build]
+        ignore line: [make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-wRxpsc']
+        ignore line: [Building CXX object CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -411,8 +411,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 14.2.1 20240910 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_c4585.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccUDpG6Z.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_29f8a.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cciFhg3g.s]
         ignore line: [GNU C++17 (GCC) version 14.2.1 20240910 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 14.2.1 20240910  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -429,14 +429,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: fce5a105c47978e141f61a441742cadf]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccUDpG6Z.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o /tmp/cciFhg3g.s]
         ignore line: [GNU assembler version 2.43.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.43.0]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_c4585]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c4585.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_29f8a]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29f8a.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper]
@@ -447,13 +447,13 @@ events:
         ignore line: [gcc version 14.2.1 20240910 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_c4585' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_c4585.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cccnxFt7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_c4585 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_29f8a' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_29f8a.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVHK9Dl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_29f8a /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cccnxFt7.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccVHK9Dl.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -468,7 +468,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_c4585] ==> ignore
+          arg [cmTC_29f8a] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o]
@@ -478,7 +478,7 @@ events:
           arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
           arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../..]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -489,7 +489,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 14.2.1 20240910]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cccnxFt7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_c4585 /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_c4585.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccVHK9Dl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_29f8a /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../.. -v CMakeFiles/cmTC_29f8a.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -531,8 +531,8 @@ events:
       - "/usr/share/ECM/kde-modules/KDEInstallDirs.cmake:15 (include)"
       - "CMakeLists.txt:10 (include)"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -542,17 +542,17 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_a5b5e/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_a5b5e.dir/build.make CMakeFiles/cmTC_a5b5e.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9'
-        Building C object CMakeFiles/cmTC_a5b5e.dir/src.c.o
-        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_a5b5e.dir/src.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9/src.c"
-        Linking C executable cmTC_a5b5e
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a5b5e.dir/link.txt --verbose=1
-        /usr/bin/cc CMakeFiles/cmTC_a5b5e.dir/src.c.o -o cmTC_a5b5e
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-9r78C9'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_606d8/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_606d8.dir/build.make CMakeFiles/cmTC_606d8.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY'
+        Building C object CMakeFiles/cmTC_606d8.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_606d8.dir/src.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY/src.c"
+        Linking C executable cmTC_606d8
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_606d8.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_606d8.dir/src.c.o -o cmTC_606d8
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-NfUSjY'
         
       exitCode: 0
   -
@@ -565,8 +565,8 @@ events:
     checks:
       - "Looking for __GLIBC__"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -576,17 +576,17 @@ events:
       variable: "LIBC_IS_GLIBC"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_43d8c/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_43d8c.dir/build.make CMakeFiles/cmTC_43d8c.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W'
-        Building C object CMakeFiles/cmTC_43d8c.dir/CheckSymbolExists.c.o
-        /usr/bin/cc    -o CMakeFiles/cmTC_43d8c.dir/CheckSymbolExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W/CheckSymbolExists.c"
-        Linking C executable cmTC_43d8c
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_43d8c.dir/link.txt --verbose=1
-        /usr/bin/cc CMakeFiles/cmTC_43d8c.dir/CheckSymbolExists.c.o -o cmTC_43d8c
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hAYz9W'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8d075/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_8d075.dir/build.make CMakeFiles/cmTC_8d075.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp'
+        Building C object CMakeFiles/cmTC_8d075.dir/CheckSymbolExists.c.o
+        /usr/bin/cc    -o CMakeFiles/cmTC_8d075.dir/CheckSymbolExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp/CheckSymbolExists.c"
+        Linking C executable cmTC_8d075
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d075.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_8d075.dir/CheckSymbolExists.c.o -o cmTC_8d075
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-8WZeSp'
         
       exitCode: 0
   -
@@ -599,8 +599,8 @@ events:
     checks:
       - "Performing Test _OFFT_IS_64BIT"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -610,17 +610,17 @@ events:
       variable: "_OFFT_IS_64BIT"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_43995/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_43995.dir/build.make CMakeFiles/cmTC_43995.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP'
-        Building CXX object CMakeFiles/cmTC_43995.dir/src.cxx.o
-        /usr/bin/c++ -D_GNU_SOURCE -D_LARGEFILE64_SOURCE -D_OFFT_IS_64BIT   -o CMakeFiles/cmTC_43995.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP/src.cxx"
-        Linking CXX executable cmTC_43995
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_43995.dir/link.txt --verbose=1
-        /usr/bin/c++ CMakeFiles/cmTC_43995.dir/src.cxx.o -o cmTC_43995
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOthmP'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_03742/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_03742.dir/build.make CMakeFiles/cmTC_03742.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8'
+        Building CXX object CMakeFiles/cmTC_03742.dir/src.cxx.o
+        /usr/bin/c++ -D_GNU_SOURCE -D_LARGEFILE64_SOURCE -D_OFFT_IS_64BIT   -o CMakeFiles/cmTC_03742.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8/src.cxx"
+        Linking CXX executable cmTC_03742
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_03742.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_03742.dir/src.cxx.o -o cmTC_03742
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-h65YH8'
         
       exitCode: 0
   -
@@ -634,8 +634,8 @@ events:
     checks:
       - "Performing Test HAVE_DATE_TIME"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -645,17 +645,17 @@ events:
       variable: "HAVE_DATE_TIME"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_29c71/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_29c71.dir/build.make CMakeFiles/cmTC_29c71.dir/build
-        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9'
-        Building CXX object CMakeFiles/cmTC_29c71.dir/src.cxx.o
-        /usr/bin/c++ -DHAVE_DATE_TIME  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla  -std=gnu++11   -Wdate-time -o CMakeFiles/cmTC_29c71.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9/src.cxx"
-        Linking CXX executable cmTC_29c71
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_29c71.dir/link.txt --verbose=1
-        /usr/bin/c++  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla  -Wl,--enable-new-dtags   CMakeFiles/cmTC_29c71.dir/src.cxx.o -o cmTC_29c71
-        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-ef7oj9'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_f7af6/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_f7af6.dir/build.make CMakeFiles/cmTC_f7af6.dir/build
+        make[1]: Entering directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV'
+        Building CXX object CMakeFiles/cmTC_f7af6.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_DATE_TIME  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla  -std=gnu++11   -Wdate-time -o CMakeFiles/cmTC_f7af6.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV/src.cxx"
+        Linking CXX executable cmTC_f7af6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f7af6.dir/link.txt --verbose=1
+        /usr/bin/c++  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla  -Wl,--enable-new-dtags   CMakeFiles/cmTC_f7af6.dir/src.cxx.o -o cmTC_f7af6
+        make[1]: Leaving directory '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-pMCzKV'
         
       exitCode: 0
   -
@@ -678,8 +678,8 @@ events:
     checks:
       - "Performing Test HAVE_STDATOMIC"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c"
     cmakeVariables:
       CMAKE_CXX_FLAGS: " -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -Wsuggest-override -Wlogical-op"
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -689,17 +689,17 @@ events:
       variable: "HAVE_STDATOMIC"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b6c4d/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_b6c4d.dir/build.make CMakeFiles/cmTC_b6c4d.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9'
-        Building CXX object CMakeFiles/cmTC_b6c4d.dir/src.cxx.o
-        /usr/bin/c++ -DHAVE_STDATOMIC -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -Wsuggest-override -Wlogical-op  -std=gnu++11 -o CMakeFiles/cmTC_b6c4d.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9/src.cxx"
-        Linking CXX executable cmTC_b6c4d
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6c4d.dir/link.txt --verbose=1
-        /usr/bin/c++  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -Wsuggest-override -Wlogical-op  -Wl,--enable-new-dtags   CMakeFiles/cmTC_b6c4d.dir/src.cxx.o -o cmTC_b6c4d
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-RfRhE9'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_62d8f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_62d8f.dir/build.make CMakeFiles/cmTC_62d8f.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c'
+        Building CXX object CMakeFiles/cmTC_62d8f.dir/src.cxx.o
+        /usr/bin/c++ -DHAVE_STDATOMIC -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -Wsuggest-override -Wlogical-op  -std=gnu++11 -o CMakeFiles/cmTC_62d8f.dir/src.cxx.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c/src.cxx"
+        Linking CXX executable cmTC_62d8f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62d8f.dir/link.txt --verbose=1
+        /usr/bin/c++  -fno-operator-names -fno-exceptions -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wnon-virtual-dtor -Woverloaded-virtual -Werror=return-type -Werror=init-self -Wvla -Wdate-time -Wsuggest-override -Wlogical-op  -Wl,--enable-new-dtags   CMakeFiles/cmTC_62d8f.dir/src.cxx.o -o cmTC_62d8f
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s42s6c'
         
       exitCode: 0
   -
@@ -713,8 +713,8 @@ events:
     checks:
       - "Looking for XOpenDisplay in /usr/lib/libX11.so;/usr/lib/libXext.so"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -724,17 +724,17 @@ events:
       variable: "X11_LIB_X11_SOLO"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_b85b3/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_b85b3.dir/build.make CMakeFiles/cmTC_b85b3.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV'
-        Building C object CMakeFiles/cmTC_b85b3.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=XOpenDisplay -std=gnu90 -o CMakeFiles/cmTC_b85b3.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV/CheckFunctionExists.c"
-        Linking C executable cmTC_b85b3
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b85b3.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=XOpenDisplay -Wl,--enable-new-dtags   CMakeFiles/cmTC_b85b3.dir/CheckFunctionExists.c.o -o cmTC_b85b3  /usr/lib/libX11.so /usr/lib/libXext.so
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-a7gDUV'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_77dbf/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_77dbf.dir/build.make CMakeFiles/cmTC_77dbf.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2'
+        Building C object CMakeFiles/cmTC_77dbf.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=XOpenDisplay -std=gnu90 -o CMakeFiles/cmTC_77dbf.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2/CheckFunctionExists.c"
+        Linking C executable cmTC_77dbf
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_77dbf.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=XOpenDisplay -Wl,--enable-new-dtags   CMakeFiles/cmTC_77dbf.dir/CheckFunctionExists.c.o -o cmTC_77dbf  /usr/lib/libX11.so /usr/lib/libXext.so
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-vOTja2'
         
       exitCode: 0
   -
@@ -748,8 +748,8 @@ events:
     checks:
       - "Looking for gethostbyname"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -759,17 +759,17 @@ events:
       variable: "CMAKE_HAVE_GETHOSTBYNAME"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d68b0/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_d68b0.dir/build.make CMakeFiles/cmTC_d68b0.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw'
-        Building C object CMakeFiles/cmTC_d68b0.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=gethostbyname -std=gnu90 -o CMakeFiles/cmTC_d68b0.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw/CheckFunctionExists.c"
-        Linking C executable cmTC_d68b0
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d68b0.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=gethostbyname -Wl,--enable-new-dtags   CMakeFiles/cmTC_d68b0.dir/CheckFunctionExists.c.o -o cmTC_d68b0
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-hyOabw'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1c365/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_1c365.dir/build.make CMakeFiles/cmTC_1c365.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u'
+        Building C object CMakeFiles/cmTC_1c365.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=gethostbyname -std=gnu90 -o CMakeFiles/cmTC_1c365.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u/CheckFunctionExists.c"
+        Linking C executable cmTC_1c365
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1c365.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=gethostbyname -Wl,--enable-new-dtags   CMakeFiles/cmTC_1c365.dir/CheckFunctionExists.c.o -o cmTC_1c365
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-UlEq0u'
         
       exitCode: 0
   -
@@ -783,8 +783,8 @@ events:
     checks:
       - "Looking for connect"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -794,17 +794,17 @@ events:
       variable: "CMAKE_HAVE_CONNECT"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_8f342/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_8f342.dir/build.make CMakeFiles/cmTC_8f342.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI'
-        Building C object CMakeFiles/cmTC_8f342.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=connect -std=gnu90 -o CMakeFiles/cmTC_8f342.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI/CheckFunctionExists.c"
-        Linking C executable cmTC_8f342
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8f342.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=connect -Wl,--enable-new-dtags   CMakeFiles/cmTC_8f342.dir/CheckFunctionExists.c.o -o cmTC_8f342
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-87zPvI'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_0df33/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_0df33.dir/build.make CMakeFiles/cmTC_0df33.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q'
+        Building C object CMakeFiles/cmTC_0df33.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=connect -std=gnu90 -o CMakeFiles/cmTC_0df33.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q/CheckFunctionExists.c"
+        Linking C executable cmTC_0df33
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0df33.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=connect -Wl,--enable-new-dtags   CMakeFiles/cmTC_0df33.dir/CheckFunctionExists.c.o -o cmTC_0df33
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-TOpM6Q'
         
       exitCode: 0
   -
@@ -818,8 +818,8 @@ events:
     checks:
       - "Looking for remove"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -829,17 +829,17 @@ events:
       variable: "CMAKE_HAVE_REMOVE"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_cd2af/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_cd2af.dir/build.make CMakeFiles/cmTC_cd2af.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX'
-        Building C object CMakeFiles/cmTC_cd2af.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=remove -std=gnu90 -o CMakeFiles/cmTC_cd2af.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX/CheckFunctionExists.c"
-        Linking C executable cmTC_cd2af
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cd2af.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=remove -Wl,--enable-new-dtags   CMakeFiles/cmTC_cd2af.dir/CheckFunctionExists.c.o -o cmTC_cd2af
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-cZOpMX'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_14f60/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_14f60.dir/build.make CMakeFiles/cmTC_14f60.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA'
+        Building C object CMakeFiles/cmTC_14f60.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=remove -std=gnu90 -o CMakeFiles/cmTC_14f60.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA/CheckFunctionExists.c"
+        Linking C executable cmTC_14f60
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_14f60.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=remove -Wl,--enable-new-dtags   CMakeFiles/cmTC_14f60.dir/CheckFunctionExists.c.o -o cmTC_14f60
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-FgUzpA'
         
       exitCode: 0
   -
@@ -853,8 +853,8 @@ events:
     checks:
       - "Looking for shmat"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -864,17 +864,17 @@ events:
       variable: "CMAKE_HAVE_SHMAT"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_1b2c4/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_1b2c4.dir/build.make CMakeFiles/cmTC_1b2c4.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR'
-        Building C object CMakeFiles/cmTC_1b2c4.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=shmat -std=gnu90 -o CMakeFiles/cmTC_1b2c4.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR/CheckFunctionExists.c"
-        Linking C executable cmTC_1b2c4
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1b2c4.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=shmat -Wl,--enable-new-dtags   CMakeFiles/cmTC_1b2c4.dir/CheckFunctionExists.c.o -o cmTC_1b2c4
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-G58HCR'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d975a/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_d975a.dir/build.make CMakeFiles/cmTC_d975a.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf'
+        Building C object CMakeFiles/cmTC_d975a.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=shmat -std=gnu90 -o CMakeFiles/cmTC_d975a.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf/CheckFunctionExists.c"
+        Linking C executable cmTC_d975a
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d975a.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=shmat -Wl,--enable-new-dtags   CMakeFiles/cmTC_d975a.dir/CheckFunctionExists.c.o -o cmTC_d975a
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-CjBXqf'
         
       exitCode: 0
   -
@@ -888,8 +888,8 @@ events:
     checks:
       - "Looking for IceConnectionNumber in ICE"
     directories:
-      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL"
-      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL"
+      source: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr"
+      binary: "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr"
     cmakeVariables:
       CMAKE_C_FLAGS: " -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration"
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -899,17 +899,17 @@ events:
       variable: "CMAKE_LIB_ICE_HAS_ICECONNECTIONNUMBER"
       cached: true
       stdout: |
-        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL'
+        Change Dir: '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_2d378/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_2d378.dir/build.make CMakeFiles/cmTC_2d378.dir/build
-        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL'
-        Building C object CMakeFiles/cmTC_2d378.dir/CheckFunctionExists.c.o
-        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -std=gnu90 -o CMakeFiles/cmTC_2d378.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL/CheckFunctionExists.c"
-        Linking C executable cmTC_2d378
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d378.dir/link.txt --verbose=1
-        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -Wl,--enable-new-dtags   CMakeFiles/cmTC_2d378.dir/CheckFunctionExists.c.o -o cmTC_2d378  -lICE
-        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-EPD0LL'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d0911/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_d0911.dir/build.make CMakeFiles/cmTC_d0911.dir/build
+        make[1]: se entra en el directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr'
+        Building C object CMakeFiles/cmTC_d0911.dir/CheckFunctionExists.c.o
+        /usr/bin/cc -D_GNU_SOURCE -D_LARGEFILE64_SOURCE  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -std=gnu90 -o CMakeFiles/cmTC_d0911.dir/CheckFunctionExists.c.o -c "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr/CheckFunctionExists.c"
+        Linking C executable cmTC_d0911
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0911.dir/link.txt --verbose=1
+        /usr/bin/cc  -fno-common -Wall -Wextra -Wcast-align -Wchar-subscripts -Wformat-security -Wno-long-long -Wpointer-arith -Wundef -Wmissing-format-attribute -Wwrite-strings -Werror=implicit-function-declaration -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -Wl,--enable-new-dtags   CMakeFiles/cmTC_d0911.dir/CheckFunctionExists.c.o -o cmTC_d0911  -lICE
+        make[1]: se sale del directorio '/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build/CMakeFiles/CMakeScratch/TryCompile-s3eLEr'
         
       exitCode: 0
 ...

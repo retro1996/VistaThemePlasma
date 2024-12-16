@@ -59,7 +59,7 @@
     </entry>
 
     <entry name="favoriteApps" type="StringList">
-      <default>preferred://email,preferred://browser</default>
+      <default>preferred://browser</default>
     </entry>
     <entry name="favoriteSystemActions" type="StringList">
       <default>logout,lock-screen,reboot,shutdown</default>
@@ -99,6 +99,9 @@
     <entry name="disableSleep" type="Bool">
       <default>false</default>
     </entry>
+    <entry name="enableAnimations" type="Bool">
+      <default>false</default>
+    </entry>
 
     <entry name="favoritesPortedToKAstats" type="Bool">
       <label>Are the favorites ported to use KActivitiesStats to allow per-activity favorites</label>
@@ -133,10 +136,10 @@
       <default>true</default>
     </entry>
     <entry name="showRecentItemsSidepanel" type="Bool">
-      <default>false</default>
+      <default>true</default>
     </entry>
     <entry name="showNetworkSidepanel" type="Bool">
-      <default>false</default>
+      <default>true</default>
     </entry>
     <entry name="showConnectToSidepanel" type="Bool">
       <default>true</default>
@@ -145,7 +148,7 @@
       <default>true</default>
     </entry>
     <entry name="showDevicesSidepanel" type="Bool">
-      <default>true</default>
+      <default>false</default>
     </entry>
     <entry name="showDefaultsSidepanel" type="Bool">
       <default>true</default>

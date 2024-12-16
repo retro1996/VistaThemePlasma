@@ -31,7 +31,7 @@ PlasmaCore.ToolTipArea {
     property int /*PlasmaCore.Types.ItemStatus*/ effectiveStatus: model.effectiveStatus || PlasmaCore.Types.UnknownStatus
     property bool effectivePressed: false
     property real minLabelHeight: 0
-    readonly property bool inHiddenLayout: effectiveStatus === PlasmaCore.Types.PassiveStatus
+    readonly property bool inHiddenLayout: effectiveStatus === PlasmaCore.Types.PassiveStatus && root.milestone2Mode
     readonly property bool inVisibleLayout: effectiveStatus === PlasmaCore.Types.ActiveStatus
 
     // input agnostic way to trigger the main action
@@ -51,7 +51,7 @@ PlasmaCore.ToolTipArea {
 
 
     location: {
-        if (inHiddenLayout && root.milestone2Mode) {
+        if (inHiddenLayout) {
             if (LayoutMirroring.enabled && Plasmoid.location !== PlasmaCore.Types.RightEdge) {
                 return PlasmaCore.Types.LeftEdge;
             } else if (Plasmoid.location !== PlasmaCore.Types.LeftEdge) {
@@ -174,7 +174,6 @@ PlasmaCore.ToolTipArea {
     ColumnLayout {
         id: icon
         anchors.fill: abstractItem
-        anchors.topMargin: abstractItem.inHiddenLayout && !root.milestone2Mode ? 0 : 1
         spacing: 0
 
         Drag.active: mouseArea.drag.active// && abstractItem.inHiddenLayout

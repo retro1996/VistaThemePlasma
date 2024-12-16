@@ -62,7 +62,7 @@ PlasmaCore.Dialog {
     property bool firstTimePopup: false // To make sure the user icon is displayed properly.
     property bool firstTimeShadowSetup: false
 
-    property int animationDuration: Kirigami.Units.longDuration*1.5
+    property int animationDuration: Plasmoid.configuration.enableAnimations ? Kirigami.Units.longDuration*1.5 : 0
 
 	property color leftPanelBackgroundColor: "white"
 	property color leftPanelBorderColor: "#44000000"
@@ -836,7 +836,7 @@ PlasmaCore.Dialog {
         transitions: [
        		Transition {
 				id: transition
-       		    PropertyAnimation { properties: "opacity"; easing.type: Easing.Linear; duration: Kirigami.Units.longDuration*1.5 }
+       		    PropertyAnimation { properties: "opacity"; easing.type: Easing.Linear; duration: animationDuration }
        		    onRunningChanged: {
 					if(!searching && !running) {
 						// fixes another inexplicable bug, makes it look just a tad bit nicer
@@ -899,7 +899,7 @@ PlasmaCore.Dialog {
 			opacity: 0
 			visible: opacity
 			Behavior on opacity {
-				NumberAnimation { easing.type: Easing.InOutQuart; duration: 150 }
+				NumberAnimation { easing.type: Easing.InOutQuart; duration: animationDuration }
 			}
 
 			z: searching ? 4 : 1
@@ -943,6 +943,7 @@ PlasmaCore.Dialog {
         Column {
             id: sidePanel
             z: 7
+
             anchors{
                 left: leftSidebar.right
                 top: parent.top

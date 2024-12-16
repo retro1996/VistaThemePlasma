@@ -722,7 +722,7 @@ ContainmentItem {
                 var availScreen = Plasmoid.containment.availableScreenRect;
                 var screen = root.screenGeometry;
 
-                x = pos.x - width / 2 + (expandedRepresentation.hiddenLayout.visible ? flyoutMargin + Kirigami.Units.smallSpacing/2 : currentHighlight.width / 2);
+                x = pos.x - width / 2 + (expandedRepresentation.hiddenLayout.visible && root.milestone2Mode ? flyoutMargin + Kirigami.Units.smallSpacing/2 : currentHighlight.width / 2);
                 y = pos.y - height + Kirigami.Units.smallSpacing*4;
 
                 if(x <= 0) x += flyoutMargin;

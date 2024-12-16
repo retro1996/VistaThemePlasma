@@ -1005,7 +1005,7 @@ TaskManagerApplet.SmartLauncherItem { }
             id: attentionIndicator
             anchors.fill: frame
             visible: task.hottrackingEnabled
-            anchors.rightMargin: (task.childCount !== 0) ? groupIndicator.margins.right : 0
+            anchors.rightMargin: 0
             property bool requiresAttention: model.IsDemandingAttention || (task.smartLauncherItem && task.smartLauncherItem.urgent)
             color: "transparent"
             Rectangle {
@@ -1280,6 +1280,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 rightMargin: !inPopup ? 0 : -Kirigami.Units.largeSpacing
                 leftMargin: !inPopup ? 0 : -Kirigami.Units.largeSpacing
             }
+
             imagePath: Qt.resolvedUrl("svgs/tasks.svg")
 
             property bool isHovered: task.highlighted
@@ -1298,7 +1299,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 else return "";
             }
             property string baseSuffix: {
-                if(isHovered && !dragArea.held) {
+                if(isHovered && !dragArea.held && Plasmoid.configuration.disableHottracking) {
                     return "-hover"
                 } else return ""
             }
@@ -1318,12 +1319,32 @@ TaskManagerApplet.SmartLauncherItem { }
 
 
         RowLayout {
+            id: contentBox
+
             spacing: Kirigami.Units.smallSpacing
-            anchors.fill: model.IsLauncher ? launcherFrame : frame
-            anchors.margins: Kirigami.Units.smallSpacing
-            anchors.rightMargin: Kirigami.Units.mediumSpacing
-            anchors.leftMargin: inPopup ? Kirigami.Units.largeSpacing : Kirigami.Units.mediumSpacing
-            anchors.topMargin: model.IsActive ? Kirigami.Units.smallSpacing + 2 : Kirigami.Units.smallSpacing
+
+            property int rightMargin: {
+                if(inPopup) {
+                    return Kirigami.Units.smallSpacing;
+                } else return Kirigami.Units.smallSpacing + Kirigami.Units.smallSpacing/2;
+            }
+            property int leftMargin: {
+                if(inPopup) {
+                    return Kirigami.Units.largeSpacing;
+                } else if(model.IsActive) {
+                    return Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/4;
+                } else return Kirigami.Units.smallSpacing + Kirigami.Units.smallSpacing/2;
+            }
+
+            anchors {
+                fill: model.IsLauncher ? launcherFrame : frame
+
+                bottomMargin: Kirigami.Units.smallSpacing
+                rightMargin: rightMargin
+                leftMargin: leftMargin
+                topMargin: model.IsActive ? Kirigami.Units.smallSpacing + Kirigami.Units.smallSpacing/2 : Kirigami.Units.smallSpacing
+            }
+
 
             Kirigami.Icon {
                 id: iconBox
@@ -1346,7 +1367,7 @@ TaskManagerApplet.SmartLauncherItem { }
             }
 
             Components.Label {
-                id: labelGrouped
+                id: groupLabel
 
                 visible: label.visible && model.ChildCount > 0
 
@@ -1357,7 +1378,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 Layout.preferredWidth: 3
                 Layout.rightMargin: Kirigami.Units.smallSpacing/2
 
-                wrapping: (maximumLineCount == 1) ? Text.NoWrap : Text.Wrap
+                wrapping: Text.NoWrap
                 bold: true
                 alignmentV: Text.AlignVCenter
                 foreground: "white"
@@ -1367,10 +1388,10 @@ TaskManagerApplet.SmartLauncherItem { }
                 // use State to avoid unnecessary re-evaluation when the label is invisible
                 states: State {
                     name: "labelVisible"
-                    when: labelGrouped.visible
+                    when: groupLabel.visible
 
                     PropertyChanges {
-                        target: labelGrouped
+                        target: groupLabel
                         text: model.ChildCount
                     }
                 }
@@ -1386,7 +1407,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                wrapping: (maximumLineCount == 1) ? Text.NoWrap : Text.Wrap
+                wrapping: Text.NoWrap
                 visible: (parent.width) >= LayoutMetrics.spaceRequiredToShowText()
                 alignmentV: Text.AlignVCenter
                 foreground: "white"
@@ -1407,7 +1428,7 @@ TaskManagerApplet.SmartLauncherItem { }
 
         }
         KSvg.SvgItem {
-            id: arrow
+            id: groupIndicator
 
             anchors {
                 right: frame.right
@@ -1415,7 +1436,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 verticalCenter: frame.verticalCenter
             }
 
-            visible: labelGrouped.visible
+            visible: groupLabel.visible
 
             implicitWidth: 10
             implicitHeight: 6
@@ -1449,6 +1470,7 @@ TaskManagerApplet.SmartLauncherItem { }
             }
         }
     }
+
     MouseArea {
         id: dragArea
         property alias taskIndex: task.index
@@ -1526,13 +1548,19 @@ TaskManagerApplet.SmartLauncherItem { }
             currentDrag = Qt.point(containerRect.x, containerRect.y);
         }
         function sendItemBack() {
-            beginDrag = Qt.point(task.x, task.y);
-            backAnimX.from = currentDrag.x //- taskList.contentX;
-            backAnimX.to = beginDrag.x - taskList.contentX;
-            backAnimY.from = currentDrag.y// - taskList.contentY;
-            backAnimY.to = beginDrag.y - taskList.contentY;
-            backAnim.start();
-            dragThreshold = Qt.point(-1,-1);
+            if(Plasmoid.configuration.enableAnimations && Plasmoid.configuration.draggingEnabled) {
+                beginDrag = Qt.point(task.x, task.y);
+                backAnimX.from = currentDrag.x //- taskList.contentX;
+                backAnimX.to = beginDrag.x - taskList.contentX;
+                backAnimY.from = currentDrag.y// - taskList.contentY;
+                backAnimY.to = beginDrag.y - taskList.contentY;
+                backAnim.start();
+                dragThreshold = Qt.point(-1,-1);
+            } else {
+                beginDrag = Qt.point(task.x, task.y);
+                dragThreshold = Qt.point(-1,-1);
+                dragArea.held = false;
+            }
         }
         onReleased: event => {
             if(held) {

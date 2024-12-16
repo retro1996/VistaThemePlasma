@@ -186,6 +186,20 @@ io.gitgud.catpswin56.vistastart/fast:
 .PHONY : io.gitgud.catpswin56.vistastart/fast
 
 # Convenience name for target.
+src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/rule:
+	cd "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/rule
+.PHONY : src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/rule
+
+# Convenience name for target.
+io.gitgud.catpswin56.vistastart_autogen_timestamp_deps: src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/rule
+.PHONY : io.gitgud.catpswin56.vistastart_autogen_timestamp_deps
+
+# fast build rule for target.
+io.gitgud.catpswin56.vistastart_autogen_timestamp_deps/fast:
+	cd "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build" && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/build.make src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen_timestamp_deps.dir/build
+.PHONY : io.gitgud.catpswin56.vistastart_autogen_timestamp_deps/fast
+
+# Convenience name for target.
 src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen.dir/rule:
 	cd "/home/pswin56/Escritorio/otras cosas/VistaThemePlasma/plasma/plasmoids/src/vistastart_src/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen.dir/rule
 .PHONY : src/CMakeFiles/io.gitgud.catpswin56.vistastart_autogen.dir/rule
@@ -285,6 +299,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... io.gitgud.catpswin56.vistastart_autogen"
+	@echo "... io.gitgud.catpswin56.vistastart_autogen_timestamp_deps"
 	@echo "... io.gitgud.catpswin56.vistastart"
 	@echo "... SevenStart.o"
 	@echo "... SevenStart.i"

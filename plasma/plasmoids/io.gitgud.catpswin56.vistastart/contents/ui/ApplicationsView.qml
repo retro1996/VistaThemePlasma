@@ -132,7 +132,7 @@ Item {
         Layout.fillWidth: true
         visible: opacity > 0.2
         opacity: crumbModel.count > 0
-        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration } }
+        Behavior on opacity { NumberAnimation { duration: root.animationDuration } }
         /*onOpacityChanged: {
             if(opacity > 0.2) visible = true;
             else visible = false;
@@ -217,7 +217,7 @@ Item {
         property Item activatedItem: null
         property var newModel: null
 
-        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.longDuration } }
+        Behavior on opacity { NumberAnimation { duration: root.animationDuration } }
 
         focus: true
         appView: true
@@ -282,14 +282,14 @@ Item {
                     // and we want the item that has been clicked on, not the one that is under the
                     // mouse once the animation is done
                     ScriptAction { script: applicationsView.activatedItem = applicationsView.currentItem }
-                    NumberAnimation { properties: "opacity"; easing.type: Easing.InQuad; duration: 100 }
+                    NumberAnimation { properties: "opacity"; easing.type: Easing.InQuad; duration: Plasmoid.configuration.enableAnimations ? 100 : 1 }
                     ScriptAction { script: {  applicationsView.moveRight(); } }
                 }
             },
             Transition {
                 to: "OutgoingRight"
                 SequentialAnimation {
-                    NumberAnimation { properties: "opacity"; easing.type: Easing.InQuad; duration: 100 }
+                    NumberAnimation { properties: "opacity"; easing.type: Easing.InQuad; duration: Plasmoid.configuration.enableAnimations ? 100 : 1 }
                     ScriptAction { script: applicationsView.moveLeft() }
                 }
             }

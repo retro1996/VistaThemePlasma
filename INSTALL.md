@@ -37,7 +37,7 @@ dnf install plasma-workspace-devel kvantum qt6-qtmultimedia-devel qt6-qt5compat-
 
 This section relates to the directories found in the ```plasma``` folder.
 
-1. Move the ```smod``` folder to ```~/.local/share```. This will install the resources required by many other components.
+1. Move the ```smod``` folder to ```~/.local/share``` or ```/usr/share/```. This will install the resources required by many other components.
 
 2. Move the folders ```desktoptheme```, ```look-and-feel```, ```plasmoids```, ```shells``` into ```~/.local/share/plasma```. If the folder doesn't exist, create it. These folders contain the following:
     - Plasma Style
@@ -84,6 +84,7 @@ This section relates to the directories found in the ```kwin``` folder.
     - Sliding Popups
     - Dialog Parent
     - Dim Inactive
+    
 (*) Only if using Milestone 2 mode
 
 ## Miscellaneous components <a name="misc"></a>

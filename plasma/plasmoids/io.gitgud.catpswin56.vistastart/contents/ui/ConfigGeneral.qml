@@ -57,6 +57,7 @@ KCM.SimpleKCM {
     property alias cfg_disableBold: disableBold.checked
     property alias cfg_disableSleep: disableSleep.checked
     property alias cfg_enableShadow: enableShadow.checked
+    property alias cfg_enableAnimations: enableAnimations.checked
 
     property alias cfg_useExtraRunners: useExtraRunners.checked
 
@@ -156,7 +157,7 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: stickOutOrb
 
-                    text: i18n("Enable floating orb for shorter taskbars")
+                    text: i18n("Enable floating orb")
                 }
                 CheckBox {
                     id: showRecentsView
@@ -207,6 +208,10 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: useFullName
                     text: i18n("Use full name instead of login name")
+                }
+                CheckBox {
+                    id: enableAnimations
+                    text: i18n("Enable animations")
                 }
             }
         }

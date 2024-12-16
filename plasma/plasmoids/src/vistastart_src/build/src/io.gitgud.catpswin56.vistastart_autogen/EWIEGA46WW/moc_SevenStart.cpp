@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'SevenStart.h'
 **
-** Created by: The Qt Meta Object Compiler version 68 (Qt 6.8.0)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -18,7 +18,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'SevenStart.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
-#error "This file was generated using the moc from 6.8.0. It"
+#error "This file was generated using the moc from 6.8.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -31,10 +31,12 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
+struct qt_meta_tag_ZN10SevenStartE_t {};
+} // unnamed namespace
+
 
 #ifdef QT_MOC_HAS_STRINGDATA
-struct qt_meta_stringdata_CLASSSevenStartENDCLASS_t {};
-constexpr auto qt_meta_stringdata_CLASSSevenStartENDCLASS = QtMocHelpers::stringData(
+static constexpr auto qt_meta_stringdata_ZN10SevenStartE = QtMocHelpers::stringData(
     "SevenStart",
     "onCompositingChanged",
     "",
@@ -63,9 +65,8 @@ constexpr auto qt_meta_stringdata_CLASSSevenStartENDCLASS = QtMocHelpers::string
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
 #endif // !QT_MOC_HAS_STRINGDATA
-} // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_CLASSSevenStartENDCLASS[] = {
+Q_CONSTINIT static const uint qt_meta_data_ZN10SevenStartE[] = {
 
  // content:
       12,       // revision
@@ -113,11 +114,11 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSSevenStartENDCLASS[] = {
 
 Q_CONSTINIT const QMetaObject SevenStart::staticMetaObject = { {
     QMetaObject::SuperData::link<Plasma::Applet::staticMetaObject>(),
-    qt_meta_stringdata_CLASSSevenStartENDCLASS.offsetsAndSizes,
-    qt_meta_data_CLASSSevenStartENDCLASS,
+    qt_meta_stringdata_ZN10SevenStartE.offsetsAndSizes,
+    qt_meta_data_ZN10SevenStartE,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSSevenStartENDCLASS_t,
+    qt_incomplete_metaTypeArray<qt_meta_tag_ZN10SevenStartE_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<SevenStart, std::true_type>,
         // method 'onCompositingChanged'
@@ -163,9 +164,8 @@ Q_CONSTINIT const QMetaObject SevenStart::staticMetaObject = { {
 
 void SevenStart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
+    auto *_t = static_cast<SevenStart *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<SevenStart *>(_o);
-        (void)_t;
         switch (_id) {
         case 0: _t->onCompositingChanged((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
         case 1: _t->onShowingDesktopChanged((*reinterpret_cast< std::add_pointer_t<bool>>(_a[1]))); break;
@@ -181,7 +181,8 @@ void SevenStart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 10: _t->setDialogAppearance((*reinterpret_cast< std::add_pointer_t<QQuickWindow*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QRegion>>(_a[2]))); break;
         default: ;
         }
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
         case 3:
@@ -224,7 +225,7 @@ const QMetaObject *SevenStart::metaObject() const
 void *SevenStart::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_CLASSSevenStartENDCLASS.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_ZN10SevenStartE.stringdata0))
         return static_cast<void*>(this);
     return Plasma::Applet::qt_metacast(_clname);
 }
@@ -238,7 +239,8 @@ int SevenStart::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 11;
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+    }
+    if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
         _id -= 11;

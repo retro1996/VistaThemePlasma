@@ -23,19 +23,6 @@ ColumnLayout {
     property var generalModel: root.generalModel
     property var observationModel: root.observationModel
 
-    PlasmaExtras.PlaceholderMessage {
-        Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
-        Layout.margins: Kirigami.Units.largeSpacing * 4
-        Layout.maximumWidth: Kirigami.Units.gridUnit * 20
-        visible: root.status === Util.Timeout
-        iconName: "network-disconnect"
-        text: {
-            const sourceTokens = root.weatherSource.split("|");
-            return i18n("Unable to retrieve weather information for %1", sourceTokens[2]);
-        }
-        explanation: i18nc("@info:usagetip", "The network request timed out, possibly due to a server outage at the weather station provider. Check again later.")
-    }
-
     property string currentWeather: "resources/unexpanded/" + generalModel.currentConditionIconName + ".png"
 
     readonly property var currentWeatherTextColor: {
@@ -97,6 +84,37 @@ ColumnLayout {
         }
         spacing: 0
 
+        Item {
+            Layout.preferredHeight: parent.height/2 + Kirigami.Units.smallSpacing - Kirigami.Units.smallSpacing/4
+
+            visible: infoRow.visible
+        }
+
+        RowLayout {
+            id: infoRow
+
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignCenter
+
+            visible: observationModel.temperature == "" && generalModel.location != ""
+
+            Item {
+                Layout.fillWidth: true
+            }
+
+            Image {
+                source: "resources/info.png"
+            }
+
+            Text {
+                text: "Service error"
+            }
+
+            Item {
+                Layout.fillWidth: true
+            }
+        }
+
         Text {
             id: temp
 
@@ -108,6 +126,7 @@ ColumnLayout {
             font.pointSize: 16
             color: typeof currentWeatherTextColor[generalModel.currentConditionIconName] != "undefined" ? currentWeatherTextColor[generalModel.currentConditionIconName] : "black" // fallback
             horizontalAlignment: Text.AlignRight
+            visible: !infoRow.visible
         }
         Text {
             id: location
@@ -120,6 +139,7 @@ ColumnLayout {
             font.pointSize: 9
             color: typeof currentWeatherTextColor[generalModel.currentConditionIconName] != "undefined" ? currentWeatherTextColor[generalModel.currentConditionIconName] : "black" // fallback
             horizontalAlignment: Text.AlignRight
+            visible: !infoRow.visible
         }
     }
 }
