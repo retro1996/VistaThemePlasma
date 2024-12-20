@@ -13,6 +13,8 @@ It is still in heavy development and testing. VTP has been tested on:
 
 See [INSTALL.md](./INSTALL.md) for a quick (almost left unmodified from ATP repo) install guide.
 
+For the sidebar gadgets, go [here](https://gitgud.io/catpswin56/win-gadgets).
+
 
 ## Credits 
 
