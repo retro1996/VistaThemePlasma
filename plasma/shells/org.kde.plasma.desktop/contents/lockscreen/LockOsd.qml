@@ -23,7 +23,7 @@ KSvg.FrameSvgItem {
     visible: false
     width: osdItem.width + margins.left + margins.right
     height: osdItem.height + margins.top + margins.bottom
-    imagePath: "widgets/background"
+    imagePath: "solid/widgets/tooltip"
 
     function show() {
         osd.visible = true;

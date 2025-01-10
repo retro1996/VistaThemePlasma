@@ -254,13 +254,13 @@ Item {
         var pre;
         switch (containment.plasmoid.location) {
         case PlasmaCore.Types.LeftEdge:
-            pre = "";
+            pre = "west";
             break;
         case PlasmaCore.Types.TopEdge:
-            pre = "";
+            pre = "north";
             break;
         case PlasmaCore.Types.RightEdge:
-            pre = "";
+            pre = "east";
             break;
         case PlasmaCore.Types.BottomEdge:
             pre = "south";

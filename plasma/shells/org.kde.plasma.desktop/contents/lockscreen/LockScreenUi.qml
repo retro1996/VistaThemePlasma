@@ -5,7 +5,7 @@
 */
 
 import QtQml 2.15
-import QtQuick 2.8
+import QtQuick
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.1
 import Qt5Compat.GraphicalEffects
@@ -38,6 +38,16 @@ Item {
     Kirigami.Theme.inherit: false
     //colorGroup: PlasmaCore.Theme.ComplementaryColorGroup
 
+    Image {
+        id: backgroundWallpaper
+
+        anchors.fill: parent
+
+        source: "/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg"
+        fillMode: Image.Stretch
+
+        z: -1
+    }
 
     Rectangle {
         id: blackRect

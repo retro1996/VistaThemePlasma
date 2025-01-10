@@ -86,45 +86,32 @@ RowLayout {
         Layout.fillHeight: true
         Layout.preferredWidth: Math.ceil(widestLabelSize.advanceWidth)
         Layout.alignment: Qt.AlignVCenter
-    PlasmaExtras.Heading {
-        id: percentageLabel
-        level: 3
-        anchors.fill: parent
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        text: formatPercent(progressBar.value)
-        textFormat: Text.PlainText
-        wrapMode: Text.NoWrap
-        //font.family: "Segoe UI Light"
+
+        PlasmaExtras.Heading {
+            id: percentageLabel
+            level: 3
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            text: formatPercent(progressBar.value)
+            textFormat: Text.PlainText
+            wrapMode: Text.NoWrap
+            //font.family: "Segoe UI Light"
 
 
-        color: "black"
-        // Display a subtle visual indication that the volume might be
-        // dangerously high
-        // ------------------------------------------------
-        // Keep this in sync with the copies in plasma-pa:ListItemBase.qml
-        // and plasma-pa:VolumeSlider.qml
-        /*color: {
-            if (progressBar.value <= 100) {
-                return Kirigami.Theme.textColor
-            } else if (progressBar.value > 100 && progressBar.value <= 125) {
-                return Kirigami.Theme.neutralTextColor
-            } else {
-                return Kirigami.Theme.negativeTextColor
-            }
-        }*/
-    }
+            color: "black"
+        }
 
-    Glow {
-        anchors.fill: percentageLabel
-        radius: 15
-        samples: 31
-        color: "#77ffffff"
-        spread: 0.60
-        source: percentageLabel
-        cached: true
-        visible: percentageLabel.visible
-    }
+        Glow {
+            anchors.fill: percentageLabel
+            radius: 15
+            samples: 31
+            color: "#77ffffff"
+            spread: 0.60
+            source: percentageLabel
+            cached: true
+            visible: percentageLabel.visible
+        }
     }
     Item {
         Layout.fillWidth: true
@@ -134,6 +121,7 @@ RowLayout {
         Layout.bottomMargin: Kirigami.Units.smallSpacing / 2 // Right end spacing
         Layout.alignment: Qt.AlignVCenter
         visible: !root.showingProgress
+
         PlasmaExtras.Heading {
             id: headingText
             anchors.fill: parent
@@ -144,7 +132,6 @@ RowLayout {
             wrapMode: Text.NoWrap
             elide: Text.ElideRight
             text: !root.showingProgress && root.osdValue ? root.osdValue : ""
-            //font.family: "Segoe UI Light"
             color: "black"
         }
         Glow {
