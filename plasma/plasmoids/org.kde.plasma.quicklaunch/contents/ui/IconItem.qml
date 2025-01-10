@@ -10,7 +10,6 @@ import org.kde.kirigami 2.20 as Kirigami
 import org.kde.ksvg 1.0 as KSvg
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.plasmoid 2.0
-import org.kde.draganddrop 2.0 as DragAndDrop
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 
 import "layout.js" as LayoutManager
@@ -27,306 +26,212 @@ Item {
     width: isPopupItem ? LayoutManager.popupItemWidth() : grid.cellWidth
     height: isPopupItem ? LayoutManager.popupItemHeight() : grid.cellHeight
 
-    Keys.onPressed: {
-        switch (event.key) {
-        case Qt.Key_Space:
-        case Qt.Key_Enter:
-        case Qt.Key_Return:
-        case Qt.Key_Select:
-            logic.openUrl(url);
-            break;
-        case Qt.Key_Menu:
-            contextMenu.refreshActions();
-            contextMenu.open(0,0);
-            event.accepted = true;
-            break;
-        case Qt.Key_Backspace:
-        case Qt.Key_Delete:
-            removeLauncher();
-            event.accepted = true;
-            break;
-        }
-
-        // BEGIN Arrow keys
-        if (!(event.modifiers & Qt.ControlModifier) || !(event.modifiers & Qt.ShiftModifier)) {
-            return;
-        }
-
-        switch (event.key) {
-        case Qt.Key_Up: {
-            if (iconItem.isPopupItem && iconItem.itemIndex === 0 && Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                iconItem.ListView.view.moveItemToGrid(iconItem, url);
-                break;
-            } else if (!iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.BottomEdge) {
-                iconItem.GridView.view.moveItemToPopup(iconItem, url);
-                break;
+    function setRequestedInhibitDnd(value) {
+        // This is modifying the value in the panel containment that
+        // inhibits accepting drag and drop, so that we don't accidentally
+        // drop the task on this panel.
+        let item = this;
+        while (item.parent) {
+            item = item.parent;
+            if (item.appletRequestsInhibitDnD !== undefined) {
+                item.appletRequestsInhibitDnD = value
             }
-
-            decreaseIndex();
-            break;
-        }
-
-        case Qt.Key_Down: {
-            if (iconItem.isPopupItem && iconItem.itemIndex === iconItem.ListView.view.count - 1 && Plasmoid.location === PlasmaCore.Types.BottomEdge) {
-                iconItem.ListView.view.moveItemToGrid(iconItem, url);
-                break;
-            } else if (!iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                iconItem.GridView.view.moveItemToPopup(iconItem, url);
-                break;
-            }
-
-            increaseIndex();
-            break;
-        }
-
-        case Qt.Key_Left: {
-            if (iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                iconItem.ListView.view.moveItemToGrid(iconItem, url);
-                break;
-            } else if (!iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                iconItem.GridView.view.moveItemToPopup(iconItem, url);
-                break;
-            }
-
-            decreaseIndex();
-            break;
-        }
-        case Qt.Key_Right: {
-            if (iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                iconItem.ListView.view.moveItemToGrid(iconItem, url);
-                break;
-            } else if (!iconItem.isPopupItem && Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                iconItem.GridView.view.moveItemToPopup(iconItem, url);
-                break;
-            }
-
-            increaseIndex();
-            break;
-        }
-        default:
-            return;
-        }
-
-        event.accepted = true;
-        // END Arrow keys
-    }
-
-    function decreaseIndex() {
-        const newIndex = iconItem.itemIndex - 1;
-        if (newIndex < 0) {
-            return;
-        }
-        if (iconItem.isPopupItem) {
-            popupModel.moveUrl(iconItem.itemIndex, newIndex);
-            iconItem.ListView.view.currentIndex = newIndex;
-        } else {
-            launcherModel.moveUrl(iconItem.itemIndex, newIndex);
-            iconItem.GridView.view.currentIndex = newIndex;
         }
     }
 
-    function increaseIndex() {
-        const newIndex = iconItem.itemIndex + 1;
-        if (newIndex === (iconItem.isPopupItem ? iconItem.ListView.view.count : iconItem.GridView.view.count)) {
-            return;
-        }
-        if (iconItem.isPopupItem) {
-            popupModel.moveUrl(iconItem.itemIndex, newIndex);
-            iconItem.ListView.view.currentIndex = newIndex;
-        } else {
-            launcherModel.moveUrl(iconItem.itemIndex, newIndex);
-            iconItem.GridView.view.currentIndex = newIndex;
-        }
-    }
+    Item {
+        id: itemRect
 
-    KSvg.FrameSvgItem {
-        id: hoverSvg
-        anchors.fill: parent
-        imagePath: "widgets/button"
-        prefix: "keyboard-hover"
-        visible: mouseArea.containsMouse
-    }
-
-    DragAndDrop.DragArea {
-        id: dragArea
         width: iconItem.width
         height: iconItem.height
-        enabled: true
-        defaultAction: Qt.MoveAction
-        supportedActions: Qt.MoveAction
-        delegate: icon
 
-        mimeData {
-            url: url
-            source: iconItem
-        }
+        Drag.active: mouseArea.held
+        Drag.source: mouseArea
+        Drag.hotSpot.x: Math.floor(width / 2)
+        Drag.hotSpot.y: Math.floor(height / 2)
 
-        onDragStarted: {
-            dragging = true;
-        }
+        states: [
+            State {
+                name: "dragging"
+                when: mouseArea.held
 
-        onDrop: {
-            dragging = false;
-
-            if (action == Qt.MoveAction) {
-                removeLauncher();
+                ParentChange {
+                    target: itemRect
+                    parent: grid
+                }
             }
+        ]
+
+        KSvg.FrameSvgItem {
+            id: frame
+
+            anchors.fill: parent
+
+            imagePath: "widgets/button"
+            prefix: mouseArea.containsPress ? "keyboard-pressed" : "keyboard-hover"
+
+            visible: mouseArea.containsMouse && !mouseArea.held
+        }
+
+        Kirigami.Icon {
+            id: icon
+
+            anchors {
+                left: showLauncherNames ? parent.left : undefined
+                leftMargin: 3
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: showLauncherNames ? undefined : parent.horizontalCenter
+            }
+
+            width: 16
+            height: width
+            source: url == "quicklaunch:drop" ? "" : iconName
+
+            opacity: mouseArea.held ? 0.5 : 1.0
+        }
+
+        PlasmaComponents3.Label {
+            id: label
+
+            anchors {
+                left: icon.right
+                leftMargin: 4
+                verticalCenter: parent.verticalCenter
+                verticalCenterOffset: -1
+            }
+
+            text: iconItem.launcher.applicationName
+            textFormat: Text.PlainText
+            maximumLineCount: 1
+            wrapMode: Text.NoWrap
+            elide: Text.ElideRight
+            width: 134
+        }
+
+        PlasmaExtras.Menu {
+            id: contextMenu
+
+            property var jumpListItems : []
+
+            visualParent: mouseArea
+
+            PlasmaExtras.MenuItem {
+                id: jumpListSeparator
+                separator: true
+            }
+
+            PlasmaExtras.MenuItem {
+                text: i18nc("@action:inmenu", "Properties")
+                onClicked: editLauncher()
+            }
+
+            PlasmaExtras.MenuItem {
+                text: i18nc("@action:inmenu", "Remove")
+                onClicked: removeLauncher()
+            }
+
+            PlasmaExtras.MenuItem {
+                separator: true
+            }
+
+            PlasmaExtras.MenuItem {
+                action: Plasmoid.internalAction("configure")
+            }
+
+            function refreshActions() {
+                for (var i = 0; i < jumpListItems.length; ++i) {
+                    var item = jumpListItems[i];
+                    removeMenuItem(item);
+                    item.destroy();
+                }
+                jumpListItems = [];
+
+                for (var i = 0; i < launcher.jumpListActions.length; ++i) {
+                    var action = launcher.jumpListActions[i];
+                    var item = menuItemComponent.createObject(iconItem, {
+                        "text": action.name,
+                        "icon": action.icon
+                    });
+                    item.clicked.connect(function() {
+                        logic.openExec(this.exec);
+                    }.bind(action));
+
+                    addMenuItem(item, jumpListSeparator);
+                    jumpListItems.push(item);
+                }
+            }
+        }
+
+        Component {
+            id: menuItemComponent
+            PlasmaExtras.MenuItem { }
         }
 
         MouseArea {
             id: mouseArea
+
             anchors.fill: parent
-            hoverEnabled: true
+
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
-            activeFocusOnTab: true
-            Accessible.name: iconItem.launcher.applicationName
-            Accessible.description: i18n("Launch %1", iconItem.launcher.genericName || iconItem.launcher.applicationName)
-            Accessible.role: Accessible.Button
+            property bool held: false
+            property int itemIndex: model.index
 
-            onActiveFocusChanged: {
-                if (activeFocus) {
-                    entered();
+            onHeldChanged: {
+                if(held) {
+                    setRequestedInhibitDnd(true);
+                    root.dragging = true;
+                } else {
+                    setRequestedInhibitDnd(false);
+                    root.dragging = false;
                 }
             }
 
-            onEntered: {
-                if (iconItem.ListView.view) {
-                    iconItem.ListView.view.currentIndex = iconItem.itemIndex;
-                }
+            hoverEnabled: true
+            propagateComposedEvents: true
+
+            drag.smoothed: false
+            drag.threshold: 0
+            drag.target: held ? itemRect : undefined
+            drag.axis: Drag.XAndYAxis
+
+            function resetPos() {
+                held = false;
+                itemRect.x = dropArea.x;
+                itemRect.y = dropArea.y;
+                itemRect.Drag.cancel();
             }
 
-            onPressed: {
+            onReleased: event => {
+                if(held) resetPos();
+            }
+            onPositionChanged: {
+                if(containsPress) held = true;
+            }
+
+            onClicked: mouse => {
                 if (mouse.button == Qt.RightButton) {
                     contextMenu.refreshActions();
                     contextMenu.open(mouse.x, mouse.y);
-                    dragArea.enabled = false
                 }
-                hoverSvg.prefix = "keyboard-pressed"
-            }
-
-            onReleased: {
-                hoverSvg.prefix = "keyboard-hover"
-            }
-
-            onClicked: {
                 if (mouse.button == Qt.LeftButton) {
                     logic.openUrl(url)
                 }
             }
+        }
+    }
 
-            Kirigami.Icon {
-                id: icon
+    DropArea {
+        id: dropArea
 
-                anchors {
-                    left: parent.left
-                    leftMargin: 3
-                    verticalCenter: parent.verticalCenter
-                }
+        anchors.fill: parent
 
-                width: 16
-                height: width
-                source: url == "quicklaunch:drop" ? "" : iconName
-            }
+        visible: root.dragging
 
-            PlasmaComponents3.Label {
-                id: label
-
-                anchors {
-                    left: icon.right
-                    leftMargin: 4
-                    verticalCenter: parent.verticalCenter
-                    verticalCenterOffset: -1
-                }
-
-                text: iconItem.launcher.applicationName
-                textFormat: Text.PlainText
-                maximumLineCount: 1
-                wrapMode: Text.NoWrap
-                elide: Text.ElideRight
-                width: 134
-            }
-
-            KSvg.FrameSvgItem {
-                anchors.fill: parent
-                imagePath: "widgets/viewitem"
-                prefix: "hover"
-                visible: dragging || url == "quicklaunch:drop"
-            }
-
-            PlasmaCore.ToolTipArea {
-                anchors.fill: parent
-                active: !dragging
-                mainText: iconItem.launcher.applicationName
-                subText: iconItem.launcher.genericName
-            }
-
-            PlasmaExtras.Menu {
-                id: contextMenu
-
-                property var jumpListItems : []
-
-                visualParent: mouseArea
-
-                PlasmaExtras.MenuItem {
-                    id: jumpListSeparator
-                    separator: true
-                }
-
-                PlasmaExtras.MenuItem {
-                    text: i18nc("@action:inmenu", "Add Launcher…")
-                    icon: "list-add"
-                    onClicked: addLauncher()
-                }
-
-                PlasmaExtras.MenuItem {
-                    text: i18nc("@action:inmenu", "Edit Launcher…")
-                    icon: "document-edit"
-                    onClicked: editLauncher()
-                }
-
-                PlasmaExtras.MenuItem {
-                    text: i18nc("@action:inmenu", "Remove Launcher")
-                    icon: "list-remove"
-                    onClicked: removeLauncher()
-                }
-
-                PlasmaExtras.MenuItem {
-                    separator: true
-                }
-
-                PlasmaExtras.MenuItem {
-                    action: Plasmoid.internalAction("configure")
-                }
-
-                function refreshActions() {
-                    for (var i = 0; i < jumpListItems.length; ++i) {
-                        var item = jumpListItems[i];
-                        removeMenuItem(item);
-                        item.destroy();
-                    }
-                    jumpListItems = [];
-
-                    for (var i = 0; i < launcher.jumpListActions.length; ++i) {
-                        var action = launcher.jumpListActions[i];
-                        var item = menuItemComponent.createObject(iconItem, {
-                            "text": action.name,
-                            "icon": action.icon
-                        });
-                        item.clicked.connect(function() {
-                            logic.openExec(this.exec);
-                        }.bind(action));
-
-                        addMenuItem(item, jumpListSeparator);
-                        jumpListItems.push(item);
-                    }
-                }
-            }
-
-            Component {
-                id: menuItemComponent
-                PlasmaExtras.MenuItem { }
-            }
+        onEntered: (drag) => {
+            if(drag.source.itemIndex !== model.index) {
+                iconItem.GridView.view.model.moveUrl(drag.source.itemIndex, model.index);
+            } else return;
         }
     }
 
@@ -334,14 +239,6 @@ Item {
         State {
             name: "popup"
             when: isPopupItem
-
-            AnchorChanges {
-                target: dragArea
-                anchors.left: dragArea.parent.left
-                anchors.right: dragArea.parent.right
-                anchors.top: dragArea.parent.top
-                anchors.bottom: dragArea.parent.bottom
-            }
 
             AnchorChanges {
                 target: icon
@@ -368,12 +265,6 @@ Item {
         State {
             name: "grid"
             when: !isPopupItem
-
-            AnchorChanges {
-                target: dragArea
-                anchors.verticalCenter: dragArea.parent.verticalCenter
-                anchors.horizontalCenter: dragArea.parent.horizontalCenter
-            }
 
             AnchorChanges {
                 target: label

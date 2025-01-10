@@ -10,7 +10,6 @@ import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents3
-import org.kde.draganddrop as DragAndDrop
 import org.kde.plasma.private.quicklaunch 1.0
 
 import "layout.js" as LayoutManager
@@ -24,7 +23,7 @@ PlasmoidItem {
     readonly property string title : ""
     readonly property bool vertical : plasmoid.formFactor == PlasmaCore.Types.Vertical || (plasmoid.formFactor == PlasmaCore.Types.Planar && height > width)
     readonly property bool horizontal : plasmoid.formFactor == PlasmaCore.Types.Horizontal
-    property bool dragging : false
+    property bool dragging: false
 
     Layout.minimumWidth: LayoutManager.minimumWidth() + (plasmoid.configuration.extraPadding ? plasmoid.configuration.extraPaddingSize : 0)
     Layout.minimumHeight: LayoutManager.minimumHeight()
@@ -34,51 +33,6 @@ PlasmoidItem {
 
     Item {
         anchors.fill: parent
-
-        DragAndDrop.DropArea {
-            anchors.fill: parent
-            preventStealing: true
-            enabled: true
-
-            onDragEnter: {
-                if (event.mimeData.hasUrls) {
-                    dragging = true;
-                } else {
-                    event.ignore();
-                }
-            }
-
-            onDragMove: {
-                var index = grid.indexAt(event.x, event.y);
-
-                if (isInternalDrop(event)) {
-                    launcherModel.moveUrl(event.mimeData.source.itemIndex, index);
-                } else {
-                    launcherModel.showDropMarker(index);
-                }
-
-                popup.visible = root.childAt(event.x, event.y) == popupArrow;
-            }
-
-            onDragLeave: {
-                dragging = false;
-                launcherModel.clearDropMarker();
-            }
-
-            onDrop: {
-                dragging = false;
-                launcherModel.clearDropMarker();
-
-                if (isInternalDrop(event)) {
-                    event.accept(Qt.IgnoreAction);
-                    saveConfiguration();
-                } else {
-                    var index = grid.indexAt(event.x, event.y);
-                    launcherModel.insertUrls(index == -1 ? launcherModel.count : index, event.mimeData.urls);
-                    event.accept(event.proposedAction);
-                }
-            }
-        }
 
         Item {
             id: launcher
