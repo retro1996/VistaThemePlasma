@@ -19,14 +19,9 @@ PlasmaCore.ToolTipArea {
     property bool vertical: Plasmoid.formFactor === PlasmaCore.Types.Vertical
     property int iconSize: Kirigami.Units.smallMedium
     property int expanderSize: Kirigami.Units.iconSizes.smallMedium - Kirigami.Units.smallSpacing / 2
-    implicitWidth: expanderSize+1
+    implicitWidth: expanderSize
     implicitHeight: expanderSize
     activeFocusOnTab: true
-
-    Accessible.name: subText
-    Accessible.description: i18n("Show all the items in the system tray in a popup")
-    Accessible.role: Accessible.Button
-    Accessible.onPressAction: systemTrayState.expanded = !systemTrayState.expanded
 
     Keys.onPressed: event => {
         switch (event.key) {
@@ -38,16 +33,7 @@ PlasmaCore.ToolTipArea {
         }
     }
 
-    subText: systemTrayState.expanded ? i18n("Close popup") : i18n("Show hidden icons")
-
-    property bool wasExpanded
-
-    property bool flyoutExpanded: systemTrayState.expanded
-    onFlyoutExpandedChanged: {
-        if(flyoutExpanded) {
-            tooltip.hideImmediately();
-        }
-    }
+    subText: root.showHidden ? i18n("Hide hidden icons") : i18n("Show hidden icons")
 
     MouseArea {
         id: arrowMa
@@ -57,26 +43,21 @@ PlasmaCore.ToolTipArea {
         hoverEnabled: true
 
         onClicked: {
-            if (root.showHidden == true) {
-                root.showHidden = false
-                arrow.elementId = "vista-arrow-left"
-            } else {
-                root.showHidden = true
-                arrow.elementId = "vista-arrow-right"
-            }
+            if (root.showHidden) root.showHidden = false
+            else root.showHidden = true
         }
     }
 
     KSvg.SvgItem {
         id: arrow
+
         z: -1
+
         anchors.centerIn: parent
+
         width: expanderSize +1
         height: expanderSize
-        //width: Math.min(parent.width, parent.height)+1
-        //height: width-1
 
-        // This is the Aero styled button texture used for the system tray expander.
         KSvg.SvgItem {
             id: hoverButton
             z: -1 // To prevent layout issues with the MouseArea.
@@ -88,65 +69,8 @@ PlasmaCore.ToolTipArea {
                 return "normal";
             }
         }
+
         imagePath: Qt.resolvedUrl("svgs/systray.svg")
-        //svg: arrowSvg
-        elementId: "vista-arrow-left"
+        elementId: root.showHidden ? "vista-arrow-right" : "vista-arrow-left"
     }
-    /*Kirigami.Icon {
-        anchors.fill: parent
-
-        rotation: systemTrayState.expanded ? 180 : 0
-        Behavior on rotation {
-            RotationAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-        opacity: systemTrayState.expanded ? 0 : 1
-        Behavior on opacity {
-            NumberAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-
-        source: {
-            if (Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                return "arrow-down";
-            } else if (Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                return "arrow-right";
-            } else if (Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                return "arrow-left";
-            } else {
-                return "arrow-up";
-            }
-        }
-    }
-
-    Kirigami.Icon {
-        anchors.fill: parent
-
-        rotation: systemTrayState.expanded ? 0 : -180
-        Behavior on rotation {
-            RotationAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-        opacity: systemTrayState.expanded ? 1 : 0
-        Behavior on opacity {
-            NumberAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-
-        source: {
-            if (Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                return "arrow-up";
-            } else if (Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                return "arrow-left";
-            } else if (Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                return "arrow-right";
-            } else {
-                return "arrow-down";
-            }
-        }
-    }*/
 }

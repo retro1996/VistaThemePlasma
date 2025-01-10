@@ -41,15 +41,14 @@ Item {
     // Milestone 2 mode settings
     property bool milestone2Mode: root.milestone2Mode
 
-    // property var dateFormat: {
-    //     if (Plasmoid.configuration.dateFormat === "longDate") {
-    //         return Locale.LongFormat;//Qt.SystemLocaleLongDate;
-    //     } else if (Plasmoid.configuration.dateFormat === "isoDate") {
-    //         return Qt.ISODate;
-    //     }
-    //     return Qt.locale() //Locale.ShortFormat;//Qt.SystemLocaleShortDate;
-    // }
-    property string dateFormat: "d/M/yyyy"
+    property var dateFormat: {
+        if (Plasmoid.configuration.dateFormat === "longDate") {
+            return Locale.LongFormat;//Qt.SystemLocaleLongDate;
+        } else if (Plasmoid.configuration.dateFormat === "isoDate") {
+            return Qt.ISODate;
+        }
+        return Qt.locale() //Locale.ShortFormat;//Qt.SystemLocaleShortDate;
+    }
 
     property string lastSelectedTimezone: Plasmoid.configuration.lastSelectedTimezone
     property bool displayTimezoneAsCode: Plasmoid.configuration.displayTimezoneAsCode
@@ -536,7 +535,6 @@ Item {
         anchors.fill: parent
 
         onClicked: {
-            
             Plasmoid.expanded = !Plasmoid.expanded
             dashWindow.visible = !dashWindow.visible;
             if(dashWindow.visible) timeToolTip.hideImmediately();

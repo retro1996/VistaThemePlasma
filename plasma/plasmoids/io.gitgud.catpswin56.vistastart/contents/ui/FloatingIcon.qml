@@ -21,21 +21,21 @@ import org.kde.kquickcontrolsaddons 2.0
 import org.kde.kirigami 2.13 as Kirigami
 import org.kde.kquickcontrolsaddons 2.0 as KQuickAddons
 import org.kde.kcmutils as KCM
-import org.kde.ksvg as KSvg
 import org.kde.kwindowsystem 1.0
 
 
 Item {
 		id: iconContainer
 		//The frame displayed on top of the user icon
-        height: 64
+        height: Kirigami.Units.iconSizes.huge
             //Kirigami.Units.iconSizes.huge
         width: height
         anchors.horizontalCenter: parent.horizontalCenter
 
         property alias iconSource: imgAuthorIcon.source
-        Image {
-            source: Qt.resolvedUrl("svgs/user-frame.png")
+
+        BorderImage {
+            source: "../pics/user.png"
             smooth: true
             z: 1
 			opacity: imgAuthorIcon.source === ""
@@ -48,6 +48,13 @@ Item {
            		bottom: parent.bottom
            		top: parent.top
 			}
+			border {
+                bottom: 11
+                top: 11
+                left: 11
+                right: 11
+            }
+
         }
         Kirigami.Icon {
             id: imgAuthorIcon

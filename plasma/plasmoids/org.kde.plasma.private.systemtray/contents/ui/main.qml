@@ -86,6 +86,8 @@ ContainmentItem {
             onHighlightedItemChanged: {
                 if(dialog.visible) dialog.setDialogPosition();
             }
+
+            visible: true
         }
 
         DnD.DropArea {
@@ -241,9 +243,6 @@ ContainmentItem {
                 if(typeof orderObject === "undefined")
                     orderObject = {};
             }
-            /*Component.onDestruction: {
-             *       saveConfiguration();
-        }*/
         }
 
         KItemModels.KSortFilterProxyModel {
@@ -420,11 +419,11 @@ ContainmentItem {
                         case ("org.kde.plasma.battery"):
                             return Plasmoid.configuration.batteryEnabled;
                             break;
-                        case ("org.kde.plasma.volume"):
-                            return Plasmoid.configuration.volumeEnabled;
-                            break;
                         case ("org.kde.plasma.networkmanagement"):
                             return Plasmoid.configuration.networkEnabled;
+                            break;
+                        case ("org.kde.plasma.volume"):
+                            return Plasmoid.configuration.volumeEnabled;
                             break;
                     }
                 }
@@ -509,7 +508,7 @@ ContainmentItem {
             ExpanderArrow {
                 id: expander
                 Layout.alignment: vertical ? Qt.AlignVCenter : Qt.AlignHCenter
-                Layout.topMargin: !vertical ? (Plasmoid.configuration.offsetIcons ? Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2 : 0) : 0
+                Layout.topMargin: !vertical ? (Plasmoid.configuration.offsetIcons ? Kirigami.Units.smallSpacing*2 : 0) : 0
                 Layout.rightMargin: -Kirigami.Units.smallSpacing/2
                 visible: root.hiddenLayout.itemCount > 0 && !root.milestone2Mode
             }
@@ -536,7 +535,7 @@ ContainmentItem {
 
                 readonly property int gridThickness: root.vertical ? root.width : root.height
                 // Should change to 2 rows/columns on a 56px panel (in standard DPI)
-                readonly property int rowsOrColumns: autoSize ? 1 : Math.max(1, Math.min(count, Math.floor(gridThickness / (smallIconSize + Kirigami.Units.smallSpacing))))
+                readonly property int rowsOrColumns: 1
 
                 // Add margins only if the panel is larger than a small icon (to avoid large gaps between tiny icons)
                 readonly property int cellSpacing: Kirigami.Units.smallSpacing/2
@@ -576,6 +575,15 @@ ContainmentItem {
                 model: root.milestone2Mode ? undefined : passiveModel
 
                 visible: implicitWidth == 0 ? false : true
+
+                MouseArea {
+                    id: hiddenMa
+
+                    anchors.fill: parent
+
+                    hoverEnabled: true
+                    propagateComposedEvents: true
+                }
             }
             GridView { // non-hidden icons (active)
                 id: tasksGrid
@@ -594,7 +602,7 @@ ContainmentItem {
 
                 readonly property int gridThickness: root.vertical ? root.width : root.height
                 // Should change to 2 rows/columns on a 56px panel (in standard DPI)
-                readonly property int rowsOrColumns: autoSize ? 1 : Math.max(1, Math.min(count, Math.floor(gridThickness / (smallIconSize + Kirigami.Units.smallSpacing))))
+                readonly property int rowsOrColumns: 1
 
                 // Add margins only if the panel is larger than a small icon (to avoid large gaps between tiny icons)
                 readonly property int cellSpacing: Kirigami.Units.smallSpacing/2
@@ -631,7 +639,8 @@ ContainmentItem {
             }
             Item {
                 id: trayGap
-                Layout.preferredWidth: root.milestone2Mode ? 0 : Plasmoid.configuration.trayGapSize
+                Layout.preferredWidth: !vertical ? (root.milestone2Mode ? 0 : Plasmoid.configuration.trayGapSize) : 0
+                Layout.preferredHeight: vertical ? (root.milestone2Mode ? 0 : Plasmoid.configuration.trayGapSize) : 0
             }
             GridView { // system icons
                 id: systemIconsGrid
@@ -650,7 +659,7 @@ ContainmentItem {
 
                 readonly property int gridThickness: root.vertical ? root.width : root.height
                 // Should change to 2 rows/columns on a 56px panel (in standard DPI)
-                readonly property int rowsOrColumns: autoSize ? 1 : Math.max(1, Math.min(count, Math.floor(gridThickness / (smallIconSize + Kirigami.Units.smallSpacing))))
+                readonly property int rowsOrColumns: 1
 
                 // Add margins only if the panel is larger than a small icon (to avoid large gaps between tiny icons)
                 readonly property int cellSpacing: Kirigami.Units.smallSpacing/2
@@ -687,6 +696,13 @@ ContainmentItem {
 
                 visible: !root.milestone2Mode
             }
+        }
+
+        Timer {
+            id: autoClose
+            running: root.showHidden && !hiddenMa.containsMouse
+            interval: 3000
+            onTriggered: root.showHidden = false;
         }
 
         Timer {

@@ -658,7 +658,7 @@ PlasmaCore.Dialog {
 				}
 				Text {
 					id: showingAllProgramsText
-					text: showingAllPrograms ? i18n("Back") : i18n("All Programs")
+					text: showingAllPrograms ? "    Back" : "    All Programs"
 					font.pixelSize: 12
 					font.bold: true
 					anchors.left: arrowDirection.right
@@ -691,7 +691,7 @@ PlasmaCore.Dialog {
 						anchors.bottomMargin: 2
 						font.italic: true
 						color: searchFieldPlaceholderColor
-						text: i18n("Start search")
+						text: i18n(" Start search")
 						verticalAlignment: Text.AlignVCenter
 						visible: !searching
 						style: Text.Outline
@@ -1354,7 +1354,7 @@ PlasmaCore.Dialog {
 				KSvg.FrameSvgItem {
 					id: trueLockButton
 
-					anchors.fill:parent
+					anchors.fill: parent
 					anchors.left: parent.left
 					imagePath: Qt.resolvedUrl("svgs/startmenu-buttons.svg")
 
@@ -1372,7 +1372,7 @@ PlasmaCore.Dialog {
 					anchors.centerIn: trueLockButton
 					anchors.horizontalCenterOffset: trueLockma.containsPress ? 1 : 0
 					anchors.verticalCenterOffset: trueLockma.containsPress ? 1 : 0
-					width: 13
+					width: 15
 					height: 16
 					elementId: "lock"
 				}
@@ -1413,7 +1413,7 @@ PlasmaCore.Dialog {
                 KSvg.FrameSvgItem {
 					id: lockButton
 
-					anchors.fill: parent;
+					anchors.fill: parent
 					anchors.left: parent.left
 					imagePath: Qt.resolvedUrl("svgs/startmenu-buttons.svg")
 

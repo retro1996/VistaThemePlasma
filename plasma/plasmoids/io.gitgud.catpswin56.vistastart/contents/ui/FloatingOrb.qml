@@ -61,6 +61,7 @@ Item {
     Image {
         id: buttonIcon
         smooth: true
+        anchors.centerIn: parent
         source: orbTexture
         sourceClipRect: Qt.rect(0, 0, buttonIconSizes.width, buttonIconSizes.height / 3);
     }
@@ -68,6 +69,7 @@ Item {
         id: buttonIconPressed
         visible: dashWindow.visible
         smooth: true
+        anchors.centerIn: parent
         source: orbTexture
         verticalAlignment: Image.AlignBottom
         sourceClipRect: Qt.rect(0, 2*buttonIconSizes.height / 3, buttonIconSizes.width, buttonIconSizes.height / 3);
@@ -75,6 +77,7 @@ Item {
     Image {
         id: buttonIconHovered
         source: orbTexture
+        anchors.centerIn: parent
         opacity: mouseArea.containsMouse || mouseAreaCompositingOff.containsMouse
         visible:  !dashWindow.visible
         Behavior on opacity {

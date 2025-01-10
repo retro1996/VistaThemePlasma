@@ -29,10 +29,12 @@ import org.kde.kirigami as Kirigami
 Item {
     id: root
 
-    Layout.minimumHeight: floatingOrbPanel.buttonIconSizes.height;
-    Layout.maximumHeight: floatingOrbPanel.buttonIconSizes.height;
+    Layout.minimumHeight: floatingOrbPanel.buttonIconSizes.height / 3;
+    Layout.maximumHeight: floatingOrbPanel.buttonIconSizes.height / 3;
     Layout.minimumWidth: floatingOrbPanel.buttonIconSizes.width;
     Layout.maximumWidth: floatingOrbPanel.buttonIconSizes.width;
+    width: Layout.maximumWidth
+    height: Layout.maximumHeight
     property bool compositing: false
 
     property QtObject contextMenu: null
@@ -45,36 +47,38 @@ Item {
     readonly property var screenGeometry: Plasmoid.screenGeometry
 
     // Should the orb be rendered in its own dialog window so that it can stick out of the panel?
-    readonly property bool stickOutOrb: (Plasmoid.location == PlasmaCore.Types.TopEdge || Plasmoid.location == PlasmaCore.Types.BottomEdge) && Plasmoid.configuration.stickOutOrb && !editMode
+    readonly property bool stickOutOrb: (Plasmoid.location == PlasmaCore.Types.TopEdge || Plasmoid.location == PlasmaCore.Types.BottomEdge) && Plasmoid.configuration.stickOutOrb && kicker.height <= 30 && !editMode
     readonly property bool useCustomButtonImage: (Plasmoid.configuration.useCustomButtonImage)
     readonly property bool vertical: (Plasmoid.formFactor == PlasmaCore.Types.Vertical)
     readonly property bool enableShadow: (Plasmoid.configuration.enableShadow)
 
     onEnableShadowChanged: {
+        //Plasmoid.enableShadow(Plasmoid.configuration.enableShadow);
         if(dashWindow) {
             dashWindow.firstTimeShadowSetup = false;
         }
     }
 
+
     // If the url is empty (default value), then use the fallback url. Otherwise, return the url path relative to
     // the location of the source code.
     function getResolvedUrl(url, fallback) {
-        if (url.toString() === "") {
+
+        if (url.toString() === "" || !Plasmoid.fileExists(url)) {
             return Qt.resolvedUrl(fallback);
         }
         return url;
     }
     function positionOrb() {
         var pos = kicker.mapToGlobal(floatingOrbPanel.x, floatingOrbPanel.y);
-        pos.y -= kicker.height <= 30 ? 5 : 10;
-        if(Plasmoid.configuration.offsetFloatingOrb) {
-            pos.y += 5;
+        if(!Plasmoid.configuration.offsetFloatingOrb) {
+            pos.y -= 5;
         }
         orb.width = floatingOrbPanel.buttonIcon.implicitWidth
         orb.height = floatingOrbPanel.buttonIcon.implicitHeight;
-        // if(orb.height === 30) {
-        //     pos.y += 2;
-        // }
+        if(orb.height === 30) {
+            pos.y += 2;
+        }
 
         orb.x = pos.x;
         orb.y = pos.y;
@@ -126,6 +130,7 @@ Item {
     Component.onCompleted: {
         dashWindow = Qt.createQmlObject("MenuRepresentation {}", kicker);
         orb = Qt.createQmlObject("StartOrb {}", kicker);
+
         maskTimer.start();
         orbTimer.start();
         Plasmoid.activated.connect(function () {
@@ -180,8 +185,10 @@ Item {
     FloatingOrb {
         id: floatingOrbPanel
         anchors.left: parent.left
+        anchors.right: parent.right
         //anchors.leftMargin: -Kirigami.Units.mediumSpacing
         anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         //anchors.verticalCenterOffset: Kirigami.Units.smallSpacing-1
         //anchors.fill: parent
         objectName: "innerorb"

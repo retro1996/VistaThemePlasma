@@ -18,9 +18,8 @@ PlasmaCore.ToolTipArea {
     readonly property int arrowAnimationDuration: Kirigami.Units.shortDuration
     property bool vertical: Plasmoid.formFactor === PlasmaCore.Types.Vertical
     property int iconSize: Kirigami.Units.smallMedium
-    property int expanderSize: Kirigami.Units.smallSpacing*4
-    implicitWidth: expanderSize+1
-    implicitHeight: expanderSize
+    implicitWidth: 8
+    implicitHeight: 8
     activeFocusOnTab: true
 
     Accessible.name: subText
@@ -64,87 +63,28 @@ PlasmaCore.ToolTipArea {
 
     KSvg.SvgItem {
         id: arrow
-        z: -1
-        anchors.centerIn: parent
-        width: expanderSize +1
-        height: expanderSize
-        //width: Math.min(parent.width, parent.height)+1
-        //height: width-1
 
-        // This is the Aero styled button texture used for the system tray expander.
-        KSvg.SvgItem {
-            id: hoverButton
-            z: -1 // To prevent layout issues with the MouseArea.
-            anchors.fill: parent
-            imagePath: Qt.resolvedUrl("svgs/systray.svg")
-            elementId: {
-                if(tooltip.containsPress || (systemTrayState.expanded && expandedRepresentation.hiddenLayout.visible)) return "m2-hover";
-                if(tooltip.containsMouse) return "m2-hover";
-                return "normal"; // The normal state actually just makes the button invisible.
-            }
-        }
+        anchors.centerIn: parent
+
+        width: 6
+        height: 8
+
         imagePath: "widgets/arrows"
-        //svg: arrowSvg
         elementId: {
             if (systemTrayState.expanded && expandedRepresentation.hiddenLayout.visible) return "down-arrow"
                 else return "up-arrow"
         }
     }
-    /*Kirigami.Icon {
+    KSvg.SvgItem {
+        id: hoverButton
+        z: -1
         anchors.fill: parent
-
-        rotation: systemTrayState.expanded ? 180 : 0
-        Behavior on rotation {
-            RotationAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-        opacity: systemTrayState.expanded ? 0 : 1
-        Behavior on opacity {
-            NumberAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-
-        source: {
-            if (Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                return "arrow-down";
-            } else if (Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                return "arrow-right";
-            } else if (Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                return "arrow-left";
-            } else {
-                return "arrow-up";
-            }
+        anchors.margins: -Kirigami.Units.smallSpacing
+        imagePath: Qt.resolvedUrl("svgs/systray.svg")
+        elementId: {
+            if(tooltip.containsPress || (systemTrayState.expanded && expandedRepresentation.hiddenLayout.visible)) return "m2-hover";
+            if(tooltip.containsMouse) return "m2-hover";
+            return "normal"; // The normal state actually just makes the button invisible.
         }
     }
-
-    Kirigami.Icon {
-        anchors.fill: parent
-
-        rotation: systemTrayState.expanded ? 0 : -180
-        Behavior on rotation {
-            RotationAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-        opacity: systemTrayState.expanded ? 1 : 0
-        Behavior on opacity {
-            NumberAnimation {
-                duration: tooltip.arrowAnimationDuration
-            }
-        }
-
-        source: {
-            if (Plasmoid.location === PlasmaCore.Types.TopEdge) {
-                return "arrow-up";
-            } else if (Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-                return "arrow-left";
-            } else if (Plasmoid.location === PlasmaCore.Types.RightEdge) {
-                return "arrow-right";
-            } else {
-                return "arrow-down";
-            }
-        }
-    }*/
 }

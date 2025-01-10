@@ -7,8 +7,8 @@
 This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma). This fork aims to recreate the look and feel of Windows Vista as much as possible on KDE Plasma, whilst adapting the design to fit in with modern features provided by KDE Plasma and Linux.
 It is still in heavy development and testing. VTP has been tested on:
 
-1. Arch Linux x64 and other Arch derivatives, KDE Neon
-2. Plasma 6.2.4, KDE Frameworks 6.8.0, Qt 6.8.0
+1. Arch Linux x64 and other Arch derivatives
+2. Plasma 6.2.4, KDE Frameworks 6.9.0, Qt 6.8.1
 3. 96 DPI scaling, single monitor
 
 See [INSTALL.md](./INSTALL.md) for a quick (almost left unmodified from ATP repo) install guide.
@@ -24,9 +24,9 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 ### Contributors
 
-- [AngelBruni](https://github.com/angelbruni) for contributing with SVG Vista taskbar texture.
-- [ThePhantom](https://github.com/ThePhantom6314) for remaking the task items and power button glyphs in SVG.
-- [aeoe](https://gitgud.io/aeoe) for fixing a minor issue with the VistaStart dialog texture.
+- [AngelBruni](https://github.com/angelbruni) for the SVG Vista taskbar texture
+- [ThePhantom](https://github.com/ThePhantom6314) for remaking the task items and power button glyphs in SVG
+- [aeoe](https://gitgud.io/aeoe) for fixing a minor issue with the VistaStart dialog texture
 
 
 ### ATP Credits
@@ -55,6 +55,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 - [QuinceTart10](https://github.com/QuinceTart10) for making the sound theme
 - (In collaboration with) [kfh83](https://github.com/kfh83), [TorutheRedFox](https://github.com/TorutheRedFox) and [ALTaleX](https://github.com/ALTaleX531/dwm_colorization_calculator/blob/main/main.py) for figuring out accurate Aero glass blur and colorization effects
 - [AngelBruni](https://github.com/angelbruni) for contributing several SVG textures, most notably the clock in DigitalClockLite Seven
+- [ricewind012](https://github.com/ricewind012/) for .bashrc Microsoft Windows header
 
 ### Special Thanks 
 
