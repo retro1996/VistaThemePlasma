@@ -27,7 +27,7 @@ MouseArea {
     property var minimized: model.IsMinimized
 
     width: 158
-    height: 30
+    height: 26
 
     hoverEnabled: true
     propagateComposedEvents: true
@@ -48,6 +48,8 @@ MouseArea {
         }
         prefix: type + state
         enabledBorders: KSvg.FrameSvg.TopBorder | KSvg.FrameSvg.BottomBorder
+
+        visible: contentMa.containsMouse
     }
 
     DropArea {
@@ -113,8 +115,8 @@ MouseArea {
         id: content
 
         anchors.fill: parent
-        anchors.rightMargin: Kirigami.Units.smallSpacing
-        anchors.leftMargin: Kirigami.Units.smallSpacing
+        anchors.rightMargin: Kirigami.Units.smallSpacing * 2
+        anchors.leftMargin: Kirigami.Units.smallSpacing * 2
 
         spacing: Kirigami.Units.smallSpacing/2
 

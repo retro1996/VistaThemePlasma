@@ -14,8 +14,8 @@ MouseArea {
     property QtObject root
     property bool containsDrag: false
 
-    width: 162
-    height: (30 * thumbnailList.count) + (Kirigami.Units.smallSpacing * 2) + (2 * (thumbnailList.count - 1))
+    width: 160
+    height: (26 * thumbnailList.count) + 1 + (2 * (thumbnailList.count - 1))
 
     hoverEnabled: true
     propagateComposedEvents: true
@@ -37,10 +37,7 @@ MouseArea {
         id: thumbnailList
 
         anchors.fill: parent
-        anchors.bottomMargin: Kirigami.Units.smallSpacing
-        anchors.topMargin: Kirigami.Units.smallSpacing
-        anchors.leftMargin: 2
-        anchors.rightMargin: 3
+        anchors.leftMargin: 1
 
         interactive: false
         spacing: 2
