@@ -25,49 +25,23 @@ MouseArea {
         }
     }
 
-    property bool isGroupDelegate: false
-    property var captionAlignment: {
-        if(Plasmoid.configuration.thmbnlCaptionAlignment == 0) return Text.AlignLeft
-        if(Plasmoid.configuration.thmbnlCaptionAlignment == 1) return Text.AlignHCenter
-        if(Plasmoid.configuration.thmbnlCaptionAlignment == 2) return Text.AlignRight
-    }
+    property var display: root.display
+    property var icon: root.icon
+    property var active: root.active
+    property var modelIndex: root.modelIndex
+    property var windows: root.windows
+    property var minimized: root.minimized
 
-    property var display: isGroupDelegate ? model.display : root.display
-    property var icon: isGroupDelegate ? model.decoration : root.icon
-    property var active: isGroupDelegate ? model.IsActive : root.active
-    property var modelIndex: isGroupDelegate ? (tasksModel.makeModelIndex(root.taskIndex, index)) : root.modelIndex
-    property var windows: isGroupDelegate ? model.WinIdList : root.windows
-    property var minimized: isGroupDelegate ? model.IsMinimized : root.minimized
-
-    width: windowThumbnailX1.paintedWidth + Kirigami.Units.smallSpacing*2
-    height: windowThumbnailX1.paintedHeight + Kirigami.Units.smallSpacing*2
+    width: dummyThumbnail.paintedWidth + Kirigami.Units.smallSpacing * 3
+    height: dummyThumbnail.paintedHeight + Kirigami.Units.smallSpacing * 3
 
     hoverEnabled: true
     propagateComposedEvents: true
 
-    MouseArea {
-        id: contentMa
-
-        anchors.fill: content
-
-        hoverEnabled: true
-        propagateComposedEvents: true
-        enabled: root.opacity == 1
-
-        onContainsMouseChanged: {
-            if(!minimized) tasks.windowsHovered(thumbnailRoot.windows, containsMouse)
-        }
-
-        onClicked: {
-            tasksModel.requestActivate(modelIndex);
-            root.visible = false;
-        }
-    }
-
     Timer {
         id: primaryCloseTimer
         interval: 175
-        running: ((!parent.containsMouse && !root.taskHovered) && root.mainItem == thumbnailRoot) && !isGroupDelegate
+        running: !root.taskHovered && root.mainItem == thumbnailRoot
         onTriggered: {
             root.destroy();
         }
@@ -82,25 +56,16 @@ MouseArea {
         }
     }
 
-    Timer {
-        id: animationTimer
-        interval: 205
-        running: root.visible
-        onTriggered: {
-            root.opacity = 1;
-        }
-    }
-
     Item {
         id: thumbnail
 
         anchors.centerIn: parent
 
-        width: 172 - Kirigami.Units.smallSpacing
+        width: 172 - (Kirigami.Units.smallSpacing / 2)
         height: 172 - (Kirigami.Units.smallSpacing * 2)
 
         PlasmaCore.WindowThumbnail {
-            id: windowThumbnailX1
+            id: dummyThumbnail
 
             height: 172
             width: 172
@@ -126,7 +91,6 @@ MouseArea {
 
                 PlasmaCore.WindowThumbnail {
                     id: windowThumbnailX11
-
 
                     winId: windows[0]
 
@@ -239,12 +203,12 @@ MouseArea {
                 function onWindowsChanged() {
                     thumbnailLoader.active = false;
                     thumbnailLoader.active = true;
-                    windowThumbnailX1.visible = false;
-                    windowThumbnailX1.visible = true;
+                    dummyThumbnail.visible = false;
+                    dummyThumbnail.visible = true;
                 }
             }
         }
     }
 
-    visible: (root && root.mainItem == thumbnailRoot) || isGroupDelegate // only visible if tooltip exists and mainItem is set to the correct one
+    visible: root && root.mainItem == thumbnailRoot // only visible if tooltip exists and mainItem is set to the correct one
 }

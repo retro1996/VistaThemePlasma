@@ -28,7 +28,7 @@ Item {
     // This makes the tasks mirrored, so we mirror them again to fix that.
     rotation: Plasmoid.configuration.reverseMode && Plasmoid.formFactor === PlasmaCore.Types.Vertical ? 180 : 0
 
-    implicitHeight: LayoutMetrics.preferredTaskHeight();
+    implicitHeight: 30
     implicitWidth: {
         if(tasksRoot.vertical) {
             return tasksRoot.width;

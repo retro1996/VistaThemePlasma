@@ -480,7 +480,7 @@ PlasmoidItem {
                 leftMargin: 1
                 right: parent.right
             }
-            height: tasks.height
+            height: 30
             orientation: {
                 if(tasks.vertical) {
                     return ListView.Vertical
