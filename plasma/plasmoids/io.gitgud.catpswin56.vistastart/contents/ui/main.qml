@@ -103,6 +103,13 @@ PlasmoidItem {
         shownItems: Kicker.RecentUsageModel.OnlyApps
     }
 
+    Kicker.RecentUsageModel {
+        id: fileUsageModel
+        favoritesModel: globalFavorites
+        ordering: 0
+        shownItems: Kicker.RecentUsageModel.OnlyDocs
+    }
+
     Kicker.RunnerModel {
         id: runnerModel
 

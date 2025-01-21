@@ -363,11 +363,40 @@ PlasmaCore.Dialog {
 			onObjectRemoved: (index, object) => contextMenu.removeMenuItem(object)
 		}
 
+		Instantiator {
+			model: fileUsageModel
+			delegate: PlasmaExtras.MenuItem {
+				required property int index
+				required property var model
+
+				text: model.display + "      "
+				icon: model.decoration
+				onClicked: fileUsageModel.trigger(index)
+			}
+			onObjectAdded: (index, object) => fileUsageMenu.addMenuItem(object);
+			onObjectRemoved: (index, object) => fileUsageMenu.removeMenuItem(object)
+		}
+
         PlasmaExtras.Menu {
 			id: contextMenu
-			visualParent: lockScreenDelegate //leaveButton
+			visualParent: lockScreenDelegate
 			placement: {
-				//return PlasmaCore.Types.FloatingPopup
+				switch (Plasmoid.location) {
+					case PlasmaCore.Types.LeftEdge:
+					case PlasmaCore.Types.RightEdge:
+					case PlasmaCore.Types.TopEdge:
+						return PlasmaExtras.Menu.BottomPosedRightAlignedPopup;
+					case PlasmaCore.Types.BottomEdge:
+					default:
+						return PlasmaExtras.Menu.RightPosedBottomAlignedPopup;
+				}
+			}
+		}
+
+		PlasmaExtras.Menu {
+			id: fileUsageMenu
+			visualParent: recentsItem
+			placement: {
 				switch (Plasmoid.location) {
 					case PlasmaCore.Types.LeftEdge:
 					case PlasmaCore.Types.RightEdge:
@@ -1106,9 +1135,9 @@ PlasmaCore.Dialog {
 					Layout.alignment: Qt.AlignHCenter
 				}
 				SidePanelItemDelegate {
+					id: recentsItem
 					itemText: i18n("Recent Items")
 					itemIcon: "document-open-recent"
-					executableString: folderDialog.getPath(11)
 					visible: Plasmoid.configuration.showRecentItemsSidepanel
 					onVisibleChanged: {
 						separator1.updateVisibility();

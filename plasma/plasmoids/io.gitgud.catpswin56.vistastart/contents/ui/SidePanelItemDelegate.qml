@@ -21,11 +21,8 @@ Item {
     property string executableString: ""
     property bool executeProgram: false
     property alias textLabel: label
-    //text: itemText
 
-    //icon: itemIcon
     width: label.implicitWidth + Kirigami.Units.largeSpacing*2+1
-    //Layout.preferredWidth: label.implicitWidth
     height: 33
 
     KeyNavigation.backtab: findPrevious();
@@ -104,7 +101,6 @@ Item {
     PlasmaComponents.Label {
         id: label
         wrapMode: Text.NoWrap
-        //elide: Text.ElideRight
         anchors.left: parent.left
         anchors.leftMargin: Kirigami.Units.smallSpacing * 2
         anchors.verticalCenter: sidePanelDelegate.verticalCenter
@@ -116,7 +112,6 @@ Item {
     PlasmaComponents.Label {
         id: label_highlight
         wrapMode: Text.NoWrap
-        //elide: Text.ElideRight
         anchors.left: parent.left
         anchors.leftMargin: Kirigami.Units.smallSpacing * 2
         anchors.verticalCenter: sidePanelDelegate.verticalCenter
@@ -127,11 +122,6 @@ Item {
         text: itemText
     }
     onFocusChanged: {
-        /*if(focus) {
-            root.m_sidebarIcon.source = itemIcon;
-        } else {
-            root.m_sidebarIcon.source = "";
-        }*/
         if(root.m_delayTimer.running) root.m_delayTimer.restart();
         else root.m_delayTimer.start();
     }
@@ -146,18 +136,27 @@ Item {
             sidePanelDelegate.focus = false;
         }
         onClicked: {
-            root.visible = false;
-            if(executeProgram)
-                executable.exec(executableString);
-            else {
-                if(KWindowSystem.isPlatformX11)
-                    Qt.callLater(Qt.openUrlExternally, executableString)
-                else // Workaround for Wayland to prevent crashing
-                    executable.exec("xdg-open " + executableString)
+            if(itemText != "Recent Items") {
+                root.visible = false;
+                if(executeProgram)
+                    executable.exec(executableString);
+                else {
+                    if(KWindowSystem.isPlatformX11)
+                        Qt.callLater(Qt.openUrlExternally, executableString);
+                    else // Workaround for Wayland to prevent crashing
+                        executable.exec("xdg-open " + executableString);
 
-            }
+                }
+            } else fileUsageMenu.openRelative();
         }
         hoverEnabled: true
         anchors.fill: parent
+    }
+
+    Timer {
+        id: recentsMenuTimer
+        interval: 500
+        running: sidePanelMouseArea.containsMouse && itemText == "Recent Items"
+        onTriggered: fileUsageMenu.openRelative();
     }
 }
