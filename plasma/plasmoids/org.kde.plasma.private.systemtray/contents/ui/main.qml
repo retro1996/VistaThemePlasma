@@ -41,7 +41,6 @@ ContainmentItem {
 
     // Milestone 2 mode settings
     property bool milestone2Mode: {
-        // Code taken from VistaTasks
         let item = this;
         while (item.parent) {
             item = item.parent;

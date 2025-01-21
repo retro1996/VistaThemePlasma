@@ -4,10 +4,12 @@
     SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accepted-LGPL
 */
 
-import QtQuick 2.2
+import QtQuick
 
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.plasma.plasmoid 2.0
+import org.kde.kirigami as Kirigami
+import org.kde.plasma.plasmoid
+import org.kde.plasma.networkmanagement as PlasmaNM
+import org.kde.networkmanager as NMQt
 
 MouseArea {
     id: root
@@ -30,11 +32,26 @@ MouseArea {
         }
     }
 
+    Text {
+        text: appletProxyModel.data(0, 27)
+        color: "red"
+        z: 1
+    }
+
     Kirigami.Icon {
         id: connectionIcon
 
+        property bool uploading: Plasmoid.configuration.txSpeed > 500
+        property bool downloading: Plasmoid.configuration.rxSpeed > 500
+
+        property string activityIcon: uploading && downloading ? "connected-activity" :
+                                      uploading ? "connected-uploading" :
+                                      downloading ? "connected-downloading" : "connected-noactivity"
+        property string state: networkStatus.connectivity === NMQt.NetworkManager.Portal ? "-limited" : ""
+        property string defaultIcon: Plasmoid.configuration.connectionState == PlasmaNM.Enums.Deactivated || !enabledConnections.wirelessEnabled ?
+                                       "network-wired-disconnected" : activityIcon + state
+
         anchors.fill: parent
-        source: root.iconName
-        active: parent.containsMouse
+        source: Plasmoid.configuration.useAlternateIcon || PlasmaNM.Configuration.airplaneModeEnabled ? root.iconName : defaultIcon
     }
 }

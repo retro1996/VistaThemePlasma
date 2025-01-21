@@ -11,6 +11,10 @@ SPDX-License-Identifier: LGPL-2.1-only OR LGPL-3.0-only OR LicenseRef-KDE-Accept
 
   <group name="General">
 
+    <entry name="useAlternateIcon" type="Bool">
+      <default>false</default>
+    </entry>
+
     <entry name="currentDetailsTab" type="String">
       <label>Last selected details tab (speed, details)</label>
       <default>speed</default>

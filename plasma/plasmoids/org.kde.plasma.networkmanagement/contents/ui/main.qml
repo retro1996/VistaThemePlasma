@@ -29,6 +29,21 @@ PlasmoidItem {
         || Plasmoid.location === PlasmaCore.Types.LeftEdge)
     property alias planeModeSwitchAction: planeAction
 
+    // Milestone 2 mode settings
+    property bool milestone2Mode: {
+        let item = this;
+        while (item.parent) {
+            item = item.parent;
+            if (item.milestone2Mode !== undefined) {
+                return item.milestone2Mode
+            }
+        }
+    }
+
+    onMilestone2ModeChanged: {
+        Plasmoid.configuration.useAlternateIcon = milestone2Mode;
+    }
+
     Plasmoid.title: "Open Network and Sharing Center"
     toolTipMainText: i18n("Networks")
     toolTipSubText: {
@@ -50,6 +65,8 @@ PlasmoidItem {
     Plasmoid.icon: inPanel ? connectionIconProvider.connectionIcon + "-symbolic" : connectionIconProvider.connectionTooltipIcon
     switchWidth: Kirigami.Units.iconSizes.small * 10
     switchHeight: Kirigami.Units.iconSizes.small * 10
+
+    expanded: true // create the dialog so the compact representation can access the speed data
 
     // Only exists because the default CompactRepresentation doesn't expose
     // a middle-click action.
@@ -159,6 +176,8 @@ PlasmoidItem {
 
     Component.onCompleted: {
         plasmoid.setInternalAction("configure", configureAction);
+        handler.requestScan();
+        mainWindow.expanded = false; // just in case
     }
 
     PlasmaNM.EnabledConnections {
@@ -182,11 +201,21 @@ PlasmoidItem {
         id: handler
     }
 
+    PlasmaNM.NetworkModel {
+        id: networkModel
+    }
+
+    PlasmaNM.AppletProxyModel {
+        id: appletProxyModel
+
+        sourceModel: networkModel
+    }
+
     Timer {
         id: scanTimer
         interval: 10200
         repeat: true
-        running: mainWindow.expanded && !PlasmaNM.Configuration.airplaneModeEnabled && !mainWindow.delayModelUpdates
+        running: !PlasmaNM.Configuration.airplaneModeEnabled && !mainWindow.delayModelUpdates
 
         onTriggered: handler.requestScan()
     }

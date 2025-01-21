@@ -237,14 +237,12 @@ PlasmaCore.ToolTipArea {
             implicitWidth: root.vertical && abstractItem.inVisibleLayout ? abstractItem.width : size
             implicitHeight: !root.vertical && abstractItem.inVisibleLayout ? abstractItem.height : size
             //Layout.topMargin: abstractItem.inHiddenLayout ? Kirigami.Units.mediumSpacing : 0
-
-            // fallback icon in case iconContainer fails to show the icon in Milestone 2 mode
             Kirigami.Icon {
                 anchors.fill: parent
 
-                visible: abstractItem.isPlasmoid
+                source: itemIcon
 
-                source: abstractItem.itemIcon
+                visible: isPlasmoid && root.milestone2Mode
             }
         }
         PlasmaComponents3.Label {

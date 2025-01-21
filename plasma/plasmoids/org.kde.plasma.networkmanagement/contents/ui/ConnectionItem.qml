@@ -22,12 +22,12 @@ ExpandableListItem {
     id: connectionItem
 
     property bool activating: ConnectionState === PlasmaNM.Enums.Activating
+    property bool activated: ConnectionState === PlasmaNM.Enums.Activated
     property bool deactivated: ConnectionState === PlasmaNM.Enums.Deactivated
     property bool passwordIsStatic: (SecurityType === PlasmaNM.Enums.StaticWep || SecurityType == PlasmaNM.Enums.WpaPsk ||
                                      SecurityType === PlasmaNM.Enums.Wpa2Psk || SecurityType == PlasmaNM.Enums.SAE)
     property bool predictableWirelessPassword: !Uuid && Type === PlasmaNM.Enums.Wireless && passwordIsStatic
-    property bool showSpeed: mainWindow.expanded &&
-                             ConnectionState === PlasmaNM.Enums.Activated &&
+    property bool showSpeed: ConnectionState === PlasmaNM.Enums.Activated &&
                              (Type === PlasmaNM.Enums.Wired ||
                               Type === PlasmaNM.Enums.Wireless ||
                               Type === PlasmaNM.Enums.Gsm ||
@@ -50,15 +50,6 @@ ExpandableListItem {
         }
 
     }//model.ConnectionIcon
-
-    // Hotfix to "hide" undefined items
-    Component.onCompleted: {
-        if(typeof model.ItemUniqueName == "undefined") {
-            height = -connectionView.spacing;
-            visible = false;
-        }
-    }
-
     title: model.ItemUniqueName
     subtitle: itemText()
     isBusy: false
@@ -178,7 +169,6 @@ ExpandableListItem {
                 }
 
                 mainWindow.expanded = true; // just in case.
-                connectionItem.collapse()
                 stack.push(showDetailscomponent, {
                     details: Qt.binding(() => ConnectionDetails),
                     connectionTitle: Qt.binding(() => model.ItemUniqueName)
@@ -370,10 +360,12 @@ ExpandableListItem {
         property double prevRxBytes: 0
         property double prevTxBytes: 0
         onTriggered: {
-            rxSpeed = prevRxBytes === 0 ? 0 : (RxBytes - prevRxBytes) * 1000 / interval
-            txSpeed = prevTxBytes === 0 ? 0 : (TxBytes - prevTxBytes) * 1000 / interval
-            prevRxBytes = RxBytes
-            prevTxBytes = TxBytes
+            rxSpeed = prevRxBytes === 0 ? 0 : (model.RxBytes - prevRxBytes) * 1000 / interval
+            txSpeed = prevTxBytes === 0 ? 0 : (model.TxBytes - prevTxBytes) * 1000 / interval
+            prevRxBytes = model.RxBytes
+            prevTxBytes = model.TxBytes
+            Plasmoid.configuration.rxSpeed = rxSpeed // Send the speed values to configuration for use in the icon. They remain in configuration until destruction
+            Plasmoid.configuration.txSpeed = txSpeed
         }
     }
 
@@ -448,6 +440,7 @@ ExpandableListItem {
         }
     }
 
+    onActivatedChanged: Plasmoid.configuration.connectionState = ConnectionState;
     onDeactivatedChanged: {
         /* Separator is part of section, which is visible only when available connections exist. Need to determine
            if there is a connection in use, to show Separator. Otherwise need to hide it from the top of the list.
@@ -459,6 +452,7 @@ ExpandableListItem {
             return
         }
         connectionView.showSeparator = false
+        Plasmoid.configuration.connectionState = ConnectionState
         return
     }
 
