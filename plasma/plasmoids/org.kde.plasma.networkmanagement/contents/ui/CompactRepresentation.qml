@@ -36,4 +36,8 @@ MouseArea {
         anchors.fill: parent
         source: root.iconName
     }
+
+    // Component.onCompleted: {
+    //     fullRepresentationItem.connectionModel = fullRepresentationItem.networkModelComponent.createObject(fullRepresentationItem)
+    // }
 }
