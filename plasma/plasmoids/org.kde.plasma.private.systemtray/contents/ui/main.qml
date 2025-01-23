@@ -742,12 +742,12 @@ ContainmentItem {
 
                 if(x <= 0) x += flyoutMargin;
                 if((x + dialog.width - screen.x) >= availScreen.width) {
-                    x = screen.x + availScreen.width - dialog.width - flyoutMargin;
+                    x = screen.x + availScreen.width - dialog.width;
 
                 }
                 if(y <= 0) y += flyoutMargin;
                 if((y + dialog.height - screen.y) >= availScreen.height) {
-                    y = screen.y + availScreen.height - dialog.height - flyoutMargin;
+                    y = screen.y + availScreen.height - dialog.height;
                 }
             }
             onYChanged: {
