@@ -33,8 +33,8 @@ ExpandableListItem {
                               Type === PlasmaNM.Enums.Gsm ||
                               Type === PlasmaNM.Enums.Cdma)
 
-    property real rxSpeed: 0
-    property real txSpeed: 0
+    property real rxSpeed: Plasmoid.configuration.rxSpeed
+    property real txSpeed: Plasmoid.configuration.txSpeed
 
     icon: {
         if(Type === PlasmaNM.Enums.Wired) {
@@ -204,7 +204,6 @@ ExpandableListItem {
         repeat: true
         interval: 2000
         running: true
-        triggeredOnStart: true
         // property int can overflow with the amount of bytes.
         property double prevRxBytes: 0
         property double prevTxBytes: 0

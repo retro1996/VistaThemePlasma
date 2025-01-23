@@ -57,8 +57,8 @@ PlasmoidItem {
         }
     }
 
-    property bool uploading: Plasmoid.configuration.txSpeed > 250
-    property bool downloading: Plasmoid.configuration.rxSpeed > 250
+    property bool uploading: Plasmoid.configuration.txSpeed > 500
+    property bool downloading: Plasmoid.configuration.rxSpeed > 500
 
     property string activityIcon: uploading && downloading ? "connected-activity" :
                                   uploading ? "connected-uploading" :
@@ -73,7 +73,7 @@ PlasmoidItem {
     switchWidth: Kirigami.Units.iconSizes.small * 10
     switchHeight: Kirigami.Units.iconSizes.small * 10
 
-    expanded: true // create the dialog so we can access the speed data
+    expanded: true
 
     // Only exists because the default CompactRepresentation doesn't expose
     // a middle-click action.
@@ -184,7 +184,8 @@ PlasmoidItem {
     Component.onCompleted: {
         plasmoid.setInternalAction("configure", configureAction);
         handler.requestScan();
-        mainWindow.expanded = false; // just in case
+        mainWindow.expanded = true;
+        mainWindow.expanded = false;
     }
 
     PlasmaNM.EnabledConnections {

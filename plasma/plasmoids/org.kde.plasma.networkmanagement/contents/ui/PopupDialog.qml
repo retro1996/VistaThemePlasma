@@ -1,11 +1,17 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as QQC2
 import QtQuick.Layouts 1.2
+
 import org.kde.kirigami 2.20 as Kirigami
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.extras 2.0 as PlasmaExtras
 import org.kde.plasma.networkmanagement as PlasmaNM
 import org.kde.plasma.plasmoid 2.0
+
+
+import org.kde.ksvg as KSvg
+import org.kde.kirigami as Kirigami
+
 
 PlasmaExtras.Representation {
     id: full
@@ -31,19 +37,70 @@ PlasmaExtras.Representation {
 
     header: PlasmaExtras.PlasmoidHeading {
         focus: true
-        contentItem: RowLayout {
+        contentItem: ColumnLayout {
             Layout.fillWidth: true
 
-            Toolbar {
-                id: toolbar
+            RowLayout {
                 Layout.fillWidth: true
-                hasConnections: connectionListPage.count > 0
-                visible: stack.depth === 1
+
+                Toolbar {
+                    id: toolbar
+                    Layout.fillWidth: true
+                    hasConnections: connectionListPage.count > 0
+                    visible: stack.depth === 1
+                }
+
+                Loader {
+                    sourceComponent: stack.currentItem?.headerItems
+                    visible: !!item
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                }
+
+                MouseArea {
+                    id: cfgBtn
+
+                    property bool showConfig: false
+
+                    Layout.preferredWidth: 20
+                    Layout.preferredHeight: 20
+
+                    hoverEnabled: true
+                    onClicked: showConfig = !showConfig
+
+                    KSvg.FrameSvgItem {
+                        anchors.fill: parent
+
+                        imagePath: "widgets/button"
+                        prefix: parent.containsPress || parent.showConfig ? "toolbutton-pressed" : "toolbutton-hover"
+
+                        visible: parent.containsMouse || parent.showConfig
+                    }
+
+                    Kirigami.Icon {
+                        width: 16
+                        height: width
+
+                        anchors.centerIn: parent
+
+                        source: "configure"
+                    }
+                }
             }
 
-            Loader {
-                sourceComponent: stack.currentItem?.headerItems
-                visible: !!item
+            QQC2.CheckBox {
+                id: useAlternateIcon
+
+                Layout.fillWidth: true
+                Layout.leftMargin: 2
+
+                text: "Use alternate icon"
+                visible: cfgBtn.showConfig
+                checked: Plasmoid.configuration.useAlternateIcon
+
+                onCheckedChanged: Plasmoid.configuration.useAlternateIcon = checked
             }
         }
     }
@@ -124,38 +181,16 @@ PlasmaExtras.Representation {
             }
         }
     }
-    /*PlasmaExtras.Heading {
-     *        Layout.fillWidth: true
-     *        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-     *        horizontalAlignment: Qt.AlignHCenter
-     *        text: i18nc("@action:button", "Return to Network Connections")
-     *        visible: stack.depth > 1
-     *        color: "#0066cc" //heading_ma.containsPress ? "#90e7ff" : (heading_ma.containsMouse ? "#b6ffff" : Kirigami.Theme.textColor)
-     *        font.underline: heading_ma.containsMouse
-     *        level: 5
-     *        MouseArea {
-     *            id: heading_ma
-     *            anchors.fill: parent
-     *            hoverEnabled: true
-     *            onClicked: {
-     *                stack.pop()
-}
-cursorShape: Qt.PointingHandCursor
-z: 5
-}
-}*/
 
     Connections {
         target: mainWindow
         function onExpandedChanged(expanded) {
             handler.requestScan();
-            if (full.connectionModel) {
+            if(full.connectionModel) {
                 full.connectionModel.destroy();
                 full.connectionModel = null;
             }
-            if (!full.connectionModel) {
-                full.connectionModel = networkModelComponent.createObject(full);
-            }
+            if(!full.connectionModel) full.connectionModel = networkModelComponent.createObject(full);
         }
     }
 }
