@@ -139,6 +139,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### Taskbar (Vista)
 
 <img src="screenshots/contextmenu-vista.png">
+<img src="screenshots/window_preview-vista.png">
 
 ### Taskbar (Milestone 2)
 
