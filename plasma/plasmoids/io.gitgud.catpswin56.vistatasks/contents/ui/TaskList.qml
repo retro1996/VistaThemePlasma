@@ -49,34 +49,14 @@ ListView {
     Transition {
         id: taskAnimation
         NumberAnimation {
-            properties: "x,y,width,height"
+            properties: "x,y"
             easing.type: Easing.OutQuad
-            duration: transitionDuration
+            duration: 200
         }
     }
     //populate: taskAnimation
     move: taskAnimation
-    /*removeDisplaced: Transition {
-        NumberAnimation {
-            properties: "x,y,width,height"
-            easing.type: Easing.OutQuad
-            duration: transitionDuration
-        }
-    }
-    moveDisplaced: Transition {
-        NumberAnimation {
-            properties: "x,y,width,height"
-            easing.type: Easing.OutQuad
-            duration: transitionDuration
-        }
-    }
-    addDisplaced: Transition {
-        NumberAnimation {
-            properties: "x,y,width,height"
-            easing.type: Easing.OutQuad
-            duration: transitionDuration
-        }
-    }*/
+
     displaced: taskAnimation
     remove: Transition {
             NumberAnimation { properties: tasks.iconsOnly ? "opacity" : ""; to: 0; duration: transitionDuration; easing.type: Easing.OutQuad; }

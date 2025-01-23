@@ -14,7 +14,7 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.kcmutils as KCM
 
 KCM.SimpleKCM {
-    readonly property bool iconOnly: Plasmoid.configuration.showLabels //Plasmoid.pluginName === "org.kde.plasma.icontasks"
+    readonly property bool iconOnly: false
 
     property bool cfg_showLabels: true // TODO: remove this
 
@@ -22,7 +22,6 @@ KCM.SimpleKCM {
     property alias cfg_disableHottracking: disableHottracking.checked
     property alias cfg_disableJumplists: disableJumplists.checked
     property alias cfg_draggingEnabled: draggingEnabled.checked
-    property alias cfg_enableAnimations: enableAnimations.checked
     property alias cfg_showMore: showMore.checked
 
     component CustomGroupBox: GroupBox {
@@ -77,10 +76,6 @@ KCM.SimpleKCM {
             id: showMore
             enabled: disableJumplists.checked
             text: i18n("Show more items in context menus")
-        }
-        CheckBox {
-            id: enableAnimations
-            text: i18n("Enable extra animations")
         }
         CheckBox {
             id: draggingEnabled

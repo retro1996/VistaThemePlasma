@@ -53,9 +53,6 @@ Item {
     Behavior on implicitWidth {
         NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
     }
-    Behavior on implicitHeight {
-        NumberAnimation { duration: animationDuration; easing.type: Easing.OutQuad }
-    }
 
     SequentialAnimation {
         id: addLabelsAnimation
@@ -63,17 +60,10 @@ Item {
         PropertyAction { target: task; property: "visible"; value: true }
         PropertyAction { target: task; property: "state"; value: "" }
     }
-    SequentialAnimation {
-        id: removeLabelsAnimation
-        NumberAnimation { target: task; properties: "width"; to: 0; duration: !Plasmoid.configuration.enableAnimations ? 0 : animationDuration; easing.type: Easing.OutQuad }
-        PropertyAction { target: task; property: "ListView.delayRemove"; value: false }
-    }
 
     required property var model
     required property int index
     required property Item tasksRoot
-
-    readonly property int animationDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
 
     readonly property int pid: model.AppPid
     readonly property string appName: model.AppName
@@ -114,42 +104,17 @@ Item {
 
     readonly property bool highlighted: dragArea.containsMouse
 
-    readonly property bool animateLabel: (!model.IsStartup && !model.IsLauncher) && !tasksRoot.iconsOnly
+    readonly property bool animateLabel: !model.IsStartup && !model.IsLauncher
     readonly property bool shouldHideOnRemoval: model.IsStartup || model.IsLauncher
-    ListView.onRemove: {
-            if (tasksRoot.containsMouse && index != tasksModel.count &&
-                task.model.WinIdList.length > 0 &&
-                taskClosedWithMouseMiddleButton.indexOf(item.winIdList[0]) > -1) {
-                tasksRoot.needLayoutRefresh = true;
-            }
-            taskClosedWithMouseMiddleButton = [];
-            if(shouldHideOnRemoval) {
-                taskList.add = null;
-                taskList.resetAddTransition.start();
-            }
-            if(animateLabel) { // Closing animation for tasks with labels
-                taskList.displaced = null;
-                ListView.delayRemove = true;
-                taskList.resetTransition.start();
-                removeLabelsAnimation.start();
-            }
-    }
+
     ListView.onAdd: {
-        if(model.IsStartup && !taskInLauncherList(appId)) {
-            task.implicitWidth = 0;
-            task.visible = false;
-        }
-        if(shouldHideOnRemoval) {
-            taskList.add = null;
-            taskList.resetAddTransition.start();
-        }
-        if(animateLabel) {
-            task.visible = false;
-            task.state = "animateLabels";
-            addLabelsAnimation.start();
-        }
+        task.implicitWidth = 0;
+        task.visible = false;
+        task.state = "animateLabels";
+        addLabelsAnimation.start();
         layoutDelay.start()
     }
+
     states: [
         State {
             name: "animateLabels"

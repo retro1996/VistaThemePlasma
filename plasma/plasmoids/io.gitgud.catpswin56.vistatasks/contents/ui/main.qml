@@ -467,19 +467,12 @@ PlasmoidItem {
         TaskList {
             id: taskList
 
-            Rectangle {
-                id: testRe
-                color: "red"
-                opacity: 0
-                anchors.fill: parent
-                z: -1
-            }
-
             anchors {
                 left: parent.left
                 leftMargin: 1
                 right: parent.right
             }
+
             height: 30
             orientation: {
                 if(tasks.vertical) {
@@ -514,25 +507,6 @@ PlasmoidItem {
                 tasksRoot: tasks
             }
             model: tasksModel
-            /*model: KItemModels.KSortFilterProxyModel {
-             *       sourceModel: tasksModel
-             *
-             *       filterRowCallback: function(source_row, source_parent) {
-             *           const IsStartup = sourceModel.KItemModels.KRoleNames.role("IsStartup");
-             *           const IsLauncher = sourceModel.KItemModels.KRoleNames.role("AppId");
-             *           const launcher = sourceModel.data(sourceModel.index(source_row, 0, source_parent), IsLauncher);
-             *           const startup = sourceModel.data(sourceModel.index(source_row, 0, source_parent), IsStartup);
-             *           var inLauncherList = false;
-             *           for(var i = 0; i < tasksModel.launcherList.length; i++) {
-             *               if(sourceModel.launcherList[i].includes(launcher)) {
-             *                   inLauncherList = true;
-             *                   break;
-        }
-        }
-        return !(startup && !inLauncherList); // Removes startups that do not belong to launchers
-        }
-
-        }*/
         }
     }
 
