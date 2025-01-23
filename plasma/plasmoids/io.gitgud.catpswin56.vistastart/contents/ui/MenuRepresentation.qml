@@ -66,7 +66,7 @@ PlasmaCore.Dialog {
 
 	property color leftPanelBackgroundColor: "white"
 	property color leftPanelBorderColor: "#44000000"
-	property color leftPanelSeparatorColor: "#d6e5f5"
+	property color leftPanelSeparatorColor: "#e2e2e2"
 	property color searchPanelSeparatorColor: "#cddbea"
 	property color searchPanelBackgroundColor: "#f1f5fb"
 
@@ -371,7 +371,7 @@ PlasmaCore.Dialog {
 
 				text: model.display + "      "
 				icon: model.decoration
-				onClicked: fileUsageModel.trigger(index)
+				onClicked: fileUsageModel.trigger(index, "", null)
 			}
 			onObjectAdded: (index, object) => fileUsageMenu.addMenuItem(object);
 			onObjectRemoved: (index, object) => fileUsageMenu.removeMenuItem(object)
@@ -704,13 +704,16 @@ PlasmaCore.Dialog {
 				focus: true
 				Layout.topMargin: Kirigami.Units.mediumSpacing + Kirigami.Units.smallSpacing
 				Layout.bottomMargin: Kirigami.Units.mediumSpacing-1
+				Layout.leftMargin: Kirigami.Units.smallSpacing + 2
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				Layout.preferredHeight: Kirigami.Units.smallSpacing * 7 - Kirigami.Units.smallSpacing
 
-				background:	KSvg.FrameSvgItem {
+				background: null
+
+				KSvg.FrameSvgItem {
 					anchors.fill: parent
-					anchors.left: parent.left
+					anchors.leftMargin: -Kirigami.Units.smallSpacing - 2
 					imagePath: Qt.resolvedUrl("svgs/lineedit.svg")
 					prefix: "base"
 
@@ -720,7 +723,7 @@ PlasmaCore.Dialog {
 						anchors.bottomMargin: 2
 						font.italic: true
 						color: searchFieldPlaceholderColor
-						text: i18n(" Start search")
+						text: i18n("Start search")
 						verticalAlignment: Text.AlignVCenter
 						visible: !searching
 						style: Text.Outline
@@ -741,12 +744,18 @@ PlasmaCore.Dialog {
 							rightMargin: Kirigami.Units.smallSpacing+1
 						}
 					}
+
+					z: -1
 				}
+
 				inputMethodHints: Qt.ImhNoPredictiveText
 				clearButtonShown: false
 				text: ""
 				color: "black"
-				verticalAlignment: TextInput.AlignTop
+				verticalAlignment: TextInput.AlignVCenter
+				leftInset: Kirigami.Units.smallSpacing*2
+				bottomInset: leftInset
+				clip: false
 
 				onTextChanged: {
 					searchView.onQueryChanged();
