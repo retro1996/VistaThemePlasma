@@ -49,6 +49,12 @@ Item {
         spacing: 17
 
         Kirigami.Icon {
+            property bool showDropdown: {
+                if(type == "sink-output") return paSinkFilterModel.count > 1
+                if(type == "sink-input") return paSourceFilterModel.count > 1
+                else return false
+            }
+
             Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
@@ -62,18 +68,18 @@ Item {
                 anchors.margins: -Kirigami.Units.smallSpacing
 
                 hoverEnabled: true
-                onClicked: contextMenu.openRelative();
+                onClicked: deviceListMenu.openRelative();
 
-                visible: type == "sink-output" || type == "sink-input"
+                visible: (type == "sink-output" || type == "sink-input") && showDropdown
             }
 
             KSvg.FrameSvgItem {
                 anchors.fill: iconMa
 
                 imagePath: "widgets/button"
-                prefix: iconMa.containsPress || contextMenu.visible ? "toolbutton-pressed" : "toolbutton-hover"
+                prefix: iconMa.containsPress || deviceListMenu.state == 1 ? "toolbutton-pressed" : "toolbutton-hover"
 
-                visible: iconMa.containsMouse || contextMenu.visible
+                visible: iconMa.containsMouse || deviceListMenu.state == 1
 
                 z: -1
             }
@@ -83,8 +89,8 @@ Item {
             id: label
 
             property bool showDropdown: {
-                if(type == "sink-output") return paSinkFilterModel.count > 1
-                if(type == "sink-input") return paSourceFilterModel.count > 1
+                if(type == "sink-output") return contextMenu.hasContent
+                if(type == "sink-input") return contextMenu.hasContent
                 else return false
             }
 
@@ -118,18 +124,18 @@ Item {
                 width: textMetrics.advanceWidth + dropdownArrow.width + Kirigami.Units.smallSpacing * 2
 
                 hoverEnabled: true
-                onClicked: deviceListMenu.openRelative();
+                onClicked: contextMenu.openRelative();
 
-                visible: parent.showDropdown
+                visible: label.showDropdown
             }
 
             KSvg.FrameSvgItem {
                 anchors.fill: labelMa
 
                 imagePath: "widgets/button"
-                prefix: labelMa.containsPress || deviceListMenu.status == 1 ? "toolbutton-pressed" : "toolbutton-hover"
+                prefix: labelMa.containsPress || contextMenu.visible ? "toolbutton-pressed" : "toolbutton-hover"
 
-                visible: (labelMa.containsMouse && parent.showDropdown) || deviceListMenu.status == 1
+                visible: labelMa.containsMouse || contextMenu.visible
 
                 z: -1
             }
@@ -145,12 +151,12 @@ Item {
                 }
 
                 width: 6
-                height: 5
+                height: 4
 
                 imagePath: Qt.resolvedUrl("svgs/control.svg")
                 elementId: "dropdown"
 
-                visible: parent.showDropdown
+                visible: label.showDropdown
             }
         }
 
@@ -286,7 +292,7 @@ Item {
 
     PlasmaExtras.Menu {
         id: deviceListMenu
-        visualParent: labelMa
+        visualParent: iconMa
         placement: PlasmaExtras.Menu.BottomPosedLeftAlignedPopup;
     }
 
@@ -296,9 +302,9 @@ Item {
         cardModel: main.paCardModel
         itemType: {
             switch (item.type) {
-            case "sink-input":
-                return ListItemMenu.Sink;
             case "sink-output":
+                return ListItemMenu.Sink;
+            case "sink-input":
                 return ListItemMenu.SinkInput;
             case "source":
                 return ListItemMenu.Source;
@@ -310,7 +316,7 @@ Item {
             if (item.type == "sink-output") return main.paSinkFilterModel
             else if (item.type == "sink-input") return main.paSourceFilterModel
         }
-        visualParent: iconMa
+        visualParent: labelMa
     }
 
     function setVolumeByPercent(targetPercent) {
