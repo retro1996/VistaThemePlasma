@@ -94,6 +94,8 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### System Tray (Vista)
 
 <img src="screenshots/battery.png">
+<img src="screenshots/network.png">
+<img src="screenshots/volume.png">
 <img src="screenshots/system_tray-vista.png">
 
 ### System Tray (Milestone 2)
