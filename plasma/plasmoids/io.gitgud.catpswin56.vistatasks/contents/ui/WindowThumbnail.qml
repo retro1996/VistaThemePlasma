@@ -32,8 +32,8 @@ MouseArea {
     property var windows: root.windows
     property var minimized: root.minimized
 
-    width: dummyThumbnail.paintedWidth + Kirigami.Units.smallSpacing * 3
-    height: dummyThumbnail.paintedHeight + Kirigami.Units.smallSpacing * 3
+    width: thumbnailLoader.sourceComponent == appIcon ? 174 : dummyThumbnail.paintedWidth + Kirigami.Units.smallSpacing * 3
+    height: thumbnailLoader.sourceComponent == appIcon ? 92 : dummyThumbnail.paintedHeight + Kirigami.Units.smallSpacing * 3
 
     hoverEnabled: true
     propagateComposedEvents: true

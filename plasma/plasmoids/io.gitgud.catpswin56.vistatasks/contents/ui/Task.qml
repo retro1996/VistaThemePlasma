@@ -1451,7 +1451,6 @@ TaskManagerApplet.SmartLauncherItem { }
                 tasksRoot.setRequestedInhibitDnd(false);
                 tasksRoot.dragItem = null;
             }
-
         }
         drag.smoothed: false
         drag.threshold: 0
@@ -1495,10 +1494,11 @@ TaskManagerApplet.SmartLauncherItem { }
             dragThreshold = Qt.point(-1,-1);
         }
         onReleased: event => {
-            if(held) {
+            if(held && Plasmoid.configuration.draggingEnabled) {
                 sendItemBack();
             } else {
                 leftTapHandler.leftClick();
+                held = false;
                 dragThreshold = Qt.point(-1,-1);
             }
             event.accepted = false;
