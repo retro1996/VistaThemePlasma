@@ -259,7 +259,7 @@ ContainmentItem {
             sourceModel: Plasmoid.systemTrayModel
             filterRoleName: "effectiveStatus"
             function filterItemId(itemId) {
-                return !root.milestone2Mode && (itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer")
+                return !root.milestone2Mode && (itemId == "io.gitgud.wackyideas.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer")
             }
             filterRowCallback: (sourceRow, sourceParent) => {
                 let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
@@ -339,7 +339,7 @@ ContainmentItem {
                 filterRoleName: "effectiveStatus"
                 function filterItemId(itemId) {
                     if(root.milestone2Mode) return false
-                    else return itemId == "org.kde.plasma.battery" || itemId == "org.kde.plasma.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer"
+                    else return itemId == "io.gitgud.wackyideas.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer"
                 }
                 filterRowCallback: (sourceRow, sourceParent) => {
                     let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);
@@ -415,10 +415,10 @@ ContainmentItem {
                 filterRoleName: "itemId"
                 function isEnabled(item) {
                     switch (item) {
-                        case ("org.kde.plasma.battery"):
+                        case ("io.gitgud.wackyideas.battery"):
                             return Plasmoid.configuration.batteryEnabled;
                             break;
-                        case ("org.kde.plasma.networkmanagement"):
+                        case ("io.gitgud.catpswin56.networkmanagement"):
                             return Plasmoid.configuration.networkEnabled;
                             break;
                         case ("io.gitgud.catpswin56.volumemixer"):

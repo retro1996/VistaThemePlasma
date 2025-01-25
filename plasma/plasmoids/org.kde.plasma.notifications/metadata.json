@@ -62,7 +62,7 @@
             "desktop"
         ],
         "Icon": "preferences-desktop-notification-bell",
-        "Id": "io.gitgud.wackyideas.notifications",
+        "Id": "org.kde.plasma.notifications",
         "License": "GPL-2.0+",
         "Name": "Action Center",
         "Name[ar]": "إخطارات",
