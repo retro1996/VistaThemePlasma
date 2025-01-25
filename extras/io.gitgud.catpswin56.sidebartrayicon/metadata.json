@@ -1,0 +1,22 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "catpswin56"
+            }
+        ],
+        "Category": "Miscellaneous",
+        "EnabledByDefault": true,
+        "FormFactors": [
+            "desktop"
+        ],
+        "Icon": "sidebar",
+        "Id": "io.gitgud.catpswin56.sidebartrayicon",
+        "License": "GPL-2.0+",
+        "Name": "Sidebar tray icon",
+        "Website": "https://gitgud.io/catpswin56/vistathemeplasma/"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-NotificationAreaCategory": "SystemServices"
+}
