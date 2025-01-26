@@ -96,5 +96,5 @@ if (langIds.indexOf(languageId) != -1) {
 }
 
 panel.addWidget("org.kde.plasma.systemtray")
-panel.addWidget("io.gitgud.wackyideas.digitalclocklite")
+panel.addWidget("io.gitgud.catpswin56.digitalclocklite")
 
