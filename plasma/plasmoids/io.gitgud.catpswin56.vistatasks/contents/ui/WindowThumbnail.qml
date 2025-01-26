@@ -32,8 +32,8 @@ MouseArea {
     property var windows: root.windows
     property var minimized: root.minimized
 
-    width: thumbnailLoader.sourceComponent == appIcon ? 174 : dummyThumbnail.paintedWidth + Kirigami.Units.smallSpacing * 3
-    height: thumbnailLoader.sourceComponent == appIcon ? 92 : dummyThumbnail.paintedHeight + Kirigami.Units.smallSpacing * 3
+    width: thumbnailLoader.sourceComponent == appIcon ? 174 + Kirigami.Units.smallSpacing * 3 : dummyThumbnail.paintedWidth + Kirigami.Units.smallSpacing * 3
+    height: thumbnailLoader.sourceComponent == appIcon ? 92 + Kirigami.Units.smallSpacing * 3 : dummyThumbnail.paintedHeight + Kirigami.Units.smallSpacing * 3
 
     hoverEnabled: true
     propagateComposedEvents: true
@@ -78,7 +78,10 @@ MouseArea {
         Loader {
             id: thumbnailLoader
 
-            anchors.fill: parent
+            anchors.centerIn: parent
+
+            height: sourceComponent != appIcon ? 172 : 92
+            width: sourceComponent != appIcon ? 172 : 174
 
             active: true
             asynchronous: true
@@ -177,13 +180,31 @@ MouseArea {
 
                         Rectangle {
                             anchors.fill: parent
-                            anchors.margins: -1
+                            anchors.topMargin: -1
+                            anchors.leftMargin: -1
 
                             color: "transparent"
 
                             border.width: 1
                             border.color: "black"
-                            radius: 1
+
+                            opacity: 0.5
+                        }
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.topMargin: -2
+                            anchors.bottomMargin: -1
+                            anchors.rightMargin: -1
+                            anchors.leftMargin: -2
+
+                            color: "transparent"
+
+                            border.width: 1
+                            border.color: "white"
+                            radius: 2
+
+                            opacity: 0.5
                         }
                     }
 
