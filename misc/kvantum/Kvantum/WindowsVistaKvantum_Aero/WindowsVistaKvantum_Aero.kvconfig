@@ -184,17 +184,18 @@ text.margin.bottom=0
 text.normal.color=#000000c8
 
 [DockTitle]
-interior.element=mdititle
-frame.element=mdititle
+#inherits=PanelButtonCommand
+interior.element=btn
+frame.element=btn
 frame=true
 interior=true
 text.normal.color=black
 text.focus.color=black
 text.bold=false
-frame.top=6
-frame.bottom=0
-frame.left=6
-frame.right=6
+frame.top=3
+frame.bottom=3
+frame.left=3
+frame.right=3
 
 [GenericFrame]
 #inherits=PanelButtonCommand
