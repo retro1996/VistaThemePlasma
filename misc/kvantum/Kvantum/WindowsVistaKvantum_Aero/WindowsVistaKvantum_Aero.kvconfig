@@ -1,5 +1,5 @@
 [%General]
-author=DrGordBord+WackyIdeas
+author=DrGordBord+WackyIdeas+catpswin56
 comment=Port Of Windows Vista theme to modern KDE
 left_tabs=true
 min_width=16
@@ -184,18 +184,17 @@ text.margin.bottom=0
 text.normal.color=#000000c8
 
 [DockTitle]
-#inherits=PanelButtonCommand
-interior.element=btn
-frame.element=btn
+interior.element=mdititle
+frame.element=mdititle
 frame=true
 interior=true
 text.normal.color=black
 text.focus.color=black
 text.bold=false
-frame.top=3
-frame.bottom=3
-frame.left=3
-frame.right=3
+frame.top=6
+frame.bottom=0
+frame.left=6
+frame.right=6
 
 [GenericFrame]
 #inherits=PanelButtonCommand
@@ -212,10 +211,10 @@ frame.right=4
 #inherits=PanelButtonCommand
 frame.element=ledit
 interior.element=ledit
-frame.top=4
-frame.bottom=4
-frame.left=4
-frame.right=4
+frame.top=3
+frame.bottom=3
+frame.left=3
+frame.right=3
 text.margin.top=0
 text.margin.bottom=0
 text.margin.left=0
