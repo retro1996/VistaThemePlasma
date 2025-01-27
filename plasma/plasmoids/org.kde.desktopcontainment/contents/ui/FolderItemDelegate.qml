@@ -393,21 +393,6 @@ Item {
                         visible: Plasmoid.configuration.textShadows
 
                     }
-                    /*PlasmaComponents.Label { // One is enough
-                        id: behind_right
-                        z: -1
-                        anchors.fill: parent
-                        anchors.rightMargin: -1
-                        anchors.leftMargin: 1
-                        color: "#d9000000"
-                        renderType: Text.NativeRendering
-                        font.hintingPreference: Font.PreferFullHinting
-                        text: parent.text
-                        elide: Text.ElideRight
-                        maximumLineCount: parent.maximumLineCount
-                        wrapMode: (maximumLineCount === 1) ? Text.NoWrap : Text.Wrap
-                        horizontalAlignment: Text.AlignHCenter
-                    }*/
                     PlasmaComponents.Label {
                         id: front
                         z: -2
@@ -462,9 +447,8 @@ Item {
 
                     color: {
                         if (Plasmoid.isContainment) {
-                            if (model.selected && Plasmoid.configuration.selectionStyle) {
-                                return "gray"
-                            } else return "white"
+                            if (model.selected && Plasmoid.configuration.selectionStyle) return "gray"
+                            else return "white"
                         }
 
                         return Kirigami.Theme.textColor;

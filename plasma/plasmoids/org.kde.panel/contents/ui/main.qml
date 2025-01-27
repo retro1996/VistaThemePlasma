@@ -465,7 +465,7 @@ ContainmentItem {
                 anchors.bottom: parent.bottom
                 anchors.top: parent.top
 
-                width: parent.clockItem + parent.userTileItem + parent.sysTrayItem + parent.wmpToolbarItem + Kirigami.Units.smallSpacing*4
+                width: parent.clockItem + parent.sysTrayItem + parent.wmpToolbarItem + Kirigami.Units.smallSpacing*4
 
                 imagePath: "widgets/panel-background"
                 visible: true
@@ -529,17 +529,8 @@ ContainmentItem {
             // Digital clock lite
             property int clockItem: {
                 for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
-                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.wackyideas.digitalclocklite") {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.digitalclocklite") {
                         return currentLayout.visibleChildren[i].applet.width;
-                    }
-                }
-                return 0
-            }
-            // User tile
-            property int userTileItem: {
-                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
-                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.usertile") {
-                        return currentLayout.visibleChildren[i].applet.width + 6;
                     }
                 }
                 return 0
@@ -574,7 +565,7 @@ ContainmentItem {
             // Sevenstart
             property int sevenstartItem: {
                 for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
-                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.vistastart" || currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.startscreenpearl") {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.vistastart") {
                         return currentLayout.visibleChildren[i].applet.width;
                     }
                 }

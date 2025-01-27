@@ -7,18 +7,18 @@
 */
 
 import QtQuick
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts
 import Qt5Compat.GraphicalEffects
 
-import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
-import org.kde.ksvg 1.0 as KSvg
+import org.kde.ksvg as KSvg
 import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
-import org.kde.kirigami 2.20 as Kirigami
+import org.kde.kirigami as Kirigami
 
-import org.kde.private.desktopcontainment.folder 0.1 as Folder
+import org.kde.private.desktopcontainment.folder as Folder
 
-import org.kde.plasma.private.containmentlayoutmanager 1.0 as ContainmentLayoutManager
+import org.kde.plasma.private.containmentlayoutmanager as ContainmentLayoutManager
 
 import "code/FolderTools.js" as FolderTools
 
@@ -351,8 +351,8 @@ ContainmentItem {
             width: 150
             gradient: Gradient {
                 orientation: Gradient.Horizontal
-                GradientStop { position: 1.0; color: "black" }
                 GradientStop { position: 0.0; color: "transparent" }
+                GradientStop { position: 1.0; color: "black" }
             }
             opacity: 0.8
 
