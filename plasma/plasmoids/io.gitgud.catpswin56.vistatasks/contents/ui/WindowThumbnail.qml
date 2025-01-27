@@ -40,7 +40,7 @@ MouseArea {
 
     Timer {
         id: primaryCloseTimer
-        interval: 175
+        interval: 0
         running: !root.taskHovered && root.mainItem == thumbnailRoot
         onTriggered: {
             root.destroy();

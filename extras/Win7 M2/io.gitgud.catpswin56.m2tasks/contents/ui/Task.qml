@@ -1468,7 +1468,7 @@ TaskManagerApplet.SmartLauncherItem { }
                 PlasmaComponents3.Label {
                     id: appName
 
-                    visible: label.visible && Plasmoid.configuration.showAppName && text != ""
+                    visible: label.visible && Plasmoid.configuration.showAppName && model.AppName != ""
 
                     Layout.topMargin: ((dragArea.containsPress || dragArea.held) ? 1 : 0)
                     Layout.fillWidth: true
@@ -1583,6 +1583,8 @@ TaskManagerApplet.SmartLauncherItem { }
         property point dragThreshold: Qt.point(-1,-1);
 
         onHeldChanged: {
+            if(toolTip) toolTip.destroy();
+
             if(held) {
                 tasksRoot.setRequestedInhibitDnd(true);
                 tasksRoot.dragItem = task;

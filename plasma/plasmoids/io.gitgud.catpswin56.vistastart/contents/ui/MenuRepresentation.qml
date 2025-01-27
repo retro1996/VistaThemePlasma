@@ -352,15 +352,13 @@ PlasmaCore.Dialog {
 				onClicked: filteredMenuItemsModel.trigger(index)
 			}
 			onObjectAdded: (index, object) => {
-				if(object.model.decoration != "system-shutdown") {
-					if(index == 3 || index == 5)
-						var separator = Qt.createQmlObject(`
-						import org.kde.plasma.extras as PlasmaExtras
+				if(index == 3 || index == 5)
+					var separator = Qt.createQmlObject(`
+					import org.kde.plasma.extras as PlasmaExtras
 
-						PlasmaExtras.MenuItem { separator: true }
-						`, contextMenu);
-					contextMenu.addMenuItem(object);
-				}
+					PlasmaExtras.MenuItem { separator: true }
+					`, contextMenu);
+				contextMenu.addMenuItem(object);
 			}
 			onObjectRemoved: (index, object) => contextMenu.removeMenuItem(object)
 		}
