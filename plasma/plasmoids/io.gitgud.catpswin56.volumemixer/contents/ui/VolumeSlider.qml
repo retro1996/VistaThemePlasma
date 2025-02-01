@@ -13,6 +13,9 @@ import org.kde.plasma.components as PC3
 import org.kde.ksvg as KSvg
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.private.volume
+import Qt5Compat.GraphicalEffects
+import org.kde.plasma.core as PlasmaCore
+
 
 // Audio volume slider. Value represents desired volume level in
 // device-specific units, while volume property reports current volume level
@@ -90,6 +93,40 @@ PC3.Slider {
             }
         }     
     }
+
+    ToolTip {
+        x: -Math.floor(width + Kirigami.Units.smallSpacing / 2)
+        y: Math.floor(-parent.height / 2)
+        parent: control.handle
+        visible: control.pressed
+        text: Math.round(control.value / PulseAudio.NormalVolume * 100.0)
+        delay: 0
+    }
+
+    handle: KSvg.SvgItem {
+        id: volumeHandle
+        implicitWidth: 18
+        implicitHeight: 10
+        x: Math.round(1 + control.leftPadding + (horizontal ? control.visualPosition * (control.availableWidth - width) : (control.availableWidth - width) / 2))
+        y: Math.round(control.topPadding + (horizontal ? (control.availableHeight - height) / 2 : control.visualPosition * (control.availableHeight - height)))
+
+        imagePath: Qt.resolvedUrl("svgs/control.svg")
+        elementId: {
+            if(control.pressed) return "scursor-pressed";
+            if(control.hovered) return "scursor-focused";
+            return "scursor-normal";
+        }
+        layer.enabled: true
+        layer.effect: DropShadow {
+            horizontalOffset: 1
+            verticalOffset: 1
+            color: "#30000000"
+            radius: 0
+            cached: true
+            samples: 3
+        }
+    }
+
 
     background: Item {
         anchors {

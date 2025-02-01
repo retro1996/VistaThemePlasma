@@ -56,22 +56,44 @@ Item {
             }
 
             Layout.alignment: Qt.AlignHCenter
+            Layout.leftMargin: iconMa.containsPress ? 1 : 0
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
 
             source: type == "sink-output" ? "audio-speakers" : (type == "sink-input" ? "audio-input-microphone" : item.iconName)
+
+            Timer {
+                id: deviceTooltipTimer
+                interval: Kirigami.Units.longDuration*2
+                onTriggered: {
+                    if(iconMa.containsMouse) {
+                        deviceTooltip.showToolTip();
+                    } else {
+                        deviceTooltip.hideToolTip();
+                    }
+                }
+            }
 
             MouseArea {
                 id: iconMa
 
                 anchors.fill: parent
                 anchors.margins: -Kirigami.Units.smallSpacing
+                anchors.leftMargin: -Kirigami.Units.smallSpacing - (containsPress ? 1 : 0)
+                anchors.rightMargin: -Kirigami.Units.smallSpacing + (containsPress ? 1 : 0)
 
                 hoverEnabled: true
-                onClicked: deviceListMenu.openRelative();
+                onClicked: {
+                    deviceListMenu.openRelative();
+                    deviceTooltip.hideImmediately();
+                }
+                onContainsMouseChanged: {
+                    deviceTooltipTimer.start();
+                }
 
                 visible: (type == "sink-output" || type == "sink-input") && showDropdown
             }
+
 
             KSvg.FrameSvgItem {
                 anchors.fill: iconMa
@@ -79,7 +101,22 @@ Item {
                 imagePath: "widgets/button"
                 prefix: iconMa.containsPress || deviceListMenu.state == 1 ? "toolbutton-pressed" : "toolbutton-hover"
 
-                visible: iconMa.containsMouse || deviceListMenu.state == 1
+                visible: opacity
+
+                opacity: iconMa.containsMouse || deviceListMenu.state == 1
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 250 }
+                }
+
+                PlasmaCore.ToolTipArea {
+                    id: deviceTooltip
+
+                    anchors.fill: parent
+                    interactive: false
+                    mainText: model.Description
+                }
+
 
                 z: -1
             }
@@ -200,7 +237,7 @@ Item {
 
             onMoved: {
                 item.model.Volume = value;
-                item.model.Muted = value === 0;
+                item.model.Muted = false;
             }
             onPressedChanged: {
                 if (!pressed) {
@@ -210,7 +247,7 @@ Item {
                     // whereas PA rejected the volume change and is
                     // still at v15 (e.g.).
                     value = Qt.binding(() => item.model.Volume);
-                    if (type === "sink") {
+                    if (type === "sink-output") {
                         playFeedback(item.model.Index);
                     }
                 }
@@ -241,8 +278,29 @@ Item {
             Layout.preferredHeight: isMixer ? 26 : 22
             Layout.alignment: Qt.AlignHCenter
 
+            property bool isMuted: item.model.Muted
+
             hoverEnabled: true
-            onClicked: item.model.Muted = !item.model.Muted
+            onClicked: {
+                item.model.Muted = !item.model.Muted
+                muteTooltip.hideImmediately();
+            }
+
+            onContainsMouseChanged: {
+                muteTooltipTimer.start();
+            }
+
+            Timer {
+                id: muteTooltipTimer
+                interval: Kirigami.Units.longDuration*2
+                onTriggered: {
+                    if(muteButton.containsMouse) {
+                        muteTooltip.showToolTip();
+                    } else {
+                        muteTooltip.hideToolTip();
+                    }
+                }
+            }
 
             Rectangle {
                 anchors.fill: parent
@@ -263,7 +321,15 @@ Item {
                 height: 16
 
                 imagePath: Qt.resolvedUrl("svgs/control.svg")
-                elementId: item.model.Muted ? "unmute" : "mute"
+                elementId: muteButton.isMuted ? "unmute" : "mute"
+
+                PlasmaCore.ToolTipArea {
+                    id: muteTooltip
+
+                    anchors.fill: parent
+                    interactive: false
+                    mainText: (muteButton.isMuted ? "Unmute" : "Mute") + " " + (item.type == "sink-output" ? "Speakers" : (item.type == "sink-input" ? "Microphone" : item.name))
+                }
             }
         }
     }

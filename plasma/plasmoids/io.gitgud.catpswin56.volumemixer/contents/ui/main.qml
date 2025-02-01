@@ -176,7 +176,10 @@ PlasmoidItem {
         }
         onClicked: mouse => {
             if (mouse.button == Qt.LeftButton) {
-                if(mixerWindow) mixerWindow.raise();
+                if(mixerWindow) {
+                    mixerWindow.visibility = Window.AutomaticVisibility;
+                    mixerWindow.raise();
+                }
                 else main.expanded = !wasExpanded;
             }
         }
@@ -226,6 +229,16 @@ PlasmoidItem {
         property int flyoutIntendedWidth: 74 + (defaultInput.visible ? 74 + (mainLayout.spacing / 2) - 1 : 0)
 
         implicitHeight: 255 - padding - 40
+
+        function overrideFunction() {
+            if(!mixerWindow) {
+                mixerWindow = Qt.createQmlObject("MixerWindow {}", main);
+                mixerWindow.visible = true;
+            } else {
+                mixerWindow.visibility = Window.AutomaticVisibility;
+                mixerWindow.raise();
+            }
+        }
 
         property list<string> hiddenTypes: []
 
