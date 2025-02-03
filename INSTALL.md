@@ -20,19 +20,32 @@ pacman -S cmake extra-cmake-modules ninja qt6-virtualkeyboard qt6-multimedia qt6
 ```
 - (optionally) plymouth
 
-### KDE Neon/Kubuntu
+### Kubuntu
 Required Packages:
 
 ```bash
-apt install cmake extra-cmake-modules ninja-dev qt6-virtualkeyboard qt6-virtualkeyboard-dev qt6-multimedia qt6-multimedia-dev qt6-5compat plasma-wayland-protocols kf6-plasma5support kf6-kcolorscheme-dev kf6-ki18n-dev kf6-kiconthemes-dev kf6-kcmutils-dev kf6-kirigami-dev libkdecorations2-dev kwin-dev kf6-kio-dev kf6-knotifications-dev kf6-ksvg-dev plasma-workspace-dev kf6-kactivities-dev gettext kvantum
+apt install build-essential cmake ninja-build curl libqt6virtualkeyboard6 libqt6multimedia6 libqt6core5compat6 libplasma5support6 libkdecorations2-dev libkf6colorscheme-dev libkf6i18n-dev libkf6iconthemes-dev libkf6kcmutils-dev libkirigami-dev libkf6kio-dev libkf6notifications-dev libkf6svg-dev libkf6crash-dev libkf6globalaccel-dev libplasma-dev libplasmaactivities-dev libxcb-composite0-dev libxcb-randr0-dev libxcb-shm0-dev libxcb-damage0-dev libepoxy-dev libqt6svg6-dev kwin-dev plasma-wayland-protocols
 ```
-- optionally plymouth (pre-installed on KDE Neon)
 
 ### Fedora KDE
 Required Packages:
 
 ```bash
 dnf install plasma-workspace-devel kvantum qt6-qtmultimedia-devel qt6-qt5compat-devel libplasma-devel qt6-qtbase-devel qt6-qtwayland-devel plasma-activities-devel kf6-kpackage-devel kf6-kglobalaccel-devel qt6-qtsvg-devel wayland-devel plasma-wayland-protocols kf6-ksvg-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-kcmutils-devel kf6-kio-devel kdecoration-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kirigami-devel kf6-kiconthemes-devel cmake gmp-ecm-devel kf5-plasma-devel libepoxy-devel kwin-devel kf6-karchive kf6-karchive-devel plasma-wayland-protocols-devel qt6-qtbase-private-devel qt6-qtbase-devel plymouth-devel plymouth-plugin-script
+```
+
+## Compiling
+
+To build the components that need to be compiled (KWin effects, Decoration theme, etc.), run ```compile.sh```:
+
+```bash
+$ chmod +x compile.sh && ./compile.sh
+```
+
+or
+
+```bash
+$ sh compile.sh
 ```
 
 ## Plasma components <a name="plasma"></a>
