@@ -95,6 +95,7 @@ PC3.Slider {
     }
 
     ToolTip {
+        id: tooltip
         x: -Math.floor(width + Kirigami.Units.smallSpacing / 2)
         y: Math.floor(-parent.height / 2)
         parent: control.handle

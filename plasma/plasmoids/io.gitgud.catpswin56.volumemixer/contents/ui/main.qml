@@ -225,10 +225,9 @@ PlasmoidItem {
     fullRepresentation: Item {
         id: fullRep
 
-        property int padding: 34 // padding that the system tray applies
-        property int flyoutIntendedWidth: 74 + (defaultInput.visible ? 74 + (mainLayout.spacing / 2) - 1 : 0)
+        property int flyoutIntendedWidth: mainLayout.width
 
-        implicitHeight: 255 - padding - 40
+        implicitHeight: 181
 
         function overrideFunction() {
             if(!mixerWindow) {
@@ -241,25 +240,33 @@ PlasmoidItem {
         }
 
         property list<string> hiddenTypes: []
+        property int listWidth: 34
 
         Rectangle {
             anchors.fill: mainLayout
-            anchors.margins: -Kirigami.Units.smallSpacing * 2
-            anchors.bottomMargin: 0
+            anchors.topMargin: -Kirigami.Units.smallSpacing * 2
+            anchors.bottomMargin: -Kirigami.Units.smallSpacing * 4
+            anchors.rightMargin: 0
+            anchors.leftMargin: 0
 
             color: "white"
+
+            z: -1
         }
 
         RowLayout {
             id: mainLayout
 
-            anchors {
-                top: parent.top
-                bottom: trayHeading.bottom
-                right: parent.right
-                left: parent.left
+            property int defaultInputWidth: {
+                if(defaultInput.visible) return (separator.width + separator.anchors.leftMargin)
+                    + (defaultInput.width + defaultInput.anchors.leftMargin)
+                    else return 0
             }
-            spacing: Kirigami.Units.smallSpacing * 2
+
+            anchors.top: parent.top
+            anchors.topMargin: Kirigami.Units.smallSpacing
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
 
             ListView {
                 id: defaultOutput
@@ -267,12 +274,13 @@ PlasmoidItem {
                 property bool mixer: false
 
                 Layout.fillHeight: true
-                Layout.preferredWidth: 64
-                Layout.leftMargin: defaultInput.visible ? 0 : -Kirigami.Units.smallSpacing / 2
+                Layout.preferredWidth: fullRep.listWidth
+                Layout.leftMargin: fullRep.listWidth / 2
+                Layout.rightMargin: defaultInput.visible ? 0 : 17
 
                 interactive: false
                 model: paSinkFilterModelDefault
-                delegate: DeviceListItem { type: "sink-output"; width: 64; height: 205 }
+                delegate: DeviceListItem { type: "sink-output"; width: fullRep.listWidth; height: parent.height }
                 orientation: ListView.Horizontal
                 focus: visible
                 spacing: 0
@@ -282,13 +290,13 @@ PlasmoidItem {
                 Rectangle {
                     anchors {
                         right: parent.right
-                        rightMargin: -Kirigami.Units.smallSpacing - 1
+                        rightMargin: -Kirigami.Units.smallSpacing * 3
                         top: parent.top
                         topMargin: Kirigami.Units.smallSpacing / 2
                     }
 
                     width: 1
-                    height: 205
+                    height: 195
 
                     color: "#d6e1dd"
 
@@ -302,11 +310,13 @@ PlasmoidItem {
                 property bool mixer: false
 
                 Layout.fillHeight: true
-                Layout.preferredWidth: 64
+                Layout.leftMargin: Kirigami.Units.smallSpacing * 4.5
+                Layout.preferredWidth: fullRep.listWidth
+                Layout.rightMargin: fullRep.listWidth / 2
 
                 interactive: false
                 model: paSourceFilterModelDefault
-                delegate: DeviceListItem { type: "sink-input"; width: 64; height: 205 }
+                delegate: DeviceListItem { type: "sink-input"; width: fullRep.listWidth; height: parent.height }
                 orientation: ListView.Horizontal
                 focus: visible
                 spacing: 0

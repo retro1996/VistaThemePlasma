@@ -91,7 +91,7 @@ Item {
                     deviceTooltipTimer.start();
                 }
 
-                visible: (type == "sink-output" || type == "sink-input") && showDropdown
+                visible: (type == "sink-output" || type == "sink-input") && parent.showDropdown
             }
 
 
