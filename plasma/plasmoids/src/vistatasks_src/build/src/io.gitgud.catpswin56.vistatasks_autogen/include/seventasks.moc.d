@@ -1,8 +1,8 @@
-/home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/build/src/io.gitgud.catpswin56.vistatasks_autogen/include/seventasks.moc: /home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/src/seventasks.cpp \
-  /home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/build/src/io.gitgud.catpswin56.vistatasks_autogen/moc_predefs.h \
-  /home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/src/metadata.json \
-  /home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/src/dialogshadows_p.h \
-  /home/pswin56/Escritorio/otras\ cosas/VistaThemePlasma/plasma/plasmoids/src/vistatasks_src/src/seventasks.h \
+/home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/build/src/io.gitgud.catpswin56.vistatasks_autogen/include/seventasks.moc: /home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/src/seventasks.cpp \
+  /home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/build/src/io.gitgud.catpswin56.vistatasks_autogen/moc_predefs.h \
+  /home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/src/metadata.json \
+  /home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/src/dialogshadows_p.h \
+  /home/catpswin56/vistathemeplasma/plasma/plasmoids/src/vistatasks_src/src/seventasks.h \
   /usr/include/KF6/KConfig/kconfig_version.h \
   /usr/include/KF6/KConfigCore/KConfigGroup \
   /usr/include/KF6/KConfigCore/KSharedConfig \
@@ -42,9 +42,17 @@
   /usr/include/PlasmaQuick/plasmaquick/dialog.h \
   /usr/include/PlasmaQuick/plasmaquick/plasmaquick_export.h \
   /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/asm/bitsperlong.h \
   /usr/include/asm/errno.h \
+  /usr/include/asm/posix_types.h \
+  /usr/include/asm/posix_types_64.h \
+  /usr/include/asm/types.h \
   /usr/include/assert.h \
   /usr/include/bits/atomic_wide_counter.h \
   /usr/include/bits/byteswap.h \
@@ -285,6 +293,9 @@
   /usr/include/limits.h \
   /usr/include/linux/errno.h \
   /usr/include/linux/limits.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
   /usr/include/locale.h \
   /usr/include/pthread.h \
   /usr/include/qt6/QtCore/QByteArray \
