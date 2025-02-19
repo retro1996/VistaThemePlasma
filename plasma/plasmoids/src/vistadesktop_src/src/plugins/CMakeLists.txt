@@ -1,0 +1,3 @@
+add_subdirectory(folder)
+add_subdirectory(containmentlayoutmanager)
+add_subdirectory(sidebar)

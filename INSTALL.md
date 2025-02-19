@@ -54,11 +54,21 @@ $ sh compile.sh
 
 This section relates to the directories found in the ```plasma``` folder.
 
+### Install scripts
+
+1. Run the following scripts:
+```bash
+$ chmod +x install_plasmoids.sh && ./install_plasmoids.sh
+$ chmod +x install_plasma_components.sh && install_plasma_components.sh # Requires authorization for SMOD resources and SDDM themes
+```
+
+### Manual
+
 1. Move the ```smod``` folder to ```~/.local/share```, or ```/usr/share/``` for a system-wide installation. This will install the resources required by many other components in this project.
 
 2. Move the folders ```desktoptheme```, ```look-and-feel```, ```plasmoids```, ```layout-templates```, ```shells``` into ```~/.local/share/plasma```. If the folder doesn't exist, create it. These folders contain the following:
     - Plasma Style
-    - Global Theme (more accurately, just the Ctrl+Alt+Del screen and splash screen)
+    - Global Theme
     - Plasmoids
     - Plasma shell
     - Preset panel layout that can be applied from Edit mode
@@ -67,7 +77,6 @@ Make sure to compile the C++ components of plasmoids located in ```plasmoids/src
 
 3. Move ```sddm-theme-mod``` to ```/usr/share/sddm/themes```.
 4. Import and apply the color scheme through System Settings. 
-5. When applying the global theme, only apply the splash screen and uncheck everything else.
 
 ## KWin components <a name="kwin"></a>
 
@@ -124,7 +133,8 @@ If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup a
 
 1. After installing everything, restart KDE Plasma and KWin (you can do so by running ```plasmashell --replace & disown``` and ```kwin_x11 --replace & disown``` (only works for X11) in a terminal)
 2. On a fresh KDE install, **remove** the default panel and add the "VistaThemePlasma Taskbar" panel using Edit mode. You can also manually configure the panel for a finer setup.
-3. Disable the following entries in the system tray settings:
+3. Right click on the desktop and open "Desktop and Wallpaper", and select "Vista Desktop" under Layout, and apply the changes.
+4. Disable the following entries in the system tray settings:
     - Audio Volume
     - Power and Battery 
     - Notifications
@@ -136,13 +146,15 @@ If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup a
     - Battery 
     - Action Center
     - Network (Vista)
-4. When updating KDE Plasma, usually through a full system upgrade, recompiling KWin effects and the DefaultToolTip component is necessary.
-5. In System Settings -> Session -> Desktop Session, uncheck the "Ask for confirmation" option.
-6. In System Settings -> Keyboard -> Shortcuts, under KWin, disable the "Peek at Desktop" shortcut, and remap the "MinimizeAll" to Meta+D
-7. In System Settings -> Fonts, configure the fonts as shown here:
+5. When updating KDE Plasma, usually through a full system upgrade, recompiling KWin effects and the DefaultToolTip component is necessary.
+6. In System Settings -> Session -> Desktop Session, uncheck the "Ask for confirmation" option.
+7. In System Settings -> Keyboard -> Shortcuts, under KWin, disable the "Peek at Desktop" shortcut, and remap the "MinimizeAll" to Meta+D
+8. In System Settings -> Fonts, configure the fonts as shown here:
 
 
 <img src="screenshots/fontconfig.png">
+
+9. Restart plasmashell in order for the desktop sidebar to appear correctly,
 
 The following steps are optional: 
 
