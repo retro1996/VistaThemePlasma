@@ -18,6 +18,8 @@ KCM.SimpleKCM {
     property alias cfg_width: width.text
     property alias cfg_location: location.currentIndex
 
+    property alias cfg_disableTrayIcon: disableTrayIcon.checked
+
     component CustomGroupBox: GroupBox {
         id: gbox
         label: Label {
@@ -104,6 +106,23 @@ KCM.SimpleKCM {
                             i18n("Left")
                         ]
                     }
+                }
+            }
+        }
+
+        CustomGroupBox {
+            Layout.fillWidth: true
+            title: i18n("Tweaks")
+
+            ColumnLayout {
+                anchors.fill: parent
+
+                spacing: 0
+
+                CheckBox {
+                    id: disableTrayIcon
+
+                    text: i18n("Disable tray icon")
                 }
             }
         }

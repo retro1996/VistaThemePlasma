@@ -60,7 +60,9 @@ ContainmentItem {
         }
         tooltip: "Windows Sidebar"
 
-        visible: true
+        onActivated: Plasmoid.configuration.collapse = !root.sidebarCollapsed;
+
+        visible: !Plasmoid.configuration.disableTrayIcon
 
         Component.onCompleted: menu.visible = false;
     }
@@ -411,16 +413,10 @@ ContainmentItem {
                     } else return;
                 }
 
-                onDropped: {
-                    console.log("dropped!!")
-                }
-
                 z: 99999999
             }
 
             onAppletChanged: {
-                // console.log("\n\n\n\n\n\n\n\n")
-
                 applet.parent = plasmoidContainer;
                 applet.anchors.fill = plasmoidContainer;
                 applet.z = -1;
@@ -522,14 +518,13 @@ ContainmentItem {
                 border.color: "white"
                 radius: 12
 
-                color: "#214d72"
+                color: "#173c5c"
 
-                opacity: 0.4
+                opacity: 0.5
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2
-                    anchors.rightMargin: Kirigami.Units.smallSpacing*2 - Kirigami.Units.smallSpacing/2
+                    anchors.leftMargin: (Kirigami.Units.smallSpacing * 2) - 1
 
                     KSvg.SvgItem {
                         Layout.preferredWidth: 16
@@ -550,36 +545,45 @@ ContainmentItem {
                         MouseArea {
                             id: addMa
 
-                            property QtObject qAction: root.Plasmoid.internalAction("add widgets")
-
                             anchors.fill: parent
 
                             hoverEnabled: true
                             propagateComposedEvents: true
 
-                            onClicked: qAction.trigger();
+                            onClicked: root.Plasmoid.internalAction("add widgets").trigger();
                         }
                     }
 
                     Rectangle {
-                        Layout.preferredHeight: 12
+                        Layout.preferredHeight: 16
                         Layout.preferredWidth: 1
+
                         color: "white"
+
+                        opacity: 0.4
                     }
 
-                    KSvg.SvgItem {
-                        Layout.preferredWidth: 16
-                        Layout.preferredHeight: 16
-                        imagePath: Qt.resolvedUrl("svgs/controls.svg")
-                        elementId: "left"
-                        opacity: 0.4
-                    }
-                    KSvg.SvgItem {
-                        Layout.preferredWidth: 16
-                        Layout.preferredHeight: 16
-                        imagePath: Qt.resolvedUrl("svgs/controls.svg")
-                        elementId: "right"
-                        opacity: 0.4
+                    RowLayout {
+                        spacing: 2
+
+                        KSvg.SvgItem {
+                            Layout.preferredWidth: 16
+                            Layout.preferredHeight: 16
+
+                            imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                            elementId: "left"
+
+                            opacity: 0.4
+                        }
+                        KSvg.SvgItem {
+                            Layout.preferredWidth: 16
+                            Layout.preferredHeight: 16
+
+                            imagePath: Qt.resolvedUrl("svgs/controls.svg")
+                            elementId: "right"
+
+                            opacity: 0.4
+                        }
                     }
                 }
             }
@@ -598,7 +602,7 @@ ContainmentItem {
                 topLeftRadius: 12
                 bottomLeftRadius: 12
 
-                color: "#214d72"
+                color: "#173c5c"
 
                 z: -1
             }
@@ -635,7 +639,7 @@ ContainmentItem {
                     live: false
                 }
 
-                opacity: addMa.containsMouse ? 0.6 : 0
+                opacity: addMa.containsMouse ? 0.5 : 0
 
                 Behavior on opacity {
                     NumberAnimation { duration: 250 }

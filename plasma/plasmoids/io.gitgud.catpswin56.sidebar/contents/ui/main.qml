@@ -21,13 +21,16 @@ PlasmoidItem {
     }
 
     property int sidebarWidth: 150
+    property int sidebarHeight: 0
     property int sidebarLocation: 0
     property bool sidebarCollapsed: false
 
     property Item internalContainmentItem
 
-    Layout.maximumWidth: 1
-    Layout.maximumHeight: 1
+    height: sidebarHeight
+
+    Layout.minimumWidth: sidebarWidth
+    Layout.maximumHeight: sidebarHeight
 
     preferredRepresentation: fullRepresentation
     Plasmoid.status: internalContainmentItem ? internalContainmentItem.status : PlasmaCore.Types.UnknownStatus
@@ -79,7 +82,7 @@ PlasmoidItem {
                     root.parent = desktopContainment;
 
                     root.width = Qt.binding(() => root.sidebarWidth);
-                    root.height = Qt.binding(() => desktopContainment.availableScreenRect.height);
+                    root.sidebarHeight = Qt.binding(() => desktopContainment.availableScreenRect.height);
 
                     desktopContainment.sidebarWidth = Qt.binding(() => root.sidebarWidth);
                 }
