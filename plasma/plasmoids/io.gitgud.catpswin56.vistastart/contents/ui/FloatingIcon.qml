@@ -35,7 +35,7 @@ Item {
         property alias iconSource: imgAuthorIcon.source
 
         BorderImage {
-            source: "../pics/user.png"
+            source: "svgs/user-frame.png"
             smooth: true
             z: 1
 			opacity: imgAuthorIcon.source === ""
@@ -67,6 +67,10 @@ Item {
             z: 99
             CrossFadeBehavior on source {
 				fadeDuration: 350
+				// sequential: true
+				// exitValue: 0.7
+				// easingType: "Linear"
+				// enterValue: 0
 			}
         }
         Image {

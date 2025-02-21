@@ -54,10 +54,11 @@ PlasmaCore.Dialog {
     property int iconSizeSide: Kirigami.Units.iconSizes.smallMedium
     property int cellWidth: 254 // Width for all standard menu items.
     property int cellWidthSide: 139 // Width for sidebar menu items.
-    property int shutdownIndex: -1
     property int cellHeight: iconSize + Kirigami.Units.smallSpacing + (Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom,
                                                     				   highlightItemSvg.margins.left + highlightItemSvg.margins.right)) - Kirigami.Units.smallSpacing/2
 	property int cellCount: Plasmoid.configuration.numberRows + faves.getFavoritesCount()
+
+	property int powerIndex: -1
     property bool searching: (searchField.text != "")
     property bool showingAllPrograms: false
     property bool firstTimePopup: false // To make sure the user icon is displayed properly.
@@ -353,7 +354,8 @@ PlasmaCore.Dialog {
 				onClicked: filteredMenuItemsModel.trigger(index)
 			}
 			onObjectAdded: (index, object) => {
-				if(object.model.decoration == "system-shutdown") root.shutdownIndex = index;
+				if(object.model.decoration == "system-shutdown" && Plasmoid.configuration.disableSleep) root.powerIndex = index;
+				else if(object.model.decoration == "system-suspend") root.powerIndex = index;
 				if(index == 3 || index == 5)
 					var separator = Qt.createQmlObject(`
 					import org.kde.plasma.extras as PlasmaExtras
@@ -689,11 +691,11 @@ PlasmaCore.Dialog {
 				}
 				Text {
 					id: showingAllProgramsText
-					text: showingAllPrograms ? "    Back" : "    All Programs"
+					text: /*"    " + */(showingAllPrograms ? i18n("Back") : i18n("All Programs"))
 					font.pixelSize: 12
 					font.bold: true
 					anchors.left: arrowDirection.right
-					anchors.leftMargin: Kirigami.Units.mediumSpacing
+					anchors.leftMargin: Kirigami.Units.largeSpacing * 2
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.verticalCenterOffset: -1
 					style: Text.Sunken
@@ -899,7 +901,7 @@ PlasmaCore.Dialog {
 				left: leftSidebar.left
 				right: leftSidebar.right
 				bottom: bottomControls.top
-				topMargin: -Kirigami.Units.smallSpacing-2
+				topMargin: -(Kirigami.Units.smallSpacing * 2)
 			}
 
 			opacity: showingAllPrograms && !searching
@@ -1364,11 +1366,7 @@ PlasmaCore.Dialog {
 						shutdown.focus = false;
 					}
 					onClicked: {
-						if(root.shutdownIndex !== -1 && Plasmoid.configuration.disableSleep) {
-							filteredMenuItemsModel.trigger(root.shutdownIndex)
-						} else {
-							pmEngine.performOperation("suspend");
-						}
+						filteredMenuItemsModel.trigger(root.powerIndex)
 						root.visible = false;
 					}
 				}

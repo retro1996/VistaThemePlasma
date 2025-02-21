@@ -154,7 +154,18 @@ Item {
     Timer {
         id: recentsMenuTimer
         interval: 500
-        running: sidePanelMouseArea.containsMouse && itemText == "Recent Items"
+        running: sidePanelMouseArea.containsMouse && itemText == i18n("Recent Items")
         onTriggered: fileUsageMenu.openRelative();
+    }
+
+    Connections {
+        target: fileUsageMenu
+        enabled: sidePanelDelegate.itemText == i18n("Recent Items")
+        function onStatusChanged() {
+            if(fileUsageMenu.status === 3) {
+                sidePanelDelegate.focus = false;
+                root.m_delayTimer.restart();
+            }
+        }
     }
 }

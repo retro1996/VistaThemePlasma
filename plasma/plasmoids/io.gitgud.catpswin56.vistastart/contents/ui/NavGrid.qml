@@ -40,11 +40,11 @@ FocusScope {
   property alias contentItem: listView.contentItem
   property Item flickableItem: listView
 
-  onFocusChanged: {
-      if (!focus) {
-          currentIndex = -1;
-      }
-  }
+  // onFocusChanged: {
+  //     if (!focus) {
+  //         currentIndex = -1;
+  //     }
+  // }
   function tryActivate() {
 
     if(currentIndex === -1 && listView.count > 0) {
@@ -129,11 +129,11 @@ FocusScope {
     onModelChanged: {
       currentIndex = -1;
     }
-    onFocusChanged: {
-      if (!focus) {
-        currentIndex = -1
-      }
-    }
+    // onFocusChanged: {
+    //   if (!focus) {
+    //     currentIndex = -1
+    //   }
+    // }
   }
   }
 }

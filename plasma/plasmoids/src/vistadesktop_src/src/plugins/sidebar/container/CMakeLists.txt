@@ -1,5 +1,3 @@
-plasma_install_package(package io.gitgud.catpswin56.sidebar)
-
 set(groupedappletscontainer_SRCS
     groupedappletscontainer.cpp
 )

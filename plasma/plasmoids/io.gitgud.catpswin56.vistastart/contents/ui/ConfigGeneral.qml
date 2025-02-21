@@ -46,21 +46,17 @@ KCM.SimpleKCM {
     property string cfg_customButtonImageHover: Plasmoid.configuration.customButtonImageHover
     property string cfg_customButtonImageActive: Plasmoid.configuration.customButtonImageActive
     
-    property alias cfg_showRecentsView: showRecentsView.checked
     property alias cfg_offsetFloatingOrb: offsetFloatingOrb.checked
     property alias cfg_orbWidth: orbWidth.value
-    property alias cfg_useFullName: useFullName.checked
 
-    property alias cfg_appNameFormat: appNameFormat.currentIndex
-    property alias cfg_switchCategoriesOnHover: switchCategoriesOnHover.checked
+    property alias cfg_useFullName: useFullName.checked
+    property alias cfg_useGenericIcons: useGenericIcons.checked
     property alias cfg_stickOutOrb: stickOutOrb.checked
     property alias cfg_fadeOrb: fadeOrb.checked
     property alias cfg_disableBold: disableBold.checked
     property alias cfg_disableSleep: disableSleep.checked
     property alias cfg_enableShadow: enableShadow.checked
     property alias cfg_enableAnimations: enableAnimations.checked
-
-    property alias cfg_useExtraRunners: useExtraRunners.checked
 
     property alias cfg_numberRows: numberRows.value
 
@@ -120,7 +116,7 @@ KCM.SimpleKCM {
                 RowLayout {
 
                     Text {
-                        text: "Orb size (0 for default/no scaling):"
+                        text: i18n("Orb size (0 for default/no scaling):")
                     }
                     SpinBox{
                         id: orbWidth
@@ -138,45 +134,11 @@ KCM.SimpleKCM {
 
             title: i18n("Behavior")
 
-            //flat: false
-
             ColumnLayout {
-
-                RowLayout {
-                    visible: false
-                    Label {
-                        text: i18n("Show applications as:")
-                    }
-
-                    ComboBox {
-                        id: appNameFormat
-
-                        Layout.fillWidth: true
-
-                        model: [i18n("Name only"), i18n("Description only"), i18n("Name (Description)"), i18n("Description (Name)")]
-                    }
-                }
-
-                CheckBox {
-                    id: switchCategoriesOnHover
-
-                    visible: false
-                    text: i18n("Switch categories on hover")
-                }
-                CheckBox {
-                    id: useExtraRunners
-                    visible: false
-                    text: i18n("Expand search to bookmarks, files and emails")
-                }
                 CheckBox {
                     id: stickOutOrb
 
                     text: i18n("Enable floating orb")
-                }
-                CheckBox {
-                    id: showRecentsView
-                    text: i18n("Show recent programs")
-                    visible: false
                 }
                 RowLayout{
                     Layout.fillWidth: true
@@ -222,6 +184,10 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: useFullName
                     text: i18n("Use full name instead of login name")
+                }
+                CheckBox {
+                    id: useGenericIcons
+                    text: i18n("Display generic folder icons for categories")
                 }
                 CheckBox {
                     id: enableAnimations

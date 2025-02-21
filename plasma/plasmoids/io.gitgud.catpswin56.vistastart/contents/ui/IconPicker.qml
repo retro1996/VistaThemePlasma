@@ -41,7 +41,7 @@ RowLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             wrapMode: Text.WordWrap
-            text: "Customize the way the menu orb looks like using ClassicShell/OpenShell-compatible PNG resources.\nOnly orb textures with three frames are supported."
+            text: i18n("Customize the way the menu orb looks like using ClassicShell/OpenShell-compatible PNG resources.\nOnly orb textures with three frames are supported.")
         }
         RowLayout {
             Button {
