@@ -26,7 +26,7 @@ ContainmentItem {
     // Expose the configuration values for io.gitgud.catpswin56.sidebar
     readonly property int sidebarWidth: Plasmoid.configuration.width
     readonly property int sidebarLocation: Plasmoid.configuration.location
-    readonly property bool sidebarCollapsed: Plasmoid.configuration.collapse
+    property bool sidebarCollapsed: Plasmoid.configuration.collapsed
 
     Containment.onAppletAdded: addApplet(applet);
     Containment.onAppletRemoved: {
@@ -51,7 +51,7 @@ ContainmentItem {
         menu: Menu {
             MenuItem {
                 text: root.sidebarCollapsed ? i18n("Show sidebar") : i18n("Hide sidebar")
-                onTriggered: Plasmoid.configuration.collapse = !root.sidebarCollapsed;
+                onTriggered: Plasmoid.configuration.collapsed = !root.sidebarCollapsed;
             }
             MenuItem {
                 text: i18n("Options")
@@ -60,7 +60,7 @@ ContainmentItem {
         }
         tooltip: "Windows Sidebar"
 
-        onActivated: Plasmoid.configuration.collapse = !root.sidebarCollapsed;
+        onActivated: Plasmoid.configuration.collapsed = !root.sidebarCollapsed;
 
         visible: !Plasmoid.configuration.disableTrayIcon
 
@@ -197,6 +197,24 @@ ContainmentItem {
                 Drag.source: dragHndMa
                 Drag.hotSpot.x: Math.floor(width / 2.5)
                 Drag.hotSpot.y: Math.floor(height / 2.5)
+
+                KSvg.FrameSvgItem {
+                    id: plasmoidBg
+
+                    property int rightMargin: plasmoidMa.hovered && !applet?.Plasmoid.pluginName.includes("io.gitgud.catpswin56.gadgets") ? 8 : 0
+                    Behavior on rightMargin {
+                        NumberAnimation { duration: 125 }
+                    }
+
+                    anchors.fill: parent
+                    anchors.topMargin: -Kirigami.Units.smallSpacing * 2
+                    anchors.bottomMargin: -Kirigami.Units.smallSpacing * 2
+                    anchors.rightMargin: rightMargin
+
+                    imagePath: applet?.Plasmoid.backgroundHints != 0 ? "widgets/background" : ""
+
+                    z: -2
+                }
 
                 Item {
                     id: gadgetToolbox
@@ -385,18 +403,6 @@ ContainmentItem {
 
             applet: model.applet
 
-            KSvg.FrameSvgItem {
-                anchors.fill: parent
-                anchors.topMargin: -Kirigami.Units.smallSpacing * 2
-                anchors.bottomMargin: -Kirigami.Units.smallSpacing * 2
-                anchors.rightMargin: Kirigami.Units.smallSpacing * 2
-
-                imagePath: "widgets/background"
-
-                visible: applet?.Plasmoid.backgroundHints != 0
-                z: -2
-            }
-
             HoverHandler { id: plasmoidMa }
 
             DropArea {
@@ -417,9 +423,9 @@ ContainmentItem {
             }
 
             onAppletChanged: {
-                applet.parent = plasmoidContainer;
-                applet.anchors.fill = plasmoidContainer;
-                applet.z = -1;
+                applet.parent = plasmoidBg;
+                applet.anchors.fill = plasmoidBg;
+                applet.anchors.margins = 8;
                 applet.visible = true;
 
                 plasmoidDelegate.height = mainStack.findPositive(applet?.Layout.preferredHeight, 125);
@@ -525,10 +531,14 @@ ContainmentItem {
                 RowLayout {
                     anchors.fill: parent
                     anchors.leftMargin: (Kirigami.Units.smallSpacing * 2) - 1
+                    anchors.rightMargin: anchors.leftMargin
+
+                    spacing: 8
 
                     KSvg.SvgItem {
                         Layout.preferredWidth: 16
                         Layout.preferredHeight: 16
+
                         imagePath: Qt.resolvedUrl("svgs/controls.svg")
                         elementId: "add"
 
@@ -536,6 +546,7 @@ ContainmentItem {
 
                         KSvg.SvgItem {
                             anchors.fill: parent
+
                             imagePath: Qt.resolvedUrl("svgs/controls.svg")
                             elementId: "hover"
 
@@ -564,7 +575,9 @@ ContainmentItem {
                     }
 
                     RowLayout {
-                        spacing: 2
+                        Layout.leftMargin: -2
+
+                        spacing: 5
 
                         KSvg.SvgItem {
                             Layout.preferredWidth: 16
@@ -578,6 +591,8 @@ ContainmentItem {
                         KSvg.SvgItem {
                             Layout.preferredWidth: 16
                             Layout.preferredHeight: 16
+
+                            Layout.leftMargin: -1
 
                             imagePath: Qt.resolvedUrl("svgs/controls.svg")
                             elementId: "right"
