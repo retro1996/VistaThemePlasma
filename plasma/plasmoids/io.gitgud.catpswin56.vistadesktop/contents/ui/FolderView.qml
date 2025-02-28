@@ -230,6 +230,66 @@ FocusScope {
         id: eventGenerator
     }
 
+    ColumnLayout {
+        id: watermark
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        spacing: 0
+        opacity: Plasmoid.configuration.watermarkVisible
+        z: -1
+
+        Text {
+            id: text1
+            text: {
+                switch(Plasmoid.configuration.watermarkStyle) {
+                    case(0):
+                        return "Windows Vista™";
+                    case(1):
+                        return "VistaThemePlasma";
+                    case(2):
+                        return Plasmoid.configuration.customText1;
+                }
+            }
+            Layout.alignment: Qt.AlignRight
+            color: "white"
+            visible: text != ""
+        }
+        Text {
+            id: text2
+            text: {
+                switch(Plasmoid.configuration.watermarkStyle) {
+                    case(0):
+                        return "Build 6003";
+                    case(1):
+                        return "Build 28/2/2025";
+                    case(2):
+                        return Plasmoid.configuration.customText2;
+                }
+            }
+            Layout.alignment: Qt.AlignRight
+            color: "white"
+            visible: text != ""
+        }
+        Text {
+            id: text3
+            text: {
+                switch(Plasmoid.configuration.watermarkStyle) {
+                    case(0):
+                        return "This copy of Windows is not genuine";
+                    case(1):
+                        return "This copy of VistaThemePlasma is not genuine";
+                    case(2):
+                        return Plasmoid.configuration.customText3;
+                }
+            }
+            Layout.alignment: Qt.AlignRight
+            visible: Plasmoid.configuration.watermarkGenuine && text != ""
+            color: "white"
+        }
+    }
+
     MouseEventListener {
         id: listener
 
