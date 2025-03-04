@@ -22,18 +22,22 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 ### VTP Credits
 
+### Forked code
+
+- blacklightpy's [PlymouthXP](https://github.com/blacklightpy/PlymouthXP) Plymouth theme
+
 ### Contributors
 
 - [AngelBruni](https://github.com/angelbruni) for the SVG Vista taskbar texture
 - [ThePhantom](https://github.com/ThePhantom6314) for remaking the task item textures and power button glyphs in SVG
 - [aeoe](https://gitgud.io/aeoe) for fixing a minor issue with the VistaStart dialog texture
+- [furkrn](https://gitgud.io/furkrn) for the Vista version of [PlymouthXP](https://github.com/blacklightpy/PlymouthXP)
 
 
 ### ATP Credits
 
 ### Forked code
 
-- blacklightpy's [PlymouthXP](https://github.com/blacklightpy/PlymouthXP) Plymouth theme
 - Intika's [Digital Clock Lite](https://store.kde.org/p/1225135/) plasmoid
 - [Adhe](https://store.kde.org/p/1386465/), [oKcerG](https://github.com/oKcerG/QuickBehaviors) and [SnoutBug](https://store.kde.org/p/1720532) for making SevenStart possible
 - Zren's [Win7 Show Desktop](https://store.kde.org/p/2151247) plasmoid
