@@ -29,6 +29,14 @@ ContainmentItem {
     Layout.preferredWidth: fixedWidth || currentLayout.implicitWidth + currentLayout.horizontalDisplacement
     Layout.preferredHeight: fixedHeight || currentLayout.implicitHeight + currentLayout.verticalDisplacement
 
+    property bool milestone2Mode: {
+        for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+            if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.m2tasks") {
+                return true;
+            }
+        }
+        return false
+    }
     property Item toolBox
     property var layoutManager: LayoutManager
 
@@ -80,7 +88,7 @@ ContainmentItem {
         }
         return "";
     }
-    function svgLocation(): string {
+    function vistaSvgLocation(): string {
         switch (Plasmoid.location) {
             case PlasmaCore.Types.LeftEdge:
                 return "east";
@@ -145,29 +153,32 @@ ContainmentItem {
         // define a normal or a thick margin.
         KSvg.FrameSvgItem {
             id: panelSvg
-
-            anchors.fill: parent
-
             imagePath: Qt.resolvedUrl("svgs/panel-background.svg")
-            prefix: svgLocation() + hasCompositing
+            anchors {
+                fill: parent
+
+                leftMargin: milestone2Mode ? darkPart1.width - 4 : 0
+                rightMargin: milestone2Mode ? darkPart2.width + darkPart2.anchors.rightMargin - 4 : gradientRect.showDesktopItem
+            }
+            prefix: milestone2Mode ? "supersouth" : "vista" + vistaSvgLocation() + hasCompositing
 
             KSvg.FrameSvgItem {
                 id: shineLayer
                 imagePath: Qt.resolvedUrl("svgs/panel-background.svg")
                 anchors { // please find a better way to do this
                     top: parent.top
-                    bottom: svgLocation() == "south" ? undefined : parent.bottom
+                    bottom: vistaSvgLocation() == "south" ? undefined : parent.bottom
                     left: parent.left
-                    right: svgLocation() == "south" ? parent.right : undefined
+                    right: vistaSvgLocation() == "south" ? parent.right : undefined
 
-                    topMargin: svgLocation() == "south" ? 2 : -2
-                    bottomMargin: svgLocation() == "south" ? 0 : -2
-                    leftMargin: svgLocation() == "south" ? 0 : 2
+                    topMargin: vistaSvgLocation() == "south" ? 2 : -2
+                    bottomMargin: vistaSvgLocation() == "south" ? 0 : -2
+                    leftMargin: vistaSvgLocation() == "south" ? 0 : 2
                 }
-                height: svgLocation() == "south" ? 30 : undefined
-                width: svgLocation() == "south" ? undefined : 30
+                height: vistaSvgLocation() == "south" ? 30 : undefined
+                width: vistaSvgLocation() == "south" ? undefined : 30
 
-                prefix: "shine-" + svgLocation()
+                prefix: milestone2Mode ? "" : "shinevista-" + vistaSvgLocation()
             }
 
             visible: true
@@ -411,10 +422,157 @@ ContainmentItem {
             height: isHorizontal ? currentLayout.height : Kirigami.Units.iconSizes.sizeForLabels * 5
         }
 
+
         ListModel {
             id: appletsModel
         }
 
+
+        Rectangle {
+            id: gradientRect
+            anchors.fill: currentLayout
+            anchors.bottomMargin: plasmoidLocationString() === "north" ? panelSvg.fixedMargins.bottom : 0
+            anchors.leftMargin: plasmoidLocationString() === "west" ? panelSvg.fixedMargins.left : 0
+            anchors.rightMargin:{
+                if(plasmoidLocationString() === "east") return panelSvg.fixedMargins.right;
+                else if(plasmoidLocationString() === "south" || plasmoidLocationString() === "north") return -parent.anchors.rightMargin;
+                else return 0;
+            }
+            color: "transparent"
+
+            KSvg.FrameSvgItem {
+                id: darkPart1
+
+                anchors.left: parent.left
+                anchors.leftMargin: -2
+                anchors.bottom: parent.bottom
+                anchors.top: parent.top
+
+                width: parent.sevenstartItem + parent.quicklaunchItem + fixSpacing
+
+                property int fixSpacing: (parent.quicklaunchItem != 0 ? Kirigami.Units.smallSpacing*3 : Kirigami.Units.smallSpacing*2) - Kirigami.Units.smallSpacing/2
+
+                imagePath: "widgets/panel-background"
+                visible: true
+                prefix: "supersouthtray"
+                z: 1
+            }
+
+            KSvg.FrameSvgItem {
+                id: darkPart2
+
+                anchors.right: parent.right
+                anchors.rightMargin: parent.showDesktopItem - Kirigami.Units.smallSpacing/4
+                anchors.bottom: parent.bottom
+                anchors.top: parent.top
+
+                width: parent.clockItem + parent.sysTrayItem + parent.wmpToolbarItem + Kirigami.Units.smallSpacing*4
+
+                imagePath: "widgets/panel-background"
+                visible: true
+                prefix: "supersouthtray"
+                z: 1
+            }
+
+            visible: milestone2Mode
+
+            property string tint: "red"
+            property string gradColor: applet ? "transparent" : gradientRect.tint
+            property double gradStart: {
+                if(root.isHorizontal) {
+                    return (applet ? (applet.x / applet.availWidth) : 0.1)
+                } else {
+                    return (applet ? (applet.y / applet.availHeight) : 0.1)
+                }
+            }
+            property double gradEnd: {
+                if(root.isHorizontal) {
+                    if(nextApplet) {
+                        return nextApplet.x / nextApplet.availWidth;
+                    } else {
+                        return (applet ? ((applet.x+applet.Layout.maximumWidth) / applet.availWidth) : 0.1)
+                    }
+                }
+                else {
+                    if(nextApplet) {
+                        return nextApplet.y / nextApplet.availHeight;
+                    } else {
+                        return (applet ? ((applet.y+applet.Layout.maximumHeight) / applet.availHeight) : 0.1)
+                    }
+                }
+            }
+            property int index: applet ? applet.index : -1
+            property int count: appletsModel.count
+            property Item nextApplet: {
+                ii
+            }
+            property Item applet: {
+                for(var i = 0; i < currentLayout.visibleChildren.length; i++) {
+                    if(currentLayout.visibleChildren[i].applet.iconsOnly && currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.wackyideas.seventasks") {
+                        return currentLayout.visibleChildren[i];
+                    }
+                }
+                return null
+            }
+
+            // The next code will probe around the panel looking for a certain plasmoid.
+            // If the plasmoid is found, it will store the width of that plasmoid in a property for later use
+
+            // Show desktop
+            property int showDesktopItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.wackyideas.win7showdesktop") {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+            // Digital clock lite
+            property int clockItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.digitalclocklite") {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+            // System tray
+            property int sysTrayItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "org.kde.plasma.systemtray") {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+            // WMP toolbar
+            property int wmpToolbarItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.wmptoolbar" && !currentLayout.visibleChildren[i].applet.hideToolbar) {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+            // Quick launch
+            property int quicklaunchItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "org.kde.plasma.quicklaunch") {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+            // Sevenstart
+            property int sevenstartItem: {
+                for(var i = 0; i < currentLayout.visibleChildren.length-1; i++) {
+                    if(currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.startscreenpearl" || currentLayout.visibleChildren[i].applet.Plasmoid.pluginName === "io.gitgud.catpswin56.vistastart") {
+                        return currentLayout.visibleChildren[i].applet.width;
+                    }
+                }
+                return 0
+            }
+        }
         GridLayout {
             id: currentLayout
 

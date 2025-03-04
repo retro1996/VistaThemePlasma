@@ -9,5 +9,5 @@ kwin/effects_cpp/kde-effects-aeroglassblur/build
 kwin/effects_cpp/smodglow/build-kf6
 kwin/effects_cpp/aeroglide/build-kf6
 kwin/effects_cpp/startupfeedback/build-kf6
-extras/win7-m2/src/m2tasks_src/build
+extras/deprecated/win7-m2/src/m2tasks_src/build
 extras/extra-apps/execbin/build

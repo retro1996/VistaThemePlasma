@@ -138,7 +138,7 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: stickOutOrb
 
-                    text: i18n("Enable floating orb")
+                    text: i18n("Enable floating orb for short taskbars")
                 }
                 RowLayout{
                     Layout.fillWidth: true

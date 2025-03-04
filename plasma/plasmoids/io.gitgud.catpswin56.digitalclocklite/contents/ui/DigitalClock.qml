@@ -40,9 +40,6 @@ Item {
     property bool showLocalTimezone: Plasmoid.configuration.showLocalTimezone
     property bool showDate: Plasmoid.configuration.showDate && !shortTaskbarHideDate
 
-    // Milestone 2 mode settings
-    property bool milestone2Mode: root.milestone2Mode
-
     property var dateFormat: {
         if(Plasmoid.configuration.dateFormat == "custom") return Plasmoid.configuration.customFormat
         else {
@@ -184,20 +181,6 @@ Item {
         repeat: false
         running: false
         onTriggered: if(!dashWindow.visible) timeToolTip.showToolTip();
-    }
-
-    KSvg.FrameSvgItem {
-       id: hoverIndicator
-
-       anchors.fill: parent
-       anchors.leftMargin: -Kirigami.Units.smallSpacing
-       anchors.rightMargin: -Kirigami.Units.smallSpacing
-
-       imagePath: Qt.resolvedUrl("svgs/tabbar.svgz")
-       prefix: mouseArea.containsPress ? "pressed-tab" : "active-tab";
-
-       z: -1
-       visible: mouseArea.containsMouse && main.milestone2Mode
     }
 
     Item {

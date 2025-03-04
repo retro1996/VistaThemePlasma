@@ -5,7 +5,6 @@
 ## Introduction
 
 This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma) which aims to recreate the look and feel of Windows Vista as much as possible on KDE Plasma, whilst adapting the design to fit in with modern features provided by KDE Plasma and Linux.
-The look and feel of Windows 7 Milestone 2 is also available as an extra.
 It is still in heavy development and testing. VTP has been tested on:
 
 1. Arch Linux x64 and other Arch derivatives
@@ -26,7 +25,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### Contributors
 
 - [AngelBruni](https://github.com/angelbruni) for the SVG Vista taskbar texture
-- [ThePhantom](https://github.com/ThePhantom6314) for remaking the task items and power button glyphs in SVG
+- [ThePhantom](https://github.com/ThePhantom6314) for remaking the task item textures and power button glyphs in SVG
 - [aeoe](https://gitgud.io/aeoe) for fixing a minor issue with the VistaStart dialog texture
 
 
@@ -72,13 +71,9 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 ## Screenshots
 
-### Desktop (Vista)
+### Desktop
 
 <img src="screenshots/desktop-vista.png">
-
-### Desktop (Milestone 2)
-
-<img src="screenshots/desktop-m2.png">
 
 ### Start Menu
 
@@ -91,16 +86,12 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 <img src="screenshots/clock.png">
 
-### System Tray (Vista)
+### System Tray
 
 <img src="screenshots/battery.png">
 <img src="screenshots/network.png">
 <img src="screenshots/volume.png">
 <img src="screenshots/system_tray-vista.png">
-
-### System Tray (Milestone 2)
-
-<img src="screenshots/system_tray-m2.png">
 
 ### Notifications 
 
@@ -114,10 +105,6 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### Lockscreen 
 
 <img src="screenshots/lockscreen.png">
-
-### Aero Peek (Milestone 2)
-
-<img src="screenshots/peek.png">
 
 ### Alt-Tab Switcher
 
@@ -138,12 +125,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 <img src="screenshots/geckium.png">
 
-### Taskbar (Vista)
+### Taskbar
 
 <img src="screenshots/contextmenu-vista.png">
 <img src="screenshots/window_preview-vista.png">
-
-### Taskbar (Milestone 2)
-
-<img src="screenshots/jumplist-m2.png">
-<img src="screenshots/window_preview-m2.png">

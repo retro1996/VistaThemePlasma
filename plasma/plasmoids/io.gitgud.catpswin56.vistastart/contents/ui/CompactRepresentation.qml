@@ -47,7 +47,7 @@ Item {
     readonly property var screenGeometry: Plasmoid.screenGeometry
 
     // Should the orb be rendered in its own dialog window so that it can stick out of the panel?
-    readonly property bool stickOutOrb: (Plasmoid.location == PlasmaCore.Types.TopEdge || Plasmoid.location == PlasmaCore.Types.BottomEdge) && Plasmoid.configuration.stickOutOrb && !editMode
+    readonly property bool stickOutOrb: (Plasmoid.location == PlasmaCore.Types.TopEdge || Plasmoid.location == PlasmaCore.Types.BottomEdge) && Plasmoid.configuration.stickOutOrb && kicker.height <= 30 && !editMode
     readonly property bool useCustomButtonImage: (Plasmoid.configuration.useCustomButtonImage)
     readonly property bool vertical: (Plasmoid.formFactor == PlasmaCore.Types.Vertical)
     readonly property bool enableShadow: (Plasmoid.configuration.enableShadow)
@@ -72,17 +72,19 @@ Item {
     function positionOrb() {
         var pos = kicker.mapToGlobal(floatingOrbPanel.x, floatingOrbPanel.y);
         pos.y -= 5;
-        if(Plasmoid.configuration.offsetFloatingOrb && root.height != 40) {
+        if(Plasmoid.configuration.offsetFloatingOrb) {
             pos.y += 5;
         }
         orb.width = floatingOrbPanel.scaledWidth
         orb.height = floatingOrbPanel.scaledHeight / 3;
+        if(orb.height === 30) {
+            pos.y += 2;
+        }
 
         orb.x = pos.x;
         orb.y = pos.y;
     }
     function showMenu() {
-
         dashWindow.visible = !dashWindow.visible;
         dashWindow.showingAllPrograms = false;
         maskTimer.start();
@@ -187,11 +189,7 @@ Item {
         id: floatingOrbPanel
         anchors.left: parent.left
         anchors.right: parent.right
-        //anchors.leftMargin: -Kirigami.Units.mediumSpacing
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        //anchors.verticalCenterOffset: Kirigami.Units.smallSpacing-1
-        //anchors.fill: parent
         objectName: "innerorb"
         opacity: (!stickOutOrb)
 
@@ -204,7 +202,6 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         anchors.fill: parent
         hoverEnabled: true
-        //visible: !stickOutOrb
         propagateComposedEvents: true
 
         onPressed: mouse => {
@@ -213,6 +210,7 @@ Item {
             else
                 mouse.accepted = false;
         }
+        z: 99
     }
 
     // I hate this
