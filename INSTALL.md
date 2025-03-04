@@ -75,26 +75,22 @@ Make sure to compile the C++ components of plasmoids located in ```plasmoids/src
 
 This section relates to the directories found in the ```kwin``` folder.
 
-1. Compile the decoration theme first and C++ KWin effects (found in ```decoration``` and ```effects_cpp``` respectively) using the provided install scripts. (Make sure to first build the decoration theme, as the C++ effects depend on it)
-2. Move ```effects```, ```tabbox```, ```outline```, ```scripts``` to ```~/.local/share/kwin```.
-3. In System Settings, apply the following settings: 
+1. Move ```effects```, ```tabbox```, ```outline```, ```scripts``` to ```~/.local/share/kwin```.
+2. In System Settings, apply the following settings: 
 - In Window Behavior -> Titlebar Actions: 
     - Mouse wheel: Do nothing
 - In Window Behavior -> Task Switcher:
     - Main: Thumbnail Seven, Include "Show Desktop" entry
     - Alternative: Flip Switch, Forward shortcut: Meta+Tab
-- In Window Behavior -> KWin Scripts: 
-    - Enable Minimize All, SMOD Peek*
 - In Window Behavior -> Desktop Effects, enable the following: 
     - Aero Glass Blur
+    - Aero Glide
     - Desaturate Unresponsive Applications
     - Fading Popups
     - Login
-    - Logout
     - SMOD Glow
-    - SMOD Snap*
+    - SMOD Snap
     - Squash
-    - SMOD Peek*
     - Scale
     - Dim Screen for Administrator Mode
 - In Window Behavior -> Desktop Effects, **disable** the following: 
@@ -104,18 +100,16 @@ This section relates to the directories found in the ```kwin``` folder.
     - Sliding Popups
     - Dialog Parent
     - Dim Inactive
-    
-(*) Enable only if you're gonna use the Milestone 2 variant of this theme
+    - Logout
 
 ## Miscellaneous components <a name="misc"></a>
 
 This section relates to the directories found in the ```misc``` folder.
 
-1. Run the install script for ```defaulttooltip```
-2. Move the ```Kvantum``` folder (the one inside the ```kvantum``` folder) to ```~/.config```, then in Kvantum Manager select the theme.
-3. Unpack the sound archive and move the folders to ```~/.local/share/sounds```, then select the sound theme in System Settings.
-4. Unpack the icon archive and move the folder to ```~/.local/share/icons```, then select the icon theme in System Settings.
-5. Unpack the cursor archive and move the folder to ```/usr/share/icons```, then follow [this](https://www.youtube.com/watch?v=Dj7co2R7RKw) guide to install the cursor theme. 
+1. Move the ```Kvantum``` folder (the one inside the ```kvantum``` folder) to ```~/.config```, then in Kvantum Manager select the theme.
+2. Unpack the sound archive and move the folders to ```~/.local/share/sounds```, then select the sound theme in System Settings.
+3. Unpack the icon archive and move the folder to ```~/.local/share/icons```, then select the icon theme in System Settings.
+4. Unpack the cursor archive and move the folder to ```/usr/share/icons```, then follow [this](https://www.youtube.com/watch?v=Dj7co2R7RKw) guide to install the cursor theme. 
 5. Move the files located in ```mimetype``` into ```~/.local/share/mime/packages``` and then run ```update-mime-database ~/.local/share/mime``` to fix DLLs and EXE files sharing the same icons.
 6. Segoe UI, Segoe UI Bold, and Segoe UI Italic are required for this theme and they should be installed as system-wide fonts.
 7. Optionally, to install custom branding at the Info Center, move ```kcm-about-distrorc``` from the ```branding``` folder to ```~/.config/kdedefaults/```, then edit the file's ```LogoPath``` entry to point to the absolute path of ```kcminfo.png```.
@@ -151,9 +145,9 @@ If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup a
 
 The following steps are optional: 
 
-8. To enable full font hinting just for Segoe UI, move the ```fontconfig``` folder to ```~/.config```. This will enable full font hinting for Segoe UI while keeping slight font hinting for other fonts. Additionally, append ```QML_DISABLE_DISTANCEFIELD=1``` into ```/etc/environment``` in order for this to be properly applied. *While full font hinting makes the font rendering look sharper and somewhat closer to Windows 7's ClearType, on Linux this option causes noticeably faulty kerning. This has been a [prominent](https://github.com/OpenTTD/OpenTTD/issues/11765) [issue](https://gitlab.gnome.org/GNOME/pango/-/issues/656) [for](https://gitlab.gnome.org/GNOME/pango/-/issues/463) [several](https://gitlab.gnome.org/GNOME/pango/-/issues/404) [years](https://github.com/harfbuzz/harfbuzz/issues/2394) [now](https://www.phoronix.com/news/HarfBuzz-Hinting-Woe) and while the situation has improved from being unreadable to just being ugly, a complete solution for this doesn't seem to be coming anytime soon.*
-9. For Wine users it's recommended to install the [VistaVG Ultimate](https://www.deviantart.com/vishal-gupta/art/VistaVG-Ultimate-57715902) msstyles theme.
-10. Add the following to ```~/.bashrc``` to get bash to look more like the command prompt on Windows:
+10. To enable full font hinting just for Segoe UI, move the ```fontconfig``` folder to ```~/.config```. This will enable full font hinting for Segoe UI while keeping slight font hinting for other fonts. Additionally, append ```QML_DISABLE_DISTANCEFIELD=1``` into ```/etc/environment``` in order for this to be properly applied. *While full font hinting makes the font rendering look sharper and somewhat closer to Windows 7's ClearType, on Linux this option causes noticeably faulty kerning. This has been a [prominent](https://github.com/OpenTTD/OpenTTD/issues/11765) [issue](https://gitlab.gnome.org/GNOME/pango/-/issues/656) [for](https://gitlab.gnome.org/GNOME/pango/-/issues/463) [several](https://gitlab.gnome.org/GNOME/pango/-/issues/404) [years](https://github.com/harfbuzz/harfbuzz/issues/2394) [now](https://www.phoronix.com/news/HarfBuzz-Hinting-Woe) and while the situation has improved from being unreadable to just being ugly, a complete solution for this doesn't seem to be coming anytime soon.*
+11. For Wine users it's recommended to install the [VistaVG Ultimate](https://www.deviantart.com/vishal-gupta/art/VistaVG-Ultimate-57715902) msstyles theme.
+12. Add the following to ```~/.bashrc``` to get bash to look more like the command prompt on Windows:
 
 ```
 PS1='C:${PWD//\//\\\\}> '
@@ -161,4 +155,4 @@ PS1='C:${PWD//\//\\\\}> '
 echo -e "Microsoft Windows [Version 6.0.6003]\nCopyright (c) 2006 Microsoft Corporation.  All rights reserved.\n"
 ```
 
-11. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking. 
+13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking. 
