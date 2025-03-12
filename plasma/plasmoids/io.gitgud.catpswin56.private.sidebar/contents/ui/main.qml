@@ -23,10 +23,44 @@ import "items"
 ContainmentItem {
     id: root
 
+    property var wrapper: null
+
     // Expose the configuration values for io.gitgud.catpswin56.sidebar
     readonly property int sidebarWidth: Plasmoid.configuration.width
     readonly property int sidebarLocation: Plasmoid.configuration.location
+
     property bool sidebarCollapsed: Plasmoid.configuration.collapsed
+
+    width: sidebarWidth
+
+    states: [
+        State {
+            name: "rightSidebar"
+            when: root.sidebarLocation == 0 && root.wrapper != null
+
+            AnchorChanges {
+                target: root
+
+                anchors.top: root.parent.top
+                anchors.bottom: root.parent.bottom
+                anchors.left: undefined
+                anchors.right: root.parent.right
+            }
+        },
+        State {
+            name: "leftSidebar"
+            when: root.sidebarLocation == 1 && root.wrapper != null
+
+            AnchorChanges {
+                target: root
+
+                anchors.top: root.parent.top
+                anchors.bottom: root.parent.bottom
+                anchors.left: root.parent.left
+                anchors.right: undefined
+            }
+        }
+    ]
 
     Containment.onAppletAdded: addApplet(applet);
     Containment.onAppletRemoved: {
@@ -40,7 +74,6 @@ ContainmentItem {
 
     function addApplet(applet) {
         const appletItem = root.itemFor(applet);
-
         appletsModel.insert(mainStack.count, { applet: appletItem, plasmoidId: appletItem.Plasmoid.pluginName })
     }
 
@@ -57,9 +90,12 @@ ContainmentItem {
                 text: i18n("Options")
                 onTriggered: Plasmoid.internalAction("configure").trigger()
             }
+            MenuItem {
+                text: i18n("Close")
+                onTriggered: root.wrapper.plasmoid.internalAction("remove").trigger();
+            }
         }
         tooltip: "Windows Sidebar"
-
         onActivated: Plasmoid.configuration.collapsed = !root.sidebarCollapsed;
 
         visible: !Plasmoid.configuration.disableTrayIcon
@@ -151,294 +187,20 @@ ContainmentItem {
 
             onChanged: delegateModel.sort();
         }
-        delegate: PlasmoidItem {
-            id: plasmoidDelegate
-
-            signal loadingCompleted()
-            onLoadingCompleted: {
-                delegateModel.sort();
-            }
-
-            required property var model
-            property int plasmoidIndex: DelegateModel.itemsIndex
-
-            width: mainStack.width
-
-            ParallelAnimation {
-                id: plasmoidBackAnim
-                NumberAnimation { id: plasmoidBackAnimX; target: plasmoidContainer; property: "x"; easing.type: Easing.Linear; duration: 125 }
-                NumberAnimation { id: plasmoidBackAnimY; target: plasmoidContainer; property: "y"; easing.type: Easing.Linear; duration: 125 }
-                onRunningChanged: {
-                    if(!running) {
-                        dragHndMa.held = false;
-                    }
-                }
-            }
-
-            Item {
-                id: plasmoidContainer
-
-                states: [
-                    State {
-                        name: "dragging"
-                        when: dragHndMa.held
-
-                        ParentChange {
-                            target: plasmoidContainer
-                            parent: mainStack
-                        }
-                    }
-                ]
-
-                width: plasmoidDelegate.width
-                height: plasmoidDelegate.height
-
-                Drag.active: dragHndMa.held
-                Drag.source: dragHndMa
-                Drag.hotSpot.x: Math.floor(width / 2.5)
-                Drag.hotSpot.y: Math.floor(height / 2.5)
-
-                KSvg.FrameSvgItem {
-                    id: plasmoidBg
-
-                    property int rightMargin: plasmoidMa.hovered && !applet?.Plasmoid.pluginName.includes("io.gitgud.catpswin56.gadgets") ? 8 : 0
-                    Behavior on rightMargin {
-                        NumberAnimation { duration: 125 }
-                    }
-
-                    anchors.fill: parent
-                    anchors.topMargin: -Kirigami.Units.smallSpacing * 2
-                    anchors.bottomMargin: -Kirigami.Units.smallSpacing * 2
-                    anchors.rightMargin: rightMargin
-
-                    imagePath: applet?.Plasmoid.backgroundHints != 0 ? "widgets/background" : ""
-
-                    z: -2
-                }
-
-                Item {
-                    id: gadgetToolbox
-
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-
-                    height: 48
-                    width: 11
-
-                    visible: opacity
-
-                    opacity: plasmoidMa.hovered
-
-                    Behavior on opacity {
-                        NumberAnimation { duration: 250 }
-                    }
-
-                    Rectangle {
-                        anchors.fill: parent
-
-                        border.width: 1
-                        border.color: "white"
-                        radius: 4
-
-                        color: "#214d72"
-
-                        opacity: 0.3
-                    }
-                    ColumnLayout {
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.rightMargin: -1
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        spacing: 0
-
-                        KSvg.FrameSvgItem {
-                            property string suffix: closeMa.containsMouse ? (closeMa.containsPress ? "-pressed" : "-hover") : ""
-
-                            Layout.preferredHeight: 15
-                            Layout.preferredWidth: 11
-
-                            imagePath: Qt.resolvedUrl("svgs/gadget-buttons.svg")
-                            prefix: "close" + suffix
-
-                            KSvg.SvgItem {
-                                anchors.centerIn: parent
-                                width: 9
-                                height: 8
-                                imagePath: Qt.resolvedUrl("svgs/gadget-buttons.svg")
-                                elementId: "close"
-                            }
-
-                            MouseArea {
-                                id: closeMa
-
-                                anchors.fill: parent
-
-                                hoverEnabled: true
-
-                                onClicked: {
-                                    plasmoidDelegate.applet.plasmoid.internalAction("remove").trigger();
-                                    appletsModel.remove(model.index, 1);
-                                }
-                            }
-                        }
-
-                        Rectangle {
-                            Layout.preferredHeight: 1
-                            Layout.preferredWidth: 7
-                            Layout.leftMargin: 2
-                            Layout.topMargin: -1
-                            color: "white"
-                            opacity: 0.3
-                        }
-
-                        KSvg.FrameSvgItem {
-                            property string suffix: optionsMa.containsMouse ? (optionsMa.containsPress ? "-pressed" : "-hover") : ""
-
-                            Layout.preferredHeight: 15
-                            Layout.preferredWidth: 11
-
-                            imagePath: Qt.resolvedUrl("svgs/gadget-buttons.svg")
-                            prefix: "other" + suffix
-
-                            KSvg.SvgItem {
-                                anchors.centerIn: parent
-                                width: 9
-                                height: 9
-                                imagePath: Qt.resolvedUrl("svgs/gadget-buttons.svg")
-                                elementId: "options"
-                            }
-
-                            MouseArea {
-                                id: optionsMa
-
-                                anchors.fill: parent
-
-                                hoverEnabled: true
-
-                                onClicked: plasmoidDelegate.applet.plasmoid.internalAction("configure").trigger()
-                            }
-                        }
-
-                        Rectangle {
-                            Layout.preferredHeight: 1
-                            Layout.preferredWidth: 7
-                            Layout.leftMargin: 2
-                            Layout.topMargin: -1
-                            Layout.bottomMargin: 3
-
-                            color: "white"
-                            opacity: 0.3
-                        }
-
-                        KSvg.SvgItem {
-                            Layout.preferredWidth: 5
-                            Layout.preferredHeight: 11
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.rightMargin: 2
-
-                            imagePath: Qt.resolvedUrl("svgs/gadget-buttons.svg")
-                            elementId: "drag"
-
-                            MouseArea {
-                                id: dragHndMa
-
-                                anchors.fill: parent
-                                anchors.margins: -Kirigami.Units.smallSpacing
-
-                                property bool held: false
-                                property alias plasmoidIndex: plasmoidDelegate.plasmoidIndex
-
-                                property point beginDrag
-                                property point currentDrag
-                                property point dragThreshold: Qt.point(-1,-1);
-
-                                onHeldChanged: {
-                                    if(held) mainStack.plasmoidIsBeingDragged = true;
-                                    else mainStack.plasmoidIsBeingDragged = false;
-                                }
-
-                                hoverEnabled: true
-                                propagateComposedEvents: true
-
-                                drag.smoothed: false
-                                drag.threshold: 0
-                                drag.target: held ? plasmoidContainer : undefined
-                                drag.axis: Drag.XAndYAxis
-
-                                function sendItemBack() {
-                                    beginDrag = Qt.point(plasmoidDelegate.x, plasmoidDelegate.y);
-                                    plasmoidBackAnimX.from = currentDrag.x //- taskList.contentX;
-                                    plasmoidBackAnimX.to = beginDrag.x - mainStack.contentX;
-                                    plasmoidBackAnimY.from = currentDrag.y// - taskList.contentY;
-                                    plasmoidBackAnimY.to = beginDrag.y - mainStack.contentY;
-                                    plasmoidBackAnim.start();
-                                    dragThreshold = Qt.point(-1,-1);
-                                }
-                                onReleased: event => {
-                                    if(held) sendItemBack();
-                                }
-                                onPressed: event => {
-                                    dragHndMa.beginDrag = Qt.point(plasmoidDelegate.x, plasmoidDelegate.y);
-                                    dragThreshold = Qt.point(mouseX, mouseY);
-                                }
-                                onExited: {
-                                    if((dragThreshold.x !== -1 && dragThreshold.y !== -1)) {
-                                        held = true;
-                                    }
-                                }
-                                onPositionChanged: {
-                                    if(dragHndMa.containsPress && (dragThreshold.x !== -1 && dragThreshold.y !== -1)) {
-                                        if(Math.abs(dragThreshold.x - mouseX) > 10 || Math.abs(dragThreshold.y - mouseY) > 10) {
-
-                                        }
-                                    }
-                                    currentDrag = Qt.point(plasmoidContainer.x, plasmoidContainer.y);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            applet: model.applet
-
-            HoverHandler { id: plasmoidMa }
-
-            DropArea {
-                id: plasmoidDropArea
-
-                anchors.fill: parent
-
-                visible: !dragHndMa.held
-
-                onEntered: (drag) => {
-                    if(drag.source.plasmoidIndex != plasmoidDelegate.plasmoidIndex) {
-                        delegateModel.items.move(drag.source.plasmoidIndex, plasmoidDelegate.plasmoidIndex);
-                        orderingManager.saveConfiguration();
-                    } else return;
-                }
-
-                z: 99999999
-            }
-
-            onAppletChanged: {
-                applet.parent = plasmoidBg;
-                applet.anchors.fill = plasmoidBg;
-                applet.anchors.margins = 8;
-                applet.visible = true;
-
-                plasmoidDelegate.height = mainStack.findPositive(applet?.Layout.preferredHeight, 125);
-
-                plasmoidDelegate.loadingCompleted();
-            }
-        }
+        delegate: PlasmoidDelegate {  }
     }
 
     Item {
         id: containerRect
 
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+
+        visible: yAnimation.duration == 125 && y != Screen.height
+        y: root.sidebarCollapsed ? Screen.height : 0
+        Behavior on y {
+            NumberAnimation { id: yAnimation; duration: 125 }
+        }
 
         HoverHandler { id: sidebarMa }
 

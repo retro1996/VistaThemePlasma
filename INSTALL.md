@@ -142,7 +142,7 @@ If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup a
 
 <img src="screenshots/fontconfig.png">
 
-9. Restart plasmashell in order for the desktop sidebar to appear correctly,
+9. To add the gadgets sidebar, drag and drop the "Windows Sidebar" plasmoid from the "Add Widgets" menu into the desktop.
 
 The following steps are optional: 
 

@@ -4,45 +4,40 @@
  *   SPDX-License-Identifier: LGPL-2.0-or-later
  */
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.1
+import QtQuick
+import QtQuick.Layouts
+
 import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.plasmoid
 
 PlasmoidItem {
     id: root
 
-    property ContainmentItem desktopContainment: null
+    property var desktopContainment: null
     onDesktopContainmentChanged: {
-        root.parent.visible = false; // Set this plasmoid's BasicAppletContainer visible property to false to avoid issues with the desktop icons
-        console.log("\n\n\n\n\n\n")
-        console.log(desktopContainment)
-        root.parent = desktopContainment; // Then change this plasmoid's parent to DesktopContainment so that BasicAppletContainer's visible property doesn't affect us
+        root.parent = desktopContainment;
+        if(internalContainmentItem) {
+            root.internalContainmentItem.parent = desktopContainment;
+            root.internalContainmentItem.wrapper = root;
+            root.internalContainmentItem.z = 1;
+        }
     }
 
-    property int sidebarWidth: 150
-    property int sidebarHeight: 0
     property int sidebarLocation: 0
-    property bool sidebarCollapsed: false
+    property int sidebarWidth: 150
 
     property Item internalContainmentItem
-
-    height: sidebarHeight
+    onInternalContainmentItemChanged: {
+        // Bind the configuration values from io.gitgud.catpswin56.private.sidebar with their equivalents in this plasmoid
+        root.sidebarWidth = Qt.binding(() => internalContainmentItem.sidebarWidth);
+        root.sidebarLocation = Qt.binding(() => internalContainmentItem.sidebarLocation);
+    }
 
     Layout.minimumWidth: sidebarWidth
-    Layout.maximumHeight: sidebarHeight
 
     preferredRepresentation: fullRepresentation
     Plasmoid.status: internalContainmentItem ? internalContainmentItem.status : PlasmaCore.Types.UnknownStatus
-    Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
-
-    visible: y != Screen.height
-
-    y: root.desktopContainment != null && !sidebarCollapsed ? 0 : Screen.height
-
-    Behavior on y {
-        NumberAnimation { duration: 125 }
-    }
+    // Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
 
     states: [
         State {
@@ -52,6 +47,8 @@ PlasmoidItem {
             AnchorChanges {
                 target: root
 
+                anchors.top: desktopContainment.top
+                anchors.bottom: desktopContainment.bottom
                 anchors.left: undefined
                 anchors.right: desktopContainment.right
             }
@@ -63,6 +60,8 @@ PlasmoidItem {
             AnchorChanges {
                 target: root
 
+                anchors.top: desktopContainment.top
+                anchors.bottom: desktopContainment.bottom
                 anchors.left: desktopContainment.left
                 anchors.right: undefined
             }
@@ -77,41 +76,23 @@ PlasmoidItem {
             let item = this;
             while (item.parent) {
                 item = item.parent;
-                if (item.isFolder !== undefined) {
-                    root.desktopContainment = item;
-                    root.parent = desktopContainment;
+                if (item.defaultItemWidth !== undefined) {
+                    root.parent.parent = item.parent;
+                    root.parent.anchors.bottom = root.parent.parent.top;
+                    root.desktopContainment = item.parent;
 
                     root.width = Qt.binding(() => root.sidebarWidth);
-                    root.sidebarHeight = Qt.binding(() => desktopContainment.availableScreenRect.height);
-
-                    desktopContainment.sidebarWidth = Qt.binding(() => root.sidebarWidth);
                 }
             }
         }
     }
 
-    Component.onCompleted: {
-        root.internalContainmentItem = plasmoid.internalContainmentItem;
-
-        if (root.internalContainmentItem === null) {
-            return;
-        }
-        root.internalContainmentItem.anchors.fill = undefined;
-        root.internalContainmentItem.parent = root;
-        root.internalContainmentItem.anchors.fill = root;
-    }
+    Component.onCompleted: root.internalContainmentItem = Plasmoid.internalContainmentItem;
 
     Connections {
         target: plasmoid
         function onInternalContainmentItemChanged() {
-            root.internalContainmentItem = plasmoid.internalContainmentItem;
-            root.internalContainmentItem.parent = root;
-            root.internalContainmentItem.anchors.fill = root;
-
-            // Bind the configuration values from io.gitgud.catpswin56.private.sidebar with their equivalents in this plasmoid
-            root.sidebarWidth = Qt.binding(() => internalContainmentItem.sidebarWidth);
-            root.sidebarLocation = Qt.binding(() => internalContainmentItem.sidebarLocation);
-            root.sidebarCollapsed = Qt.binding(() => internalContainmentItem.sidebarCollapsed);
+            root.internalContainmentItem = Plasmoid.internalContainmentItem;
         }
     }
 }

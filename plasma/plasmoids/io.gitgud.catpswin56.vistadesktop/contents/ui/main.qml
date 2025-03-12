@@ -17,7 +17,7 @@ import org.kde.kirigami 2.20 as Kirigami
 
 import io.gitgud.catpswin56.vistadesktop.folder as Folder
 
-import io.gitgud.catpswin56.private.containmentlayoutmanager 1.0 as ContainmentLayoutManager
+import org.kde.plasma.private.containmentlayoutmanager 1.0 as ContainmentLayoutManager
 
 import "code/FolderTools.js" as FolderTools
 
@@ -32,9 +32,6 @@ ContainmentItem {
     // - allow defining a custom drop handler
     // TODO remove once it gains that feature (perhaps optionally?)
     compactRepresentation: (isFolder && !isContainment) ? compactRepresentation : null
-
-    property bool sidebarExists: false
-    property int sidebarWidth: 0
 
     objectName: isFolder ? "folder" : "desktop"
 

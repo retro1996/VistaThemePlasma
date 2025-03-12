@@ -4,13 +4,13 @@
  *
  *  SPDX-License-Identifier: GPL-2.0-or-later
  */
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
-import QtQuick.Window 2.0
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Window
 
 import org.kde.plasma.core as PlasmaCore
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.kquickcontrolsaddons 2.0
+import org.kde.kirigami as Kirigami
+import org.kde.kquickcontrolsaddons
 import org.kde.plasma.plasmoid
 
 PlasmaCore.ToolTipArea {
@@ -112,7 +112,7 @@ PlasmaCore.ToolTipArea {
         visible: plasmoidItem.expanded && fullRepresentation
         visualParent: compactRepresentation ? compactRepresentation : null
         location: plasmoid.location
-        hideOnWindowDeactivate: root.plasmoidItem.hideOnWindowDeactivate
+        hideOnWindowDeactivate: true
 
         backgroundHints: PlasmaCore.Dialog.SolidBackground
         property var oldStatus: PlasmaCore.Types.UnknownStatus
@@ -123,12 +123,13 @@ PlasmaCore.ToolTipArea {
 
             focus: true
 
-            Keys.onEscapePressed: {
-                plasmoidItem.expanded = false;
-            }
+            Keys.onEscapePressed: plasmoidItem.expanded = false;
 
             LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
             LayoutMirroring.childrenInherit: true
+
+            Kirigami.Theme.colorSet: Kirigami.Theme.View
+            Kirigami.Theme.inherit: false
 
             Layout.minimumWidth: (fullRepresentation && fullRepresentation.Layout) ? fullRepresentation.Layout.minimumWidth : 0
             Layout.minimumHeight: (fullRepresentation && fullRepresentation.Layout) ? fullRepresentation.Layout.minimumHeight: 0
