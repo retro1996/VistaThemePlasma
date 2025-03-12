@@ -127,7 +127,7 @@ Regular colorization:
 Basic colorization:
 <img src="screenshots/aeroblursimple.png">
 Maximized opaque colorization:
-<img src="screenshots/aeroblur-opaque.png">
+<img src="screenshots/aeroblur_opaque.png">
 
 ### Decorations
 
