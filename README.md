@@ -78,7 +78,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 ### Desktop
 
-<img src="screenshots/desktop-vista.png">
+<img src="screenshots/desktop.png">
 
 ### Start Menu
 
@@ -95,8 +95,12 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 <img src="screenshots/battery.png">
 <img src="screenshots/network.png">
+<img src="screenshots/system_tray.png">
+
+### Sound Mixer
+
 <img src="screenshots/volume.png">
-<img src="screenshots/system_tray-vista.png">
+<img src="screenshots/volumemixer.png">
 
 ### Notifications 
 
@@ -118,19 +122,26 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### Colorization 
 
 <img src="screenshots/colorization.png">
+Regular colorization:
 <img src="screenshots/aeroblur.png">
+Basic colorization:
 <img src="screenshots/aeroblursimple.png">
-<img src="screenshots/aero-maximize-effect.png">
+Maximized opaque colorization:
+<img src="screenshots/aeroblur-opaque.png">
 
 ### Decorations
 
 <img src="screenshots/decorations.png">
 
-### Firefox
+### Gadgets 
+
+<img src="screenshots/gadgets.png">
+
+### Floorp
 
 <img src="screenshots/geckium.png">
 
 ### Taskbar
 
-<img src="screenshots/contextmenu-vista.png">
-<img src="screenshots/window_preview-vista.png">
+<img src="screenshots/contextmenu.png">
+<img src="screenshots/window_preview.png">
