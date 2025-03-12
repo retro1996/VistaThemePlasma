@@ -84,6 +84,10 @@ PlasmoidItem {
         Layout.preferredHeight: dialogItem.implicitHeight
         anchors.fill: parent
         focus: true
+
+        function overrideFunction() {
+            KCMUtils.KCMLauncher.openSystemSettings("kcm_networkmanagement");
+        }
     }
 
     Connections {
