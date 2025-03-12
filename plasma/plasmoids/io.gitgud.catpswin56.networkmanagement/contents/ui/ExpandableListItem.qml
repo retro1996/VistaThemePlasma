@@ -7,14 +7,17 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Controls as QQC2
 import QtQuick.Layouts
 import QtQuick.Templates as T
-import org.kde.plasma.core as PlasmaCore
+
 import org.kde.ksvg as KSvg
+import org.kde.kirigami as Kirigami
+
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
-import org.kde.kirigami as Kirigami
-import QtQuick.Controls 2.15 as QQC2
+import org.kde.plasma.networkmanagement as PlasmaNM
 
 Item {
     id: listItem
@@ -197,6 +200,8 @@ Item {
      */
     readonly property bool hasExpandableContent: customExpandedViewContent !== null || __enabledContextualActions.length > 0
 
+    property int securityType
+
     /*
      * expand()
      * Show the expanded view, growing the list item to its taller size.
@@ -363,7 +368,7 @@ Item {
                     visible: listItem.isDefault
 
                     Kirigami.Icon {
-                        visible: iconEmblem.source
+                        visible: iconEmblem.source != undefined
 
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
@@ -427,7 +432,9 @@ Item {
                     Kirigami.Icon {
                         id: iconEmblem
 
-                        visible: valid
+                        visible: securityType == PlasmaNM.Enums.UnknownSecurity || securityType == PlasmaNM.Enums.NoneSecurity
+
+                        source: securityType == PlasmaNM.Enums.UnknownSecurity ? "stock_lock" : "bluetooth-active-symbolic"
 
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom

@@ -87,7 +87,7 @@ Item {
                 text: {
                     if(PlasmaNM.Configuration.airplaneModeEnabled) return i18nc("@info:tooltip", "Middle-click to turn off Airplane Mode");
                     else if(airplaneModeAvailable) return i18nc("@info:tooltip", "Middle-click to turn on Airplane Mode");
-                    else return "Currently connected to a network"
+                    else return i18n("Currently connected to a network")
                 }
                 opacity: 0.75
                 visible: text !== ""

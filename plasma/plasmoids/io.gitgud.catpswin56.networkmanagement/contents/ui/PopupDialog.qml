@@ -76,11 +76,9 @@ PlasmaExtras.Representation {
     Rectangle {
         id: toolsbars
 
-        property int rightMargin: 8
-
         anchors {
             right: parent.right
-            rightMargin: rightMargin
+            rightMargin: connectionListPage.scrollbarWidth - (Kirigami.Units.smallSpacing + 3)
             left: parent.left
             leftMargin: -Kirigami.Units.smallSpacing
             top: parent.top
@@ -89,6 +87,8 @@ PlasmaExtras.Representation {
 
         height: 25
         color: "white"
+
+        visible: stack.depth === 1
 
         ColumnLayout {
             anchors.fill: parent
@@ -100,7 +100,6 @@ PlasmaExtras.Representation {
                     id: toolbar
                     Layout.fillWidth: true
                     hasConnections: connectionListPage.count > 0
-                    visible: stack.depth === 1
                 }
 
                 Loader {
@@ -119,7 +118,10 @@ PlasmaExtras.Representation {
                     Layout.preferredHeight: 24
 
                     hoverEnabled: true
-                    onClicked: handler.requestScan();
+                    onClicked: nmHandler.requestScan();
+                    enabled: false // TODO: reenable it once refreshing on command is figured out
+
+                    opacity: enabled ? 1.0 : 0.5
 
                     KSvg.FrameSvgItem {
                         anchors.fill: parent
@@ -148,13 +150,13 @@ PlasmaExtras.Representation {
         QQC2.StackView {
             id: stack
             anchors.top: parent.top
-            anchors.topMargin: -Kirigami.Units.smallSpacing * 2
+            anchors.topMargin: toolsbars.visible ? -Kirigami.Units.smallSpacing * 2 : Kirigami.Units.smallSpacing
             anchors.left: parent.left
-            anchors.leftMargin: -Kirigami.Units.smallSpacing * 2
+            anchors.leftMargin: toolsbars.visible ? -Kirigami.Units.smallSpacing * 2 : 0
             anchors.right: parent.right
-            anchors.rightMargin: -Kirigami.Units.smallSpacing * 2
+            anchors.rightMargin: toolsbars.visible ? -Kirigami.Units.smallSpacing * 2 : 0
             anchors.bottom: backButton.visible ? backButton.top : parent.bottom
-            anchors.bottomMargin: -Kirigami.Units.smallSpacing/2
+            anchors.bottomMargin: toolsbars.visible ? -Kirigami.Units.smallSpacing / 2 : 0
             initialItem: ConnectionListPage {
                 id: connectionListPage
                 model: appletProxyModel

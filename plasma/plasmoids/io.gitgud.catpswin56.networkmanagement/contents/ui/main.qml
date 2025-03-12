@@ -29,18 +29,7 @@ PlasmoidItem {
         || Plasmoid.location === PlasmaCore.Types.LeftEdge)
     property alias planeModeSwitchAction: planeAction
 
-    // Milestone 2 mode settings
-    property bool milestone2Mode: {
-        let item = this;
-        while (item.parent) {
-            item = item.parent;
-            if (item.milestone2Mode !== undefined) {
-                return item.milestone2Mode
-            }
-        }
-    }
-
-    Plasmoid.title: "Open Network and Sharing Center"
+    Plasmoid.title: i18n("Open Network and Sharing Center")
 
     toolTipItem: Tooltip {  }
 
@@ -172,20 +161,18 @@ PlasmoidItem {
             priority: PlasmaCore.Action.LowPriority
             visible: networkStatus.connectivity === NMQt.NetworkManager.Portal
             onTriggered: Qt.openUrlExternally("http://networkcheck.kde.org")
+        },
+        PlasmaCore.Action {
+            id: configureAction
+            text: i18n("&Configure Network Connections…")
+            icon.name: "configure"
+            visible: kcmAuthorized
+            shortcut: "alt+d, s"
+            onTriggered: KCMUtils.KCMLauncher.openSystemSettings(kcm)
         }
     ]
 
-    PlasmaCore.Action {
-        id: configureAction
-        text: i18n("&Configure Network Connections…")
-        icon.name: "configure"
-        visible: kcmAuthorized
-        shortcut: "alt+d, s"
-        onTriggered: KCMUtils.KCMLauncher.openSystemSettings(kcm)
-    }
-
     Component.onCompleted: {
-        plasmoid.setInternalAction("configure", configureAction);
         handler.requestScan();
         mainWindow.expanded = true;
         mainWindow.expanded = false;
@@ -215,6 +202,7 @@ PlasmoidItem {
     Timer {
         id: scanTimer
         interval: 10200
+        triggeredOnStart: true
         repeat: true
         running: !PlasmaNM.Configuration.airplaneModeEnabled && !mainWindow.delayModelUpdates
 

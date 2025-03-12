@@ -7,25 +7,24 @@
 */
 
 import QtQuick
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.ksvg 1.0 as KSvg
 
-/**
- * Ignores the theme's listItem margins, and uses custom highlight(pressed) area.
- * Could break some themes but the majority look fine.
- * Also includes a separator to be used in sections.
- */
+import org.kde.kirigami as Kirigami
+import org.kde.ksvg as KSvg
+
+import org.kde.plasma.networkmanagement as PlasmaNM
+
 MouseArea {
     id: listItem
 
     property bool checked: false
     property bool separator: false
+    property bool wirelessSeparator: separator && (appletProxyModel.data(appletProxyModel.index(0, 0), PlasmaNM.NetworkModel.SectionRole) !== "Available connections")
     property rect highlightRect: Qt.rect(0, 0, width, height)
 
     width: parent.width
 
     // Sections have spacing above but not below. Will use 2 of them below.
-    height: separator ? 32 : parent.height
+    height: separator ? (wirelessSeparator ? 32 : 16) : parent.height
     hoverEnabled: true
 
     Rectangle {
@@ -35,6 +34,35 @@ MouseArea {
             left: parent.left
             top: parent.top
         }
+
+        states: [
+            State {
+                name: "separator"
+                when: listItem.separator && !listItem.wirelessSeparator
+
+                AnchorChanges {
+                    target: separatorLine
+
+                    anchors.top: undefined
+                    anchors.right: listItem.right
+                    anchors.left: listItem.left
+                    anchors.verticalCenter: listItem.verticalCenter
+                }
+            },
+            State {
+                name: "wirelessSeparator"
+                when: listItem.wirelessSeparator
+
+                AnchorChanges {
+                    target: separatorLine
+
+                    anchors.top: listItem.top
+                    anchors.right: listItem.right
+                    anchors.left: listItem.left
+                    anchors.verticalCenter: undefined
+                }
+            }
+        ]
         color: "#cbcbcb"
         height: 1
         width: parent.width
@@ -44,12 +72,12 @@ MouseArea {
     Text {
         anchors.fill: parent
 
-        text: "Wireless Network Connection"
+        text: i18n("Wireless Network Connection")
         color: "#40555a"
         verticalAlignment: Text.AlignVCenter
         leftPadding: 10
 
-        visible: separatorLine.visible
+        visible: wirelessSeparator
     }
 
     KSvg.FrameSvgItem {
@@ -72,4 +100,6 @@ MouseArea {
         height: highlightRect.height
         width: highlightRect.width
     }
+
+    Component.onCompleted: console.log(appletProxyModel.data(appletProxyModel.index(0, 0), PlasmaNM.NetworkModel.SectionRole) + "\n\n\n\n\n");
 }

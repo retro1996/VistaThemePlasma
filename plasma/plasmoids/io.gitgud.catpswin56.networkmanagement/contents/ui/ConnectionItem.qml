@@ -45,6 +45,7 @@ ExpandableListItem {
             else return "network-type-work";
         }
     }//model.ConnectionIcon
+    securityType: SecurityType
     title: model.ItemUniqueName
     subtitle: itemText()
     isBusy: false
@@ -199,8 +200,8 @@ ExpandableListItem {
         onTriggered: {
             rxSpeed = prevRxBytes === 0 ? 0 : (RxBytes - prevRxBytes) * 1000 / interval
             txSpeed = prevTxBytes === 0 ? 0 : (TxBytes - prevTxBytes) * 1000 / interval
-            prevRxBytes = RxBytes
-            prevTxBytes = TxBytes
+            if(RxBytes != undefined) prevRxBytes = RxBytes
+            if(TxBytes != undefined) prevTxBytes = TxBytes
             Plasmoid.configuration.rxSpeed = rxSpeed // Store the speed values to configuration for use in the icon. They remain in configuration until destruction
             Plasmoid.configuration.txSpeed = txSpeed
         }

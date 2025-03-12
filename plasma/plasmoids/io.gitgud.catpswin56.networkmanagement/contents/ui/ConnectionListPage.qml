@@ -20,6 +20,7 @@ ColumnLayout {
     required property PlasmaNM.NetworkStatus nmStatus
     property alias model: connectionView.model
     property alias count: connectionView.count
+    property alias scrollbarWidth: scrollView.effectiveScrollBarWidth
 
     spacing: Kirigami.Units.smallSpacing * 2
 
