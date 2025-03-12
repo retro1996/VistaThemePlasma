@@ -143,5 +143,5 @@ Maximized opaque colorization:
 
 ### Taskbar
 
-<img src="screenshots/contextmenu.png">
-<img src="screenshots/window_preview.png">
+<img src="screenshots/vistatasks-contextmenu.png">
+<img src="screenshots/vistatasks-window_preview.png">

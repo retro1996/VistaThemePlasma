@@ -7,6 +7,7 @@
 3. [KWin components](#kwin)
 4. [Miscellaneous components](#misc)
 5. [Configuring VistaThemePlasma](#conf)
+6. [Extras](#extras)
 
 ## Prerequisites <a name="preq"></a>
 
@@ -139,7 +140,6 @@ If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup a
 7. In System Settings -> Keyboard -> Shortcuts, under KWin, disable the "Peek at Desktop" shortcut, and remap the "MinimizeAll" to Meta+D
 8. In System Settings -> Fonts, configure the fonts as shown here:
 
-
 <img src="screenshots/fontconfig.png">
 
 9. To add the gadgets sidebar, drag and drop the "Windows Sidebar" plasmoid from the "Add Widgets" menu into the desktop.
@@ -156,4 +156,21 @@ PS1='C:${PWD//\//\\\\}> '
 echo -e "Microsoft Windows [Version 6.0.6003]\nCopyright (c) 2006 Microsoft Corporation.  All rights reserved.\n"
 ```
 
-13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking. 
+13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
+
+## Extras <a name="extras"></a>
+
+This sections relates to the directories found inside the ``extras`` folder
+
+### Extra apps
+
+**Execute Binary** 
+
+Application written in QtWidgets that's meant to replicate Windows's run dialog.
+
+<img src="screenshots/execbin.png">
+
+**Installation**
+
+1. Run the install script. The program will get installed to ``/usr/bin/execbin``
+2. Optionally, make a shortcut for ``execbin`` inside system settings
