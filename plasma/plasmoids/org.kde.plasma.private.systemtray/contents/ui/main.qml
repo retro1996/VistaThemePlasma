@@ -84,7 +84,10 @@ ContainmentItem {
             parent: root
 
             onHighlightedItemChanged: {
-                if(dialog.visible) dialog.setDialogPosition();
+                if(dialog.visible) {
+                    dialog.raise();
+                    dialog.setDialogPosition();
+                }
             }
         }
 
@@ -128,62 +131,141 @@ ContainmentItem {
             }
         }
 
-        Item {
-            id: orderingManager
-
-            property var orderObject: {}
-            property var orderModel: null
-
-            function saveConfiguration() {
-                for(var i = 0; i < orderModel.items.count; i++) {
-                    var item = orderModel.items.get(i);
-                    if(item.model.itemId !== "")
-                        setItemOrder(item.model.itemId, item.itemsIndex, false);
-                }
-                writeToConfig();
-            }
-
-            function setItemOrder(id, index, write = true) {
-                if(typeof orderObject === "undefined")
-                    orderObject = {};
-                orderObject[id] = index;
-                if(write) writeToConfig();
-            }
-
-            function getItemOrder(id) {
-                if(typeof orderObject[id] === "undefined") return -1;
-                return orderObject[id];
-            }
-
-            function writeToConfig() {
-                Plasmoid.configuration.itemOrdering = JSON.stringify(orderObject);
-                Plasmoid.configuration.writeConfig();
-            }
-
-            Component.onCompleted: {
-                var list = Plasmoid.configuration.itemOrdering;
-                if(list !== "")
-                    orderObject = JSON.parse(list);
-
-                if(typeof orderObject === "undefined")
-                    orderObject = {};
-            }
-        }
-
         ItemModels.IconsModel {
             id: hiddenIconsModel
 
             status: PlasmaCore.Types.PassiveStatus
             grid: hiddenIconsGrid
+            orderingManager: Item {
+                id: hiddenOrderingManager
+
+                property var orderObject: {}
+
+                function saveConfiguration() {
+                    for(var i = 0; i < hiddenIconsModel.items.count; i++) {
+                        var item = hiddenIconsModel.items.get(i);
+                        if(item.model.itemId !== "")
+                            setItemOrder(item.model.itemId, item.itemsIndex, false);
+                    }
+                    writeToConfig();
+                }
+
+                function setItemOrder(id, index, write = true) {
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                    orderObject[id] = index;
+                    if(write) writeToConfig();
+                }
+
+                function getItemOrder(id) {
+                    if(typeof orderObject[id] === "undefined") return -1;
+                    return orderObject[id];
+                }
+
+                function writeToConfig() {
+                    Plasmoid.configuration.hiddenItemOrdering = JSON.stringify(orderObject);
+                    Plasmoid.configuration.writeConfig();
+                }
+
+                Component.onCompleted: {
+                    var list = Plasmoid.configuration.hiddenItemOrdering;
+                    if(list !== "")
+                        orderObject = JSON.parse(list);
+
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                }
+            }
         }
         ItemModels.IconsModel {
             id: activeIconsModel
 
             status: PlasmaCore.Types.ActiveStatus
             grid: activeIconsGrid
+            orderingManager: Item {
+                id: activeOrderingManager
+
+                property var orderObject: {}
+
+                function saveConfiguration() {
+                    for(var i = 0; i < activeIconsModel.items.count; i++) {
+                        var item = activeIconsModel.items.get(i);
+                        if(item.model.itemId !== "")
+                            setItemOrder(item.model.itemId, item.itemsIndex, false);
+                    }
+                    writeToConfig();
+                }
+
+                function setItemOrder(id, index, write = true) {
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                    orderObject[id] = index;
+                    if(write) writeToConfig();
+                }
+
+                function getItemOrder(id) {
+                    if(typeof orderObject[id] === "undefined") return -1;
+                    return orderObject[id];
+                }
+
+                function writeToConfig() {
+                    Plasmoid.configuration.activeItemOrdering = JSON.stringify(orderObject);
+                    Plasmoid.configuration.writeConfig();
+                }
+
+                Component.onCompleted: {
+                    var list = Plasmoid.configuration.activeItemOrdering;
+                    if(list !== "")
+                        orderObject = JSON.parse(list);
+
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                }
+            }
         }
         ItemModels.SystemModel {
             id: systemIconsModel
+
+            orderingManager: Item {
+                id: systemOrderingManager
+
+                property var orderObject: {}
+
+                function saveConfiguration() {
+                    for(var i = 0; i < systemIconsModel.items.count; i++) {
+                        var item = systemIconsModel.items.get(i);
+                        if(item.model.itemId !== "")
+                            setItemOrder(item.model.itemId, item.itemsIndex, false);
+                    }
+                    writeToConfig();
+                }
+
+                function setItemOrder(id, index, write = true) {
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                    orderObject[id] = index;
+                    if(write) writeToConfig();
+                }
+
+                function getItemOrder(id) {
+                    if(typeof orderObject[id] === "undefined") return -1;
+                    return orderObject[id];
+                }
+
+                function writeToConfig() {
+                    Plasmoid.configuration.systemItemOrdering = JSON.stringify(orderObject);
+                    Plasmoid.configuration.writeConfig();
+                }
+
+                Component.onCompleted: {
+                    var list = Plasmoid.configuration.systemItemOrdering;
+                    if(list !== "")
+                        orderObject = JSON.parse(list);
+
+                    if(typeof orderObject === "undefined")
+                        orderObject = {};
+                }
+            }
         }
 
         //Main Layout

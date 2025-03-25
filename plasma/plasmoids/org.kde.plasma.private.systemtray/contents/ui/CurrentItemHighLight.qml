@@ -1,8 +1,8 @@
 /*
-    SPDX-FileCopyrightText: 2011 Marco Martin <mart@kde.org>
-
-    SPDX-License-Identifier: LGPL-2.0-or-later
-*/
+ *    SPDX-FileCopyrightText: 2011 Marco Martin <mart@kde.org>
+ *
+ *    SPDX-License-Identifier: LGPL-2.0-or-later
+ */
 
 import QtQuick 2.15
 
@@ -18,6 +18,8 @@ KSvg.FrameSvgItem {
 
     property bool animationEnabled: true
     property var highlightedItem: null
+
+    property int oldY: 0
 
     property var containerMargins: {
         return 0;
@@ -83,12 +85,16 @@ KSvg.FrameSvgItem {
     }
 
     function updateHighlightedItem() {
-        if (systemTrayState.activeApplet && systemTrayState.activeApplet.parent) {
-            changeHighlightedItem(systemTrayState.activeApplet.parent.container, false);
-        } else { // 'Show hidden items' popup
-            changeHighlightedItem(parent, true);
-            width = 0;
-            height = 0;
+        if (systemTrayState.expanded) {
+            if (systemTrayState.activeApplet && systemTrayState.activeApplet.parent) {
+                changeHighlightedItem(systemTrayState.activeApplet.parent.container, /*forceEdgeHighlight*/false);
+            } else { // 'Show hidden items' popup
+                changeHighlightedItem(parent, /*forceEdgeHighlight*/true);
+                width = 0;
+                height = 0;
+            }
+        } else {
+            highlightedItem = null;
         }
     }
 
@@ -125,35 +131,35 @@ KSvg.FrameSvgItem {
         }
     }
     /*Behavior on x {
-        id: xAnim
-        enabled: animationEnabled
-        NumberAnimation {
-            duration: Kirigami.Units.longDuration
-            easing.type: Easing.InOutCubic
-        }
-    }
-    Behavior on y {
-        id: yAnim
-        enabled: animationEnabled
-        NumberAnimation {
-            duration: Kirigami.Units.longDuration
-            easing.type: Easing.InOutCubic
-        }
-    }
-    Behavior on width {
-        id: widthAnim
-        enabled: animationEnabled
-        NumberAnimation {
-            duration: Kirigami.Units.longDuration
-            easing.type: Easing.InOutCubic
-        }
-    }
-    Behavior on height {
-        id: heightAnim
-        enabled: animationEnabled
-        NumberAnimation {
-            duration: Kirigami.Units.longDuration
-            easing.type: Easing.InOutCubic
-        }
-    }*/
+     *        id: xAnim
+     *        enabled: animationEnabled
+     *        NumberAnimation {
+     *            duration: Kirigami.Units.longDuration
+     *            easing.type: Easing.InOutCubic
+}
+}
+Behavior on y {
+id: yAnim
+enabled: animationEnabled
+NumberAnimation {
+duration: Kirigami.Units.longDuration
+easing.type: Easing.InOutCubic
+}
+}
+Behavior on width {
+id: widthAnim
+enabled: animationEnabled
+NumberAnimation {
+duration: Kirigami.Units.longDuration
+easing.type: Easing.InOutCubic
+}
+}
+Behavior on height {
+id: heightAnim
+enabled: animationEnabled
+NumberAnimation {
+duration: Kirigami.Units.longDuration
+easing.type: Easing.InOutCubic
+}
+}*/
 }

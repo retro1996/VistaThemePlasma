@@ -11,6 +11,8 @@ import "../items"
 DelegateModel {
     id: delegateModel
 
+    required property Item orderingManager
+
     model: KItemModels.KSortFilterProxyModel {
         sourceModel: Plasmoid.systemTrayModel
         filterRoleName: "itemId"
@@ -33,8 +35,6 @@ DelegateModel {
         }
     }
     function determinePosition(item) {
-        orderingManager.orderModel = delegateModel;
-
         let lower = 0;
         let upper = items.count
         while(lower < upper) {

@@ -6,7 +6,13 @@
   <kcfgfile name=""/>
 
   <group name="General">
-    <entry name="itemOrdering" type="String">
+    <entry name="hiddenItemOrdering" type="String">
+      <default></default>
+    </entry>
+    <entry name="activeItemOrdering" type="String">
+      <default></default>
+    </entry>
+    <entry name="systemItemOrdering" type="String">
       <default></default>
     </entry>
     <entry name="extraItems" type="StringList">
