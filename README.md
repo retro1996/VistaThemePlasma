@@ -10,6 +10,9 @@ It is still in heavy development and testing. VTP has been tested on:
 1. Arch Linux x64 and other Arch derivatives
 2. Plasma 6.3.2, KDE Frameworks 6.11.0, Qt 6.8.2
 3. 96 DPI scaling, single monitor
+4. X11, Wayland*
+
+*VistaThemePlasma currently lacks full Wayland support, which may result in Wayland-specific issues. 
 
 See [INSTALL.md](./INSTALL.md) for a quick install guide.
 
@@ -32,6 +35,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 - [ThePhantom](https://github.com/ThePhantom6314) for remaking the task item textures and power button glyphs in SVG
 - [aeoe](https://gitgud.io/aeoe) for fixing a minor issue with the VistaStart dialog texture
 - [furkrn](https://gitgud.io/furkrn) for the Vista version of [PlymouthXP](https://github.com/blacklightpy/PlymouthXP)
+- [xodus2002](https://github.com/xodus2002) for the Glass, Pearl and Tinker sound themes from Windows Ultimate Extras
 
 
 ### ATP Credits
@@ -69,7 +73,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 ### Very Cool projects that you should check out
 
 - [Geckium](https://github.com/angelbruni/Geckium) by AngelBruni
-- [Aero UserChrome](https://gitgud.io/souris/aero-userchrome) by Souris (Geckium in combination with Aero UserChrome works well with AeroThemePlasma)
+- [Aero UserChrome](https://gitgud.io/souris/aero-userchrome) by Souris (Geckium in combination with Aero UserChrome works well with AeroThemePlasma and VistaThemePlasma)
 - [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma/) by WackyIdeas
 - [Ice2K.sys](https://toiletflusher.neocities.org/ice2k/) by 0penrc
 
