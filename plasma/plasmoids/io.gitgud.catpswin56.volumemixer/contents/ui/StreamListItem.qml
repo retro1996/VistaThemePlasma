@@ -42,7 +42,7 @@ ListItemBase {
         anchors.right: parent.right
 
         width: 1
-        height: (item.height * 1.3) + (Kirigami.Units.smallSpacing / 2)
+        height: item.ListView.view.height
 
         color: "#d6e1dd"
     }

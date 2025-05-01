@@ -240,7 +240,7 @@ PlasmoidItem {
         }
 
         property list<string> hiddenTypes: []
-        property int listWidth: 34
+        property int listWidth: 36
 
         Rectangle {
             anchors.fill: mainLayout
@@ -339,10 +339,13 @@ PlasmoidItem {
             color: "#3593ff"
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
-            text: i18n("Mixer")
+            text: i18n("Mi<u>x</u>er")
             font.underline: ma.containsMouse
+            textFormat: Text.StyledText
             wrapMode: Text.NoWrap
             elide: Text.ElideNone
+            style: Text.Outline
+            styleColor: "#02ffffff"
 
             MouseArea {
                 id: ma

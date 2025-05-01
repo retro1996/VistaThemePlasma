@@ -190,6 +190,8 @@ Window {
                         visible: count != 0
                         spacing: 0
                     }
+
+                    z: 999
                 }
             }
             CustomGroupBox {
@@ -215,7 +217,6 @@ Window {
                         orientation: ListView.Horizontal
                         focus: visible
                         spacing: Kirigami.Units.smallSpacing
-                        clip: true
                     }
                 }
             }
