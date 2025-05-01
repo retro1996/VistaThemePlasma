@@ -135,7 +135,7 @@ PC3.Slider {
             bottom: parent.bottom
         }
 
-        width: 22
+        width: 24
 
         KSvg.FrameSvgItem {
             id: bg
