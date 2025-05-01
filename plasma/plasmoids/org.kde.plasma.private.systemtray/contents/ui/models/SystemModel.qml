@@ -18,7 +18,7 @@ DelegateModel {
         filterRoleName: "itemId"
         function isEnabled(item) {
             switch (item) {
-                case ("io.gitgud.wackyideas.battery"):
+                case ("io.gitgud.catpswin56.battery"):
                     return Plasmoid.configuration.batteryEnabled;
                     break;
                 case ("io.gitgud.catpswin56.networkmanagement"):

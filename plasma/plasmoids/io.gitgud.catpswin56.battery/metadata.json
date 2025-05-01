@@ -3,6 +3,9 @@
     "KPlugin": {
         "Authors": [
             {
+                "Name": "catpswin56"
+            },
+            {
                 "Email": "wackyideas@disroot.org",
                 "Name": "WackyIdeas"
             },
@@ -58,7 +61,7 @@
                 "Name[zh_TW]": "Kai Uwe Broulik"
             }
         ],
-        "BugReportUrl": "https://bugs.kde.org/enter_bug.cgi?product=plasmashell&component=Battery%20Monitor",
+        "BugReportUrl": "https://gitgud.io/catpswin56/vistathemeplasma/-/issues",
         "Category": "System Information",
         "Description": "Control power management settings and see the power status of your battery",
         "Description[ar]": "التحكم في إعدادات إدارة الطاقة ومعرفة حالة طاقة البطارية",
@@ -99,10 +102,10 @@
             "desktop"
         ],
         "Icon": "battery-full",
-        "Id": "io.gitgud.wackyideas.battery",
+        "Id": "io.gitgud.catpswin56.battery",
         "License": "GPL-2.0+",
         "Name": "Battery (Vista)",
-        "Website": "https://kde.org/plasma-desktop/"
+        "Website": "https://gitgud.io/catpswin56/vistathemeplasma"
     },
     "Keywords": "Power Management;Battery;System;Energy;",
     "Keywords[ar]": "إدارة الطاقة;بطارية;نظام;طاقة;",

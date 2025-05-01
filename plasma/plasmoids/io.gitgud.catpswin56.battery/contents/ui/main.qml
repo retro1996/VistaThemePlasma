@@ -139,6 +139,8 @@ PlasmoidItem {
         return PlasmaCore.Types.PassiveStatus;
     }
 
+    toolTipItem: TrayToolTip {  }
+
     toolTipMainText: {
         if (!hasBatteries) {
             return Plasmoid.title

@@ -19,7 +19,7 @@ DelegateModel {
         sourceModel: Plasmoid.systemTrayModel
         filterRoleName: "effectiveStatus"
         function filterItemId(itemId) {
-            return itemId == "io.gitgud.wackyideas.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer"
+            return itemId == "io.gitgud.catpswin56.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer"
         }
         filterRowCallback: (sourceRow, sourceParent) => {
             let value = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), filterRole);

@@ -7,6 +7,8 @@
 
 import QtQuick 2.0
 
+import org.kde.plasma.plasmoid
+
 import org.kde.kirigami 2.20 as Kirigami
 
 Item {
@@ -29,6 +31,8 @@ Item {
         source: root.hasBattery ? fillElement(root.percent, root.health, root.broken) : "battery-missing"
         visible: !otherBatteriesIcon.visible
         active: root.active
+
+        onSourceChanged: Plasmoid.icon = source;
 
         function fillElement(p: int, h: int, b: bool): string {
             let name
