@@ -12,6 +12,7 @@ import Qt.labs.platform
 
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
+import org.kde.plasma.plasma5support as Plasma5Support
 
 import org.kde.graphicaleffects as KGraphicalEffects
 import org.kde.kirigami as Kirigami
@@ -75,6 +76,26 @@ ContainmentItem {
     function addApplet(applet) {
         const appletItem = root.itemFor(applet);
         appletsModel.insert(mainStack.count, { applet: appletItem, plasmoidId: appletItem.Plasmoid.pluginName })
+    }
+
+    Plasma5Support.DataSource {
+        id: execEngine
+        engine: "executable"
+        connectedSources: []
+        onNewData: (sourceName, data) => {
+            var exitCode = data["exit code"]
+            var exitStatus = data["exit status"]
+            var stdout = data["stdout"]
+            var stderr = data["stderr"]
+            exited(sourceName, exitCode, exitStatus, stdout, stderr)
+            disconnectSource(sourceName)
+        }
+        function exec(cmd) {
+            if (cmd) {
+                connectSource(cmd)
+            }
+        }
+        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
     }
 
     SystemTrayIcon {
@@ -323,7 +344,7 @@ ContainmentItem {
                             hoverEnabled: true
                             propagateComposedEvents: true
 
-                            onClicked: root.Plasmoid.internalAction("add widgets").trigger();
+                            onClicked: execEngine.exec("qdbus6 org.kde.plasmashell /PlasmaShell toggleWidgetExplorer; qdbus6 org.kde.plasmashell /PlasmaShell editMode false");
                         }
                     }
 

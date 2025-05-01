@@ -6,18 +6,20 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQuick.Layouts
 
-import org.kde.plasma.plasmoid 2.0
+import org.kde.ksvg as KSvg
+import org.kde.kquickcontrolsaddons as KQuickControlsAddons
+import org.kde.kirigami as Kirigami
+
+import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
-import org.kde.ksvg 1.0 as KSvg
-import org.kde.kquickcontrolsaddons 2.0 as KQuickControlsAddons
-import org.kde.kirigami 2.20 as Kirigami
-
-import io.gitgud.catpswin56.vistadesktop.folder as Folder
+import org.kde.plasma.plasma5support as Plasma5Support
 
 import org.kde.plasma.private.containmentlayoutmanager 1.0 as ContainmentLayoutManager
+
+import io.gitgud.catpswin56.vistadesktop.folder as Folder
 
 import "code/FolderTools.js" as FolderTools
 
@@ -388,6 +390,36 @@ ContainmentItem {
                 }
             }
         }
+
+        Plasma5Support.DataSource {
+            id: execEngine
+            engine: "executable"
+            connectedSources: []
+            onNewData: (sourceName, data) => {
+                var exitCode = data["exit code"]
+                var exitStatus = data["exit status"]
+                var stdout = data["stdout"]
+                var stderr = data["stderr"]
+                exited(sourceName, exitCode, exitStatus, stdout, stderr)
+                disconnectSource(sourceName)
+            }
+            function exec(cmd) {
+                if (cmd) {
+                    connectSource(cmd)
+                }
+            }
+            signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
+        }
+
+        Plasmoid.contextualActions: [
+            PlasmaCore.Action {
+                text: i18n("Gadgets")
+                icon.name: "gadgets-sidebar"
+                onTriggered: {
+                    execEngine.exec("qdbus6 org.kde.plasmashell /PlasmaShell toggleWidgetExplorer; qdbus6 org.kde.plasmashell /PlasmaShell editMode false");
+                }
+            }
+        ]
 
         PlasmaCore.Action {
             id: configAction
