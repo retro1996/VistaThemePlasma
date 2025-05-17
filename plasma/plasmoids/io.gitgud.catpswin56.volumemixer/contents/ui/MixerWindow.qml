@@ -5,8 +5,10 @@ import QtQuick.Window
 
 import org.kde.ksvg as KSvg
 import org.kde.kirigami as Kirigami
+
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.plasma.plasmoid
+import org.kde.plasma.core as PlasmaCore
 
 import org.kde.plasma.private.volume
 
@@ -19,8 +21,25 @@ Window {
     height: 331
 
     onVisibleChanged: {
-        x = Screen.desktopAvailableWidth
-        y = Screen.desktopAvailableHeight
+        if(visible) {
+
+            var pos = main.mapToGlobal(main.x, main.y);
+            var availScreen = Plasmoid.containment.availableScreenRect;
+            if(Plasmoid.location === PlasmaCore.Types.BottomEdge) {
+                x = pos.x - mixer.width / 2;
+                y = pos.y - mixer.height;
+            } else if(Plasmoid.location === PlasmaCore.Types.TopEdge) {
+                x = pos.x - mixer.width / 2;
+                y = availScreen.y;
+            } else if(Plasmoid.location === PlasmaCore.Types.LeftEdge) {
+                x = pos.x;
+                y = pos.y - mixer.height / 2;
+            } else if(Plasmoid.location === PlasmaCore.Types.RightEdge) {
+                x = pos.x - mixer.width;
+                y = pos.y - mixer.height / 2;
+            }
+
+        }
     }
 
     onClosing: mixer.destroy();
@@ -158,7 +177,7 @@ Window {
 
                         interactive: false
                         model: paSinkFilterModelDefault
-                        delegate: DeviceListItem { type: "sink-output"; width: 96; height: parent.height }
+                        delegate: DeviceListItem { type: "sink-output"; width: 96; height: parent.height-16; isMixer: true; }
                         orientation: ListView.Horizontal
                         spacing: 0
 
@@ -184,7 +203,7 @@ Window {
 
                         interactive: false
                         model: paSourceFilterModelDefault
-                        delegate: DeviceListItem { type: "sink-input"; width: 96; height: parent.height }
+                        delegate: DeviceListItem { type: "sink-input"; width: 96; height: parent.height-16; isMixer: true }
                         orientation: ListView.Horizontal
                         focus: visible
                         visible: count != 0
@@ -213,9 +232,10 @@ Window {
 
                         interactive: false
                         model: paSinkInputFilterModel
-                        delegate: StreamListItem { type: "source-output"; width: 96; height: parent.height }
+                        delegate: StreamListItem { type: "source-output"; width: 96; height: parent.height-16; isMixer: true }
                         orientation: ListView.Horizontal
                         focus: visible
+                        clip: true
                         spacing: Kirigami.Units.smallSpacing
                     }
                 }

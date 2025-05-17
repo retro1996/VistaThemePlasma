@@ -179,6 +179,7 @@ PlasmoidItem {
                 if(mixerWindow) {
                     mixerWindow.visibility = Window.AutomaticVisibility;
                     mixerWindow.raise();
+                    mixerWindow.requestActivate();
                 }
                 else main.expanded = !wasExpanded;
             }
@@ -233,9 +234,12 @@ PlasmoidItem {
             if(!mixerWindow) {
                 mixerWindow = Qt.createQmlObject("MixerWindow {}", main);
                 mixerWindow.visible = true;
+                mixerWindow.raise();
+                mixerWindow.requestActivate();
             } else {
                 mixerWindow.visibility = Window.AutomaticVisibility;
-                mixerWindow.raise();
+                mixerWindow.raise();}
+                mixerWindow.requestActivate();
             }
         }
 

@@ -34,12 +34,7 @@ PlasmoidItem {
 
     signal reset
 
-    //anchors.fill: parent
-    //property bool isDash: false
     property Item dragSource: null
-
-    //switchWidth: !fullRepresentationItem ? 0 :fullRepresentationItem.Layout.minimumWidth
-    //switchHeight: !fullRepresentationItem ? 0 :fullRepresentationItem.Layout.minimumHeight
 
     property alias rootModel: rootModel
     property QtObject globalFavorites: rootModel.favoritesModel
@@ -49,21 +44,14 @@ PlasmoidItem {
     preferredRepresentation: null
     compactRepresentation: compactRepresentation
     fullRepresentation: menuRepresentation
-    //compactRepresentation: compactRepresentation
-    //fullRepresentation: compactRepresentation//menuRepresentation
+    compactRepresentation: compactRepresentation
+    fullRepresentation: menuRepresentation
     Plasmoid.constraintHints: Plasmoid.CanFillArea
+    activationTogglesExpanded: false
+
 
     toolTipMainText: i18n("Start")
     toolTipSubText: ""
-
-    // Runs KMenuEdit.
-    function action_menuedit() {
-        processRunner.runMenuEditor();
-    }
-
-    function action_taskman() {
-        menu_executable.exec("ksysguard");
-    }
 
     Component {
         id: compactRepresentation
@@ -149,7 +137,6 @@ PlasmoidItem {
             } else {
                 favoritesModel.favorites = Plasmoid.configuration.favoriteApps;
             }
-            //favoritesModel.maxFavorites = pageSize;
         }
 
         onSystemFavoritesModelChanged: {
@@ -169,8 +156,6 @@ PlasmoidItem {
             } else {
                 favoritesModel.favorites = Plasmoid.configuration.favoriteApps;
             }
-
-            //favoritesModel.maxFavorites = pageSize;
         }
     }
 
@@ -271,14 +256,8 @@ PlasmoidItem {
     ]
 
     Component.onCompleted: {
-        /*if (Plasmoid.hasOwnProperty("activationTogglesExpanded")) {
-            Plasmoid.activationTogglesExpanded = !kicker.isDash
-        }*/
-
         windowSystem.focusIn.connect(enableHideOnWindowDeactivate);
         kicker.hideOnWindowDeactivate = true;
-
-        //rootModel.refreshed.connect(reset);
 
         dragHelper.dropped.connect(resetDragSource);
     }

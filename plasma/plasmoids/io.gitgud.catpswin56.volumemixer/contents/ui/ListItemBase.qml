@@ -27,15 +27,7 @@ Item {
     property string name: "unknown"
     property string iconName: model.IconName
 
-    property bool isMixer: {
-        let item = this;
-        while (item.parent) {
-            item = item.parent;
-            if (item.mixer !== undefined) {
-                return item.mixer
-            }
-        }
-    }
+    property bool isMixer: false
 
     opacity: (main.draggedStream && main.draggedStream.deviceIndex === item.model.Index) ? 0.3 : 1.0
 
@@ -59,7 +51,7 @@ Item {
             Layout.leftMargin: (iconMa.containsPress ? 1 : 0) - 2
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
-            Layout.topMargin: -3
+            Layout.topMargin: isMixer ? 0 : -3
 
             source: type == "sink-output" ? "audio-speakers" : (type == "sink-input" ? "audio-input-microphone" : item.iconName)
 
