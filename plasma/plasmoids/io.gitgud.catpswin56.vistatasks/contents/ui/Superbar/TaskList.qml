@@ -29,16 +29,10 @@ ListView {
     interactive: false
     cacheBuffer: 9999
     spacing: 2
-    readonly property int transitionDuration: Plasmoid.configuration.enableAnimations ? 200 : 0
+    readonly property int transitionDuration: 400
     property alias taskAnimation: taskAnimation
     property alias resetTransition: resetTransition
     property alias resetAddTransition: resetAddTransition
-
-    anchors {
-        left: parent.left
-        leftMargin: 1
-        right: parent.right
-    }
 
     orientation: {
         if(tasks.vertical) {
@@ -46,8 +40,6 @@ ListView {
         }
         return ListView.Horizontal
     }
-
-    height: 30
 
     // Is this really needed?
     // It apparently is, this somehow resets MouseArea and makes stuff actually work
@@ -87,23 +79,23 @@ ListView {
     Transition {
         id: taskAnimation
         NumberAnimation {
-            properties: "x,y"
+            properties: "x,y,width,height"
             easing.type: Easing.OutQuad
-            duration: 200
+            duration: transitionDuration
         }
     }
-    //populate: taskAnimation
     move: taskAnimation
 
     displaced: taskAnimation
     remove: Transition {
-            NumberAnimation { properties: tasks.iconsOnly ? "opacity" : ""; to: 0; duration: transitionDuration; easing.type: Easing.OutQuad; }
+        NumberAnimation { property: "implicitWidth"; to: 20; duration: transitionDuration; easing.type: Easing.OutQuad; }
+        NumberAnimation { properties: "opacity"; to: 0; duration: transitionDuration; easing.type: Easing.OutQuad; }
     }
     Transition {
         id: addAnimation
         ParallelAnimation {
-            NumberAnimation { property: tasks.iconsOnly ? "" : "implicitWidth"; duration: 200; easing.type: Easing.OutQuad; }
-            NumberAnimation { property: tasks.iconsOnly ? "opacity" : ""; from: 0; to: 1; duration: transitionDuration; easing.type: Easing.OutQuad; }
+            NumberAnimation { property: "implicitWidth"; from: 0; duration: transitionDuration; easing.type: Easing.OutQuad; }
+            NumberAnimation { property: "opacity"; to: 1; duration: transitionDuration; easing.type: Easing.OutQuad; }
         }
     }
     add: addAnimation

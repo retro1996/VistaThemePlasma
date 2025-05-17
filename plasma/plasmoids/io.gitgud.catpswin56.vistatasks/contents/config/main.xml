@@ -160,6 +160,11 @@
       <label> Spacing between icons in task manager. Margin is multiplied by this value.</label>
       <default>1</default>
     </entry>
+
+    <entry name="taskStyle" type="Int">
+      <label>0 = 7 Milestone 2, 1 = Vista (default), 2 = Plasma</label>
+      <default>1</default>
+    </entry>
   </group>
 
 </kcfg>

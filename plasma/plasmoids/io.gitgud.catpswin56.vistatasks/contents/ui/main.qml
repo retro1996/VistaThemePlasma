@@ -8,7 +8,7 @@ import QtQuick
 import QtQuick.Layouts 1.15
 import QtQml 2.15
 
-import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.plasmoid
 import org.kde.plasma.components 3.0 as PlasmaComponents3
 import org.kde.plasma.core as PlasmaCore
 import org.kde.ksvg 1.0 as KSvg
@@ -25,6 +25,8 @@ import org.kde.kwindowsystem
 
 import "code/layoutmetrics.js" as LayoutMetrics
 import "code/tools.js" as TaskTools
+
+import "Superbar/" as Superbar
 
 PlasmoidItem {
     id: tasks
@@ -45,7 +47,7 @@ PlasmoidItem {
     property var jumpListItem: null
     property var toolTipItem: null
     onJumpListItemChanged: {
-        taskList.forceMouseEvent();
+        taskList.item.forceMouseEvent();
     }
 
     property QtObject jumpListComponent: Qt.createComponent("TasksMenu.qml");
@@ -79,6 +81,13 @@ PlasmoidItem {
         if(KWindowSystem.isPlatformX11) {
             return KX11Extras.compositingActive;
         } else return true; // Composition is always enabled in Wayland
+    }
+
+    Connections {
+        target: Plasmoid.configuration
+        function onTaskStyleChanged() {
+            setTaskStyle(Plasmoid.configuration.taskStyle);
+        }
     }
 
     Item {
@@ -122,6 +131,27 @@ PlasmoidItem {
         return !tasks.vertical ? 0 : LayoutMetrics.preferredMinHeight();
     }
 
+    function setTaskStyle(value) {
+        var taskStyleName = "";
+        switch(value) {
+            case(0):
+                taskStyleName = "sevenm2";
+                break;
+            case(1):
+                taskStyleName = "vista";
+                break;
+            case(2):
+                taskStyleName = "plasma";
+                break;
+        }
+        let item = this;
+        while (item.parent) {
+            item = item.parent;
+            if (item.currentStyle !== undefined) {
+                item.currentStyle = taskStyleName
+            }
+        }
+    }
     function setRequestedInhibitDnd(value) {
         // This is modifying the value in the panel containment that
         // inhibits accepting drag and drop, so that we don't accidentally
@@ -158,7 +188,7 @@ PlasmoidItem {
             return;
         }
         for(var i = 0; i < tasksModel.count; ++i) {
-            var task = taskList.itemAtIndex(i);
+            var task = taskList.item.itemAtIndex(i);
             if (!task.model.IsLauncher && !task.model.IsStartup) {
                 tasks.tasksModel.requestPublishDelegateGeometry(tasks.tasksModel.makeModelIndex(task.index),
                     backend.globalRect(task), task);
@@ -424,49 +454,27 @@ PlasmoidItem {
             }
         }
 
-        TaskList {
+        Loader {
             id: taskList
 
-            anchors {
-                left: parent.left
-                leftMargin: 1
-                right: parent.right
-            }
+            anchors.fill: parent
 
-            height: 30
-            orientation: {
-                if(tasks.vertical) {
-                    return ListView.Vertical
-                }
-                return ListView.Horizontal
-            }
+            property int selectedStyle: Plasmoid.configuration.taskStyle
 
-            Behavior on width {
-                NumberAnimation { duration: 250 }
-            }
+            asynchronous: true
+            active: true
+            sourceComponent: selectedStyle == 0 ? superBar : taskBar
 
-            // Is this really needed?
-            // It apparently is, this somehow resets MouseArea and makes stuff actually work
-            function forceMouseEvent() {
-                for(var child in taskList.contentItem.children) {
-                    var t = taskList.contentItem.children[child];
-                    if(typeof t !== "undefined") {
-                        if(t.isLauncher) {
-                            t.visible = false;
-                            t.visible = true;
-                        }
-                    }
-                }
-                onAnimatingChanged: {
-                    if (!animating) {
-                        tasks.publishIconGeometries(visibleChildren, tasks);
-                    }
-                }
+            Component {
+                id: superBar
+
+                Superbar.TaskList { model: tasksModel }
             }
-            delegate: Task {
-                tasksRoot: tasks
+            Component {
+                id: taskBar
+
+                TaskList { model: tasksModel }
             }
-            model: tasksModel
         }
     }
 
@@ -494,7 +502,7 @@ PlasmoidItem {
             return;
         }
 
-        var task = taskRepeater.itemAt(index);
+        var task = taskList.item.itemAtIndex(index);
         if (task) {
             TaskTools.activateTask(task.modelIndex(), task.model, null, task, Plasmoid, tasks, effectWatcher.registered);
         }
@@ -536,11 +544,20 @@ PlasmoidItem {
         return toolTipComponent.createObject(rootTask, initialArgs);
     }
 
+    Timer {
+        id: styleTimer
+        interval: 5
+        running: false
+        triggeredOnStart: false
+        onTriggered: setTaskStyle(Plasmoid.configuration.taskStyle);
+    }
+
     Component.onCompleted: {
         TaskTools.taskManagerInstanceCount += 1;
         tasks.requestLayout.connect(iconGeometryTimer.restart);
         tasks.windowsHovered.connect(backend.windowsHovered);
         tasks.activateWindowView.connect(backend.activateWindowView);
+        styleTimer.start();
     }
 
     Component.onDestruction: {

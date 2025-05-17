@@ -29,6 +29,9 @@ ContainmentItem {
     Layout.preferredWidth: fixedWidth || currentLayout.implicitWidth + currentLayout.horizontalDisplacement
     Layout.preferredHeight: fixedHeight || currentLayout.implicitHeight + currentLayout.verticalDisplacement
 
+    // The current panel style. This is set by VistaTasks
+    property string currentStyle: "vista"
+
     property Item toolBox
     property var layoutManager: LayoutManager
 
@@ -81,17 +84,11 @@ ContainmentItem {
         return "";
     }
     function svgLocation(): string {
-        switch (Plasmoid.location) {
-            case PlasmaCore.Types.LeftEdge:
-                return "east";
-            case PlasmaCore.Types.TopEdge:
-                return "south";
-            case PlasmaCore.Types.RightEdge:
-                return "east";
-            case PlasmaCore.Types.BottomEdge:
-                return "south";
-        }
-        return "";
+        if(Plasmoid.location == PlasmaCore.Types.LeftEdge
+        || Plasmoid.location == PlasmaCore.Types.RightEdge)
+            return "east";
+        else
+            return "south";
     }
 //END functions
 
@@ -148,29 +145,66 @@ ContainmentItem {
 
             anchors.fill: parent
 
-            imagePath: Qt.resolvedUrl("svgs/panel-background.svg")
-            prefix: svgLocation() + hasCompositing
+            imagePath: Qt.resolvedUrl("svgs/vista-panel-background.svg")
+            prefix: root.svgLocation() + root.hasCompositing
+            visible: root.currentStyle !== "plasma"
 
             KSvg.FrameSvgItem {
                 id: shineLayer
-                imagePath: Qt.resolvedUrl("svgs/panel-background.svg")
-                anchors { // please find a better way to do this
-                    top: parent.top
-                    bottom: svgLocation() == "south" ? undefined : parent.bottom
-                    left: parent.left
-                    right: svgLocation() == "south" ? parent.right : undefined
 
-                    topMargin: svgLocation() == "south" ? 2 : -2
-                    bottomMargin: svgLocation() == "south" ? 0 : -2
-                    leftMargin: svgLocation() == "south" ? 0 : 2
-                }
-                height: svgLocation() == "south" ? 30 : undefined
-                width: svgLocation() == "south" ? undefined : 30
+                anchors.top: parent.top
+                anchors.left: parent.left
 
-                prefix: "shine-" + svgLocation()
+                states: [
+                    State {
+                        name: "east"
+                        when: root.svgLocation() === "east"
+
+                        AnchorChanges {
+                            target: shineLayer
+
+                            anchors.bottom: shineLayer.parent.bottom
+                            anchors.right: undefined
+                        }
+
+                        PropertyChanges {
+                            target: shineLayer
+
+                            anchors.topMargin: -2
+                            anchors.bottomMargin: -2
+                            anchors.leftMargin: 2
+
+                            width: 30
+                            height: undefined
+                        }
+                    },
+                    State {
+                        name: "south"
+                        when: root.svgLocation() === "south"
+
+                        AnchorChanges {
+                            target: shineLayer
+
+                            anchors.bottom: undefined
+                            anchors.right: shineLayer.parent.right
+                        }
+
+                        PropertyChanges {
+                            target: shineLayer
+
+                            anchors.topMargin: 2
+                            anchors.bottomMargin: 0
+                            anchors.leftMargin: 0
+
+                            width: undefined
+                            height: 30
+                        }
+                    }
+                ]
+
+                imagePath: parent.imagePath
+                prefix: "shine-" + root.svgLocation()
             }
-
-            visible: true
         }
         KSvg.FrameSvgItem {
             id: thickPanelSvg
