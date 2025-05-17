@@ -218,6 +218,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        cursorShape: listItem.modelChildren || !listItem.smallIcon ? undefined : Qt.PointingHandCursor
         onEntered: {
             if(listItem.listView.currentItem && listItem.listView.currentIndex !== model.index) {
                 listItem.listView.currentItem.delegateItem.toolTipTimer.stop();

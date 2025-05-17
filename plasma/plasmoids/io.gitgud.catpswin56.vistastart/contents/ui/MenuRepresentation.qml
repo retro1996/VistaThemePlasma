@@ -549,7 +549,7 @@ PlasmaCore.Dialog {
             Behavior on opacity {
 				NumberAnimation { easing.type: Easing.Linear; duration: animationDuration*0.66 }
 			}
-
+			visible: opacity > 0
         }
 		/* 
 			This is the separator between favorite applications and recently used applications.
@@ -582,6 +582,7 @@ PlasmaCore.Dialog {
 			Behavior on opacity {
 				NumberAnimation { easing.type: Easing.Linear; duration: animationDuration*0.66 }
 			}
+			visible: opacity > 0
         }
 		}
 		ColumnLayout {
@@ -933,6 +934,8 @@ PlasmaCore.Dialog {
 			Behavior on opacity {
 				NumberAnimation { easing.type: Easing.Linear; duration: animationDuration*0.66 }
 			}
+
+			visible: opacity > 0
 
 			function resetIndex() {
 				appsView.listView.currentIndex = -1;
