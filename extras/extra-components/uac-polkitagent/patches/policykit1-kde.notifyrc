@@ -219,5 +219,5 @@ Comment[x-test]=xxYou are required to authenticatexx
 Comment[zh_CN]=您需要进行身份验证
 Comment[zh_TW]=您需要認證
 Action=None
-Sound=dialog-special
+Sound=dialog-warning-auth
 
