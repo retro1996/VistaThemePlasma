@@ -14,14 +14,14 @@ import org.kde.plasma.plasmoid
 import org.kde.kcmutils as KCM
 
 KCM.SimpleKCM {
-    property alias cfg_taskStyle: taskStyle.currentIndex
+    property alias cfg_showPreviews: showPreviews.checked
+    property alias cfg_extPreviewFunc: extFunctionality.checked
 
-    property alias cfg_disableHottracking: disableHottracking.checked
-    property alias cfg_disableJumplists: disableJumplists.checked
-    property alias cfg_draggingEnabled: draggingEnabled.checked
-    property alias cfg_showMore: showMore.checked
-    property alias cfg_showProgress: showProgress.checked
-    property alias cfg_hoverFadeAnim: hoverFadeAnim.checked
+    property alias cfg_showPreviewClose: showPreviewClose.checked
+    property alias cfg_windowPeek: windowPeek.checked
+    property alias cfg_showPreviewMpris: showPreviewMpris.checked
+    property alias cfg_showPreviewMute: showPreviewMute.checked
+    property alias cfg_previewGroupEnabled: previewGroupEnabled.checked
 
     component CustomGroupBox: GroupBox {
         id: gbox
@@ -36,7 +36,7 @@ KCM.SimpleKCM {
                 anchors.fill: parent
                 anchors.leftMargin: -2
                 anchors.rightMargin: -2
-                color: Kirigami.Theme.backgroundColor
+                color: gbox.enabled ? Kirigami.Theme.backgroundColor : "white"
                 z: -1
             }
         }
@@ -62,23 +62,18 @@ KCM.SimpleKCM {
         CustomGroupBox {
             Layout.fillWidth: true
 
-            title: "General"
+            title: i18n("General")
 
             ColumnLayout {
                 Layout.fillWidth: true
 
-                RowLayout {
-                    Layout.fillWidth: true
-
-                    Text { text: i18n("Style (unfinished):") }
-                    ComboBox {
-                        id: taskStyle
-
-                        model: [
-                            i18n("Vista"),
-                            i18n("Plasma")
-                        ]
-                    }
+                CheckBox {
+                    id: showPreviews
+                    text: i18n("Enable window previews")
+                }
+                CheckBox {
+                    id: extFunctionality
+                    text: i18n("Enable extended functionality")
                 }
             }
         }
@@ -86,38 +81,32 @@ KCM.SimpleKCM {
         CustomGroupBox {
             Layout.fillWidth: true
 
-            title: "Tweaks"
+            title: i18n("Extended functionality")
+
+            enabled: extFunctionality.checked
 
             ColumnLayout {
                 Layout.fillWidth: true
 
-                spacing: 0
-
                 CheckBox {
-                    id: disableHottracking
-                    text: i18n("Disable hot tracking")
+                    id: showPreviewClose
+                    text: i18n("Show close button")
                 }
                 CheckBox {
-                    id: disableJumplists
-                    text: i18n("Use traditional context menus instead of jumplists")
+                    id: windowPeek
+                    text: i18n("Enable window peek")
                 }
                 CheckBox {
-                    id: showMore
-                    enabled: disableJumplists.checked
-                    text: i18n("Show more items in context menus")
+                    id: showPreviewMpris
+                    text: i18n("Show MPRIS controls")
                 }
                 CheckBox {
-                    id: draggingEnabled
-                    text: i18n("Enable dragging")
+                    id: showPreviewMute
+                    text: i18n("Show mute button")
                 }
                 CheckBox {
-                    id: showProgress
-                    text: i18n("Show app progress bar")
-                }
-                CheckBox {
-                    id: hoverFadeAnim
-                    enabled: disableHottracking.checked && cfg_taskStyle === 0
-                    text: i18n("Enable hover fade animation")
+                    id: previewGroupEnabled
+                    text: i18n("Use grouped previews for grouped tasks")
                 }
             }
         }

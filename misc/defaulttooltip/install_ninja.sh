@@ -8,6 +8,11 @@ ARCHIVE="libplasma-v${VERSION}.tar.gz"
 SRCDIR="libplasma-v${VERSION}"
 
 INSTALLDST="/usr/lib/x86_64-linux-gnu/qt6/qml/org/kde/plasma/core/libcorebindingsplugin.so"
+LIBDIR="/usr/lib/x86_64-linux-gnu/"
+
+if [ ! -d ${LIBDIR} ]; then
+	LIBDIR="/usr/lib64/"
+fi
 
 if [ ! -f ${INSTALLDST} ]; then
 	INSTALLDST="/usr/lib64/qt6/qml/org/kde/plasma/core/libcorebindingsplugin.so"
@@ -23,11 +28,22 @@ if [ ! -d ./build/${SRCDIR} ]; then
 fi
 
 cp DefaultToolTip.qml ./build/$SRCDIR/src/declarativeimports/core/private/DefaultToolTip.qml
+cp tooltiparea.h ./build/$SRCDIR/src/declarativeimports/core/tooltiparea.h
+cp tooltiparea.cpp ./build/$SRCDIR/src/declarativeimports/core/tooltiparea.cpp
+cp tooltipdialog.cpp ./build/$SRCDIR/src/declarativeimports/core/tooltipdialog.cpp
+cp plasmawindow.cpp ./build/$SRCDIR/src/plasmaquick/plasmawindow.cpp
 cd ./build/$SRCDIR/
 mkdir build
 cd build
+echo "Stopping plasmashell to prevent crashes. Will be restarted after the script has finished."
+killall plasmashell
 cmake -DCMAKE_INSTALL_PREFIX=/usr -G Ninja ..
-cmake --build . --target corebindingsplugin
+cmake --build . --target corebindingsplugin # Implicitly compiles plasmaquick
 sudo cp ./bin/org/kde/plasma/core/libcorebindingsplugin.so $INSTALLDST
-#plasmashell --replace & disown
+
+for filename in "$PWD/bin/libPlasma"*; do
+	echo "Copying $filename to $LIBDIR"
+	sudo cp "$filename" "$LIBDIR"
+done
+setsid plasmashell --replace &
 echo "Done."

@@ -5,19 +5,19 @@
 */
 
 import QtQuick
-import QtQuick.Layouts 1.15
-import QtQml 2.15
+import QtQuick.Layouts
+import QtQml
 
 import org.kde.plasma.plasmoid
-import org.kde.plasma.components 3.0 as PlasmaComponents3
+import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.core as PlasmaCore
-import org.kde.ksvg 1.0 as KSvg
+import org.kde.ksvg as KSvg
 import org.kde.plasma.private.mpris as Mpris
-import org.kde.kirigami 2.20 as Kirigami
+import org.kde.kirigami as Kirigami
 import org.kde.kitemmodels as KItemModels
 
-import org.kde.taskmanager 0.1 as TaskManager
-import org.kde.plasma.private.taskmanager 0.1 as TaskManagerApplet
+import org.kde.taskmanager as TaskManager
+import org.kde.plasma.private.taskmanager as TaskManagerApplet
 import org.kde.plasma.workspace.dbus as DBus
 
 import org.kde.kquickcontrolsaddons
@@ -25,8 +25,6 @@ import org.kde.kwindowsystem
 
 import "code/layoutmetrics.js" as LayoutMetrics
 import "code/tools.js" as TaskTools
-
-import "Superbar/" as Superbar
 
 PlasmoidItem {
     id: tasks
@@ -45,14 +43,14 @@ PlasmoidItem {
     }
 
     property var jumpListItem: null
-    property var toolTipItem: null
+    property bool pinnedToolTipOpen: false
+    property bool toolTipOpen: false
     onJumpListItemChanged: {
-        taskList.item.forceMouseEvent();
+        taskList.forceMouseEvent();
     }
 
     property QtObject jumpListComponent: Qt.createComponent("TasksMenu.qml");
     property QtObject contextMenuComponent: Qt.createComponent("ContextMenu.qml")
-    property QtObject toolTipComponent: Qt.createComponent("ToolTip.qml");
     property QtObject pulseAudioComponent: Qt.createComponent("PulseAudio.qml")
 
     property bool needLayoutRefresh: false;
@@ -116,8 +114,8 @@ PlasmoidItem {
 
     Plasmoid.constraintHints: Plasmoid.CanFillArea
 
-    Layout.fillWidth: tasks.vertical ? true : Plasmoid.configuration.fill
-    Layout.fillHeight: !tasks.vertical ? true : Plasmoid.configuration.fill
+    Layout.fillWidth: true
+    Layout.fillHeight: true
     Layout.minimumWidth: {
         if (shouldShrinkToZero) {
             return Kirigami.Units.iconSizes.small; // For edit mode
@@ -135,12 +133,9 @@ PlasmoidItem {
         var taskStyleName = "";
         switch(value) {
             case(0):
-                taskStyleName = "sevenm2";
-                break;
-            case(1):
                 taskStyleName = "vista";
                 break;
-            case(2):
+            case(1):
                 taskStyleName = "plasma";
                 break;
         }
@@ -188,7 +183,7 @@ PlasmoidItem {
             return;
         }
         for(var i = 0; i < tasksModel.count; ++i) {
-            var task = taskList.item.itemAtIndex(i);
+            var task = taskList.itemAtIndex(i);
             if (!task.model.IsLauncher && !task.model.IsStartup) {
                 tasks.tasksModel.requestPublishDelegateGeometry(tasks.tasksModel.makeModelIndex(task.index),
                     backend.globalRect(task), task);
@@ -214,6 +209,8 @@ PlasmoidItem {
             taskList.width -= 1;
         }
     }
+
+    property Item taskThumbnail: ToolTip {  }
 
     property TaskManager.TasksModel tasksModel: TaskManager.TasksModel {
         id: tasksModel
@@ -415,66 +412,42 @@ PlasmoidItem {
             }
         }
 
-        GroupThumbnails {
-            id: groupThumbnails
-
-            root: toolTipItem
-
-            KSvg.FrameSvgItem {
-                id: groupThumbnailsBg
-
-                anchors.fill: parent
-
-                imagePath: Qt.resolvedUrl("svgs/tooltip.svg")
-                prefix: "list"
-
-                visible: compositionEnabled
-
-                z: -1
-            }
-        }
-        PinnedToolTip {
-            id: pinnedToolTip
-
-            root: toolTipItem
-        }
-        WindowThumbnail {
-            id: windowThumbnail
-
-            root: toolTipItem
-
-            KSvg.FrameSvgItem {
-                id: windowThumbnailBg
-
-                anchors.fill: parent
-
-                imagePath: Qt.resolvedUrl("svgs/tooltip.svg")
-
-                z: -1
-            }
-        }
-
-        Loader {
+        TaskList {
             id: taskList
 
-            anchors.fill: parent
-
-            property int selectedStyle: Plasmoid.configuration.taskStyle
-
-            asynchronous: true
-            active: true
-            sourceComponent: selectedStyle == 0 ? superBar : taskBar
-
-            Component {
-                id: superBar
-
-                Superbar.TaskList { model: tasksModel }
+            anchors {
+                left: parent.left
+                leftMargin: 1
+                right: parent.right
             }
-            Component {
-                id: taskBar
 
-                TaskList { model: tasksModel }
+            height: 30
+
+            // Is this really needed?
+            // It apparently is, this somehow resets MouseArea and makes stuff actually work
+            function forceMouseEvent() {
+                for(var child in taskList.contentItem.children) {
+                    var t = taskList.contentItem.children[child];
+                    if(typeof t !== "undefined") {
+                        if(t.isLauncher) {
+                            t.visible = false;
+                            t.visible = true;
+                        }
+                    }
+                }
+                onAnimatingChanged: {
+                    if (!animating) {
+                        tasks.publishIconGeometries(visibleChildren, tasks);
+                    }
+                }
             }
+
+            orientation: {
+                if(tasks.vertical) return ListView.Vertical
+                else return ListView.Horizontal
+            }
+            delegate: Task { tasksRoot: tasks }
+            model: tasksModel
         }
     }
 
@@ -502,9 +475,9 @@ PlasmoidItem {
             return;
         }
 
-        var task = taskList.item.itemAtIndex(index);
+        var task = taskList.itemAtIndex(index);
         if (task) {
-            TaskTools.activateTask(task.modelIndex(), task.model, null, task, Plasmoid, tasks, effectWatcher.registered);
+            task.leftTapHandler.leftClick();
         }
     }
 
@@ -530,18 +503,6 @@ PlasmoidItem {
             backend,
         });
         return contextMenuComponent.createObject(rootTask, initialArgs);
-    }
-
-    function createToolTip(rootTask, modelIndex, args = {}) {
-        const initialArgs = Object.assign(args, {
-            visualParent: rootTask,
-            modelIndex: modelIndex,
-            taskWidth: rootTask.width,
-            taskHeight: rootTask.height,
-            taskX: rootTask.x,
-            taskY: rootTask.y
-        });
-        return toolTipComponent.createObject(rootTask, initialArgs);
     }
 
     Timer {
