@@ -39,7 +39,7 @@ function maxStripes() {
 
 function optimumCapacity(width, height) {
     const length = tasks.vertical ? height : width;
-    const maximum = tasks.vertical ? preferredMaxHeight() : preferredMaxWidth();
+    const maximum = tasks.vertical ? preferredTaskHeight() : preferredMaxWidth();
 
     if (!tasks.vertical) {
         //  Fit more tasks in this case, that is possible to cut text, before combining tasks.
