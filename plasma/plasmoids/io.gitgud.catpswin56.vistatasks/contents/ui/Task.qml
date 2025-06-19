@@ -153,6 +153,7 @@ PlasmaCore.ToolTipArea {
 
     readonly property bool draggingEnabled: Plasmoid.configuration.draggingEnabled
 
+    ListView.onRemove: task.visible = false;
     ListView.onAdd: {
         if(model.IsStartup && !taskInLauncherList(appId)) {
             task.implicitWidth = 0;
