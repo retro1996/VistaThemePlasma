@@ -541,8 +541,8 @@ PlasmoidItem {
     Component.onCompleted: {
         TaskTools.taskManagerInstanceCount += 1;
         tasks.requestLayout.connect(iconGeometryTimer.restart);
-        tasks.windowsHovered.connect(backend.windowsHovered);
-        tasks.activateWindowView.connect(backend.activateWindowView);
+        // tasks.windowsHovered.connect(backend.windowsHovered);
+        // tasks.activateWindowView.connect(backend.activateWindowView);
         styleTimer.start();
     }
 
