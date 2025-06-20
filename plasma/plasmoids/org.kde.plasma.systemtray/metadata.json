@@ -55,14 +55,14 @@
                 "Name[zh_TW]": "Marco Martin"
             }
         ],
-        "BugReportUrl": "https://bugs.kde.org/enter_bug.cgi?product=plasmashell&component=System%20Tray",
+        "BugReportUrl": "https://gitgud.io/catpswin56/vistathemeplasma/-/issues",
         "Category": "Windows and Tasks",
         "EnabledByDefault": true,
         "FormFactors": [
             "desktop"
         ],
         "Icon": "preferences-desktop-notification",
-        "Id": "org.kde.plasma.private.systemtray",
+        "Id": "org.kde.plasma.systemtray",
         "License": "GPL-2.0+",
         "Name": "System Tray",
         "Name[af]": "Stelsellaai",
@@ -154,9 +154,8 @@
         "Name[xh]": "Itreyi Yendlela yokusebenza",
         "Name[zh_CN]": "系统托盘",
         "Name[zh_TW]": "系統匣",
-        "Website": "https://www.kde.org/plasma-desktop"
+        "Website": "https://gitgud.io/catpswin56/vistathemeplasma"
     },
-    "NoDisplay": true,
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-ContainmentType": "CustomEmbedded"
 }
