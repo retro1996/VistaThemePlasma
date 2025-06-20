@@ -249,8 +249,17 @@ PlasmoidItem {
         groupInline: !Plasmoid.configuration.groupPopups
         groupingWindowTasksThreshold: Plasmoid.configuration.onlyGroupWhenFull ? LayoutMetrics.optimumCapacity(width, height) + 1 : -1
 
-        onGroupingAppIdBlacklistChanged: Plasmoid.configuration.groupingAppIdBlacklist = groupingAppIdBlacklist;
-        onGroupingLauncherUrlBlacklistChanged: Plasmoid.configuration.groupingLauncherUrlBlacklist = groupingLauncherUrlBlacklist;
+        onLauncherListChanged: {
+            Plasmoid.configuration.launchers = launcherList;
+        }
+
+        onGroupingAppIdBlacklistChanged: {
+            Plasmoid.configuration.groupingAppIdBlacklist = groupingAppIdBlacklist;
+        }
+
+        onGroupingLauncherUrlBlacklistChanged: {
+            Plasmoid.configuration.groupingLauncherUrlBlacklist = groupingLauncherUrlBlacklist;
+        }
 
         Component.onCompleted: {
             launcherList = Plasmoid.configuration.launchers;

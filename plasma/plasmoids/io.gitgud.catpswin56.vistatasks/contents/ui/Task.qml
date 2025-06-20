@@ -38,7 +38,12 @@ PlasmaCore.ToolTipArea {
 
     onAboutToShow: updateToolTipBindings();
 
-    onToolTipVisibleChanged: tasksRoot.toolTipOpen = toolTipVisible
+    onToolTipVisibleChanged: {
+        if(containsMouse && !tasksRoot.toolTipOpen)
+            tasksRoot.toolTipOpen = toolTipVisible;
+        else
+            tasksRoot.toolTipOpen = false;
+    }
 
     function updateToolTipBindings() {
         taskThumbnail.parentTask = Qt.binding(() => task);
@@ -71,11 +76,10 @@ PlasmaCore.ToolTipArea {
             return tasksRoot.width;
         } else {
             if(model.IsLauncher || model.IsStartup) {
-                return LayoutMetrics.preferredMinLauncherWidth();
+                return -taskList.spacing;
             } else {
-                var minWidth = LayoutMetrics.preferredMinWidth(); // 158
+                var minWidth = LayoutMetrics.preferredMinWidth();
                 var maxWidth = LayoutMetrics.preferredMaxWidth();
-
 
                 var taskCount = taskList.contentItem.visibleChildren.length;
                 if(taskCount <= 1) taskCount = taskList.count
@@ -88,13 +92,13 @@ PlasmaCore.ToolTipArea {
         }
     }
     Behavior on implicitWidth {
+        enabled: state !== "animateLabels"
         NumberAnimation { duration: 200; easing.type: Easing.OutQuad }
     }
 
     SequentialAnimation {
         id: addLabelsAnimation
-        NumberAnimation { target: task; properties: "opacity"; to: 1; duration: 200; easing.type: Easing.OutQuad }
-        PropertyAction { target: task; property: "visible"; value: true }
+        PropertyAction { target: task; property: "visible"; value: "true" }
         PropertyAction { target: task; property: "state"; value: "" }
     }
 
@@ -155,10 +159,6 @@ PlasmaCore.ToolTipArea {
 
     ListView.onRemove: task.visible = false;
     ListView.onAdd: {
-        if(model.IsStartup && !taskInLauncherList(appId)) {
-            task.implicitWidth = 0;
-            task.visible = false;
-        }
         if(shouldHideOnRemoval) {
             taskList.add = null;
             taskList.resetAddTransition.start();
@@ -168,13 +168,12 @@ PlasmaCore.ToolTipArea {
             task.state = "animateLabels";
             addLabelsAnimation.start();
         }
-        layoutDelay.start()
     }
 
     states: [
         State {
             name: "animateLabels"
-            PropertyChanges { target: task; implicitWidth: 0 }
+            PropertyChanges { target: task; implicitWidth: 16 }
         }
     ]
 
@@ -851,22 +850,6 @@ TaskManagerApplet.SmartLauncherItem { }
         }
 
         ]
-
-        KSvg.FrameSvgItem {
-            id: launcherFrame
-
-            anchors {
-                fill: parent
-            }
-
-            imagePath: Qt.resolvedUrl("svgs/tabbar.svgz")
-            visible: model.IsLauncher// && !task.containsMouseFalsePositive
-            prefix: {
-                if(dragArea.held || dragArea.containsPress) return "pressed-tab";
-                else if(dragArea.containsMouse) return "active-tab";
-                else return "";
-            }
-        }
 
         property color glowColor: "#33c2ff"
         property color glowColorCenter: Qt.tint("#eaeaea", opacify(glowColor, 0.2))
@@ -1657,7 +1640,5 @@ TaskManagerApplet.SmartLauncherItem { }
             taskInitComponent.createObject(task);
         }
         completed = true;
-
-        taskThumbnail = tasksRoot.taskThumbnail;
     }
 }

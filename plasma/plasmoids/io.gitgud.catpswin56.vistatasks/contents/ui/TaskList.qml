@@ -61,18 +61,6 @@ ListView {
     move: taskAnimation
 
     displaced: taskAnimation
-    remove: Transition {
-            NumberAnimation { properties: tasks.iconsOnly ? "opacity" : ""; to: 0; duration: transitionDuration; easing.type: Easing.OutQuad; }
-    }
-    Transition {
-        id: addAnimation
-        ParallelAnimation {
-            NumberAnimation { property: tasks.iconsOnly ? "" : "implicitWidth"; duration: 200; easing.type: Easing.OutQuad; }
-            NumberAnimation { property: tasks.iconsOnly ? "opacity" : ""; from: 0; to: 1; duration: transitionDuration; easing.type: Easing.OutQuad; }
-        }
-    }
-    add: addAnimation
-    populate: addAnimation
 
 
     property int scrollIndex: 0
