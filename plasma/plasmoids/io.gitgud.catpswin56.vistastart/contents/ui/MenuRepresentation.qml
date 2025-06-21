@@ -97,6 +97,8 @@ PlasmaCore.Dialog {
 
 	property SidePanelItemDelegate m_recentsSidePanelItem
 
+	property int newItemsCount: 0
+
 	function setFloatingAvatarPosition()  {
 		// It's at this point where everything actually gets properly initialized and we don't have to worry about
 		// random unpredictable values, so we can safely allow the popup icon to show up.
@@ -656,11 +658,22 @@ PlasmaCore.Dialog {
 				Layout.preferredHeight: allProgsBtn.implicitHeight + startStyles.currentStyle.allProgramsBtn.padding
 
 				KSvg.FrameSvgItem {
-					id: allProgramsButton
 					anchors.fill: parent
-					imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "menuitem.svg")
 
+					imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "menuitem.svg")
+					prefix: "new"
+
+					visible: root.newItemsCount > 0
+				}
+
+				KSvg.FrameSvgItem {
+					id: allProgramsButton
+
+					anchors.fill: parent
+
+					imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "menuitem.svg")
 					prefix: "hover"
+
 					opacity: {
 						if(allButtonsArea.containsMouse) return 1.0;
 						else if(allButtonsArea.focus) return 0.5;

@@ -37,16 +37,15 @@ import "code/tools.js" as Tools
 Item {
     id: listItem
 
-    signal reset
-    signal actionTriggered(string actionId, variant actionArgument)
-    signal aboutToShowActionMenu(variant actionMenu)
-    signal addBreadcrumb(var model, string title)
-
     required property var model
     required property int index
 
     property int pressX: -1
     property int pressY: -1
+    signal reset
+    signal actionTriggered(string actionId, variant actionArgument)
+    signal aboutToShowActionMenu(variant actionMenu)
+    signal addBreadcrumb(var model, string title)
 
     property alias toolTip: toolTip
     property alias toolTipTimer: toolTipTimer
@@ -57,13 +56,8 @@ Item {
 
     property bool dropEnabled: false
     property bool appView: false
-
     property bool modelChildren: model?.hasChildren ?? false
     property var childModel
-    property alias delegateRepeater: children
-    property int childCount: children.count
-    property int childIndex: -1
-    property var childItem: null
 
     property bool hasActionList: ((model?.favoriteId !== null)
         || (("hasActionList" in model) && (model?.hasActionList)))
@@ -72,12 +66,13 @@ Item {
     property bool expanded: false
     property var listView: listItem.ListView.view
 
+    property var parentKickoffItem
+
     readonly property bool isFavorites: listView?.isFavorites ?? false
     readonly property bool isDefaultInternetApp: isFavorites && Plasmoid.configuration.defaultInternetApp == model?.display
     readonly property bool isDefaultEmailApp: isFavorites && Plasmoid.configuration.defaultEmailApp == model?.display
 
     readonly property string title: {
-        // return listView.currentIndex + "root : " + listItem.index + " childindex : " + listItem.childIndex
         if(model) {
             if(isDefaultInternetApp)
                 return i18n("Internet");
@@ -102,11 +97,10 @@ Item {
         }
     }
 
-    implicitWidth: listView.width
-    implicitHeight: !visible ? 0 : column.height
-
     enabled: model ? (!model.disabled && title !== "") : false
     visible: title !== ""
+    implicitWidth: listView?.width ?? parent.width
+    implicitHeight: column.height
 
     function activate() {
         var view = listView;
@@ -115,12 +109,10 @@ Item {
             childModel = view.model.modelForRow(index);
             listItem.expanded = !listItem.expanded;
         } else {
-            view.model.trigger(model.index, "", null);
+            childModel.trigger(model.index, "", null);
             listItem.reset();
-            //kicker.compactRepresentation.showMenu();
             Plasmoid.expanded = false;
         }
-        
     }
 
     function openActionMenu(x, y) {
@@ -157,20 +149,18 @@ Item {
             right: parent.right
         }
 
-        height: mainItem.height + childrenColumn.height
+        height: mainItem.height
 
         Item {
             id: mainItem
 
-            width: parent.width
-            height: title !== "" ?
+            implicitWidth: parent.width
+            implicitHeight: model?.display !== "" ?
                 (Kirigami.Units.smallSpacing / (small ? 2 : 1)) + Math.max(elementIcon.height, titleElement.implicitHeight) + (small ? 1 : 0)
                 : 0
 
             KSvg.FrameSvgItem {
                 id: newHighlight
-
-                property bool completed: false
 
                 anchors.fill: background
 
@@ -178,19 +168,6 @@ Item {
                 prefix: "new"
 
                 visible: model?.isNewlyInstalled ?? false
-                onVisibleChanged: {
-                    if(completed) {
-                        if(visible)
-                            root.newItemsCount += 1;
-                        else
-                            root.newItemsCount -= 1;
-                    }
-                }
-
-                Component.onCompleted: {
-                    completed = true;
-                    if(visible) root.newItemsCount += 1
-                }
             }
 
             KSvg.FrameSvgItem {
@@ -207,7 +184,7 @@ Item {
 
                 opacity: {
                     if(ma.containsMouse) return 1;
-                    if(listItem.listView.currentIndex === listItem.itemIndex && listItem.childIndex === -1) return 0.5;
+                    if(listItem.parentKickoffItem.childIndex === model.index) return 0.5;
                     return 0;
                 }
             }
@@ -217,7 +194,7 @@ Item {
 
                 anchors {
                     left: parent.left
-                    leftMargin: listItem.appView ? (Kirigami.Units.mediumSpacing-1) : Kirigami.Units.smallSpacing*2-1
+                    leftMargin: Kirigami.Units.largeSpacing*3
                     verticalCenter: parent.verticalCenter
                 }
 
@@ -239,10 +216,12 @@ Item {
                     rightMargin: Kirigami.Units.smallSpacing * 2
                 }
 
-                spacing: 0
+                spacing: 2
 
                 PlasmaComponents.Label {
                     id: titleElement
+
+                    Layout.fillWidth: true
 
                     text: listItem.title
                     font.bold: listItem.isFavorites && !Plasmoid.configuration.disableBold
@@ -256,13 +235,15 @@ Item {
                 PlasmaComponents.Label {
                     id: subTitleElement
 
+                    Layout.fillWidth: true
+
                     height: implicitHeight
                     color: startStyles.currentStyle.leftPanel.itemTextColor
                     text: isDefaultEmailApp || isDefaultInternetApp ? listItem.subtitle : listItem.title
                     elide: Text.ElideRight
                     horizontalAlignment: Text.AlignLeft
 
-                    visible: listItem.title !== model?.display && !listItem.smallIcon
+                    visible: listItem.title !== model?.display
                 }
             }
 
@@ -295,18 +276,17 @@ Item {
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 cursorShape: listItem.modelChildren || !listItem.smallIcon ? undefined : Qt.PointingHandCursor
                 onEntered: {
-                    if(listItem.listView.currentItem && listItem.listView.currentIndex !== model.index) {
-                        listItem.listView.currentItem.toolTipTimer.stop();
-                        listItem.listView.currentItem.toolTip.hideToolTip();
+                    if(listItem.parentKickoffItem.childItem && listItem.parentKickoffItem.childItem === listItem) {
+                        listItem.parentKickoffItem.childItem.toolTipTimer.stop();
+                        listItem.parentKickoffItem.childItem.toolTip.hideToolTip();
                     }
-                    listItem.listView.currentIndex = model.index;
+                    listItem.parentKickoffItem.childItem = listItem;
                     toolTipTimer.start();
-
                 }
                 onExited: {
                     toolTipTimer.stop();
                     toolTip.hideToolTip();
-                    listItem.listView.currentIndex = -1;
+                    listItem.parentKickoffItem.childItem = null;
                     listItem.pressX = -1;
                     listItem.pressY = -1;
                 }
@@ -332,45 +312,16 @@ Item {
                         listItem.pressX = -1;
                         listItem.pressY = -1;
                     }
-                    mouse.accepted = false;
                 }
                 onClicked: mouse => {
                     if(mouse.button === Qt.LeftButton) {
                         listItem.activate();
-                        if(!listItem.modelChildren) root.visible = false;
+                        root.visible = false;
                     } else if(mouse.button === Qt.RightButton) {
                         if(listItem.hasActionList) {
                             listItem.openActionMenu(mouse.x, mouse.y);
                         }
                     }
-                }
-            }
-        }
-
-        Column {
-            id: childrenColumn
-
-            width: parent.width
-            height: {
-                if(!listItem.modelChildren) return 0;
-                return listItem.expanded ? children.count * listItem.implicitHeight : 0
-            }
-
-            visible: listItem.expanded
-
-            Repeater {
-                id: children
-
-                model: listItem.childModel
-                delegate: KickoffChildItem {
-                    width: childrenColumn.width
-
-                    appView: listItem.appView
-                    smallIcon: listItem.smallIcon
-                    onReset: listItem.listView.actualView.reset();
-                    listView: listItem.listView
-                    childModel: listItem.childModel
-                    parentKickoffItem: listItem
                 }
             }
         }
