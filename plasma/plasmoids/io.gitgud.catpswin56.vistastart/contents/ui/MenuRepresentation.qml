@@ -97,13 +97,7 @@ PlasmaCore.Dialog {
 
 	property SidePanelItemDelegate m_recentsSidePanelItem
 
-	readonly property bool newItemsAvailable: {
-		for(var i = 0; i < appsView.count; i++) {
-			var item = appsView.listView.itemAtIndex(i);
-			if(item?.isNew) return true;
-		}
-		return false;
-	}
+	readonly property bool newItemsAvailable: filteredNewItems.count > 0
 
 	function setFloatingAvatarPosition()  {
 		// It's at this point where everything actually gets properly initialized and we don't have to worry about
@@ -244,6 +238,17 @@ PlasmaCore.Dialog {
 			onTriggered: root.hideOnWindowDeactivate = true;
 		}
 
+		KItemModels.KSortFilterProxyModel {
+			id: filteredNewItems
+			sourceModel: kicker.rootModel
+
+			function containsNewItem(sourceRow, sourceParent) {
+				const isNewlyInstalledRole = sourceModel.KItemModels.KRoleNames.role("isNewlyInstalled");
+				const isNewlyInstalled = sourceModel.data(sourceModel.index(sourceRow, 0, sourceParent), isNewlyInstalledRole);
+				return isNewlyInstalled === true;
+			}
+			filterRowCallback: (sourceRow, sourceParent) => containsNewItem(sourceRow, sourceParent)
+		}
 
         KCoreAddons.KUser {   id: kuser  }  // Used for getting the username and icon.
         

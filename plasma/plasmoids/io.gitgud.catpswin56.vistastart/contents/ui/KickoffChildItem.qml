@@ -181,10 +181,7 @@ Item {
             KSvg.FrameSvgItem {
                 id: background
 
-                anchors {
-                    fill: parent
-                    leftMargin: listItem.smallIcon ? Kirigami.Units.smallSpacing-1 : Kirigami.Units.smallSpacing
-                }
+                anchors.fill: parent
 
                 imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "menuitem.svg")
                 prefix: "hover"
