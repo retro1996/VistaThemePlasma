@@ -43,6 +43,9 @@
     <entry name="defaultEmailApp" type="String">
       <default>Thunderbird</default>
     </entry>
+    <entry name="defaultRunnerApp" type="String">
+      <default>krunner</default>
+    </entry>
 
     <entry name="showFilterList" type="Bool">
       <default>true</default>

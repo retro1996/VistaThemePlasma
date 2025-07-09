@@ -58,6 +58,8 @@ KCM.SimpleKCM {
     property alias cfg_enableShadow: enableShadow.checked
     property alias cfg_enableAnimations: enableAnimations.checked
 
+    property string cfg_defaultRunnerApp
+
     property alias cfg_numberRows: numberRows.value
 
     property string cfg_defaultInternetApp
@@ -235,6 +237,23 @@ KCM.SimpleKCM {
 
                         onTextChanged: {
                             configGeneral.cfg_defaultEmailApp = text;
+                        }
+                    }
+                }
+                RowLayout {
+                    Label {
+                        text: i18n("Run:")
+                    }
+                    TextField {
+                        id: defaultRunnerApp
+                        Layout.fillWidth: true
+
+                        placeholderText: configGeneral.cfg_defaultRunnerApp
+
+                        inputMethodHints: Qt.ImhNoPredictiveText
+
+                        onTextChanged: {
+                            configGeneral.cfg_defaultRunnerApp = text;
                         }
                     }
                 }

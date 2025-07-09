@@ -168,7 +168,7 @@ Item {
 			itemText: i18n("Run..."),
 			itemIcon: "krunner",
 			itemIconFallback: "system-run",
-			executableString: "krunner --replace",
+			executableString: Plasmoid.configuration.defaultRunnerApp,
 			executeProgram: true,
             menuModel: null,
         },
