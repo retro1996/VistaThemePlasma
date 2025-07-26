@@ -1,5 +1,7 @@
 # VISTATHEMEPLASMA FOR KDE 6
 
+# THIS PROJECT IS INDEFINITELY ON HOLD DUE TO A LACK OF MOTIVATION TO DO ANY SORT OF WORK ON IT. THIS ALSO APPLIES TO EVERY OTHER PROJECT OF MINE
+
 ## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2025 All rights reserved. All resources belong to Microsoft Corporation.
 
 ## Introduction
