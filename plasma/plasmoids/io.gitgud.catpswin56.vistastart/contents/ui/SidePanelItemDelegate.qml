@@ -18,6 +18,7 @@ Item {
     objectName: "SidePanelItemDelegate"
     property int iconSizeSide: Kirigami.Units.iconSizes.smallMedium
     property string itemText: ""
+    property string description: ""
     property string itemIcon: ""
     property string itemIconFallback: "unknown"
     property string executableString: ""
@@ -54,7 +55,7 @@ Item {
 
     function findNext() {
         var i = findItem()+1;
-        if(i >= parent.visibleChildren.length-1) {
+        if(parent.visibleChildren[i].objectName == "PaddingItem") {
             return root.m_shutDownButton;
         }
         if(parent.visibleChildren[i].objectName == "SidePanelItemSeparator") {
@@ -145,8 +146,52 @@ Item {
     }
 
     onFocusChanged: {
+        /*if(focus) {
+         *       root.m_sidebarIcon.source = itemIcon;
+    } else {
+        root.m_sidebarIcon.source = "";
+    }*/
         if(root.m_delayTimer.running) root.m_delayTimer.restart();
         else root.m_delayTimer.start();
+
+        if(focus) {
+            if(sidePanelDelegate.menuModel !== null) {
+                recentsMenuTimer.start();
+            } else if(toolTip.active) {
+                toolTipTimer.start();
+            }
+        } else {
+            toolTipTimer.stop();
+            toolTip.hideImmediately();
+            recentsMenuTimer.stop();
+        }
+    }
+
+    Timer {
+        id: toolTipTimer
+        interval: Kirigami.Units.longDuration*3
+        onTriggered: {
+            toolTip.showToolTip();
+        }
+    }
+    PlasmaCore.ToolTipArea {
+        id: toolTip
+
+        anchors {
+            fill: parent
+        }
+
+        active: !contextMenu.enabled && sidePanelDelegate.description !== ""
+        interactive: false
+        location: {
+            var result = PlasmaCore.Types.Floating
+            if(sidePanelMouseArea.containsMouse || toolTip.containsMouse) result |= PlasmaCore.Types.Desktop;
+            return result;
+        }
+
+        mainItem: Text {
+            text: sidePanelDelegate.description
+        }
     }
     MouseArea {
         id: sidePanelMouseArea
@@ -172,7 +217,7 @@ Item {
     Timer {
         id: recentsMenuTimer
         interval: 500
-        running: sidePanelMouseArea.containsMouse && sidePanelDelegate.menuModel !== null
+        // running: sidePanelMouseArea.containsMouse && sidePanelDelegate.menuModel !== null
         onTriggered: contextMenu.openRelative();
     }
 
@@ -181,7 +226,7 @@ Item {
         enabled: sidePanelDelegate.menuModel !== null
         function onStatusChanged() {
             if(contextMenu.status === 3) {
-                sidePanelDelegate.focus = false;
+                // sidePanelDelegate.focus = false;
                 root.m_delayTimer.restart();
             }
         }

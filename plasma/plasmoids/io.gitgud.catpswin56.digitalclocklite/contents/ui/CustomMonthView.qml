@@ -185,7 +185,7 @@
   
          days: 7
          weeks: 6
-         firstDayOfWeek: Qt.locale().firstDayOfWeek
+         // firstDayOfWeek: Qt.locale().firstDayOfWeek
          today: root.today
   
          Component.onCompleted: {

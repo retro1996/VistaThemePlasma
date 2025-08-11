@@ -34,6 +34,7 @@ Item {
     property Item hoverArea:       loader.item ? loader.item.hoverArea      : null
     property Item frame:           loader.item ? loader.item.frame          : null
     property Item toolTip:         loader.item ? loader.item.toolTip        : null
+    property bool shouldShowToolTip: false
     Accessible.name: name
     Accessible.role: Accessible.Canvas
 
@@ -114,7 +115,16 @@ Item {
 
             // When a drop happens, a new item is created, and is set to selected
             // grabToImagebefore it gets the final width, making grabToImage fail because it's still 0x0
-            onSelectedChanged: Qt.callLater(updateDragImage)
+            onSelectedChanged: {
+                Qt.callLater(updateDragImage)
+                if(selected && (!toolTip.containsMouse) && main.shouldShowToolTip) {
+                    toolTipTimer.start();
+                    main.shouldShowToolTip = false;
+                } else {
+                    toolTipTimer.stop();
+                    toolTip.hideImmediately();
+                }
+            }
             function updateDragImage() {
                 if (selected && !blank) {
                     frameLoader.grabToImage(result => {
@@ -175,94 +185,13 @@ Item {
                 }
             }
 
-            PlasmaCore.ToolTipArea {
-                id: toolTip
-
-                active: (Plasmoid.configuration.toolTips || label.truncated)
-                        && popupDialog === null
-                        && !model.blank
-                interactive: false
-                location: root.useListViewMode ? (Plasmoid.location === PlasmaCore.Types.LeftEdge ? PlasmaCore.Types.LeftEdge : PlasmaCore.Types.RightEdge) : Plasmoid.location
-                z: 999
-                //anchors.fill: parent
-                Timer {
-                    id: showtooltip
-                    interval: 750
-                    onTriggered: {
-                        if(ma.containsMouse) {
-                            toolTip.showToolTip();
-                        }
-                    }
+            Timer {
+                id: toolTipTimer
+                interval: 700
+                onTriggered: {
+                    toolTip.updateToolTip();
+                    toolTip.showToolTip();
                 }
-                MouseArea {
-                    id: ma
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    propagateComposedEvents: true
-                    onPositionChanged: (mouse) => {
-
-                        if (containsMouse && !model.blank) {
-
-                            if (toolTip.active) {
-
-                                toolTip.textFormat = Text.RichText;
-                                toolTip.mainText = model.display;
-
-                                if (model.size !== undefined) {
-                                    toolTip.subText = model.type + "<br>" + "Size: " + model.size;
-                                } else {
-                                    toolTip.subText = model.type;
-                                }
-                                showtooltip.start();
-                            }
-
-                            main.GridView.view.hoveredItem = main;
-                        }
-                        mouse.accepted = false;
-
-                    }
-                }
-
-
-                states: [
-                    State { // icon view
-                        when: !root.useListViewMode
-
-                        AnchorChanges {
-                            target: toolTip
-                            anchors.horizontalCenter: parent.horizontalCenter
-                        }
-
-                        PropertyChanges {
-                            target: toolTip
-                            x: Kirigami.Units.smallSpacing
-                            y: Kirigami.Units.smallSpacing
-                            width: parent.width - Kirigami.Units.smallSpacing
-                            height: parent.height - Kirigami.Units.smallSpacing
-                            //width: Math.max(icon.paintedWidth, label.paintedWidth)
-                            //height: (label.y + label.paintedHeight)
-                            //y: frameLoader.y + icon.y
-                            //width: Math.max(icon.paintedWidth, label.paintedWidth)
-                            //height: (label.y + label.paintedHeight) - y
-                        }
-                    },
-                    State { // list view
-                        when: root.useListViewMode
-
-                        AnchorChanges {
-                            target: toolTip
-                            anchors.horizontalCenter: undefined
-                        }
-
-                        PropertyChanges {
-                            target: toolTip
-                            x: frameLoader.x
-                            y: frameLoader.y
-                            width: frameLoader.width
-                            height: frameLoader.height
-                        }
-                    }
-                ]
             }
 
             Loader {
@@ -541,14 +470,19 @@ Item {
                 Component {
                     id: frameComponent
 
-                    PlasmaExtras.Highlight {
-                        // Workaround for a bug where the frameComponent does not
-                        // get unloaded when items are dragged to a different
-                        // place on the desktop.
+                    KSvg.FrameSvgItem {
+                        imagePath: "widgets/viewitem"
+
+
                         visible: this === frameLoader.item && !Plasmoid.configuration.selectionStyle
-                        hovered: impl.iconAndLabelsShouldlookSelected
-                        pressed: model.selected
-                        active: Window.active
+                        property bool hovered: impl.iconAndLabelsShouldlookSelected
+                        property bool pressed: model.selected
+                        prefix: {
+                            if(hovered && pressed) return "selected+hover";
+                            if(hovered) return "hover";
+                            if(pressed) return "selected";
+                            return "normal";
+                        }
                     }
                 }
 
@@ -603,6 +537,81 @@ Item {
                     }
                 }
 
+            }
+
+            PlasmaCore.ToolTipArea {
+                id: toolTip
+
+                active: (Plasmoid.configuration.toolTips || label.truncated)
+                && popupDialog === null
+                && !model.blank
+                interactive: false
+                location: {
+                    if(toolTip.containsMouse) {
+                        return PlasmaCore.Types.Floating | PlasmaCore.Types.Desktop
+                    } else {
+                        return root.useListViewMode ? (Plasmoid.location === PlasmaCore.Types.LeftEdge ? PlasmaCore.Types.LeftEdge : PlasmaCore.Types.RightEdge) : Plasmoid.location
+                    }
+                }
+                z: 999
+                function updateToolTip() {
+                    if (toolTip.active && !model.blank) {
+
+                        toolTip.textFormat = Text.RichText;
+                        toolTip.mainText = model.display;
+
+                        if (model.size !== undefined) {
+                            toolTip.subText = model.type + "<br>" + "Size: " + model.size;
+                        } else {
+                            toolTip.subText = model.type;
+                        }
+                    }
+
+                }
+                MouseArea {
+                    id: toolTipMA
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onPositionChanged: {
+                        if (containsMouse) {
+                            toolTip.updateToolTip();
+                            main.GridView.view.hoveredItem = main;
+                        } else if(!containsMouse && main.GridView.view.hoveredItem === main) {
+                            toolTip.hideImmediately();
+                        }
+                    }
+
+                }
+
+                states: [
+                    State { // icon view
+                        when: !root.useListViewMode
+
+                        PropertyChanges {
+                            target: toolTip
+                            x: frameLoader.x
+                            y: frameLoader.y
+                            width: frameLoader.width
+                            height: frameLoader.height
+                        }
+                    },
+                    State { // list view
+                        when: root.useListViewMode
+
+                        AnchorChanges {
+                            target: toolTip
+                            anchors.horizontalCenter: undefined
+                        }
+
+                        PropertyChanges {
+                            target: toolTip
+                            x: frameLoader.x
+                            y: frameLoader.y
+                            width: frameLoader.width
+                            height: frameLoader.height
+                        }
+                    }
+                ]
             }
 
             Column {

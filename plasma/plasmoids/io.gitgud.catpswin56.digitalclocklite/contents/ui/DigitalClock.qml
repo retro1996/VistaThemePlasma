@@ -99,6 +99,21 @@ Item {
     onShowDateChanged:             { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
     onUse24hFormatChanged:         { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
 
+    Connections {
+        target: Plasmoid.configuration
+        function onSelectedTimeZonesChanged() {
+            // If the currently selected timezone was removed,
+            // default to the first one in the list
+            var lastSelectedTimezone = Plasmoid.configuration.lastSelectedTimezone;
+            if (Plasmoid.configuration.selectedTimeZones.indexOf(lastSelectedTimezone) == -1) {
+                Plasmoid.configuration.lastSelectedTimezone = Plasmoid.configuration.selectedTimeZones[0];
+            }
+
+            setupLabels();
+            setTimezoneIndex();
+        }
+    }
+
     // TODO: add vertical panels support
     states: [
         State {
@@ -312,6 +327,13 @@ Item {
                 tooltipTimer.stop();
                 timeToolTip.hideToolTip();
             }
+        }
+        onEntered: {
+            tooltipTimer.start();
+        }
+        onExited: {
+            tooltipTimer.stop();
+            timeToolTip.hideToolTip();
         }
         onWheel: wheel => {
             if (!Plasmoid.configuration.wheelChangesTimezone) {

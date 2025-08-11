@@ -4,9 +4,9 @@
     xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
     http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
     <kcfgfile arg="true"/>
-    <group name="Effect-blurplus">
+    <group name="Effect-aeroglassblur">
     <entry name="BlurStrength" type="Int">
-            <default>4</default>
+            <default>3</default>
     </entry>
     <entry name="WindowClasses" type="String">
         <default></default>
@@ -64,8 +64,11 @@
     <entry name="EnableCornerGlow" type="Bool">
         <default>true</default>
     </entry>
+    <entry name="AccentColorGroup" type="Int">
+        <default>1</default>
+    </entry>
     <entry name="AccentColorName" type="Int">
-        <default>18</default>
+        <default>1</default>
     </entry>
     <entry name="CustomColor" type="String">
 	<default>#ffffffff</default>

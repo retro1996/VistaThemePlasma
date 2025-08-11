@@ -136,7 +136,7 @@ BlurEffect::BlurEffect() : m_sharedMemory("kwinaero")
         m_reflectPass.reflectTextureLocation = m_reflectPass.shader->uniformLocation("texUnit");
         // Glow
         m_reflectPass.textureSizeLocation = m_reflectPass.shader->uniformLocation("textureSize");
-        m_reflectPass.scaleYLocation = m_reflectPass.shader->uniformLocation("scaleY");
+        m_reflectPass.useWaylandLocation = m_reflectPass.shader->uniformLocation("useWayland");
         m_reflectPass.glowTextureLocation = m_reflectPass.shader->uniformLocation("glowTexture");
         m_reflectPass.glowEnableLocation = m_reflectPass.shader->uniformLocation("glowEnable");
         m_reflectPass.glowOpacityLocation = m_reflectPass.shader->uniformLocation("glowOpacity");
@@ -234,8 +234,8 @@ void BlurEffect::initBlurStrengthValues()
     // {minOffset, maxOffset, expandSize}
     blurOffsets.append({1.0, 2.0, 10}); // Down sample size / 2
     blurOffsets.append({2.0, 3.0, 20}); // Down sample size / 4
-    blurOffsets.append({3.0, 5.0, 50}); // Down sample size / 8
-    blurOffsets.append({5.0, 7.0, 150}); // Down sample size / 16
+    blurOffsets.append({2.0, 5.0, 50}); // Down sample size / 8
+    blurOffsets.append({3.0, 8.0, 150}); // Down sample size / 16
     //blurOffsets.append({5.0, 8.0, 300}); // Down sample size / 32
     // blurOffsets.append({7.0, ?.0});       // Down sample size / 64
 
@@ -347,7 +347,7 @@ void BlurEffect::reconfigure(ReconfigureFlags flags)
 	}
 	m_reflectionIntensity = BlurConfig::reflectionIntensity();
 
-    int blurStrength = BlurConfig::blurStrength() - 1;
+    int blurStrength = BlurConfig::blurStrength()-1;
     m_iterationCount = blurStrengthValues[blurStrength].iteration;
     m_offset = blurStrengthValues[blurStrength].offset;
     m_expandSize = blurOffsets[m_iterationCount - 1].expandSize;
@@ -802,6 +802,7 @@ bool BlurEffect::shouldForceBlur(const EffectWindow *w) const
     {
         return false;
     }
+    if(w->isTooltip()) return false;
 
     // Is it a Gadget window
     bool matches = (w->window()->resourceName() == "plasmashell" || w->window()->resourceClass() == "plasmashell") && w->caption() == "plasmashell_explorer";
@@ -852,6 +853,14 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
 
     QMatrix4x4 transformedMatrix;
     QVariant winData = w->data(TRANSFORMATION_DATA);
+
+    // HDR brightness must be handled by color management in the compositor.
+    double hdr_brightness_correction = 1.0;
+    if (w->screen()->highDynamicRange())
+    {
+        hdr_brightness_correction = w->screen()->brightnessSetting();
+    }
+
     if(!winData.isNull())
     {
         transformedMatrix = winData.value<QMatrix4x4>();
@@ -874,7 +883,18 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
         blurShape.translate(std::round(data.xTranslation()), std::round(data.yTranslation()));
     }
 
-    const QRect backgroundRect = blurShape.boundingRect();
+    QRect backgroundRect = blurShape.boundingRect();
+
+    /*
+     * The new way of downsampling works reliably for textures with
+     * even dimensions, so we shrink the bounding rectangle by 1
+     * on odd-sized regions. This helps prevent the blur shaking as
+     * the user resizes windows.
+     */
+    if(backgroundRect.width() % 2 != 0)
+        backgroundRect.setWidth(backgroundRect.width() - 1);
+    if(backgroundRect.height() % 2 != 0)
+        backgroundRect.setHeight(backgroundRect.height() - 1);
     const QRect deviceBackgroundRect = snapToPixelGrid(scaledRect(backgroundRect, viewport.scale()));
     QVariant opacityData = w->data(OPACITY_DATA);
     auto opacity = w->opacity() * data.opacity();
@@ -925,7 +945,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
                 return;
             }
             texture->setFilter(GL_LINEAR_MIPMAP_LINEAR);
-            texture->setWrapMode(GL_CLAMP_TO_EDGE);
+            texture->setWrapMode(GL_MIRRORED_REPEAT);
 
             auto framebuffer = std::make_unique<GLFramebuffer>(texture.get());
             if (!framebuffer->valid()) {
@@ -1064,7 +1084,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
     }
 
     vbo->bindArrays();
-    QMatrix4x4 colorMat = colorMatrix(data.brightness(), data.saturation());
+    QMatrix4x4 colorMat = colorMatrix(data.brightness() * hdr_brightness_correction, data.saturation());
 
     {
         // The downsample pass of the dual Kawase algorithm: the background will be scaled down 50% every iteration.
@@ -1195,6 +1215,7 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
         const QVector2D halfpixel(0.5 / (double)read->colorAttachment()->width(),
                                   0.5 / (double)read->colorAttachment()->height());
         m_aeroPasses[selectedPass].shader->setUniform(m_aeroPasses[selectedPass].halfpixelLocation, halfpixel);
+        m_aeroPasses[selectedPass].shader->setUniform(m_aeroPasses[selectedPass].offsetLocation, float(m_offset / 2.5f));
 
         m_aeroPasses[selectedPass].shader->setUniform(m_aeroPasses[selectedPass].aeroColorRLocation, r);
         m_aeroPasses[selectedPass].shader->setUniform(m_aeroPasses[selectedPass].aeroColorGLocation, g);
@@ -1260,14 +1281,10 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
             m_reflectPass.shader->setUniform(m_reflectPass.glowEnableLocation, enableGlow);
             if(enableGlow)
             {
-                const auto scale = viewport.scale();
-                bool scaleY = false;
-                if(backgroundRect.height() != windowSize.height() && !scaledOrTransformed(w, mask, data)) scaleY = true;
-                const QRectF pixelGeometry = snapToPixelGridF(scaledRect(QRectF(0, 0, glowTex->width(), glowTex->height()), scale));
-
+                const bool useWayland = effects->waylandDisplay() != nullptr;
                 m_reflectPass.shader->setUniform(m_reflectPass.glowEnableLocation, enableGlow);
-            	m_reflectPass.shader->setUniform(m_reflectPass.textureSizeLocation, QVector2D(pixelGeometry.width(), pixelGeometry.height()));
-            	m_reflectPass.shader->setUniform(m_reflectPass.scaleYLocation, scaleY);
+            	m_reflectPass.shader->setUniform(m_reflectPass.textureSizeLocation, QVector2D(glowTex->width(), glowTex->height()));
+            	m_reflectPass.shader->setUniform(m_reflectPass.useWaylandLocation, useWayland);
                 m_reflectPass.shader->setUniform(m_reflectPass.glowOpacityLocation, float(opacity*0.8));
 
                 glUniform1i(m_reflectPass.glowTextureLocation, 1);
@@ -1305,7 +1322,10 @@ QMatrix4x4 BlurEffect::colorMatrix(const float &brightness, const float &saturat
 
     QMatrix4x4 brightnessMatrix;
     if (brightness != 1.0) {
-        brightnessMatrix.scale(brightness, brightness, brightness);
+        brightnessMatrix = QMatrix4x4(brightness, 0, 0, 0,
+                                      0, brightness, 0, 0,
+                                      0, 0, brightness, 0,
+                                      0, 0, 0, brightness);
     }
 
     return saturationMatrix * brightnessMatrix;

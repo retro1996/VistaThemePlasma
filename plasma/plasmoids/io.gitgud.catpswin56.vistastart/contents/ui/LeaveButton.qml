@@ -32,6 +32,8 @@ Item {
 
     property alias text: label.text
 
+    readonly property bool hovered: focus || mouseArea.containsMouse
+
     property bool isFramed: true
     property string prefix: ""
     property alias glyphWidth: glyphItem.width
@@ -77,7 +79,7 @@ Item {
         }
 
         imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "startmenu-buttons.svg")
-        prefix: item.prefix + (mouseArea.containsMouse ? (mouseArea.containsPress ? "-pressed": "-hover") : "")
+        prefix: item.prefix + (item.hovered ? (mouseArea.containsPress ? "-pressed": "-hover") : "")
 
         visible: item.isFramed
     }
@@ -91,7 +93,7 @@ Item {
             id: svgItem
 
             imagePath: Qt.resolvedUrl("svgs/" + startStyles.currentStyle.styleName + "/" + "startmenu-buttons.svg")
-            elementId: item.prefix + (mouseArea.containsMouse ? (mouseArea.containsPress ? "-pressed": "-hover") : "")
+            elementId: item.prefix + (item.hovered ? (mouseArea.containsPress ? "-pressed": "-hover") : "")
         }
 
         PlasmaComponents.Label {

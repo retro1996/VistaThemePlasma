@@ -60,6 +60,7 @@ Item {
 
     property bool modelChildren: model?.hasChildren ?? false
     property var childModel
+    property bool isCurrent: listItem.listView.currentIndex === index;
     property alias delegateRepeater: children
     property int childCount: children.count
     property int childIndex: -1
@@ -144,6 +145,15 @@ Item {
 
         onActionClicked: (actionId, actionArgument) => {
             actionTriggered(actionId, actionArgument);
+        }
+    }
+
+    onIsCurrentChanged: {
+        if(isCurrent && !ma.containsMouse) {
+            toolTipTimer.start();
+        } else {
+            toolTipTimer.stop();
+            toolTip.hideImmediately();
         }
     }
 
@@ -262,15 +272,17 @@ Item {
                 id: toolTip
 
                 anchors.fill: parent
-
                 active: titleElement.truncated
                 interactive: false
-                mainText: model?.display ?? ""
+                mainText: model ? model.display : ""
+                location: {
+                    var result = PlasmaCore.Types.Floating
+                    if(ma.containsMouse) result |= PlasmaCore.Types.Desktop;
+                    return result;
+                }
             }
-
             Timer {
                 id: toolTipTimer
-
                 interval: Kirigami.Units.longDuration*2
                 onTriggered: {
                     toolTip.showToolTip();

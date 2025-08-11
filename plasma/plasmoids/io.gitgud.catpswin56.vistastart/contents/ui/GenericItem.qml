@@ -40,6 +40,7 @@ Item {
   property bool isDraging: false
   property bool canDrag: true
   property bool canNavigate: false
+  property bool isCurrentlySelected: listView.currentIndex === index
   signal highlightChanged
   signal aboutToShowActionMenu(variant actionMenu)
 
@@ -47,6 +48,15 @@ Item {
       || (("hasActionList" in model) && (model.hasActionList !== null)))
 
   property var triggerModel
+
+  onIsCurrentlySelectedChanged: {
+    if(isCurrentlySelected && toolTip.location) {
+      toolTipTimer.start();
+    } else {
+      toolTipTimer.stop();
+      toolTip.hideImmediately();
+    }
+  }
 
   onAboutToShowActionMenu: actionMenu => {
     var actionList = allItem.hasActionList ? model.actionList : [];
@@ -129,9 +139,11 @@ Item {
 
     active: appname.truncated
     interactive: false
-    /*location: (((Plasmoid.location === PlasmaCore.Types.RightEdge)
-     *   || (Qt.application.layoutDirection === Qt.RightToLeft))
-     *   ? PlasmaCore.Types.RightEdge : PlasmaCore.Types.LeftEdge)*/
+    location: {
+      var result = PlasmaCore.Types.Floating;
+      if(ma.containsMouse) result |= PlasmaCore.Types.Desktop;
+      return result;
+    }
 
     mainText: appname.text
   }

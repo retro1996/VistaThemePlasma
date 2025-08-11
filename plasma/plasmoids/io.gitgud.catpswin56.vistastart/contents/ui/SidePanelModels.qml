@@ -19,10 +19,12 @@ Item {
         shownItems: Kicker.RecentUsageModel.OnlyDocs
     }
 
+    // TODO: make the tooltips text accurate later
     property var firstCategory:
     [
         {
             name: "Home directory",
+            description: "Open your personal folder.",
             itemText: Plasmoid.configuration.useFullName ? kuser.fullName : kuser.loginName,
             itemIcon: "user-home",
             itemIconFallback: "unknown",
@@ -33,6 +35,7 @@ Item {
         {
             name: "Documents",
             itemText: i18n("Documents"),
+            description: "Access letters, reports, notes and other kinds of documents.",
             itemIcon: "folder-documents",
             itemIconFallback: "folder-documents",
             executableString: StandardPaths.writableLocation(StandardPaths.DocumentsLocation),
@@ -42,6 +45,7 @@ Item {
         {
             name: "Pictures",
             itemText: i18n("Pictures"),
+            description: "View and organize digital pictures",
             itemIcon: "folder-image",
             itemIconFallback: "folder-image",
             executableString: StandardPaths.writableLocation(StandardPaths.PicturesLocation),
@@ -51,6 +55,7 @@ Item {
         {
             name: "Music",
             itemText: i18n("Music"),
+            description: "Play music and other audio files.",
             itemIcon: "folder-music",
             itemIconFallback: "folder-music",
             executableString: StandardPaths.writableLocation(StandardPaths.MusicLocation),
@@ -60,6 +65,7 @@ Item {
         {
             name: "Videos",
             itemText: i18n("Videos"),
+            description: "Watch home movies and other digital videos.",
             itemIcon: "folder-videos",
             itemIconFallback: "folder-videos",
             executableString: StandardPaths.writableLocation(StandardPaths.MoviesLocation),
@@ -69,6 +75,7 @@ Item {
         {
             name: "Downloads",
             itemText: i18n("Downloads"),
+            description: "Find Internet downloads and links to favorite websites.",
             itemIcon: "folder-download",
             itemIconFallback: "folder-download",
             executableString: StandardPaths.writableLocation(StandardPaths.HomeLocation) + "/Downloads",
@@ -78,6 +85,7 @@ Item {
         {
             name: "Games",
             itemText: i18n("Games"),
+            description: "Play and manage games on your computer.",
             itemIcon: "applications-games",
             itemIconFallback: "folder-games",
             executableString: "applications:///Games/",
@@ -91,6 +99,7 @@ Item {
         {
             name: "Recent Items",
             itemText: i18n("Recent Items"),
+            description: "",
             itemIcon: "document-open-recent",
             itemIconFallback: "folder-documents",
             executableString: "recentlyused:/",
@@ -100,6 +109,7 @@ Item {
         {
             name: "Computer",
             itemText: i18n("Computer"),
+            description: "See the disk drives and other hardware connected to your computer.",
             itemIcon: "computer",
             itemIconFallback: "unknown",
             executableString: "file:///.",
@@ -109,6 +119,7 @@ Item {
         {
             name: "Network",
             itemText: i18n("Network"),
+            description: "Access the computers and devices that are on your network.",
             itemIcon: "folder-network",
             itemIconFallback: "network-server",
             executableString: "remote:/",
@@ -118,6 +129,7 @@ Item {
         {
             name: "Connect To",
             itemText: i18n("Connect To"),
+            description: "",
             itemIcon: "connectto",
             itemIconFallback: "network-server",
             executableString: "remote:/",
@@ -130,6 +142,7 @@ Item {
         {
             name: "Control Panel",
 			itemText: i18n("Control Panel"),
+			description: "Change settings and customize the functionality of your computer.",
 			itemIcon: "preferences-system",
 			itemIconFallback: "preferences-desktop",
 			executableString: "systemsettings",
@@ -139,6 +152,7 @@ Item {
         {
             name: "Devices and Printers",
 			itemText: i18n("Devices and Printers"),
+			description: "View and manage devices, printers and print jobs",
 			itemIcon: "input_devices_settings",
 			itemIconFallback: "printer",
 			executableString: "systemsettings kcm_printer_manager",
@@ -148,6 +162,7 @@ Item {
         {
             name: "Default Programs",
 			itemText: i18n("Default Programs"),
+			description: "Choose default programs for web browsing, e-mail, playing music, and other activities.",
 			itemIcon: "preferences-desktop-default-applications",
 			itemIconFallback: "application-x-executable",
 			executableString: "systemsettings kcm_componentchooser",
@@ -157,6 +172,7 @@ Item {
         {
             name: "Help and Support",
 			itemText: i18n("Help and Support"),
+			description: "Find Help topics, tutorials, troubleshooting, and other support services.",
 			itemIcon: "help-browser",
 			itemIconFallback: "system-help",
 			executableString: "https://develop.kde.org/docs/",
@@ -166,6 +182,7 @@ Item {
         {
             name: "Run",
 			itemText: i18n("Run..."),
+			description: "Opens a program, folder, document, or web site.",
 			itemIcon: "krunner",
 			itemIconFallback: "system-run",
 			executableString: Plasmoid.configuration.defaultRunnerApp,

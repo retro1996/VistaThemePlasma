@@ -1,8 +1,6 @@
 #!/bin/bash
 
 BUILD_DST="build"
-BUILD_PLATFORM="X11"
-BUILD_PARAM=
 USE_NINJA=
 BUILD_COMMAND="make"
 
@@ -17,19 +15,12 @@ then
     fi
 fi
 
-if [[ "$*" == *"--wayland"* ]]
-then
-    BUILD_DST="build-wl"
-    BUILD_PLATFORM="Wayland"
-    BUILD_PARAM="-DKWIN_BUILD_WAYLAND=ON"
-fi
-rm -rf "${BUILD_DST}"
-mkdir "${BUILD_DST}"
-cd "${BUILD_DST}"
 
-
-echo "Building ${BUILD_PLATFORM} effect..."
-cmake ../ -DCMAKE_INSTALL_PREFIX=/usr $BUILD_PARAM $USE_NINJA
-
+rm -rf "$BUILD_DST"
+mkdir "$BUILD_DST"
+cd "$BUILD_DST"
+cmake -DCMAKE_INSTALL_PREFIX=/usr .. $USE_NINJA
 $BUILD_COMMAND
 sudo $BUILD_COMMAND install
+
+

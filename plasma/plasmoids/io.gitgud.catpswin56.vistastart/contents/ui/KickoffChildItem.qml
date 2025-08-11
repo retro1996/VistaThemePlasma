@@ -255,10 +255,15 @@ Item {
                 id: toolTip
 
                 anchors.fill: parent
-
                 active: titleElement.truncated
                 interactive: false
-                mainText: model?.display ?? ""
+                mainText: model.display
+                location: {
+                    var result = PlasmaCore.Types.Floating
+                    if(ma.containsMouse) result |= PlasmaCore.Types.Desktop;
+                    return result;
+                }
+
             }
 
             Timer {

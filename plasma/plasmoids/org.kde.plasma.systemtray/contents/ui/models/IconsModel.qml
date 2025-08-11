@@ -62,7 +62,10 @@ DelegateModel {
         name: "unsorted"
 
         includeByDefault: true
-        onChanged: {
+        onChanged: (removed, inserted) => {
+            if(inserted.length > 0) {
+                delegateModel.model.invalidateFilter();
+            }
             delegateModel.sort();
         }
     }

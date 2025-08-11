@@ -73,19 +73,28 @@ PlasmaCore.Dialog {
 		var availScreen = Plasmoid.containment.availableScreenRect;
 		var screen = root.screenGeometry;
 
-		x = pos.x - calendar.width / 2 + root.width / 2
-		y = pos.y - calendar.height;
-
-		// if(x <= 0) x += flyoutMargin;
-		if(x + calendar.width - screen.x >= availScreen.width) {
-			x = screen.x + availScreen.width - calendar.width;
-
+		if(Plasmoid.location === PlasmaCore.Types.BottomEdge) {
+			x = pos.x - calendar.width / 2 + root.width / 2
+			y = pos.y - calendar.height;
+		} else if(Plasmoid.location === PlasmaCore.Types.TopEdge) {
+			x = pos.x - calendar.width / 2 + root.width / 2
+			y = availScreen.y //pos.y - calendar.height;
+		} else if(Plasmoid.location === PlasmaCore.Types.LeftEdge) {
+			y = pos.y - calendar.height / 2 + root.height / 2
+			x = availScreen.x
+		} else if(Plasmoid.location === PlasmaCore.Types.RightEdge) {
+			y = pos.y - calendar.height / 2 + root.height / 2
+			x = availScreen.x + availScreen.width - calendar.width
 		}
-		// if(y <= 0) y += flyoutMargin;
-		if(y + calendar.height - screen.y >= availScreen.height) {
+
+		if(x <= availScreen.x) x = availScreen.x;
+		if(x + calendar.width - screen.x >= availScreen.x + availScreen.width) {
+			x = screen.x + availScreen.width - calendar.width;
+		}
+		if(y <= availScreen.y) y = availScreen.y;
+		if(y + calendar.height - screen.y >= availScreen.y + availScreen.height) {
 			y = screen.y + availScreen.height - calendar.height;
 		}
-
 
 	}
 
@@ -196,7 +205,7 @@ PlasmaCore.Dialog {
 						id: monthView
 						today: root.tzDate
 						showWeekNumbers: Plasmoid.configuration.showWeekNumbers
-						firstDayOfWeek: Plasmoid.configuration.firstDayOfWeek
+						firstDayOfWeek: (Plasmoid.configuration.firstDayOfWeek == -1 ? Qt.locale().firstDayOfWeek : Plasmoid.configuration.firstDayOfWeek)
 						anchors.fill: parent
 					}
 				}

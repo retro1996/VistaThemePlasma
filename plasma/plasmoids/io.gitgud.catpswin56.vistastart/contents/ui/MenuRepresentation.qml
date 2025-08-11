@@ -136,6 +136,7 @@ PlasmaCore.Dialog {
 		popupPosition();
 		setFloatingAvatarPosition();
 		Plasmoid.setDialogAppearance(root, dialogBackground.mask);
+		Plasmoid.syncBorders(Qt.rect(x, y, width, height), Plasmoid.location);
     }
 
     onWidthChanged: {
@@ -147,7 +148,12 @@ PlasmaCore.Dialog {
 
     onSearchingChanged: {
         if (!searching) {
+			if(!KWindowSystem.isPlatformX11) {
+				root.hideOnWindowDeactivate = false;
+				wayland_fix.start();
+			}
 			reset();
+
         }
     }
     
@@ -706,11 +712,9 @@ PlasmaCore.Dialog {
 
 				CrossFadeBehavior on textLabel {
 					fadeDuration: animationDuration
-					easingType: "Linear"
 				}
 				CrossFadeBehavior on svgArrow {
 					fadeDuration: animationDuration
-					easingType: "Linear"
 				}
 
 				RowLayout {
@@ -1116,6 +1120,7 @@ PlasmaCore.Dialog {
 					delegate: SidePanelItemDelegate {
 						required property int index
 						itemText: sidePanelModels.firstCategory[index].itemText
+						description: sidePanelModels.firstCategory[index].description
 						itemIcon: sidePanelModels.firstCategory[index].itemIcon
 						executableString: sidePanelModels.firstCategory[index].executableString
 						visible: typeof columnItems.sidePanelVisibility[sidePanelModels.firstCategory[index].name] !== "undefined"
@@ -1141,6 +1146,7 @@ PlasmaCore.Dialog {
 						id: delgate
 						required property int index
 						itemText: sidePanelModels.secondCategory[index].itemText
+						description: sidePanelModels.secondCategory[index].description
 						itemIcon: sidePanelModels.secondCategory[index].itemIcon
 						executableString: sidePanelModels.secondCategory[index].executableString
 						visible: typeof columnItems.sidePanelVisibility[sidePanelModels.secondCategory[index].name] !== "undefined"
@@ -1167,6 +1173,7 @@ PlasmaCore.Dialog {
 					delegate: SidePanelItemDelegate {
 						required property int index
 						itemText: sidePanelModels.thirdCategory[index].itemText
+						description: sidePanelModels.thirdCategory[index].description
 						itemIcon: sidePanelModels.thirdCategory[index].itemIcon
 						executableString: sidePanelModels.thirdCategory[index].executableString
 						visible: typeof columnItems.sidePanelVisibility[sidePanelModels.thirdCategory[index].name] !== "undefined"
@@ -1217,14 +1224,10 @@ PlasmaCore.Dialog {
 			z: 7
 
 			function findUpItem() {
-				if(searching) {
-					return allButtonsArea;
-				} else {
-					if(columnItems.visibleChildren.length === 2) {
-						return searchField;
-					}
-					return columnItems.visibleChildren[columnItems.visibleChildren.length-2];
+				if(columnItems.visibleChildren.length === 2) {
+					return searchField;
 				}
+				return columnItems.visibleChildren[columnItems.visibleChildren.length-2];
 			}
 
 			LeaveButton {
@@ -1233,11 +1236,11 @@ PlasmaCore.Dialog {
 				anchors.verticalCenter: parent.verticalCenter
 
 				KeyNavigation.tab: lock
-				KeyNavigation.backtab: leaveButtons.findUpItem();
+				KeyNavigation.backtab: Qt.binding(() => { return leaveButtons.findUpItem(); });
 
 				Keys.onPressed: event => {
 					if(event.key == Qt.Key_Return) {
-						clicked();
+						ma.clicked(null);
 					} else if(event.key == Qt.Key_Right) {
 						lock.focus = true;
 					} else if(event.key == Qt.Key_Left) {
@@ -1310,13 +1313,13 @@ PlasmaCore.Dialog {
 				anchors.verticalCenter: parent.verticalCenter
 
 				KeyNavigation.tab: faves
-				KeyNavigation.backtab: shutdown
+				KeyNavigation.backtab: lock
 
 				Keys.onPressed: event => {
 					if(event.key == Qt.Key_Return) {
 						clicked();
 					} else if(event.key == Qt.Key_Left) {
-						shutdown.focus = true;
+						lock.focus = true;
 					} else if(event.key == Qt.Key_Up) {
 						leaveButtons.findUpItem().focus = true;
 					}

@@ -18,7 +18,7 @@ import io.gitgud.catpswin56.vistadesktop.folder as Folder
 FocusScope {
     id: folderViewLayerComponent
 
-    property var sharedActions: ["newMenu", "paste", "undo", "emptyTrash"]
+    property var sharedActions: ["refresh", "paste", "undo", "emptyTrash", "newMenu"]
     property Component folderViewDialogComponent: Qt.createComponent("FolderViewDialog.qml", Qt.Asynchronous, root)
 
     property Item view: folderView
@@ -358,12 +358,26 @@ FocusScope {
 
     PlasmaCore.Action {
         id: viewPropertiesAction
-        text: i18n("Icons")
-        icon.name: "view-list-icons"
+        text: i18n("View")
+        //icon.name: ""
         menu: viewPropertiesMenu.menu
     }
     PlasmaCore.Action {
+        id: viewSortMenu
+        text: i18n("Sort by")
+        //icon.name: ""
+        menu: viewPropertiesMenu.sortMenu
+    }
+    PlasmaCore.Action {
         id: actionSeparator
+        isSeparator: true
+    }
+    PlasmaCore.Action {
+        id: actionSeparatorSecond
+        isSeparator: true
+    }
+    PlasmaCore.Action {
+        id: actionSeparatorThird
         isSeparator: true
     }
 
@@ -375,13 +389,20 @@ FocusScope {
         for (let i = 0, len = sharedActions.length; i < len; i++) {
             const actionName = sharedActions[i];
             const modelAction = folderView.model.action(actionName);
-            Plasmoid.contextualActions.push(modelAction)
             if (actionName === "newMenu") {
+                Plasmoid.contextualActions.push(actionSeparator);
+            }
+            if (actionName === "refresh") {
                 Plasmoid.contextualActions.push(viewPropertiesAction)
+                Plasmoid.contextualActions.push(viewSortMenu)
+            }
+            Plasmoid.contextualActions.push(modelAction)
+            if (actionName === "refresh") {
+                Plasmoid.contextualActions.push(actionSeparatorSecond);
             }
         }
 
-        Plasmoid.contextualActions.push(actionSeparator);
+        Plasmoid.contextualActions.push(actionSeparatorThird);
 
         Plasmoid.contextualActionsAboutToShow.connect(updateContextualActions);
         Plasmoid.contextualActionsAboutToShow.connect(folderView.model.clearSelection);
