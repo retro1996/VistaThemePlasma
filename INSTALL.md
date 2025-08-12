@@ -272,19 +272,11 @@ This section relates to the directories found inside the ``extras`` folder and i
 
 ### Extra components
 
-**Execute Binary** 
+**ExecBin**
 
-Application written in QtWidgets that's meant to replicate Windows's run dialog.
+Moved to [another repository](https://gitgud.io/catpswin56/execbin)
 
-![execbin](screenshots/execbin.png)
-
-**Installation**
-
-1. Run the install script. The program will get installed to ``/usr/bin/execbin``
-2. Optionally, make a shortcut for ``execbin`` inside system settings
-
-
-**UAC-like Polkit** 
+**UAC-like Polkit agent** 
 
 # WARNING:
 
