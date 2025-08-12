@@ -6,15 +6,16 @@
 */
 
 import QtQuick
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick.Controls
+import QtQuick.Layouts
 
-import org.kde.plasma.plasmoid 2.0
+import org.kde.plasma.plasmoid
 import org.kde.plasma.core as PlasmaCore
-import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.plasma.extras as PlasmaExtras
 import org.kde.iconthemes as KIconThemes
 import org.kde.config // for KAuthorized
-import org.kde.kirigami 2.20 as Kirigami
+import org.kde.kirigami as Kirigami
+import org.kde.kcmutils as KCM
 
 import io.gitgud.catpswin56.vistadesktop.folder as Folder
 
@@ -50,18 +51,42 @@ Item {
 
     readonly property bool lockedByKiosk: !KAuthorized.authorize("editable_desktop_icons")
 
+    implicitHeight: mainLayout.height
+
+    component CustomGroupBox: GroupBox {
+        id: gbox
+        label: Label {
+            id: lbl
+            x: gbox.leftPadding + 2
+            y: lbl.implicitHeight/2-gbox.bottomPadding-1
+            width: lbl.implicitWidth
+            text: gbox.title
+            elide: Text.ElideRight
+            Rectangle {
+                anchors.fill: parent
+                anchors.leftMargin: -2
+                anchors.rightMargin: -2
+                color: Kirigami.Theme.backgroundColor
+                z: -1
+            }
+        }
+        background: Rectangle {
+            y: gbox.topPadding - gbox.bottomPadding*2
+            width: parent.width
+            height: parent.height - gbox.topPadding + gbox.bottomPadding*2
+            color: "transparent"
+            border.color: "#d5dfe5"
+            radius: 3
+        }
+    }
+
     KIconThemes.IconDialog {
         id: iconDialog
-        onIconNameChanged: cfg_icon = iconName || "folder-symbolic";
+        onIconNameChanged: iconName => cfg_icon = iconName || "folder-symbolic";
     }
 
     Kirigami.FormLayout {
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-
+        id: mainLayout
         // Panel button
         RowLayout {
             spacing: Kirigami.Units.smallSpacing

@@ -12,42 +12,60 @@ import org.kde.plasma.configuration 2.0
 import org.kde.plasma.plasma5support as Plasma5Support
 
 
-ColumnLayout {
+RowLayout {
     id: column
     property int bottomMargin
     property string iconSource
     property string text
+    property string description
     property string command
 
     property var execHelper
 
-    Item {
-        Layout.alignment: Qt.AlignHCenter
-        Layout.preferredWidth: Math.max(icon.width, textLabel.implicitWidth)
-        Layout.preferredHeight: icon.height + textLabel.implicitHeight
-        Layout.bottomMargin: column.bottomMargin //pluginComboBox.height + parent.spacing
-        Kirigami.Icon {
-            id: icon
-            width: Kirigami.Units.iconSizes.large
-            height: width
-            anchors.centerIn: parent
-            source: column.iconSource
-            Text {
-                id: textLabel
-                anchors.top: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Kirigami.Theme.linkColor
-                font.underline: ma.containsMouse
-                text: column.text
-            }
-        }
+    function execute() {
+        execHelper.exec(command);
+    }
+
+    Kirigami.Icon {
+        id: icon
+        Layout.preferredWidth: 24
+        Layout.preferredHeight: 24
+        Layout.alignment: Qt.AlignTop
+        source: column.iconSource
+
         MouseArea {
-            id: ma
             anchors.fill: parent
-            anchors.margins: -Kirigami.Units.smallSpacing
-            onClicked: column.execHelper.exec(column.command);
+            onClicked: column.execute();
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
         }
     }
+
+    spacing: 8
+
+    ColumnLayout {
+        width: parent.width
+        spacing: 2
+        Text {
+            id: textLabel
+            color: Kirigami.Theme.linkColor
+            font.underline: ma.containsMouse
+            text: column.text
+
+            MouseArea {
+                id: ma
+                anchors.fill: parent
+                onClicked: column.execute();
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+            }
+        }
+        Text {
+            Layout.fillWidth: true
+            Layout.rightMargin: icon.width
+            text: column.description
+            wrapMode: Text.WordWrap
+        }
+    }
+
 }

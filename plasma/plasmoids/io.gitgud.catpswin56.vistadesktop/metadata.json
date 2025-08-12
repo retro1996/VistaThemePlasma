@@ -3,6 +3,9 @@
     "KPlugin": {
         "Authors": [
             {
+                "Name": "catpswin56"
+            },
+            {
                 "Email": "sebas@kde.org",
                 "Name": "Sebastian Kügler",
                 "Name[ar]": "سيباستيان كوغلر",
@@ -106,9 +109,6 @@
                 "Name[x-test]": "xxEike Heinxx",
                 "Name[zh_CN]": "Eike Hein",
                 "Name[zh_TW]": "Eike Hein"
-            },
-            {
-                "Name": "catpswin56"
             }
         ],
         "BugReportUrl": "https://gitgud.io/catpswin56/vistathemeplasma/-/issues",
