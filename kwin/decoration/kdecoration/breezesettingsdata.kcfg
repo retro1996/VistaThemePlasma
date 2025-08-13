@@ -119,7 +119,7 @@
     </entry>
 
     <entry name="DecorationTheme" type="String">
-      <default>Aero</default>
+      <default>VistaAero</default>
     </entry>
 
 
