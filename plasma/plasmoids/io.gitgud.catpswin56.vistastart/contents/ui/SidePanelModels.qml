@@ -19,12 +19,11 @@ Item {
         shownItems: Kicker.RecentUsageModel.OnlyDocs
     }
 
-    // TODO: make the tooltips text accurate later
     property var firstCategory:
     [
         {
             name: "Home directory",
-            description: "Open your personal folder.",
+            description: "Opens your home folder, where you can find folders for Documents, Pictures, Music, and other files that belong to you.",
             itemText: Plasmoid.configuration.useFullName ? kuser.fullName : kuser.loginName,
             itemIcon: "user-home",
             itemIconFallback: "unknown",
@@ -35,7 +34,7 @@ Item {
         {
             name: "Documents",
             itemText: i18n("Documents"),
-            description: "Access letters, reports, notes and other kinds of documents.",
+            description: "Store letters, reports, notes and other kinds of documents.",
             itemIcon: "folder-documents",
             itemIconFallback: "folder-documents",
             executableString: StandardPaths.writableLocation(StandardPaths.DocumentsLocation),
@@ -45,7 +44,7 @@ Item {
         {
             name: "Pictures",
             itemText: i18n("Pictures"),
-            description: "View and organize digital pictures",
+            description: "Store pictures and other graphic files.",
             itemIcon: "folder-image",
             itemIconFallback: "folder-image",
             executableString: StandardPaths.writableLocation(StandardPaths.PicturesLocation),
@@ -55,7 +54,7 @@ Item {
         {
             name: "Music",
             itemText: i18n("Music"),
-            description: "Play music and other audio files.",
+            description: "Store and play music and other audio files.",
             itemIcon: "folder-music",
             itemIconFallback: "folder-music",
             executableString: StandardPaths.writableLocation(StandardPaths.MusicLocation),
@@ -119,7 +118,7 @@ Item {
         {
             name: "Network",
             itemText: i18n("Network"),
-            description: "Access the computers and devices that are on your network.",
+            description: "Provides access to the computers and devices that are on your network.",
             itemIcon: "folder-network",
             itemIconFallback: "network-server",
             executableString: "remote:/",
@@ -129,7 +128,7 @@ Item {
         {
             name: "Connect To",
             itemText: i18n("Connect To"),
-            description: "",
+            description: "See the available wireless networks, dial-up, and VPN connections that you can connect to.",
             itemIcon: "connectto",
             itemIconFallback: "network-server",
             executableString: "remote:/",
@@ -142,20 +141,10 @@ Item {
         {
             name: "Control Panel",
 			itemText: i18n("Control Panel"),
-			description: "Change settings and customize the functionality of your computer.",
+			description: "Customize the appearance and functionality of your computer, add or remove programs, and set up network connections and user accounts.",
 			itemIcon: "preferences-system",
 			itemIconFallback: "preferences-desktop",
 			executableString: "systemsettings",
-			executeProgram: true,
-            menuModel: null,
-        },
-        {
-            name: "Devices and Printers",
-			itemText: i18n("Devices and Printers"),
-			description: "View and manage devices, printers and print jobs",
-			itemIcon: "input_devices_settings",
-			itemIconFallback: "printer",
-			executableString: "systemsettings kcm_printer_manager",
 			executeProgram: true,
             menuModel: null,
         },
@@ -167,6 +156,16 @@ Item {
 			itemIconFallback: "application-x-executable",
 			executableString: "systemsettings kcm_componentchooser",
 			executeProgram: true,
+            menuModel: null,
+        },
+        {
+            name: "Printers",
+            itemText: i18n("Printers"),
+            description: "See installed printers and add new ones.",
+            itemIcon: "input_devices_settings",
+            itemIconFallback: "printer",
+            executableString: "systemsettings kcm_printer_manager",
+            executeProgram: true,
             menuModel: null,
         },
         {

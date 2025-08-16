@@ -42,6 +42,8 @@ Item {
     property alias elementWidth: svgItem.implicitWidth
     property alias elementHeight: svgItem.implicitHeight
 
+    property string description: ""
+
     property bool showLabel: false
 
     width: isFramed ? elementWidth : implicitWidth
@@ -50,6 +52,36 @@ Item {
     implicitWidth: contentArea.width
     implicitHeight: contentArea.height
 
+    Timer {
+        id: toolTipTimer
+        interval: Kirigami.Units.longDuration*3
+        onTriggered: if(item.description !== "") toolTipArea.showToolTip();
+    }
+
+    PlasmaCore.ToolTipArea {
+        id: toolTipArea
+
+        anchors.fill: parent
+
+        interactive: false
+        location: {
+            var result = PlasmaCore.Types.Floating;
+            if(mouseArea.containsMouse) result |= PlasmaCore.Types.Desktop;
+            return result;
+        }
+
+        mainItem: Text {
+            text: item.description
+        }
+    }
+    onFocusChanged: {
+        if(focus) toolTipTimer.start();
+        else {
+            toolTipArea.hideImmediately();
+            toolTipTimer.stop();
+        }
+    }
+
     MouseArea {
         id: mouseArea
 
@@ -57,6 +89,14 @@ Item {
 
         acceptedButtons: Qt.LeftButton
         hoverEnabled: true
+        onContainsMouseChanged: {
+            if(containsMouse) toolTipTimer.start();
+            else {
+                toolTipArea.hideImmediately();
+                toolTipTimer.stop();
+            }
+        }
+        onExited: item.focus = false;
         onClicked: item.clicked()
     }
 

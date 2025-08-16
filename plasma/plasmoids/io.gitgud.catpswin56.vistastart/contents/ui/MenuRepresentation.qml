@@ -396,7 +396,10 @@ PlasmaCore.Dialog {
 				required property var model
 
 				text: "       " + model.display + "      "
-				onClicked: filteredMenuItemsModel.trigger(index)
+				onClicked: {
+					filteredMenuItemsModel.trigger(index)
+					root.visible = false;
+				}
 			}
 			onObjectAdded: (index, object) => {
 				if(object.model.decoration == "system-shutdown") root.shutdownIndex = index;
@@ -1250,7 +1253,8 @@ PlasmaCore.Dialog {
 					}
 				}
 
-				text: Plasmoid.configuration.disableSleep ? "Power off" : "Sleep"
+				text: Plasmoid.configuration.disableSleep ? i18n("Power off") : i18n("Sleep")
+				description: i18n("Closes all open programs, shuts down Linux, and then turns off your computer.")
 				showLabel: startStyles.currentStyle.leaveButtons.showLabel
 
 				isFramed: startStyles.currentStyle.leaveButtons.isFramed
@@ -1266,7 +1270,9 @@ PlasmaCore.Dialog {
 				elementHeight: startStyles.currentStyle.leaveButtons.shutdownHeight
 
 				onClicked: {
-					filteredMenuItemsModel.trigger(Plasmoid.configuration.disableSleep ? shutdownIndex : sleepIndex)
+					if((!Plasmoid.configuration.disableSleep && sleepIndex !== -1) || (Plasmoid.configuration.disableSleep && shutdownIndex !== -1))
+						filteredMenuItemsModel.trigger(Plasmoid.configuration.disableSleep ? shutdownIndex : sleepIndex)
+
 					root.visible = false;
 				}
 			}
@@ -1290,7 +1296,8 @@ PlasmaCore.Dialog {
 					}
 				}
 
-				text: "Lock"
+				text: i18n("Lock")
+				description: i18n("Lock this computer.")
 				showLabel: startStyles.currentStyle.leaveButtons.showLabel
 
 				isFramed: startStyles.currentStyle.leaveButtons.isFramed
@@ -1303,7 +1310,9 @@ PlasmaCore.Dialog {
 				elementHeight: startStyles.currentStyle.leaveButtons.lockHeight
 
 				onClicked: {
-					filteredMenuItemsModel.trigger(lockIndex)
+					if(lockIndex !== -1)
+						filteredMenuItemsModel.trigger(lockIndex);
+
 					root.visible = false;
 				}
 			}
@@ -1334,9 +1343,7 @@ PlasmaCore.Dialog {
 				elementWidth: startStyles.currentStyle.leaveButtons.moreWidth
 				elementHeight: startStyles.currentStyle.leaveButtons.moreHeight
 
-				onClicked: {
-					contextMenu.openRelative();
-				}
+				onClicked: contextMenu.openRelative();
 			}
 		}
 		
