@@ -281,7 +281,7 @@ ContainmentItem {
 
         Timer {
             id: updateTimer
-            interval: 100
+            interval: 50
             onTriggered: root.invalidateFilters();
         }
 

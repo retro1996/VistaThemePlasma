@@ -80,7 +80,9 @@ Item
 
         property bool playSound: !executable.fileExists && config.boolValue("playSound")
 
-        audioOutput: AudioOutput {}
+        audioOutput: AudioOutput {
+            volume: 1.0
+        }
         source: "Assets/session-start.wav"
     }
 
@@ -383,7 +385,7 @@ Item
                 }
 
 
-                Item
+                ColumnLayout
                 {
                     id: loginbox
 
@@ -391,10 +393,12 @@ Item
                     anchors.top: userpic.bottom
                     anchors.topMargin: 4
 
+                    spacing: 0
+
                     QQC2.Label {
                         id: userNameLabel
 
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        Layout.alignment: Qt.AlignHCenter
 
                         text: ""
                         color: "white"
@@ -403,68 +407,96 @@ Item
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferVerticalHinting
                     }
-                    QQC2.TextField {
-                        id: password
+                    Row {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.topMargin: 8
+                        Layout.leftMargin: loginButton.width+1
 
-                        anchors.top: userNameLabel.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.topMargin: 8
+                        spacing: 4
 
-                        width: 225
-                        height: 25
+                        QQC2.TextField {
+                            id: password
 
-                        leftPadding: 7
+                            width: 225
+                            height: 25
 
-                        font.pointSize: password.length > 0 ? 7 : 9
-                        placeholderTextColor: "#555"
-                        background: BorderImage {
-                            border {
-                                top: 3
-                                bottom: 3
-                                left: 3
-                                right: 3
+                            leftPadding: 7
+
+                            font.pointSize: password.length > 0 ? 7 : 9
+                            placeholderTextColor: "#555"
+                            background: BorderImage {
+                                border {
+                                    top: 3
+                                    bottom: 3
+                                    left: 3
+                                    right: 3
+                                }
+                                source: {
+                                    if (password.focus) return "Assets/input/focus.png"
+                                    else if (password.hovered) return "Assets/input/hover.png"
+                                    else return "Assets/input/normal.png"
+                                }
                             }
-                            source: {
-                                if (password.focus) return "Assets/input/focus.png"
-                                if (password.hovered) return "Assets/input/hover.png"
-                                return "Assets/input/normal.png"
+                            placeholderText: "Password"
+                            selectByMouse: true
+                            echoMode : TextInput.Password
+                            inputMethodHints: Qt.ImhSensitiveData | Qt.ImhNoPredictiveText
+
+                            KeyNavigation.backtab: switchLayoutButton
+                            KeyNavigation.tab: loginButton
+                            KeyNavigation.down: switchuser.enabled ? switchuser : accessbutton
+
+
+                            Keys.onPressed : (event) => {
+                                if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                                    let index = listView.currentIndex
+                                    let username = userModel.data(userModel.index(index, 0), Main.UserRoles.NameRole)
+
+                                    if (username != null) sddm.login(username, password.text, session.index)
+                                        event.accepted = true
+                                }
+                                else if (
+                                    event.matches(StandardKey.Undo) ||
+                                    event.matches(StandardKey.Redo) ||
+                                    event.matches(StandardKey.Cut)  ||
+                                    event.matches(StandardKey.Copy) ||
+                                    event.matches(StandardKey.Paste)
+                                )
+                                {
+                                    // disable these events
+                                    event.accepted = true
+                                }
                             }
                         }
-                        placeholderText: "Password"
-                        selectByMouse: true
-                        echoMode : TextInput.Password
-                        inputMethodHints: Qt.ImhSensitiveData | Qt.ImhNoPredictiveText
 
-                        KeyNavigation.backtab: switchLayoutButton
-                        KeyNavigation.tab: loginButton
-                        KeyNavigation.down: switchuser.enabled ? switchuser : accessbutton
+                        QQC2.Button {
+                            id: loginButton
 
+                            anchors.verticalCenter: password.verticalCenter
+                            anchors.verticalCenterOffset: -1
 
-                        Keys.onPressed : (event) => {
-                            if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                            width: 30
+                            height: 30
+
+                            background: Image {
+                                source: loginButton.pressed ? "Assets/go/pressed.png" : (loginButton.focus || loginButton.hovered ? "Assets/go/hover.png" : "Assets/go/normal.png")
+                            }
+
+                            onClicked: {
                                 let index = listView.currentIndex
                                 let username = userModel.data(userModel.index(index, 0), Main.UserRoles.NameRole)
 
                                 if (username != null) sddm.login(username, password.text, session.index)
-                                event.accepted = true
                             }
-                            else if (
-                                event.matches(StandardKey.Undo) ||
-                                event.matches(StandardKey.Redo) ||
-                                event.matches(StandardKey.Cut) ||
-                                event.matches(StandardKey.Copy) ||
-                                event.matches(StandardKey.Paste)
-                                )
-                            {
-                                // disable these events
-                                event.accepted = true
-                            }
+
+                            KeyNavigation.backtab: password
+                            KeyNavigation.tab: switchuser.enabled ? switchuser : accessbutton
+                            KeyNavigation.down: switchuser.enabled ? switchuser : accessbutton
                         }
                     }
-                    RowLayout {
-                        anchors.top: password.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.topMargin: 2
+                    Row {
+                        Layout.topMargin: 2
+                        Layout.alignment: Qt.AlignHCenter
 
                         spacing: 2
 
@@ -489,34 +521,8 @@ Item
                             color: "white"
                         }
                     }
-
-                    QQC2.Button {
-                        id: loginButton
-
-                        anchors.left: password.right
-                        anchors.verticalCenter: password.verticalCenter
-                        anchors.verticalCenterOffset: -1
-                        anchors.leftMargin: 4
-
-                        width: 30
-                        height: 30
-
-                        background: Image {
-                            source: loginButton.pressed ? "Assets/go/pressed.png" : (loginButton.focus || loginButton.hovered ? "Assets/go/hover.png" : "Assets/go/normal.png")
-                        }
-
-                        onClicked: {
-                            let index = listView.currentIndex
-                            let username = userModel.data(userModel.index(index, 0), Main.UserRoles.NameRole)
-
-                            if (username != null) sddm.login(username, password.text, session.index)
-                        }
-
-                        KeyNavigation.backtab: password
-                        KeyNavigation.tab: switchuser.enabled ? switchuser : accessbutton
-                        KeyNavigation.down: switchuser.enabled ? switchuser : accessbutton
-                    }
                 }
+
                 QQC2.Button {
                     id: switchuser
 

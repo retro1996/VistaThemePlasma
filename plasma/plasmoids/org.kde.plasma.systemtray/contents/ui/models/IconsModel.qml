@@ -64,9 +64,9 @@ DelegateModel {
 
         includeByDefault: true
         onChanged: (removed, inserted) => {
-            if(inserted.length > 0) {
+            /*if(inserted.length > 0) {
                 delegateModel.root.invalidateFilters();
-            }
+            }*/
             delegateModel.sort();
             delegateModel.root.updateTimer.start();
         }
