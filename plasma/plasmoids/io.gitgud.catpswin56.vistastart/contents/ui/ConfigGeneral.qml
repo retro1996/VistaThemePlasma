@@ -57,13 +57,13 @@ KCM.SimpleKCM {
     property alias cfg_disableSleep: disableSleep.checked
     property alias cfg_enableShadow: enableShadow.checked
     property alias cfg_enableAnimations: enableAnimations.checked
-
-    property string cfg_defaultRunnerApp
+    property alias cfg_hideSearchLinks: hideSearchLinks.checked
 
     property alias cfg_numberRows: numberRows.value
 
     property string cfg_defaultInternetApp
     property string cfg_defaultEmailApp
+    property string cfg_defaultRunnerApp
 
     property alias cfg_startStyle: startStyle.currentIndex
 
@@ -196,6 +196,10 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: enableAnimations
                     text: i18n("Enable animations")
+                }
+                CheckBox {
+                    id: hideSearchLinks
+                    text: i18n("Hide search links")
                 }
             }
         }

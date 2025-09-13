@@ -1021,10 +1021,12 @@ PlasmaCore.Dialog {
 		ColumnLayout {
 			id: searchViewBottom
 
+			height: !Plasmoid.configuration.hideSearchLinks ? implicitHeight : 0
+
+			visible: opacity && !Plasmoid.configuration.hideSearchLinks
 			opacity: 0
-			visible: opacity
 			Behavior on opacity {
-				NumberAnimation { easing.type: Easing.InOutQuart; duration: 150 }
+				NumberAnimation { easing.type: Easing.InOutQuart; duration: animationDuration }
 			}
 
 			anchors {
