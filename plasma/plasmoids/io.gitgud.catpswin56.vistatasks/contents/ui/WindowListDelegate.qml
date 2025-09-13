@@ -113,7 +113,8 @@ MouseArea {
                 if(Plasmoid.configuration.taskStyle == 1) return "focus";
                 else return "active";
             }
-            return "normal";
+            else if(isHovered) return "normal";
+            else return "";
         }
 
         anchors {
