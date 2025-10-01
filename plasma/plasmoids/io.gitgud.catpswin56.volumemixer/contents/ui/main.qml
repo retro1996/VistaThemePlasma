@@ -423,6 +423,15 @@ PlasmoidItem {
             onTriggered: Plasmoid.configuration.showVirtualDevices = !Plasmoid.configuration.showVirtualDevices
         },
         PlasmaCore.Action {
+            text: i18n("Raise maximum volume")
+            checkable: true
+            checked: config.raiseMaximumVolume
+            onTriggered: {
+                config.raiseMaximumVolume = checked;
+                config.save();
+            }
+        },
+        PlasmaCore.Action {
             text: i18n("Volume Mixer")
             icon.name: "menu_new"
             onTriggered: {

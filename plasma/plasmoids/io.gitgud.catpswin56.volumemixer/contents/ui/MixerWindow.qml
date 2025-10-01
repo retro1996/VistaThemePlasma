@@ -105,17 +105,6 @@ Window {
         placement: PlasmaExtras.Menu.BottomPosedLeftAlignedPopup;
 
         PlasmaExtras.MenuItem {
-            id: raiseMaximumVolumeItem
-
-            text: i18n("Raise maximum volume")
-            checkable: true
-            checked: config.raiseMaximumVolume
-            onClicked: {
-                config.raiseMaximumVolume = checked;
-                config.save();
-            }
-        }
-        PlasmaExtras.MenuItem {
             id: hideDefaultInputItem
 
             text: i18n("Hide default input device from flyout")
@@ -131,10 +120,11 @@ Window {
         spacing: 0
 
         KSvg.FrameSvgItem {
-            imagePath: Qt.resolvedUrl("svgs/button.svg")
-            prefix: "toolbutton-hover"
+            imagePath: Qt.resolvedUrl("svgs/menubar.svg")
+            prefix: "menu"
             Layout.fillWidth: true
-            Layout.preferredHeight: 20
+            Layout.minimumHeight: 20
+            Layout.maximumHeight: 20
 
             RowLayout {
                 anchors.fill: parent
@@ -142,9 +132,9 @@ Window {
                 MouseArea {
                     id: optionsItem
 
-                    Layout.preferredWidth: deviceItem.implicitWidth + Kirigami.Units.smallSpacing * 2
+                    Layout.preferredWidth: deviceItem.implicitWidth + Kirigami.Units.mediumSpacing * 2
                     Layout.margins: 1
-                    Layout.bottomMargin: 2
+                    Layout.bottomMargin: 0
                     Layout.fillHeight: true
                     hoverEnabled: true
 
@@ -154,14 +144,15 @@ Window {
                         anchors.fill: parent
 
                         imagePath: "widgets/button"
-                        prefix: parent.containsPress || optionsMenu.state == 1 ? "toolbutton-pressed" : "toolbutton-hover"
+                        prefix: parent.containsPress || optionsMenu.status == PlasmaExtras.Menu.Open ? "toolbutton-pressed" : "toolbutton-hover"
 
-                        visible: parent.containsMouse || optionsMenu.state == 1
+                        visible: parent.containsMouse || optionsMenu.status == PlasmaExtras.Menu.Open
                     }
 
                     Text {
                         id: deviceItem
                         text: i18n("Options")
+                        topPadding: 1
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
