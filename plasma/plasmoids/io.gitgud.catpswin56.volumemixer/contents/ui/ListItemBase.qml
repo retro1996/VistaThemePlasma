@@ -124,7 +124,7 @@ Item {
                 else return false
             }
 
-            Layout.topMargin: -parent.spacing / 2
+            Layout.topMargin: Math.floor(-parent.spacing / 2)
             Layout.preferredHeight: 32
             Layout.fillWidth: true
 
@@ -150,8 +150,8 @@ Item {
                     horizontalCenter: parent.horizontalCenter
                 }
 
-                height: textMetrics.height + Kirigami.Units.smallSpacing - 1
-                width: textMetrics.advanceWidth + dropdownArrow.width + Kirigami.Units.smallSpacing * 2
+                height: Math.floor(textMetrics.height + Kirigami.Units.smallSpacing - 1)
+                width: Math.floor(textMetrics.advanceWidth + dropdownArrow.width + Kirigami.Units.smallSpacing * 2)
 
                 hoverEnabled: true
                 onClicked: contextMenu.openRelative();
