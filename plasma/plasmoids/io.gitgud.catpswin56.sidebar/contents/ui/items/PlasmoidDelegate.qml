@@ -287,7 +287,7 @@ PlasmoidItem {
         }
 
         if(plasmoidDelegate.height == 0) plasmoidDelegate.height = mainStack.delegateWidth/2;
-        if(plasmoidBg.visible) plasmoidDelegate.height += 12;
+        if(applet?.plasmoid.backgroundHints != 0) plasmoidDelegate.height += 12;
 
         applet?.compactRepresentationItemChanged.connect(replaceCompactRepresentation);
 
