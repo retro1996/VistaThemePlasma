@@ -26,8 +26,11 @@ import "items"
 ContainmentItem {
     id: root
 
-    property var desktopContainment: null
+    property ContainmentItem desktopContainment: null
     onDesktopContainmentChanged: root.parent = desktopContainment;
+
+    property var appletsLayout: null
+    onAppletsLayoutChanged: updateDesktopBindings();
 
     Timer {
         running: desktopContainment == null
@@ -40,7 +43,11 @@ ContainmentItem {
                 if (item.defaultItemWidth !== undefined) {
                     root.parent.parent = item.parent;
                     root.parent.anchors.bottom = root.parent.parent.top;
-                    root.desktopContainment = item.parent;
+                    root.parent.anchors.top = root.parent.parent.top;
+                    root.parent.visible = false;
+
+                    root.appletsLayout = item;
+                    root.desktopContainment = item.parent.parent;
                 }
             }
         }
@@ -68,12 +75,19 @@ ContainmentItem {
     }
 
     readonly property int sidebarLocation: Plasmoid.configuration.location
-    onSidebarLocationChanged: configureWindow.start();
+    onSidebarLocationChanged: {
+        updateDesktopBindings();
+        configureWindow.start();
+    }
 
     readonly property bool sidebarDock: Plasmoid.configuration.dock
-    onSidebarDockChanged: configureWindow.start();
+    onSidebarDockChanged: {
+        updateDesktopBindings();
+        configureWindow.start();
+    }
 
     property bool sidebarCollapsed: Plasmoid.configuration.collapsed
+    onSidebarCollapsedChanged: updateDesktopBindings();
 
     Containment.onAppletAdded: applet => addApplet(applet);
     Containment.onAppletRemoved: applet => {
@@ -83,6 +97,23 @@ ContainmentItem {
                 appletsModel.remove(i, 0);
                 break;
             }
+        }
+    }
+
+    function updateDesktopBindings() {
+        if(sidebarDock && !sidebarCollapsed) {
+            if(sidebarLocation) {
+                appletsLayout.anchors.leftMargin = Qt.binding(() => root.sidebarWidth);
+                appletsLayout.anchors.rightMargin = 0;
+            }
+            else {
+                appletsLayout.anchors.leftMargin = 0;
+                appletsLayout.anchors.rightMargin = Qt.binding(() => root.sidebarWidth);
+            }
+        }
+        else {
+            appletsLayout.anchors.leftMargin = 0;
+            appletsLayout.anchors.rightMargin = 0;
         }
     }
 
