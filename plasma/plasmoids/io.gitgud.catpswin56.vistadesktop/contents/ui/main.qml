@@ -329,7 +329,7 @@ ContainmentItem {
                     if(item.id !== "")
                         setPosition(item, false);
                 }
-                writeToConfig();
+                save();
             }
 
             function setPosition(plasmoid) {
@@ -343,7 +343,7 @@ ContainmentItem {
                 }
             }
 
-            function writeToConfig() {
+            function save() {
                 Plasmoid.configuration.plasmoidPositions = JSON.stringify(positions);
                 Plasmoid.configuration.writeConfig();
             }
@@ -379,7 +379,7 @@ ContainmentItem {
                             "height":plasmoid.height
                         };
                         positionManager.positions.push(position_object);
-                        positionManager.writeToConfig();
+                        positionManager.save();
 
                     }
                 }
@@ -391,20 +391,36 @@ ContainmentItem {
         Item {
             id: appletsLayout
 
+            Connections {
+                target: Containment
+
+                // sanity check
+                function onAppletAboutToBeRemoved(applet) {
+                    var plasmoid;
+                    for(var i = 0; i < appletsLayout.plasmoids.length; i++) {
+                        if(appletsLayout.plasmoids[i].applet == applet) plasmoid = appletsLayout.plasmoids[i];
+                    }
+
+                    if(typeof plasmoid !== "undefined") appletsLayout.deleteApplet(plasmoid.id, plasmoid.index);
+                }
+            }
+
             signal plasmoidCreated(var plasmoid)
             signal plasmoidDestroyed(int index, string id)
-            onPlasmoidDestroyed: (index, id) => {
-                for(var i = index; i < plasmoids.length; i++) plasmoids[i].index--;
-
-                positionManager.positions.splice(index, 1)
-                for(var i = index; i < positionManager.positions.length; i++) positionManager.positions[i].index--
-                positionManager.writeToConfig();
-            }
+            onPlasmoidDestroyed: (index, id) => deleteApplet(index, id);
 
             property PlasmoidContainer plasmoid_aboveAll
             property list<PlasmoidContainer> plasmoids: []
             property bool isDragging: false
             property alias positionManager: positionManager
+
+            function deleteApplet(index, id) {
+                plasmoids.splice(index, 1);
+                for(var i = index; i < plasmoids.length; i++) plasmoids[i].index--;
+                positionManager.positions.splice(index, 1);
+                for(var i = index; i < positionManager.positions.length; i++) positionManager.positions[i].index--;
+                positionManager.save();
+            }
 
             function createApplet(applet, x, y) {
                 var createAtX;
