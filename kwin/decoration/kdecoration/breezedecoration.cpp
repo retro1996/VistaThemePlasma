@@ -79,17 +79,17 @@ bool Decoration::glowEnabled()
     else return false;
 }
 
-KDecoration3::DecorationButtonGroup *Decoration::getButtonGroup(Button *button) const
+QString Decoration::getButtonGroupStr(Button *button) const
 {
     if(!m_leftButtons || !m_rightButtons) {
         qWarning() << "smod: button groups not initialized (how was this even called), returning...";
-        return nullptr;
+        return "";
     }
 
-    if(m_leftButtons->buttons().indexOf(button) != -1) return m_leftButtons;
-    if(m_rightButtons->buttons().indexOf(button) != -1) return m_rightButtons;
+    if(m_leftButtons->buttons().indexOf(button) != -1) return "left";
+    else if(m_rightButtons->buttons().indexOf(button) != -1) return "right";
 
-    return nullptr;
+    return "";
 }
 
 //________________________________________________________________

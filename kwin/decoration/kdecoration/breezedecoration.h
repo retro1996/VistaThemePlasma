@@ -75,7 +75,7 @@ public:
     //* button height
     int buttonHeight() const;
 
-    KDecoration3::DecorationButtonGroup *getButtonGroup(Button *button) const;
+    QString getButtonGroupStr(Button *button) const;
 
     int titlebarHeight() const;
     static QString themeName();

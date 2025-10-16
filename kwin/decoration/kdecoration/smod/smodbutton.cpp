@@ -120,9 +120,9 @@ namespace Breeze
             bool buttonBefore{false};
             bool buttonAfter{false};
 
-            // get the button group this button is in
-            const KDecoration3::DecorationButtonGroup *btnGroup = deco->getButtonGroup(this);
-            QString btnGroupPos = "right";
+            // get the parent button group this button is in
+            const KDecoration3::DecorationButtonGroup *btnGroup = qobject_cast<KDecoration3::DecorationButtonGroup *>(this->parent());
+            QString btnGroupPos = deco->getButtonGroupStr(this);
 
             const auto internalSettingsButtons = btnGroupPos == "left"
                                                  ? decoration()->settings()->decorationButtonsLeft()
@@ -134,6 +134,10 @@ namespace Breeze
                     qWarning() << "smod: button group search returned a nullptr, returning...";
                     return;
                 }
+                if(btnGroupPos == "") {
+                    qWarning() << "smod: could not get button group position string, returning...";
+                    return;
+                }
 
                 index = btnGroup->buttons().indexOf(this);
 
@@ -143,19 +147,24 @@ namespace Breeze
                     return;
                 }
 
-                if(btnGroup->pos().x() < decoration()->titleBar().x()) btnGroupPos = "left";
-
+                // check for buttons
                 if(btnGroup->buttons().length() > 1)
                 {
+                    qDebug() << "btnGroupPos:" << btnGroupPos << "index:" << index;
+
                     if(index > 0) {
                         const auto button = internalSettingsButtons.at(index-1);
 
-                        buttonBefore = !(button == DecorationButtonType::Spacer || button == DecorationButtonType::Menu) && btnGroup->buttons().at(index-1)->isVisible();
+                        if(btnGroup->buttons().at(index-1)->isVisible()) {
+                            buttonBefore = button != DecorationButtonType::Spacer && button != DecorationButtonType::Menu;
+                        }
                     }
                     if(index != btnGroup->buttons().length() - 1) {
                         const auto button = internalSettingsButtons.at(index+1);
 
-                        buttonAfter = !(button == DecorationButtonType::Spacer || button == DecorationButtonType::Menu) && btnGroup->buttons().at(index+1)->isVisible();
+                        if(btnGroup->buttons().at(index+1)->isVisible()) {
+                            buttonAfter = button != DecorationButtonType::Spacer && button != DecorationButtonType::Menu;
+                        }
                     }
                 }
             }
@@ -192,7 +201,6 @@ namespace Breeze
             bool isSingleClose = !(c->isMinimizeable() || c->isMaximizeable() || c->providesContextHelp()) || (!buttonAfter && !buttonBefore);
 
             // BEGIN BUTTON
-
             minimizeMargins = margins.minimizeSizing();
             maximizeMargins = margins.maximizeSizing();
 
@@ -539,8 +547,8 @@ namespace Breeze
             aImageR = activeR.toImage();
 
             FrameTexture btn(l, r, t, b, w, h, &normal);
-            FrameTexture btnL(l, 0, t, b, round(w/2), h, &normalL);
-            FrameTexture btnR(0, r, t, b, round(w/2), h, &normalR);
+            FrameTexture btnL(l, 0, t, b, floor(w/2), h, &normalL);
+            FrameTexture btnR(0, r, t, b, floor(w/2), h, &normalR);
             painter->setRenderHint(QPainter::Antialiasing, true);
             painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
             if (!isPressed() && !m_isToggled)
@@ -552,7 +560,7 @@ namespace Breeze
                     normalR.convertFromImage(imageR);
 
                     btnL.render(painter);
-                    btnR.translate(round(w/2), 0);
+                    btnR.translate(floor(w/2), 0);
                     btnR.render(painter);
                 } else {
                     image = hoverImage(image, hImage, m_hoverProgress);
@@ -569,7 +577,7 @@ namespace Breeze
                     normalR.convertFromImage(aImageR);
 
                     btnL.render(painter);
-                    btnR.translate(round(w/2), 0);
+                    btnR.translate(floor(w/2), 0);
                     btnR.render(painter);
                 } else {
                     normal.convertFromImage(aImage);
