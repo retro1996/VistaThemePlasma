@@ -422,4 +422,19 @@ ContainmentItem {
             }
         }
     }
+
+    // I hate this.
+    Timer {
+        id: systemIconsFix
+        interval: 35
+        onTriggered: {
+            Plasmoid.configuration.networkEnabled = !Plasmoid.configuration.networkEnabled;
+        }
+    }
+
+    Component.onCompleted: {
+        Plasmoid.configuration.networkEnabled = !Plasmoid.configuration.networkEnabled;
+        systemIconsFix.start();
+    }
+
 }

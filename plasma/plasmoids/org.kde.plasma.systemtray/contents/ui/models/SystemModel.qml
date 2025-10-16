@@ -74,7 +74,7 @@ DelegateModel {
                 delegateModel.root.invalidateFilters();
             }*/
             delegateModel.sort();
-            delegateModel.root.updateTimer.start();
+            if(inserted.length <= 1) delegateModel.model.invalidateFilter();
         }
     }
     delegate: ItemLoader {
