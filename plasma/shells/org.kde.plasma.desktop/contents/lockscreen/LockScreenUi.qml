@@ -83,7 +83,7 @@ Item {
         connectedSources: []
         onNewData: (sourceName, data) => {
             var stdout = data["stdout"]
-            exited(stdout)
+            exited(stdout, sourceName)
             disconnectSource(sourceName) // cmd finished
         }
         function exec(cmd) {
@@ -91,26 +91,35 @@ Item {
                 connectSource(cmd)
             }
         }
-        signal exited(string stdout)
+        signal exited(string stdout, string cmd)
     }
     Connections {
         target: executable
-        function onExited(stdout) {
-            soundsModel.theme = stdout.trim() ? stdout.trim() : "ocean";
-            for(var i = 0; i < soundsModel.rowCount(); i++) {
-                var str = soundsModel.initialSourceUrl(i);
-                if(str.includes("desktop-login") && !str.endsWith(".license")) {
-                    lockSuccess.source = str;
-                    break;
+        function onExited(stdout, cmd) {
+            if(cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\""
+               || cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"")
+            {
+                if(stdout == "")
+                    executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
+                else {
+                    var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
+                    backgroundWallpaper.source = Qt.resolvedUrl(string.trim());
                 }
-                /*if(str.includes("desktop-logout") && !str.endsWith(".license")) {
-                    lockSound.source = str;
-                    lockSound.play();
-                }*/
-            }
 
+            } else {
+                soundsModel.theme = stdout.trim() ? stdout.trim() : "ocean";
+                for(var i = 0; i < soundsModel.rowCount(); i++) {
+                    var str = soundsModel.initialSourceUrl(i);
+                    if(str.includes("desktop-login") && !str.endsWith(".license")) {
+                        lockSuccess.source = str;
+                        break;
+                    }
+                }
+
+            }
         }
     }
+
     SoundsModel {
         id: soundsModel
     }
@@ -189,6 +198,8 @@ Item {
         id: capsLockState
         key: Qt.Key_CapsLock
     }
+
+    Component.onCompleted: executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"")
 
     Loader {
         id: changeSessionComponent
@@ -318,12 +329,14 @@ Item {
 
         property bool calledUnlock: false
 
+        Rectangle {
+            color: "#1D5F7A"
+            anchors.fill: parent
+        }
+
         Image {
             id: backgroundWallpaper
-
             anchors.fill: parent
-
-            source: "/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg"
             fillMode: Image.Stretch
         }
 

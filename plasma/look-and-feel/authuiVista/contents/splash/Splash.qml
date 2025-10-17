@@ -17,12 +17,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.15
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.3
-import QtQuick.Templates 2.3
-import org.kde.plasma.core 2.0 as PlasmaCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls
+import QtQuick.Templates
+
 import QtMultimedia
+
+import org.kde.plasma.core as PlasmaCore
+import org.kde.plasma.plasma5support as Plasma5Support
+
 import "../components"
 
 Item {
@@ -33,17 +37,9 @@ Item {
 
     onStageChanged: {
         if (stage == 6) {
-            //lockSuccess.play();
-
-            //fadeOut.running = true;
             transitionAnim.opacity = 1;
         }
     }
-    /*MediaPlayer {
-        id: lockSuccess
-        source: Qt.resolvedUrl("../sounds/lockSuccess.ogg");
-        audioOutput: AudioOutput {}
-    }*/
 
     Rectangle {
         color: "#1D5F7A"
@@ -52,11 +48,42 @@ Item {
 
     property int framenumber: 1
 
-    Image
-    {
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: (sourceName, data) => {
+            var exitCode = data["exit code"]
+            var exitStatus = data["exit status"]
+            var stdout = data["stdout"]
+            var stderr = data["stderr"]
+            exited(sourceName, exitCode, exitStatus, stdout, stderr)
+            disconnectSource(sourceName)
+        }
+        function exec(cmd) {
+            if (cmd) {
+                connectSource(cmd)
+            }
+        }
+        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
+    }
+
+    Connections {
+        target: executable
+        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
+            if(stdout == "")
+                executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
+            else {
+                var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
+                bg.source = Qt.resolvedUrl(string.trim());
+            }
+        }
+    }
+
+    Image {
+        id: bg
         anchors.fill: parent
         fillMode: Image.Stretch
-        source: Qt.resolvedUrl("/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg")
     }
 
     Status {
@@ -67,19 +94,15 @@ Item {
         speen: true
     }
 
-    RowLayout {
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-        }
-        height: 96
-        Rectangle { Layout.fillWidth: true }
-        Image {
-            id: watermark
-            source: "../images/watermark.png"
-        }
-        Rectangle { Layout.fillWidth: true }
+    Image {
+        id: watermark
+
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 48 - (height / 2)
+
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        source: "../images/watermark.png"
     }
 
     Rectangle {
@@ -92,13 +115,5 @@ Item {
         }
     }
 
-    /*OpacityAnimator {
-        id: fadeOut
-        running: false
-        target: transitionAnim
-        from: 0
-        to: 1
-        duration: 640
-        easing.type: Easing.InOutQuad
-    }*/
+    Component.onCompleted: executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"")
 }

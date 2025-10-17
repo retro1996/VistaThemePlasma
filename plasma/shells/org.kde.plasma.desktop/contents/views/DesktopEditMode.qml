@@ -5,17 +5,18 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 
-import QtQuick 2.15
+import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 
+import org.kde.kirigami as Kirigami
+import org.kde.ksvg as KSvg
+import org.kde.kcmutils as KCM
+
+import org.kde.plasma.plasma5support as Plasma5Support
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PC
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.ksvg as KSvg
-
-import org.kde.kcmutils as KCM
 
 import "../components"
 
@@ -28,13 +29,48 @@ Item {
     property real roundedRootHeight: Math.round(root.height)
 
     property bool open: false
-    Component.onCompleted: {
-        open = Qt.binding(() => {return containment.plasmoid.corona.editMode})
+
+    Plasma5Support.DataSource {
+        id: executable
+        engine: "executable"
+        connectedSources: []
+        onNewData: (sourceName, data) => {
+            var exitCode = data["exit code"]
+            var exitStatus = data["exit status"]
+            var stdout = data["stdout"]
+            var stderr = data["stderr"]
+            exited(sourceName, exitCode, exitStatus, stdout, stderr)
+            disconnectSource(sourceName)
+        }
+        function exec(cmd) {
+            if (cmd) {
+                connectSource(cmd)
+            }
+        }
+        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
+    }
+
+    Connections {
+        target: executable
+        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
+            if(stdout == "")
+                executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
+            else {
+                var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
+                bg.source = Qt.resolvedUrl(string.trim());
+            }
+        }
+    }
+
+    Rectangle {
+        color: "#1D5F7A"
+        anchors.fill: parent
     }
 
     Image {
+        id: bg
         anchors.fill: parent
-        source: "/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg"
+        fillMode: Image.Stretch
     }
 
     Rectangle {
@@ -180,5 +216,10 @@ Item {
             layer.enabled: true
             layer.smooth: true
         }
+    }
+
+    Component.onCompleted: {
+        open = Qt.binding(() => {return containment.plasmoid.corona.editMode});
+        executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"");
     }
 }

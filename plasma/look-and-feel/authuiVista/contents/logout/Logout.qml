@@ -1,24 +1,22 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
-import Qt5Compat.GraphicalEffects
 
 import org.kde.kirigami as Kirigami
 import org.kde.ksvg as KSvg
 import org.kde.kcmutils as KCMUtils
+
 import org.kde.plasma.plasma5support as Plasma5Support
+
 import org.kde.plasma.private.sessions
 
-import org.kde.kitemmodels as KItemModels
-import org.kde.plasma.extras as PlasmaExtras
+import Qt5Compat.GraphicalEffects
 
 Image {
     id: root
 
-    height: screenGeometry.height
     width: screenGeometry.width
-
-    source: "/usr/share/sddm/themes/sddm-theme-mod/bgtexture.jpg"
+    height: screenGeometry.height
 
     signal logoutRequested()
     signal haltRequested()
@@ -53,8 +51,17 @@ Image {
 
     Connections {
         target: executable
-        function onExited() {
-            root.cancelRequested();
+        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
+            if(root.source == "") {
+                if(stdout == "")
+                    executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
+                else {
+                    var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
+                    root.source = Qt.resolvedUrl(string.trim());
+                }
+            }
+            else
+                root.cancelRequested();
         }
     }
 
@@ -65,9 +72,7 @@ Image {
 
     Rectangle {
         anchors.fill: parent
-
         color: "#1D5F7A"
-
         z: -1
     }
 
@@ -370,4 +375,6 @@ Image {
 
         source: "../images/watermark.png"
     }
+
+    Component.onCompleted: executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"")
 }
