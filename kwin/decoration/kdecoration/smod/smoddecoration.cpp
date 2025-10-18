@@ -282,7 +282,11 @@ void Decoration::smodPaintTitleBar(QPainter *painter, const QRectF &repaintRegio
         int titleAlignment = internalSettings()->titleAlignment();
         bool invertText = internalSettings()->invertTextColor() && c->isMaximized();
 
-        QRect captionRect(m_leftButtons->geometry().right(), 0, m_rightButtons->geometry().left() - m_leftButtons->geometry().right() - 4, borderTop());
+        QRect captionRect(m_leftButtons->geometry().right(), 0,
+                          titleBar().width() - (m_rightButtons->geometry().left() + m_leftButtons->geometry().right()) - 4, borderTop());
+        qDebug() << "smod: captionRect width:" << captionRect.width();
+        qDebug() << "smod: m_leftButtons right:" << m_leftButtons->geometry().right();
+        qDebug() << "smod: m_rightButtons right:" << m_rightButtons->geometry().left();
         QString caption = settings()->fontMetrics().elidedText(c->caption(), Qt::ElideMiddle, captionRect.width());
         QStringList programname = caption.split(" — ");
         caption.remove(" — " + programname.at(programname.size()-1));
@@ -292,12 +296,12 @@ void Decoration::smodPaintTitleBar(QPainter *painter, const QRectF &repaintRegio
         int blurWidth = rect.width() + 30;
         int blurHeight = rect.height();
 
-        QColor shadowColor = QColor(0, 0, 0, 255);
+        // QColor shadowColor = QColor(0, 0, 0, 255);
         QColor textColor = c->color(c->isActive() ? KDecoration3::ColorGroup::Active : KDecoration3::ColorGroup::Inactive, KDecoration3::ColorRole::Foreground);
 
         captionRect.setHeight(captionRect.height() & -2);
         painter->setFont(settings()->font());
-        painter->setPen(shadowColor);
+        // painter->setPen(shadowColor);
         painter->setPen(textColor);
 
         QLabel real_label(caption);
