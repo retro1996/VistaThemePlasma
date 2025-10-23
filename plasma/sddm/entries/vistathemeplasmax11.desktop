@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=XSession
+Exec=/usr/bin/startvtp
+TryExec=/usr/bin/startvtp
+DesktopNames=KDE
+Name=VistaThemePlasma (X11)
+Comment=KDE Plasma running VistaThemePlasma
+X-KDE-PluginInfo-Version=6.4.4

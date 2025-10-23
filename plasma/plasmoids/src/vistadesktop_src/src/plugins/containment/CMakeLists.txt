@@ -1,12 +1,12 @@
-add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_io.gitgud.catpswin56.vistadesktop\")
+add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_io.gitgud.catpswin56.desktop\")
 
 if (Qt6_VERSION VERSION_GREATER_EQUAL "6.8.0")
     set(private_code_option  "PRIVATE_CODE")
 endif()
 
-add_library(io.gitgud.catpswin56.vistadesktop MODULE containment.cpp)
+add_library(io.gitgud.catpswin56.desktop MODULE containment.cpp)
 
-target_link_libraries(io.gitgud.catpswin56.vistadesktop
+target_link_libraries(io.gitgud.catpswin56.desktop
                       Qt6::Gui
                       Qt6::Quick
                       Qt6::Widgets
@@ -22,4 +22,4 @@ target_link_libraries(io.gitgud.catpswin56.vistadesktop
 
 include_directories(/usr/include/Plasma /usr/include/PlasmaQuick /usr/include/KF6/KConfigCore/ /usr/include/KF6/KConfig/ /usr/include/KF6/KCoreAddons/)
 
-install(TARGETS io.gitgud.catpswin56.vistadesktop DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/applets)
+install(TARGETS io.gitgud.catpswin56.desktop DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/applets)

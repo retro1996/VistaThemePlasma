@@ -1,0 +1,15 @@
+[Desktop]
+Containment=io.gitgud.catpswin56.desktop
+ToolBox=
+RuntimePlatform=Desktop
+
+[Desktop][ContainmentActions]
+RightButton;NoModifier=org.kde.contextmenu
+MiddleButton;NoModifier=org.kde.paste
+
+[Panel]
+Containment=io.gitgud.catpswin56.panel
+ToolBox=org.kde.paneltoolbox
+
+[Panel][ContainmentActions]
+RightButton;NoModifier=org.kde.contextmenu

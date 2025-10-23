@@ -72,32 +72,31 @@ PlasmaCore.Dialog {
 		var pos = root.mapToGlobal(root.x, root.y);
 		var availScreen = Plasmoid.containment.availableScreenRect;
 		var screen = root.screenGeometry;
+		var availableScreenGeometry = Qt.rect(availScreen.x + screen.x, availScreen.y + screen.y, availScreen.width, availScreen.height);
 
 		if(Plasmoid.location === PlasmaCore.Types.BottomEdge) {
-			x = pos.x - calendar.width / 2 + root.width / 2
+			x = pos.x - calendar.width / 2 + root.width / 2;
 			y = pos.y - calendar.height;
 		} else if(Plasmoid.location === PlasmaCore.Types.TopEdge) {
-			x = pos.x - calendar.width / 2 + root.width / 2
-			y = availScreen.y //pos.y - calendar.height;
+			x = pos.x - calendar.width / 2 + root.width / 2;
+			y = availableScreenGeometry.y;
 		} else if(Plasmoid.location === PlasmaCore.Types.LeftEdge) {
-			y = pos.y - calendar.height / 2 + root.height / 2
-			x = availScreen.x
+			y = pos.y - calendar.height / 2 + root.height / 2;
+			x = availableScreenGeometry.x;
 		} else if(Plasmoid.location === PlasmaCore.Types.RightEdge) {
-			y = pos.y - calendar.height / 2 + root.height / 2
-			x = availScreen.x + availScreen.width - calendar.width
+			y = pos.y - calendar.height / 2 + root.height / 2;
+			x = availableScreenGeometry.x + availScreen.width - calendar.width;
 		}
 
-		if(x <= availScreen.x) x = availScreen.x;
-		if(x + calendar.width - screen.x >= availScreen.x + availScreen.width) {
-			x = screen.x + availScreen.width - calendar.width;
+		if(x < availableScreenGeometry.x) x = availableScreenGeometry.x;
+		if(x + calendar.width >= availableScreenGeometry.x + availScreen.width) {
+			x = availableScreenGeometry.x + availScreen.width - calendar.width;
 		}
-		if(y <= availScreen.y) y = availScreen.y;
-		if(y + calendar.height - screen.y >= availScreen.y + availScreen.height) {
-			y = screen.y + availScreen.height - calendar.height;
+		if(y < availableScreenGeometry.y) y = availableScreenGeometry.y;
+		if(y + calendar.height >= availableScreenGeometry.y + availScreen.height) {
+			y = availableScreenGeometry.y + availScreen.height - calendar.height;
 		}
-
 	}
-
 
     readonly property bool showAgenda: Plasmoid.configuration.enabledCalendarPlugins.length > 0
 

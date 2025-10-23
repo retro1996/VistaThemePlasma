@@ -1,5 +1,6 @@
 PlymouthVista/
-misc/defaulttooltip/build
+misc/libplasma/build
+misc/uac-polkitagent/build
 plasma/aerothemeplasma-kcmloader/build
 plasma/plasmoids/src/sidebar_src/build
 plasma/plasmoids/src/vistadesktop_src/build
@@ -7,6 +8,7 @@ plasma/plasmoids/src/vistastart_src/build
 plasma/plasmoids/src/vistatasks_src/build
 plasma/plasmoids/src/quicklaunch_src/build
 plasma/plasmoids/src/volume_src/build
+plasma/plasmoids/src/notifications_src/build
 kwin/decoration/build
 kwin/effects_cpp/kwin-effect-smodsnap-v2/build
 kwin/effects_cpp/kwin-effect-smodsnap-v2/build-wl
@@ -18,5 +20,4 @@ kwin/effects_cpp/aeroglide/build
 kwin/effects_cpp/aeroglide/build-wl
 kwin/effects_cpp/startupfeedback/build
 kwin/effects_cpp/startupfeedback/build-wl
-extras/extra-components/execbin/build
-extras/extra-components/uac-polkitagent/build
+

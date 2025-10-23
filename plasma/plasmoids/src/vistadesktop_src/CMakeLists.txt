@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(vistadesktop)
+project(io.gitgud.catpswin56.desktop)
 
 set(QT_MIN_VERSION "6.7.0")
 set(KF6_MIN_VERSION "6.0.0")

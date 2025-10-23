@@ -2,7 +2,7 @@ if(BUILD_TESTING)
    add_definitions(-DBUILD_TESTING)
 endif(BUILD_TESTING)
 
-ecm_add_qml_module(folderplugin URI io.gitgud.catpswin56.vistadesktop.folder GENERATE_PLUGIN_SOURCE DEPENDENCIES "QtCore" "QtQuick")
+ecm_add_qml_module(folderplugin URI io.gitgud.catpswin56.desktop.folder GENERATE_PLUGIN_SOURCE DEPENDENCIES "QtCore" "QtQuick")
 
 target_sources(folderplugin PRIVATE
     applauncher.cpp

@@ -42,7 +42,7 @@ Only Arch-based distributions are supported officially for VistaThemePlasma, and
 
 ### Do you plan on recreating the file explorer (along with other Windows applications)?
 
-
+Only applications that will most likely get recreated with time will be the simple ones, like the Run dialog (not exactly an application but whatever), Calculator, Paint (maybe), etc
 
 ## List of components <a name="list-of-components"></a>
 
@@ -172,6 +172,14 @@ kvantumpreview -style [qstyle]
 ```
 
 Running without passing `-style` will simply load the application with the currently applied QStyle. 
+
+### Testing notifications 
+
+```bash
+notify-send -a Dolphin -h string:desktop-entry:org.kde.dolphin "Lorem ipsum dolor sit amet" "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." -i org.kde.dolphin --action=inline-reply="Reply" --action="Test"
+```
+
+This will spawn a notification with a sufficiently long body, presenting as Dolphin, and provides actions in the form of regular actions and inline replies. 
 
 ## Logging 
 

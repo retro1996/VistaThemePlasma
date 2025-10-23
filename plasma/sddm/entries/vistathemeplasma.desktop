@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=/usr/bin/startvtp-wayland
+TryExec=/usr/bin/startvtp-wayland
+DesktopNames=KDE
+Name=VistaThemePlasma (Wayland)
+Comment=KDE Plasma running VistaThemePlasma
+X-KDE-PluginInfo-Version=6.4.4

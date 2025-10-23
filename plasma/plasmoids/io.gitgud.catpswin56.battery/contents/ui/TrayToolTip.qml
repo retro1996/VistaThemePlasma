@@ -27,12 +27,18 @@ ColumnLayout {
 
         spacing: Kirigami.Units.smallSpacing * 2
 
-        Kirigami.Icon {
-            animated: false
-            source: "flyout-" + Plasmoid.icon
-            Layout.preferredWidth: 32
-            Layout.preferredHeight: 32
-            Layout.leftMargin: -Kirigami.Units.smallSpacing*2/1.6
+        FlyoutBatteryIcon {
+            id: batteryIcon
+
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredWidth: Kirigami.Units.iconSizes.medium
+            Layout.preferredHeight: Kirigami.Units.iconSizes.medium
+
+            hasBattery: batterymonitor.compactRepresentationItem.batteryPluggedIn
+            percent: batterymonitor.compactRepresentationItem.batteryPercent
+            pluggedIn: batterymonitor.compactRepresentationItem.pluggedIn && batterymonitor.compactRepresentationItem.batteryIsPowerSupply
+            batteryType: batterymonitor.compactRepresentationItem.batteryType
+            broken: batterymonitor.compactRepresentationItem.isBroken
         }
 
         PlasmaComponents.Label {
@@ -40,7 +46,7 @@ ColumnLayout {
             Layout.alignment: Qt.AlignTop
             Layout.maximumWidth: 125
             wrapMode: Text.WordWrap
-            text: batterymonitor.toolTipSubText
+            text: batterymonitor.toolTipMainText
             opacity: 0.75
             visible: text !== ""
             maximumLineCount: 2
@@ -64,6 +70,7 @@ ColumnLayout {
             color: "#1370ab"
             maximumLineCount: 1
         }
+
         Item { Layout.minimumWidth: 8 }
     }
 
