@@ -96,6 +96,6 @@ if (langIds.indexOf(languageId) != -1) {
 }
 
 panel.addWidget("io.gitgud.catpswin56.wmptoolbar")
-panel.addWidget("org.kde.plasma.systemtray")
+panel.addWidget("io.gitgud.catpswin56.systemtray")
 panel.addWidget("io.gitgud.catpswin56.digitalclocklite")
 
