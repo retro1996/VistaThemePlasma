@@ -151,7 +151,7 @@ Item {
                     Text {
                         Layout.fillWidth: true
                         Layout.rightMargin: layoutIcon.width
-                        text: "Change the layout of your desktop"
+                        text:  i18nd("plasma_shell_org.kde.plasma.desktop", "Change the layout of your desktop")
                         wrapMode: Text.WordWrap
                     }
                     QQC2.ComboBox {
@@ -175,7 +175,7 @@ Item {
                 width: appearanceRoot.width/2
                 bottomMargin: pluginComboBox.height + parent.spacing
                 iconSource: "shell-aero-color"
-                text: "Window Color"
+                text: i18nd("plasma_shell_org.kde.plasma.desktop", "Window Color")
                 description: "Fine tune the color of your windows"
                 command: "kstart aerothemeplasma-kcmloader kwin/effects/configs/kwin_aeroglassblur_config.so " + iconSource
                 execHelper: menu_executable
@@ -184,7 +184,7 @@ Item {
                 width: appearanceRoot.width/2
                 bottomMargin: pluginComboBox.height + parent.spacing
                 iconSource: "shell-decoration-themes"
-                text: "Window Decorations"
+                text: i18nd("plasma_shell_org.kde.plasma.desktop", "Window Decorations")
                 description: "Change the way your window frames look"
                 command: "kstart aerothemeplasma-kcmloader org.kde.kdecoration3.kcm/kcm_smoddecoration.so " + iconSource
                 execHelper: menu_executable
@@ -193,7 +193,7 @@ Item {
                 width: appearanceRoot.width/2
                 bottomMargin: pluginComboBox.height + parent.spacing
                 iconSource: "shell-sound-themes"
-                text: "Sounds"
+                text: i18nd("plasma_shell_org.kde.plasma.desktop", "Sounds")
                 description: "Change which sounds are heard"
                 command: "kstart systemsettings kcm_soundtheme"
                 execHelper: menu_executable

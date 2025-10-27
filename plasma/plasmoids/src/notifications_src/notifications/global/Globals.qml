@@ -401,6 +401,8 @@ QtObject {
                     y -= popupSpacing;
                 }
             }
+            popup.intendedX = popup.x;
+            popup.intendedY = popup.y;
 
             // don't let notifications take more than popupMaximumScreenFill of the screen
             var visible = true;

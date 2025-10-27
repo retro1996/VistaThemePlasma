@@ -99,7 +99,7 @@ Item {
             if(cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\""
                || cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"")
             {
-                if(stdout == "")
+                if(stdout.length <= 1)
                     executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
                 else {
                     var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
@@ -141,7 +141,7 @@ Item {
             if (root.notification) {
                 root.notification += "\n"
             }
-            setWrongPasswordScreen("The user name or password is incorrect.");
+            setWrongPasswordScreen(i18nd("plasma_lookandfeel_org.kde.lookandfeel", "The user name or password is incorrect."));
             lockScreenUi.hadPrompt = false;
         }
         function onSucceeded() {
@@ -206,11 +206,6 @@ Item {
         active: false
         source: "ChangeSession.qml"
         visible: false
-    }
-
-    WallpaperFader {
-        anchors.fill: parent
-        source: wallpaper
     }
 
     Loader {

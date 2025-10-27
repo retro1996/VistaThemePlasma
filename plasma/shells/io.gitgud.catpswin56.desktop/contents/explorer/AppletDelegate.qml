@@ -34,6 +34,7 @@ Item {
     readonly property string description: model.description
     readonly property string category: model.category
     readonly property string license: model.license
+    property int running: model.running
 
     readonly property bool local: model.local
 
@@ -46,14 +47,11 @@ Item {
         imagePath: "widgets/viewitem"
         prefix: {
             var isSelected = delegate.GridView.view.currentIndex == index;
-            if(isSelected && hoverHandler.hovered) return "selected+hover";
+            if(isSelected && toolTip.containsMouse) return "selected+hover";
             if(isSelected) return "selected";
-            if(hoverHandler.hovered) return "hover";
+            if(toolTip.containsMouse) return "hover";
             return "";
         }
-    }
-    HoverHandler {
-        id: hoverHandler
     }
 
     TapHandler {
@@ -72,15 +70,18 @@ Item {
     }
 
     PlasmaCore.ToolTipArea {
+        id: toolTip
         anchors.fill: parent
-        visible: model.running
-        mainText: model.running + " added"
-    }
-    PlasmaCore.ToolTipArea {
-        anchors.fill: parent
-        visible: !model.isSupported
-        mainText: i18n("Unsupported Widget")
-        subText: model.unsupportedMessage
+        active: model.running || !model.isSupported
+        mainText: {
+            if(model.running) {
+                return i18nd("plasma_shell_org.kde.plasma.desktop", "%1 added", model.running)
+            } else {
+                return i18nd("plasma_shell_org.kde.plasma.desktop", "Unsupported Widget")
+            }
+        }
+        subText: !model.isSupported ? model.unsupportedMessage : null
+        location: PlasmaCore.Types.Floating | PlasmaCore.Types.Desktop
     }
 
     // Avoid repositioning delegate item after dragFinished

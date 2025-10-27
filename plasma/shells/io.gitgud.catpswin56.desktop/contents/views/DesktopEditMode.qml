@@ -53,7 +53,7 @@ Item {
     Connections {
         target: executable
         function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if(stdout == "")
+            if(stdout.length <= 1)
                 executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
             else {
                 var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
