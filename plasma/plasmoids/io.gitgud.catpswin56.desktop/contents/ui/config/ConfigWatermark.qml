@@ -34,7 +34,7 @@ Item {
                 anchors.fill: parent
                 anchors.leftMargin: -2
                 anchors.rightMargin: -2
-                color: Kirigami.Theme.backgroundColor
+                color: "white"
                 z: -1
             }
         }
@@ -56,6 +56,7 @@ Item {
         ListElement { text: "Windows 8" }
         ListElement { text: "Windows 7" }
         ListElement { text: "Windows Vista" }
+        ListElement { text: "VistaThemePlasma" }
     }
 
     Item {
@@ -184,6 +185,11 @@ Item {
                     addWatermark(0, "Build 6003", false, "FFFFFF", 2);
                     break;
                 }
+                case 5: {
+                    addWatermark(0, "VistaThemePlasma", false, "FFFFFF", 2);
+                    addWatermark(0, "Build 6.5.0", false, "FFFFFF", 2);
+                    break;
+                }
             }
         }
 
@@ -209,6 +215,7 @@ Item {
             Layout.fillWidth: true
 
             title: i18n("Presets")
+            enabled: watermarkVisible.checked
 
             RowLayout {
                 anchors.fill: parent
@@ -221,7 +228,7 @@ Item {
                         watermarkManager.loadPreset(repeater_presets.selected_delegate)
                         repeater_presets.selected_delegate = -1
                     }
-                    enabled: repeater_presets.selected_delegate !== -1
+                    enabled: repeater_presets.selected_delegate !== -1 && watermarkVisible.checked
                 }
 
                 Item {
@@ -267,12 +274,15 @@ Item {
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: 22
 
+                                enabled: watermarkVisible.checked
+                                opacity: enabled ? 1.0 : 0.5
+
                                 Rectangle {
                                     anchors.fill: parent
 
                                     color: "#3399FF"
 
-                                    visible: delegate.hovered || delegate.selected
+                                    visible: (delegate.hovered || delegate.selected) && delegate.enabled
                                     opacity: delegate.selected ? 1.0 : 0.5
                                 }
 
@@ -291,6 +301,7 @@ Item {
                                     anchors.fill: parent
 
                                     hoverEnabled: true
+                                    enabled: delegate.enabled
                                     onPressed: repeater_presets.selected_delegate = delegate.index;
                                     onDoubleClicked: {
                                         watermarkManager.loadPreset(model.index);
@@ -309,6 +320,7 @@ Item {
             Layout.fillWidth: true
 
             title: i18n("Watermarks")
+            enabled: watermarkVisible.checked
 
             RowLayout {
                 anchors.fill: parent
@@ -326,6 +338,7 @@ Item {
 
                         text: i18n("New")
                         onClicked: watermarkManager.newWatermark();
+                        enabled: watermarkVisible.checked
                     }
 
                     Button {
@@ -333,6 +346,7 @@ Item {
 
                         text: i18n("Clear")
                         onClicked: watermarkManager.clear();
+                        enabled: watermarkVisible.checked
                     }
 
                     Item {  }
@@ -342,7 +356,7 @@ Item {
 
                         text: i18n("Remove")
                         onClicked: watermarkManager.remove(repeater_watermarks.selected_delegate)
-                        enabled: repeater_watermarks.selected_delegate !== -1
+                        enabled: repeater_watermarks.selected_delegate !== -1 && watermarkVisible.checked
                     }
 
                     Button {
@@ -350,7 +364,7 @@ Item {
 
                         text: i18n("Modify")
                         onClicked: watermarkManager.modify(repeater_watermarks.selected_delegate)
-                        enabled: repeater_watermarks.selected_delegate !== -1
+                        enabled: repeater_watermarks.selected_delegate !== -1 && watermarkVisible.checked
                     }
 
                     Button {
@@ -361,7 +375,7 @@ Item {
                             watermarkManager.moveUp(repeater_watermarks.selected_delegate);
                             repeater_watermarks.selected_delegate--;
                         }
-                        enabled: repeater_watermarks.selected_delegate !== -1
+                        enabled: repeater_watermarks.selected_delegate !== -1 && watermarkVisible.checked
                     }
                     Button {
                         Layout.fillWidth: true
@@ -371,7 +385,7 @@ Item {
                             watermarkManager.moveDown(repeater_watermarks.selected_delegate);
                             repeater_watermarks.selected_delegate++;
                         }
-                        enabled: repeater_watermarks.selected_delegate !== -1
+                        enabled: repeater_watermarks.selected_delegate !== -1 && watermarkVisible.checked
                     }
                 }
 
@@ -418,6 +432,9 @@ Item {
 
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: 22
+
+                                    enabled: watermarkVisible.checked
+                                    opacity: enabled ? 1.0 : 0.5
 
                                     Rectangle {
                                         anchors.fill: parent
@@ -472,9 +489,16 @@ Item {
 
                                     MouseArea {
                                         id: ma
+
                                         anchors.fill: parent
+
                                         hoverEnabled: true
+                                        enabled: delegate.enabled
                                         onPressed: repeater_watermarks.selected_delegate = delegate.index;
+                                        onDoubleClicked: {
+                                            repeater_watermarks.selected_delegate = delegate.index;
+                                            watermarkManager.modify(repeater_watermarks.selected_delegate);
+                                        }
                                     }
                                 }
                             }
