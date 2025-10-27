@@ -255,7 +255,8 @@ Item
         Item {
             id: userlistpage
 
-            anchors.fill: parent
+            implicitWidth: parent.width
+            implicitHeight: parent.height
 
             GridView {
                 id: listView
@@ -315,7 +316,7 @@ Item
         Item {
             id: loginpage
 
-            Column {
+            Item {
                 id: mainColumn
 
                 anchors.centerIn: parent
@@ -684,34 +685,7 @@ Item
         visible: pages.currentIndex != Main.LoginPage.Startup
     }
 
-    SMOD.GenericButton {
-        id: switchLayoutButton
-
-        property int currentIndex: keyboard.currentLayout
-        onCurrentIndexChanged: keyboard.currentLayout = currentIndex
-
-        anchors {
-            top: parent.top
-            topMargin: 5
-            left: parent.left
-            leftMargin: 7
-        }
-        implicitWidth: 35
-        implicitHeight: 28
-        label.font.pointSize: 9
-        label.font.capitalization: Font.AllUppercase
-        Accessible.description: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Button to change keyboard layout", "Switch layout")
-        KeyNavigation.backtab: rebootButton
-        KeyNavigation.tab: pages.currentIndex === Main.LoginPage.SelectUser ? listView : password
-        KeyNavigation.down: pages.currentIndex === Main.LoginPage.SelectUser ? listView : password
-
-        text: keyboard.layouts[currentIndex].shortName
-        onClicked: currentIndex = (currentIndex + 1) % keyboard.layouts.length
-
-        visible: keyboard.layouts.length > 1 && pages.currentIndex != Main.LoginPage.Startup
-    }
-    QQC2.CheckBox
-    {
+    QQC2.CheckBox {
         id: accessbutton
 
         anchors.bottom: parent.bottom
@@ -783,8 +757,8 @@ Item
             return accessbutton
         }
 
-        KeyNavigation.tab: shutdownButton
-        KeyNavigation.right: shutdownButton
+        KeyNavigation.tab: switchLayoutButton
+        KeyNavigation.right: switchLayoutButton
 
         Item {
             anchors.bottom: parent.top
@@ -827,6 +801,35 @@ Item
 
             }
         }
+    }
+
+    SMOD.GenericButton {
+        id: switchLayoutButton
+
+        property int currentIndex: keyboard.currentLayout
+        onCurrentIndexChanged: keyboard.currentLayout = currentIndex
+
+        anchors {
+            left: accessbutton.right
+            leftMargin: 7
+            verticalCenter: accessbutton.verticalCenter
+        }
+
+        implicitWidth: 35
+        implicitHeight: 28
+
+        text: keyboard.layouts[currentIndex].shortName
+        onClicked: currentIndex = (currentIndex + 1) % keyboard.layouts.length
+
+        label.font.pointSize: 9
+        label.font.capitalization: Font.AllUppercase
+        Accessible.description: i18ndc("plasma_lookandfeel_org.kde.lookandfeel", "Button to change keyboard layout", "Switch layout")
+
+        KeyNavigation.backtab: accessbutton
+        KeyNavigation.tab: shutdownButton
+        KeyNavigation.down: shutdownButton
+
+        visible: keyboard.layouts.length > 1 && pages.currentIndex != Main.LoginPage.Startup
     }
 
     Item {
@@ -887,8 +890,7 @@ Item
             KeyNavigation.left: accessbutton
             KeyNavigation.tab: rebootButton
             KeyNavigation.right: rebootButton
-            KeyNavigation.up:
-            {
+            KeyNavigation.up: {
                 if (pages.currentIndex === Main.LoginPage.Login && switchuser.enabled)
                 {
                     return switchuser
@@ -902,8 +904,7 @@ Item
             QQC2.ToolTip.text: qsTr("Shut down")
         }
 
-        QQC2.Button
-        {
+        QQC2.Button {
             id: rebootButton
 
             anchors.bottom: parent.bottom
@@ -992,8 +993,8 @@ Item
 
             KeyNavigation.backtab: shutdownButton
             KeyNavigation.left: shutdownButton
-            KeyNavigation.up: pages.currentIndex === Main.LoginPage.Login && switchuser.enabled ? switchuser : rebootbutton
-            KeyNavigation.tab: switchLayoutButton
+            KeyNavigation.up: pages.currentIndex === Main.LoginPage.Login && switchuser.enabled ? switchuser : rebootButton
+            KeyNavigation.tab: pages.currentIndex === Main.LoginPage.Login && switchuser.enabled ? switchuser : rebootButton
         }
     }
 

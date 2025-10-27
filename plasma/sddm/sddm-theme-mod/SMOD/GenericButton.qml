@@ -28,18 +28,19 @@ Control {
         }
     }
 
-    KSvg.FrameSvgItem {
-        id: texture
-        z: -1
-        anchors.fill: parent
-        imagePath: Qt.resolvedUrl("../Assets/button.svg");
-        prefix: {
-            var result = "";
-            if(genericButton.focus) result = "focus-";
-            if(buttonMA.containsPress) result = "pressed";
-            else if(buttonMA.containsMouse) result += "hover";
-            else result += "normal";
-            return result;
+    BorderImage {
+        border {
+            top: 3
+            bottom: 3
+            left: 3
+            right: 3
+        }
+        source: {
+            if(buttonMA.containsPress) return "../Assets/switchuser/pressed.png"
+            if(buttonMA.containsMouse && genericButton.focus) return "../Assets/switchuser/hover-focus.png"
+            if(buttonMA.containsMouse && !genericButton.focus) return "../Assets/switchuser/hover.png"
+            if(!buttonMA.containsMouse && genericButton.focus) return "../Assets/switchuser/normal-focus.png"
+            return "../Assets/switchuser/normal.png"
         }
     }
     MouseArea {
@@ -67,21 +68,12 @@ Control {
         id: btnLabel
         z: 0
         anchors.fill: parent
+        anchors.margins: 3
         text: genericButton.text
         visible: genericButton.text !== ""
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
-	elide: Text.ElideRight
-	color: "white"
-        layer.enabled: genericButton.text !== ""
-        layer.effect: DropShadow {
-            //visible: !softwareRendering
-            horizontalOffset: 0
-            verticalOffset: 1
-            radius: 6
-            samples: 14
-            spread: 0.0001
-            color: "#bf000000"
-        }
+        elide: Text.ElideRight
+        color: "white"
     }
 }
