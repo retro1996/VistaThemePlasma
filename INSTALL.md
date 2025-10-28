@@ -17,7 +17,7 @@ Before installing VistaThemePlasma, it's important to know which display server 
 Required packages:
 
 ```bash
-pacman -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat plasma-wayland-protocols plasma5support kvantum base-devel
+pacman --needed -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat qt6-wayland sddm-kcm plasma-wayland-protocols plasma5support kvantum base-devel
 ```
 
 Since Plasma 6.4, the X11 session has been separated from the main codebase. On Arch Linux, additional dependencies for X11 include:
