@@ -7,7 +7,7 @@
    viewBox="0 0 164.00005 84.000035"
    version="1.1"
    id="svg8"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
    sodipodi:docname="plasmoidheading.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.4529845"
-     inkscape:cx="41.432887"
-     inkscape:cy="23.467407"
+     inkscape:zoom="1.5743678"
+     inkscape:cx="-14.609039"
+     inkscape:cy="-28.265314"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -38,16 +38,20 @@
      fit-margin-left="20"
      fit-margin-right="20"
      fit-margin-bottom="20"
-     inkscape:window-width="1600"
-     inkscape:window-height="832"
+     inkscape:window-width="1216"
+     inkscape:window-height="718"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:deskcolor="#d1d1d1">
     <inkscape:grid
        originy="60.000029"
        originx="-4.9999959"
        type="xygrid"
-       id="grid4469" />
+       id="grid4469"
+       spacingy="1"
+       spacingx="1"
+       units="px" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -90,11 +94,11 @@
          height="32"
          width="1.0000006"
          id="rect868"
-         style="opacity:0.5;fill:#a2b5c9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
+         style="opacity:0.5;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
          transform="rotate(-90)" />
       <rect
          transform="rotate(-90)"
-         style="opacity:0.5;fill:#25333f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
+         style="opacity:0.5;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
          id="rect870"
          width="1.0000006"
          height="32"
@@ -290,26 +294,6 @@
          style="opacity:0.25;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
          transform="matrix(0,1,1,0,0,0)" />
     </g>
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#008080;stroke-width:1"
-       id="hint-top-margin"
-       d="m 133.72305,414.2505 h 1 v 6 h -1 z" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#008080;stroke-width:0.99999994"
-       id="hint-bottom-margin"
-       d="m 133.72305,421.25047 h 1 v 6.00003 h -1 z" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#008080;stroke-width:1"
-       id="hint-right-margin"
-       d="m 140.72305,420.25047 v 1 h -6 v -1 z" />
-    <path
-       inkscape:connector-curvature="0"
-       style="fill:#008080;stroke-width:1"
-       id="hint-left-margin"
-       d="m 133.72305,420.25047 v 1 h -6 v -1 z" />
     <rect
        y="158.72305"
        x="420.25049"
@@ -327,11 +311,11 @@
          height="32"
          width="1.0000006"
          id="rect1563"
-         style="opacity:0.5;fill:#25333f;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
+         style="opacity:0.5;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
          transform="rotate(-90)" />
       <rect
          transform="rotate(-90)"
-         style="opacity:0.5;fill:#a2b5c9;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
+         style="opacity:0.5;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.149436;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;shape-rendering:crispEdges"
          id="rect1565"
          width="1.0000006"
          height="32"
