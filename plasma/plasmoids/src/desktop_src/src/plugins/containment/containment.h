@@ -18,6 +18,9 @@ class QQuickItem;
 class DesktopContainment : public Plasma::Containment
 {
     Q_OBJECT
+
+    Q_PROPERTY(QObject *layout READ layout WRITE setLayout NOTIFY layoutChanged)
+
 public:
     explicit DesktopContainment(QObject *parent, const KPluginMetaData &data, const QVariantList &args);
 
@@ -27,13 +30,22 @@ public:
     // cleans all instances of a given applet
     Q_INVOKABLE void cleanupTask(const QString &task);
 
+    QObject *layout();
+    void setLayout(QObject *layout);
+
     /**
      * Given an AppletInterface pointer, shows a proper context menu for it
      */
     Q_INVOKABLE void showPlasmoidMenu(QQuickItem *appletInterface, int x, int y);
 
+private:
+    QObject *m_layout = nullptr;
+
 Q_SIGNALS:
     void taskCreated(Plasma::Applet *applet, int x, int y);
+    void appletDeletion(Plasma::Applet *applet);
+
+    void layoutChanged(QObject *layout);
 };
 
 #endif

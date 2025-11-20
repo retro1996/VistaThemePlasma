@@ -14,7 +14,7 @@ Item {
 
     required property int index
 
-    readonly property string id: applet?.plasmoid.pluginName;
+    readonly property string id: applet?.plasmoid.pluginName
     readonly property Item positionManager: parent.positionManager
 
     // special cases
@@ -57,15 +57,11 @@ Item {
     }
 
     function remove() {
-        parent.plasmoidDestroyed(plasmoid_root.index, plasmoid_root.id);
-        if(applet) applet.plasmoid.internalAction("remove").trigger();
-        console.log("vistadesktop: removing applet...")
+        if(applet?.plasmoid) applet.plasmoid.internalAction("remove").trigger();
         destroy();
     }
 
     function updateSizes() {
-        console.log("vistadesktop: updating " + plasmoid_root.id + " container size...");
-
         if(!!applet.Layout.minimumWidth) plasmoid_root.minimumWidth = Qt.binding(() => applet?.Layout.minimumWidth);
         if(!!applet.Layout.minimumHeight) plasmoid_root.minimumHeight = Qt.binding(() => applet?.Layout.minimumHeight);
 
@@ -82,11 +78,11 @@ Item {
     function correctPositions() {
         plasmoid_root.checkingPosition = true;
 
-        if((parent.width > 0 || parent.height > 0) && (parent.x > 0 || parent.y > 0)) {
-            // ensure that the plasmoid stays within layout bounds
-            console.log(x, width, parent.x, parent.width);
-            console.log(y, height, parent.y, parent.height);
+        // console.log(x, width, parent.x, parent.width);
+        // console.log(y, height, parent.y, parent.height);
 
+        if((parent.width > 0 || parent.height > 0) && (parent.x >= 0 || parent.y >= 0)) {
+            // ensure that the plasmoid stays within layout bounds
             if(plasmoid_root.x + plasmoid_root.width > parent.x + parent.width)
                 plasmoid_root.x = (parent.x + parent.width) - plasmoid_root.width;
             if(plasmoid_root.y + plasmoid_root.height > parent.y + parent.height)
@@ -204,11 +200,23 @@ Item {
 
             clip: !plasmoid_root.isGadget
 
-            MultiEffect {
-                source: applet
+            Loader {
+                id: shadow
+
                 anchors.fill: applet
-                shadowEnabled: true
-                visible: (!backgroundControl.bgEnabled && backgroundControl.canConfigureBg) && !isGadget
+
+                active: applet && (!backgroundControl.bgEnabled && backgroundControl.canConfigureBg)
+                sourceComponent: shadowComponent
+                asynchronous: true
+
+                Component {
+                    id: shadowComponent
+
+                    MultiEffect {
+                        source: applet
+                        shadowEnabled: true
+                    }
+                }
             }
         }
 

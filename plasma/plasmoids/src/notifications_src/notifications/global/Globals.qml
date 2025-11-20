@@ -19,7 +19,7 @@ import org.kde.kirigami 2.11 as Kirigami
 import org.kde.notificationmanager as NotificationManager
 import org.kde.taskmanager 0.1 as TaskManager
 
-import plasma.applet.io.gitgud.wackyideas.notifications as Notifications
+import plasma.applet.io.gitgud.catpswin56.notifications as Notifications
 
 import ".."
 

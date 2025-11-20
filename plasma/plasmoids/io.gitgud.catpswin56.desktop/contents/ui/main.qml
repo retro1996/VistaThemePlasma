@@ -33,7 +33,7 @@ ContainmentItem {
     // - open on drag
     // - allow defining a custom drop handler
     // TODO remove once it gains that feature (perhaps optionally?)
-    compactRepresentation: (isFolder && !isContainment) ? compactRepresentation : null
+    compactRepresentation: Item {  }
 
     objectName: isFolder ? "folder" : "desktop"
 
@@ -175,8 +175,6 @@ ContainmentItem {
         property int leftBorder: elementSize("left").width
     }
 
-    Containment.onAppletAdded: (applet) => appletsLayout.createApplet(applet);
-
     // FIXME: the use and existence of this property is a workaround
     preloadFullRepresentation: true
     fullRepresentation: FolderViewDropArea {
@@ -184,14 +182,15 @@ ContainmentItem {
 
         anchors {
             fill: parent
-            leftMargin: (isContainment && root.availableScreenRect) ? root.availableScreenRect.x : 0
-            topMargin: (isContainment && root.availableScreenRect) ? root.availableScreenRect.y : 0
 
-            rightMargin: (isContainment && root.availableScreenRect && parent)
+            leftMargin: root.availableScreenRect ? root.availableScreenRect.x : 0
+            topMargin: root.availableScreenRect ? root.availableScreenRect.y : 0
+
+            rightMargin: (root.availableScreenRect && parent)
                 ? (parent.width - root.availableScreenRect.x - root.availableScreenRect.width) : 0
 
-            bottomMargin: (isContainment && root.availableScreenRect && parent)
-                ? (parent.height - root.availableScreenRect.y - root.availableScreenRect.height) : 0
+            bottomMargin: (root.availableScreenRect && parent)
+                ? root.availableScreenRect.y + root.availableScreenRect.height - parent.height : 0
         }
 
         LongDropBehavior on anchors.topMargin { }
@@ -324,7 +323,6 @@ ContainmentItem {
             }
 
             function savePositions() {
-                console.log("vistadesktop: function savePositions() called!")
                 for(var i = 0; i < appletsLayout.plasmoids.length; i++) {
                     var item = appletsLayout.plasmoids[i];
                     if(item.id !== "")
@@ -343,7 +341,6 @@ ContainmentItem {
                     position_object.height = plasmoid.height;
                 }
                 else {
-                    console.log("vistadesktop: position object for", plasmoid.id, "does not exist, creating...");
                     createPositionObject(plasmoid);
                 }
             }
@@ -370,7 +367,9 @@ ContainmentItem {
                 target: appletsLayout
 
                 function onPlasmoidCreated(plasmoid: var) {
-                    var position_object = positionManager.positions.find((plasmoid_position) => plasmoid_position.index === plasmoid.index)
+                    var position_object = positionManager.positions.find((object) => {
+                        return object.index === plasmoid.index && object.id === plasmoid.id
+                    });
 
                     if(typeof position_object != "undefined") {
                         plasmoid.x = position_object.x;
@@ -415,23 +414,35 @@ ContainmentItem {
             }
 
             signal plasmoidCreated(var plasmoid)
-            signal plasmoidDestroyed(int index, string id)
-            onPlasmoidDestroyed: (index, id) => deleteApplet(index, id);
 
             property PlasmoidContainer plasmoid_aboveAll
             property list<PlasmoidContainer> plasmoids: []
             property bool isDragging: false
             property alias positionManager: positionManager
 
-            function deleteApplet(index, id) {
-                plasmoids.splice(index, 1);
-                for(var i = index; i < plasmoids.length; i++) plasmoids[i].index--;
-                positionManager.positions.splice(index, 1);
-                for(var i = index; i < positionManager.positions.length; i++) positionManager.positions[i].index--;
-                positionManager.save();
+            function deleteApplet(applet) {
+                var plasmoid;
+
+                for(var i = 0; i < plasmoids.length; i++) {
+                    plasmoid = plasmoids[i];
+                    if(plasmoid.applet.plasmoid != applet) plasmoid = null;
+                }
+
+                if(plasmoid) {
+                    plasmoid.remove();
+
+                    // remove the plasmoid from the plasmoids list and reorder the others
+                    plasmoids.splice(plasmoid.index, 1);
+                    for(var i = index; i < plasmoids.length; i++) plasmoids[i].index--;
+
+                    // do the same thing here but in the positions list
+                    positionManager.positions.splice(plasmoid.index, 1);
+                    for(var i = index; i < positionManager.positions.length; i++) positionManager.positions[i].index--;
+                    positionManager.save();
+                }
             }
 
-            function createApplet(applet, x, y) {
+            function createApplet(applet: var, x: int, y: int) {
                 // FIXME TODO: this doesn't work, fix later
                 var createAtX;
                 if(typeof x == "undefined") createAtX = 0;
@@ -452,7 +463,8 @@ ContainmentItem {
                     });
                     if(plasmoid.id != "io.gitgud.catpswin56.sidebar") plasmoids.push(plasmoid);
 
-                } else if(component.status == Component.Error)
+                }
+                else if(component.status == Component.Error)
                     console.log("vistadesktop: Error creating plasmoid container:\n", component.errorString());
 
             }
@@ -490,23 +502,8 @@ ContainmentItem {
             onTriggered: Plasmoid.containment.configureRequested(Plasmoid)
         }
 
-        Component.onCompleted: {
-            if (!Plasmoid.isContainment) {
-                return;
-            }
-
-            Plasmoid.setInternalAction("configure", configAction)
-        }
+        Component.onCompleted: Plasmoid.setInternalAction("configure", configAction);
     }
 
-    Component.onCompleted: {
-        var appletCount = Plasmoid.applets.length;
-        if(appletCount > 0) {
-            for(var i = 0; i < appletCount; i++) {
-                var applet = Plasmoid.applets[i];
-                // console.log(i);
-                appletsLayout.createApplet(applet);
-            }
-        }
-    }
+    Component.onCompleted: Plasmoid.layout = appletsLayout;
 }
