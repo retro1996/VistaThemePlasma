@@ -17,6 +17,32 @@ ListView {
 
     property bool animating: false
 
+    readonly property int transitionDuration: 200
+    property alias taskAnimation: taskAnimation
+    property alias resetTransition: resetTransition
+    property alias resetAddTransition: resetAddTransition
+
+    height: 30
+
+    // Is this really needed?
+    // It apparently is, this somehow resets MouseArea and makes stuff actually work
+    function forceMouseEvent() {
+        for(var child in taskList.contentItem.children) {
+            var t = taskList.contentItem.children[child];
+            if(typeof t !== "undefined") {
+                if(t.isLauncher) {
+                    t.visible = false;
+                    t.visible = true;
+                }
+            }
+        }
+        onAnimatingChanged: {
+            if (!animating) {
+                tasks.publishIconGeometries(visibleChildren, tasks);
+            }
+        }
+    }
+
     layoutDirection: (Plasmoid.configuration.reverseMode && !tasks.vertical)
         ? (Qt.application.layoutDirection === Qt.LeftToRight)
             ? Qt.RightToLeft
@@ -29,10 +55,14 @@ ListView {
     interactive: false
     cacheBuffer: 9999
     spacing: 2
-    readonly property int transitionDuration: 200
-    property alias taskAnimation: taskAnimation
-    property alias resetTransition: resetTransition
-    property alias resetAddTransition: resetAddTransition
+
+    orientation: {
+        if(tasks.vertical) return ListView.Vertical
+            else return ListView.Horizontal
+    }
+
+    model: tasksModel
+    delegate: Task { tasksRoot: tasks }
 
     Timer {
         id: resetTransition
@@ -41,6 +71,7 @@ ListView {
             taskList.displaced = taskList.taskAnimation;
         }
     }
+
     Timer {
         id: resetAddTransition
         interval: 100

@@ -55,7 +55,7 @@ PlasmoidItem {
 
     property bool needLayoutRefresh: false;
     property var taskClosedWithMouseMiddleButton: []
-    property alias taskList: taskList
+    property alias taskList: taskListLoader.item
     property alias animationManager: animationManager
 
     property alias taskBackend: backend
@@ -412,8 +412,10 @@ PlasmoidItem {
             }
         }
 
-        TaskList {
-            id: taskList
+        Loader {
+            id: taskListLoader
+
+            property bool libplasmaPatched: false
 
             anchors {
                 left: parent.left
@@ -423,31 +425,59 @@ PlasmoidItem {
 
             height: 30
 
-            // Is this really needed?
-            // It apparently is, this somehow resets MouseArea and makes stuff actually work
-            function forceMouseEvent() {
-                for(var child in taskList.contentItem.children) {
-                    var t = taskList.contentItem.children[child];
-                    if(typeof t !== "undefined") {
-                        if(t.isLauncher) {
-                            t.visible = false;
-                            t.visible = true;
-                        }
-                    }
-                }
-                onAnimatingChanged: {
-                    if (!animating) {
-                        tasks.publishIconGeometries(visibleChildren, tasks);
-                    }
-                }
+            asynchronous: true
+            active: libplasmaPatched
+            source: "TaskList.qml"
+        }
+
+        Component.onCompleted: {
+            const testComponent = Qt.createQmlObject(`
+            import QtQuick
+            import org.kde.plasma.core as PlasmaCore
+
+            PlasmaCore.ToolTipArea { windowTitle: "" }
+            `,
+            tasks,
+            "libplasmaTest"
+            );
+
+            console.log("vistatasks: checking if libplasma is patched...");
+
+            if(testComponent.status !== Component.Error) {
+                taskListLoader.libplasmaPatched = true;
+                testComponent.destroy();
+            }
+        }
+
+        Row {
+            id: libplasmaPatchesMissing
+
+            anchors.fill: parent
+
+            spacing: 4
+
+            visible: !taskListLoader.libplasmaPatched
+
+            Kirigami.Icon {
+                anchors.verticalCenter: parent.verticalCenter
+
+                width: 16
+                height: 16
+
+                source: "dialog-error"
             }
 
-            orientation: {
-                if(tasks.vertical) return ListView.Vertical
-                else return ListView.Horizontal
+            Text {
+                anchors.verticalCenter: parent.verticalCenter
+
+                width: parent.width - 20
+
+                text: "VistaTasks requires the libplasma patches in order to work, which are missing. Please make sure to compile them and reboot your system."
+                color: "white"
+                style: Text.Outline
+                styleColor: "transparent"
+                wrapMode: Text.WordWrap
             }
-            delegate: Task { tasksRoot: tasks }
-            model: tasksModel
         }
     }
 
