@@ -416,56 +416,59 @@ PlasmaCore.Dialog {
             id: openTimer
             interval: 25
             repeat: false
-            onTriggered: {
-                tasksMenu.x = xpos;
-            }
+            onTriggered: tasksMenu.x = xpos;
         }
         // Timer used to free the object from memory after the fade out animation has finished.
         Timer {
             id: closeTimer
             interval: 150
-            onTriggered: {
-                tasksMenu.destroy();
-            }
+            onTriggered: tasksMenu.destroy();
         }
+
         ColumnLayout {
             id: menuitems
+
+            anchors {
+                left: parent.left
+                leftMargin: Kirigami.Units.mediumSpacing
+
+                right: parent.right
+                rightMargin: Kirigami.Units.mediumSpacing
+
+                bottom: staticMenuItems.top
+                bottomMargin: 10
+            }
+
+            onHeightChanged: if(sliderAnimation.running) tasksMenu.y -= tasksMenu.slide;
+
+            spacing: Kirigami.Units.smallSpacing/2
+
             z: 1
 
             function isEmpty() {
                 return menuitems.visibleChildren.length <= 2;
             }
-            onHeightChanged: {
-                if(sliderAnimation.running)
-                    tasksMenu.y -= tasksMenu.slide;
-            }
-            spacing: Kirigami.Units.smallSpacing/2
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: staticMenuItems.top
-                leftMargin: Kirigami.Units.mediumSpacing
-                rightMargin: Kirigami.Units.mediumSpacing
-                bottomMargin: 10
-            }
 
-            Item {
-                Layout.fillHeight: true
-            }
-            Item {
-                height: Kirigami.Units.smallSpacing
-            }
+            Item { Layout.fillHeight: true }
+            Item { height: Kirigami.Units.smallSpacing }
         }
         ColumnLayout {
             id: staticMenuItems
-            z: 1
+
             spacing: Kirigami.Units.smallSpacing/2
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 6
-            anchors.bottomMargin: 6
-            anchors.rightMargin: 6
+
+            anchors {
+                left: parent.left
+                leftMargin: 6
+
+                right: parent.right
+                rightMargin: 6
+
+                bottom: parent.bottom
+                bottomMargin: 6
+            }
+
+            z: 1
 
             Item {
                 height: 1
@@ -495,83 +498,19 @@ PlasmaCore.Dialog {
                     closeMenu();
                 }
             }
-            /*TasksMenuItemWrapper {
-             *                id: testItem
-             *                Layout.fillWidth: true
-             *                Layout.preferredHeight: menuItemHeight
-             *
-             *                text: "Test"
-             *                icon: "window-close"
-             *                onClicked: {
-        }
-        }*/
         }
 
-        Rectangle {
-            id: bgRect
-            visible: secondaryColumn
-            anchors {
-                top: parent.top
-                bottom: bgStatic.top
-                left: parent.left
-                right: parent.right
-                leftMargin: 0
-                rightMargin: 0
-                topMargin: 0
+        BorderImage {
+            anchors.fill: parent
+            anchors.margins: -2
+
+            border {
+                left: 6
+                right: 6
+                top: 6
+                bottom: 6
             }
-            gradient: Gradient {
-                GradientStop { position: 0; color: backgroundColorStatic }
-                GradientStop { position: 0.5; color: backgroundColorGradient }
-                GradientStop { position: 1; color: backgroundColorStatic }
-            }
-            z: -2
-        }
-        Rectangle {
-            id: bgStatic
-            anchors {
-                top: staticMenuItems.top
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-                leftMargin: 0
-                rightMargin: 0
-                topMargin: -4
-            }
-            Rectangle {
-                id: bgStaticBorderLine
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                    right: parent.right
-                }
-                height: Kirigami.Units.smallSpacing
-                gradient: Gradient {
-                    GradientStop { position: 0; color: borderColor }
-                    GradientStop { position: 1; color: "transparent"}
-                }
-            }
-            z: -1
-            color: backgroundColorStatic
-            visible: !menuitems.isEmpty();
-        }
-        Rectangle {
-            id: bgStaticGradient
-            anchors {
-                top: staticMenuItems.top
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.right
-                leftMargin: 0
-                rightMargin: 0
-                topMargin: -4
-            }
-            z: -1
-            gradient: Gradient {
-                GradientStop { position: 0; color: backgroundColorStatic }
-                GradientStop { position: 0.5; color: backgroundColorGradient }
-                GradientStop { position: 1; color: backgroundColorStatic }
-            }
-            visible: menuitems.isEmpty();
+            source: "pngs/jumplist-bg.png"
         }
         function decreaseItemIndex() {
             currentItemIndex--;

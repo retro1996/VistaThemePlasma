@@ -94,7 +94,7 @@ Item {
         horizontalAlignment: Text.AlignLeft
         verticalAlignment: Text.AlignVCenter
         opacity: parent.enabled ? 1 : 0.75
-        color: "black"
+        color: "white"
         style: Text.Sunken
         styleColor: "transparent"
     }
