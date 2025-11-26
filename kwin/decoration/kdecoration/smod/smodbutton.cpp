@@ -228,42 +228,42 @@ namespace Breeze
                     switch(type()) {
                         case DecorationButtonType::ApplicationMenu:
                             m_isToggled = d->window()->isApplicationMenuActive();
-                            buttonMargins = margins.menuSizing();
                             glyphType = "menu";
+                            buttonMargins = margins.menuSizing();
                             break;
 
                         case DecorationButtonType::OnAllDesktops:
                             m_isToggled = d->window()->isOnAllDesktops();
-                            buttonMargins = margins.pinSizing();
                             glyphType = "pin";
+                            buttonMargins = margins.pinSizing();
                             break;
 
                         case DecorationButtonType::Shade:
                             m_isToggled = d->window()->isShaded();
-                            buttonMargins = margins.shadeSizing();
                             glyphType = "shade";
+                            buttonMargins = margins.shadeSizing();
                             break;
 
                         case DecorationButtonType::KeepAbove:
                             m_isToggled = d->window()->isKeepAbove();
-                            buttonMargins = margins.overlapSizing();
                             glyphType = "overlap";
+                            buttonMargins = margins.overlapSizing();
                             break;
 
                         case DecorationButtonType::KeepBelow:
                             m_isToggled = d->window()->isKeepBelow();
-                            buttonMargins = margins.underlapSizing();
                             glyphType = "underlap";
+                            buttonMargins = margins.underlapSizing();
                             break;
 
                         case DecorationButtonType::ContextHelp:
-                            buttonMargins = margins.helpSizing();
                             glyphType = "help";
+                            buttonMargins = margins.helpSizing();
                             break;
 
                         case DecorationButtonType::Minimize:
-                            buttonMargins = margins.minimizeSizing();
                             glyphType = "minimize";
+                            buttonMargins = margins.minimizeSizing();
                             break;
 
                         default:

@@ -191,7 +191,7 @@ This will spawn a notification with a sufficiently long body, presenting as Dolp
 
 ### From the terminal
 
-Restarting Plasmashell or KWin as described above results in output being printed to `stdout` which is readable by the terminal emulator. By default, `kwin_wayland` doesn't output logs to `stdout` by default, and in that case it's difficult to get logs this way. 
+Restarting Plasmashell or KWin as described above results in output being printed to `stdout` which is readable by the terminal emulator. By default, `kwin_wayland` doesn't output logs to `stdout`, and in that case it's difficult to get logs this way. 
 
 As for KCMs, their respective logs can be retrieved by running System settings from the terminal:
 
