@@ -11,6 +11,7 @@ import org.kde.kquickcontrolsaddons as KQuickAddons
 import org.kde.plasma.core as PlasmaCore
 import org.kde.kirigami as Kirigami
 import org.kde.ksvg as KSvg
+import org.kde.kwindowsystem as KWindowSystem
 
 import org.kde.notificationmanager as NotificationManager
 import plasma.applet.io.gitgud.catpswin56.notifications as NotificationsApplet
