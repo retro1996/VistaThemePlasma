@@ -169,7 +169,7 @@ Item {
             PropertyChanges {
                 target: mainContent
 
-                width: 0 + Math.max(timeLabel.implicitWidth, 0) + ((Kirigami.Units.smallSpacing * 2) + 2)
+                width: 0 + Math.max(timeLabel.implicitWidth, 0) + ((Kirigami.Units.smallSpacing * 2) + 1)
                 height: main.height
             }
         }
@@ -254,8 +254,8 @@ Item {
                     return (showTimezone ? "" : " ") + Qt.formatTime(currentTime, main.timeFormat) + " " + (showTimezone ? (" " + timezoneResult) : "");
                 }
                 verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: main.showDate ? Text.AlignHCenter : Text.AlignLeft
-                leftPadding: !Plasmoid.configuration.offsetClock && !main.showDate ? Kirigami.Units.smallSpacing : 0
+                horizontalAlignment: main.state != "horizontalSmall" ? Text.AlignHCenter : Text.AlignLeft
+                leftPadding: Plasmoid.configuration.offsetClock && main.state == "horizontalSmall" ? Kirigami.Units.mediumSpacing-2 : 0
             }
             Text {
                 id: dayLabel

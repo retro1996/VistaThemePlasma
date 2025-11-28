@@ -280,7 +280,7 @@ ContainmentItem {
 
             anchors.fill: parent
             anchors.topMargin: !Plasmoid.configuration.dontOffset
-                             ? -Kirigami.Units.smallSpacing*2 + Kirigami.Units.smallSpacing/2 - Kirigami.Units.smallSpacing/4
+                             ? -5
                              : 0
 
             rowSpacing: 0
