@@ -303,9 +303,9 @@ indicator.element=resize-grip
 indicator.size=10
 
 [Toolbar]
-frame.left=2
-frame.right=2
-frame.top=2
+frame.left=1
+frame.right=1
+frame.top=1
 frame.bottom=2
 indicator.size=7
 frame.expansion=4
