@@ -37,6 +37,30 @@ Item {
     height: Layout.maximumHeight
     property bool compositing: false
 
+    Binding {
+        target: kicker
+        property: "Layout.minimumHeight"
+        value: root.Layout.minimumHeight
+    }
+
+    Binding {
+        target: kicker
+        property: "Layout.maximumHeight"
+        value: root.Layout.maximumHeight
+    }
+
+    Binding {
+        target: kicker
+        property: "Layout.minimumWidth"
+        value: root.Layout.minimumWidth
+    }
+
+    Binding {
+        target: kicker
+        property: "Layout.maximumWidth"
+        value: root.Layout.maximumWidth
+    }
+
     property QtObject contextMenu: null
     readonly property bool editMode: Plasmoid.containment.corona.editMode
     readonly property bool inPanel: (Plasmoid.location == PlasmaCore.Types.TopEdge || Plasmoid.location == PlasmaCore.Types.RightEdge || Plasmoid.location == PlasmaCore.Types.BottomEdge || Plasmoid.location == PlasmaCore.Types.LeftEdge)
