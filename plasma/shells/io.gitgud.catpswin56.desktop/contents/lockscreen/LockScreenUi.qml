@@ -27,8 +27,13 @@ import "../components"
 
 Item {
     id: lockScreenUi
-    // If we're using software rendering, draw outlines instead of shadows
-    // See https://bugs.kde.org/show_bug.cgi?id=398317
+
+    // --- Critical fix: Define root compatibility aliases and signals ---
+    property var root: lockScreenUi
+    signal clearPassword()
+    property string notification: ""
+    // ----------------------------------------
+
     readonly property bool softwareRendering: GraphicsInfo.api === GraphicsInfo.Software
     property bool hadPrompt: false;
     property int currentPage: 0;
@@ -47,14 +52,7 @@ Item {
             NumberAnimation { duration: 600 }
         }
     }
-    Timer {
-        id: graceLockTimer
-        interval: 3000
-        onTriggered: {
-            root.clearPassword();
-            authenticator.startAuthenticating();
-        }
-    }
+
     Timer {
         id: successTimer
         interval: 800
@@ -62,13 +60,25 @@ Item {
             Qt.quit();
         }
     }
+
+    // --- Timer ---
+    Timer {
+        id: focusEnforcer
+        interval: 100 // 100ms delay is added to ensure the interface switching is complete
+        repeat: false
+        onTriggered: {
+            console.log("Timer triggered: Forcing focus to dismissButton");
+            dismissButton.forceActiveFocus();
+        }
+    }
+
     function setWrongPasswordScreen(msg) {
-        root.clearPassword();
+        lockScreenUi.clearPassword();
         currentMessage.text = msg;
         currentMessageIcon.source = "dialog-error";
         currentPage = 2;
-        dismissButton.focus = true;
-        //graceLockTimer.restart();
+        // Start a timer so it can try to grab focus later.
+        focusEnforcer.start();
     }
 
     // This is probably the worst code I've ever written, just so that I can play a themed sound file slightly earlier, on time, instead of letting Plasma decide,
@@ -134,17 +144,25 @@ Item {
 
     Connections {
         target: authenticator
-        function onFailed(kind) {
-            if (kind != 0) { // if this is coming from the noninteractive authenticators
-                return;
+
+        // 1. Standard failure signal (may not be triggered in Plasma 6 / systemd-homed)
+        function onFailed() {
+            console.log("auth failed signal received");
+            handleAuthFailed(i18nd("plasma_lookandfeel_org.kde.lookandfeel", "The user name or password is incorrect."));
+        }
+
+        // 2. Error message change signal (this is a double safeguard for systemd-homed)
+        // This property changes when the underlying system issues an "ERROR..." error, allowing us to catch the error.
+        function onErrorMessageChanged() {
+            console.log("Error Message Changed to: " + authenticator.errorMessage);
+            // If you are currently stuck on the "Welcome" page (currentPage == 1) and receive an error message...
+            if (authenticator.errorMessage.length > 0 && currentPage === 1) {
+                console.log("Detected stuck on Welcome screen with error, forcing fallback.");
+                handleAuthFailed(authenticator.errorMessage);
             }
-            if (root.notification) {
-                root.notification += "\n"
-            }
-            setWrongPasswordScreen(i18nd("plasma_lookandfeel_org.kde.lookandfeel", "The user name or password is incorrect."));
-            lockScreenUi.hadPrompt = false;
         }
         function onSucceeded() {
+            console.log("auth success");
             if (lockScreenUi.hadPrompt) {
                 blackRect.opacity = 1;
                 lockSuccess.play();
@@ -156,19 +174,15 @@ Item {
         }
 
         function onInfoMessageChanged() {
-            root.clearPassword();
+            lockScreenUi.clearPassword();
             currentMessage.text = authenticator.infoMessage;
             currentMessageIcon.source = "dialog-info";
             currentPage = 2;
             dismissButton.focus = true;
         }
 
-        function onErrorMessageChanged() {
-            console.log("ERROR " + authenticator.errorMessage);
-        }
-
         function onPromptChanged() {
-            root.notification = authenticator.prompt;
+            lockScreenUi.notification = authenticator.prompt;
             passwordArea.mainPasswordBox.forceActiveFocus();
             lockScreenUi.hadPrompt = true;
         }
@@ -178,6 +192,15 @@ Item {
         }
     }
 
+    // Unified error handling helper function
+    function handleAuthFailed(msg) {
+        if (lockScreenUi.notification) {
+            lockScreenUi.notification += "\n";
+        }
+        setWrongPasswordScreen(msg);
+        lockScreenUi.hadPrompt = false;
+    }
+
     SessionManagement {
         id: sessionManagement
     }
@@ -185,7 +208,7 @@ Item {
     Connections {
         target: sessionManagement
         function onAboutToSuspend() {
-            root.clearPassword();
+            lockScreenUi.clearPassword();
         }
     }
 
@@ -340,7 +363,6 @@ Item {
             if (!calledUnlock) {
                 calledUnlock = true;
                 authenticator.startAuthenticating();
-                graceLockTimer.restart();
             }
         }
 
@@ -405,12 +427,16 @@ Item {
             visible: currentPage == 0
             focus: true
 
+            // When not on page 0, disable it completely so that it absolutely cannot receive the Enter key
+            enabled: currentPage == 0
             //enabled: !authenticator.busy
-            enabled: !graceLockTimer.running
             onPasswordResult: (password) => {
+                console.log("password result signal received")
                 // Switch to the 'Welcome' screen
                 currentPage = 1;
+                console.log("begin auth")
                 authenticator.startAuthenticating();
+                console.log("respond with password")
                 authenticator.respond(password);
             }
 
@@ -545,11 +571,28 @@ Item {
 
                 Accessible.name: "OK"
                 text: "OK"
-                onClicked: {
+
+                // 1. Define an inner function containing return logic
+                function goBackToPassword() {
                     authenticator.startAuthenticating();
                     currentPage = 0;
                     passwordArea.mainPasswordBox.forceActiveFocus();
                 }
+
+                // 2. Start a timer to capture focus when the button is visible
+                onVisibleChanged: {
+                    if (visible) {
+                        focusEnforcer.start();
+                    }
+                }
+
+                // 3. Bind Enter (main keyboard) and Return (numeric keypad)
+                // Call the function we defined above directly, instead of onClicked.
+                Keys.onReturnPressed: goBackToPassword()
+                Keys.onEnterPressed: goBackToPassword()
+
+                // 4. Mouse clicks also call the same function
+                onClicked: goBackToPassword()
             }
         }
 
