@@ -322,7 +322,7 @@ ContainmentItem {
             function savePositions() {
                 for(var i = 0; i < appletsLayout.plasmoids.length; i++) {
                     var item = appletsLayout.plasmoids[i];
-                    if(item.id !== "")
+                    if((item?.id ?? "") !== "")
                         setPosition(item);
                 }
                 save();
@@ -399,13 +399,17 @@ ContainmentItem {
                 // sanity check
                 function onAppletAboutToBeRemoved(applet) {
                     var plasmoid;
+
                     for(var i = 0; i < appletsLayout.plasmoids.length; i++) {
-                        if(appletsLayout.plasmoids[i].applet.Plasmoid == applet) plasmoid = appletsLayout.plasmoids[i];
+                        if(appletsLayout.plasmoids[i].applet.Plasmoid == applet) {
+                            plasmoid = appletsLayout.plasmoids[i];
+                            break;
+                        }
                     }
 
                     if(typeof plasmoid !== "undefined") {
                         plasmoid.remove();
-                        appletsLayout.deleteApplet(plasmoid.id, plasmoid.index);
+                        appletsLayout.deleteApplet(plasmoid);
                     }
                 }
             }
@@ -417,25 +421,22 @@ ContainmentItem {
             property bool isDragging: false
             property alias positionManager: positionManager
 
-            function deleteApplet(applet) {
-                var plasmoid;
-
-                for(var i = 0; i < plasmoids.length; i++) {
-                    plasmoid = plasmoids[i];
-                    if(plasmoid.applet.plasmoid != applet) plasmoid = null;
-                }
-
+            function deleteApplet(plasmoid: var) {
                 if(plasmoid) {
+                    var plasmoidIndex = plasmoid.index;
+
                     plasmoid.remove();
 
                     // remove the plasmoid from the plasmoids list and reorder the others
-                    plasmoids.splice(plasmoid.index, 1);
-                    for(var i = index; i < plasmoids.length; i++) plasmoids[i].index--;
+                    plasmoids.splice(plasmoidIndex, 1);
+                    for(var i = plasmoidIndex; i < plasmoids.length; i++) plasmoids[i].index--;
 
                     // do the same thing here but in the positions list
-                    positionManager.positions.splice(plasmoid.index, 1);
-                    for(var i = index; i < positionManager.positions.length; i++) positionManager.positions[i].index--;
+                    positionManager.positions.splice(plasmoidIndex, 1);
+                    console.log(positionManager.positions);
+                    for(var i = plasmoidIndex; i < positionManager.positions.length; i++) positionManager.positions[i].index--;
                     positionManager.save();
+                    console.log(positionManager.positions);
                 }
             }
 
@@ -458,7 +459,7 @@ ContainmentItem {
                         index: plasmoids.length,
                         applet: root.itemFor(applet)
                     });
-                    if(plasmoid.id != "io.gitgud.catpswin56.sidebar") plasmoids.push(plasmoid);
+                    if(!plasmoid.isSidebar) plasmoids.push(plasmoid);
 
                 }
                 else if(component.status == Component.Error)
@@ -502,5 +503,6 @@ ContainmentItem {
         Component.onCompleted: Plasmoid.setInternalAction("configure", configAction);
     }
 
+    // set the plasmoid layout after creation, so the C++ backend can add the applets
     Component.onCompleted: Plasmoid.layout = appletsLayout;
 }

@@ -18,10 +18,10 @@ Item {
     readonly property Item positionManager: parent.positionManager
 
     // special cases
-    property bool isGadget: applet?.plasmoid.pluginName.includes("io.gitgud.catpswin56.gadgets")
-    property bool isSidebar: applet?.plasmoid.pluginName.includes("io.gitgud.catpswin56.sidebar")
-    property bool notesIsResizable: false
-    onNotesIsResizableChanged: updateSizes();
+    property bool isGadget: applet?.plasmoidType == "Gadget"
+    property bool isSidebar: applet?.plasmoidType == "Sidebar"
+    property bool gadgetResizable: false
+    onGadgetResizableChanged: updateSizes();
 
     property bool checkingPosition: false
 
@@ -36,6 +36,7 @@ Item {
 
     property var applet: null
     onAppletChanged: {
+        console.log("applet changed", applet);
         if(applet) {
             if(isSidebar) {
                 plasmoid_root.visible = false;
@@ -45,11 +46,18 @@ Item {
                 return;
             }
 
+            if(isGadget) {
+                gadgetResizable = Qt.binding(() => applet.resizable);
+                applet.requestSizeUpdate.connect(updateSizes);
+            }
+
+            applet.Plasmoid.destroyedChanged.connect(function() {
+               if(applet.Plasmoid.destroyedChanged.destroyed) plasmoid_root.remove();
+            });
+
             applet.parent = representation_container;
             applet.anchors.fill = representation_container;
             applet.visible = true;
-
-            if(id == "io.gitgud.catpswin56.gadgets.notes") notesIsResizable = Qt.binding(() => applet.resizable);
 
             updateSizes();
         }
@@ -62,8 +70,8 @@ Item {
     }
 
     function updateSizes() {
-        if(!!applet.Layout.minimumWidth) plasmoid_root.minimumWidth = Qt.binding(() => applet?.Layout.minimumWidth);
-        if(!!applet.Layout.minimumHeight) plasmoid_root.minimumHeight = Qt.binding(() => applet?.Layout.minimumHeight);
+        if(applet.Layout.minimumWidth) plasmoid_root.minimumWidth = Qt.binding(() => applet?.Layout.minimumWidth);
+        if(applet.Layout.minimumHeight) plasmoid_root.minimumHeight = Qt.binding(() => applet?.Layout.minimumHeight);
 
         if(plasmoid_root.minimumWidth <= 1) plasmoid_root.minimumWidth = Kirigami.Units.gridUnit*8;
         if(plasmoid_root.minimumHeight <= 1) plasmoid_root.minimumHeight = Kirigami.Units.gridUnit*8;
@@ -71,8 +79,15 @@ Item {
         if(applet.Layout.preferredWidth >= plasmoid_root.minimumWidth) plasmoid_root.preferredWidth = Qt.binding(() => applet?.Layout.preferredWidth);
         if(applet.Layout.preferredHeight >= plasmoid_root.minimumHeight) plasmoid_root.preferredHeight = Qt.binding(() => applet?.Layout.preferredHeight);
 
-        plasmoid_root.width = Qt.binding(() => implicitWidth);
-        plasmoid_root.height = Qt.binding(() => implicitHeight);
+        if(isGadget && !gadgetResizable) {
+            plasmoid_root.width = Qt.binding(() => minimumWidth);
+            plasmoid_root.height = Qt.binding(() => minimumHeight);
+
+            console.log(minimumWidth, minimumHeight);
+        } else {
+            plasmoid_root.width = Qt.binding(() => implicitWidth);
+            plasmoid_root.height = Qt.binding(() => implicitHeight);
+        }
     }
 
     function correctPositions() {
@@ -114,14 +129,11 @@ Item {
     }
 
     readonly property int implicitWidth: (preferredWidth < minimumWidth ? minimumWidth : preferredWidth)
-                                       + 15
-                                       + ((applet?.plasmoid.backgroundHints !== 0 ?? false) ? 10 : 0)
+                                       + 15 // idk what this was for ngl
+                                       + ((applet?.plasmoid.backgroundHints !== 0 ?? false) ? 10 : 0) // bg border
 
     readonly property int implicitHeight: (preferredHeight < minimumHeight ? minimumHeight : preferredHeight)
-                                        + ((applet?.plasmoid.backgroundHints !== 0 ?? false) ? 10 : 0)
-
-    onImplicitWidthChanged: if(isGadget) width = implicitWidth;
-    onImplicitHeightChanged: if(isGadget) height = implicitHeight;
+                                        + ((applet?.plasmoid.backgroundHints !== 0 ?? false) ? 10 : 0) // bg border
 
     width: implicitWidth
     onWidthChanged: {
@@ -349,7 +361,7 @@ Item {
         anchors.fill: parent
         anchors.rightMargin: 15
 
-        visible: Plasmoid.corona.editMode && (!plasmoid_root.isGadget || notesIsResizable)
+        visible: Plasmoid.corona.editMode && (!isGadget || gadgetResizable)
 
         ResizeHandle {
             anchors.verticalCenter: parent.bottom

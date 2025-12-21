@@ -26,10 +26,13 @@ import "items"
 ContainmentItem {
     id: root
 
+    // BEGIN GADGET STUFF
+    readonly property string plasmoidType: "Sidebar"
+    // END GADGET STUFF
+
     property ContainmentItem desktopContainment: null
     onDesktopContainmentChanged: root.parent = desktopContainment;
 
-    // in case desktopContainment is our own containment implementation
     property bool isVTPcontainment: false
 
     property var appletsLayout: null
