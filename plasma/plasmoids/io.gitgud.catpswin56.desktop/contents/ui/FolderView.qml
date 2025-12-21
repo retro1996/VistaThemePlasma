@@ -719,7 +719,7 @@ FocusScope {
                     var extraSpacing = 0;
                     if (availableColumns > 0) {
                         var allColumnSize = availableColumns * cellSize;
-                        var extraSpace = Math.max(containerSize - allColumnSize, 0);
+                        var extraSpace = Math.min(containerSize - allColumnSize, 0);
                         extraSpacing = extraSpace / availableColumns;
                     }
                     return Math.floor(extraSpacing);
@@ -752,7 +752,7 @@ FocusScope {
                             listItemSvg.margins.top + listItemSvg.margins.bottom)) / 2) * 2;
                     } else {
                         // the smallSpacings are for padding
-                        var iconHeight = iconSize + (Kirigami.Units.iconSizes.small * Plasmoid.configuration.textLines) + Kirigami.Units.smallSpacing;
+                        var iconHeight = iconSize + (Kirigami.Units.iconSizes.small * Plasmoid.configuration.textLines) + (Kirigami.Units.smallSpacing * 3);
                         if (root.isContainment && isRootView && scrollArea.viewportHeight > 0) {
                             var extraHeight = calcExtraSpacing(iconHeight, scrollArea.viewportHeight);
                             return iconHeight + extraHeight;
