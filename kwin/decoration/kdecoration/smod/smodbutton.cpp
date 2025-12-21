@@ -73,8 +73,7 @@ namespace Breeze
         }
 
         // menu button
-        if (type() == DecorationButtonType::Menu)
-        {
+        if(type() == DecorationButtonType::Menu) {
             const auto c = deco->window();
             QRectF iconRect(geometry().topLeft(), m_iconSize);
 
@@ -90,17 +89,8 @@ namespace Breeze
             painter->restore();
 
             return;
-        }
-        else if (type() == DecorationButtonType::Close
-              || type() == DecorationButtonType::Maximize
-              || type() == DecorationButtonType::Minimize
-              || type() == DecorationButtonType::ContextHelp
-              || type() == DecorationButtonType::Shade
-              || type() == DecorationButtonType::KeepAbove
-              || type() == DecorationButtonType::KeepBelow
-              || type() == DecorationButtonType::OnAllDesktops
-              || type() == DecorationButtonType::ApplicationMenu)
-        {
+
+        } else if(type() != DecorationButtonType::Spacer) {
             QRectF g = geometry();
             qreal w = g.width();
             qreal h = g.height();
@@ -128,6 +118,7 @@ namespace Breeze
                                                  ? decoration()->settings()->decorationButtonsLeft()
                                                  : decoration()->settings()->decorationButtonsRight();
 
+            // fixes KDED crashing
             if(!m_gtkButton){
                 // just in case
                 if(btnGroup == nullptr) {
@@ -150,8 +141,6 @@ namespace Breeze
                 // check for buttons
                 if(btnGroup->buttons().length() > 1)
                 {
-                    qDebug() << "btnGroupPos:" << btnGroupPos << "index:" << index;
-
                     if(index > 0) {
                         const auto button = internalSettingsButtons.at(index-1);
 

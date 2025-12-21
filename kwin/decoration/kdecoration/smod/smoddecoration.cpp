@@ -102,6 +102,8 @@ void Decoration::smodPaint(QPainter *painter, const QRectF &repaintRegion)
 
 void Decoration::smodPaintGlow(QPainter *painter, const QRectF &repaintRegion)
 {
+    Q_UNUSED(repaintRegion)
+
     const auto c = window();
 
     int SIDEBAR_HEIGHT = qMax(25, (int)(size().height() / 4));
@@ -279,6 +281,8 @@ void Decoration::smodPaintOuterBorder(QPainter *painter, const QRectF &repaintRe
 
 void Decoration::smodPaintTitleBar(QPainter *painter, const QRectF &repaintRegion)
 {
+    Q_UNUSED(repaintRegion)
+
     if (hideTitleBar())
     {
         return;
@@ -297,11 +301,19 @@ void Decoration::smodPaintTitleBar(QPainter *painter, const QRectF &repaintRegio
                           (right == 0 ? size().width() : right) - left - 4, borderTop() + (hideInnerBorder() ? sizingMargins().topSide().margin_bottom : 0));
 
         QString caption = settings()->fontMetrics().elidedText(c->caption(), Qt::ElideMiddle, captionRect.width());
+
+        // remove program name
         QStringList programname = caption.split(" — ");
         caption.remove(" — " + programname.at(programname.size()-1));
-        QFontMetrics fm(settings()->font());
         QString fixedCaption = caption;
-        auto rect = fm.boundingRect(fixedCaption.replace(QRegularExpression("\\p{Extended_Pictographic}", QRegularExpression::UseUnicodePropertiesOption), "█"));
+
+        // replace emojis for █
+        // fixes a BUG in which the glow is shorter than the actual text when there's emojis
+        QTextOption opt;
+        opt.setFlags(QTextOption::ShowDefaultIgnorables);
+        QFontMetrics fm(settings()->font());
+        auto rect = fm.boundingRect(fixedCaption.replace(QRegularExpression("\\p{Extended_Pictographic}", QRegularExpression::UseUnicodePropertiesOption), "█"), opt);
+
         int blurWidth = rect.width() + 30;
         int blurHeight = rect.height();
 
