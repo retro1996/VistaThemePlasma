@@ -74,14 +74,7 @@ Item {
     }
 
     Rectangle {
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: parent.top
-            topMargin: editModeUi.y - (toolBar.height + Kirigami.Units.smallSpacing) - ((Kirigami.Units.largeSpacing * 4) / 2)
-        }
-
-        height: editModeUi.height + Kirigami.Units.smallSpacing + (Kirigami.Units.largeSpacing * 4)
+        anchors.fill: parent
 
         gradient: Gradient {
             orientation: Gradient.Vertical
@@ -215,6 +208,78 @@ Item {
             source: containment
             layer.enabled: true
             layer.smooth: true
+        }
+
+        Item {
+            id: emptyRect
+
+            readonly property rect availableScreenRect: containment.plasmoid.availableScreenRect
+
+            anchors {
+                fill: parent
+
+                leftMargin: availableScreenRect.x
+                rightMargin: Screen.width - (availableScreenRect.x + availableScreenRect.width)
+                topMargin: availableScreenRect.y
+                bottomMargin: Screen.height - (availableScreenRect.y + availableScreenRect.height)
+            }
+
+
+            Image {
+                anchors {
+                    left: parent.left
+                    leftMargin: -parent.anchors.leftMargin
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+
+                width: parent.anchors.leftMargin
+
+                source: "../images/restricted.png"
+                fillMode: Image.TileVertically
+            }
+
+            Image {
+                anchors {
+                    right: parent.right
+                    rightMargin: -parent.anchors.rightMargin
+                    top: parent.top
+                    bottom: parent.bottom
+                }
+
+                width: parent.anchors.rightMargin
+
+                source: "../images/restricted.png"
+                fillMode: Image.TileVertically
+            }
+
+            Image {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
+                    topMargin: -parent.anchors.topMargin
+                }
+
+                height: parent.anchors.topMargin
+
+                source: "../images/restricted.png"
+                fillMode: Image.TileHorizontally
+            }
+
+            Image {
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    bottom: parent.bottom
+                    bottomMargin: -parent.anchors.bottomMargin
+                }
+
+                height: parent.anchors.bottomMargin
+
+                source: "../images/restricted.png"
+                fillMode: Image.TileHorizontally
+            }
         }
     }
 
