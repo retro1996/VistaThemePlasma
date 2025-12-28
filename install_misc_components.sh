@@ -32,6 +32,7 @@ echo "Done."
 echo "Unpacking icon theme..."
 ICONS_DIR="$HOME/.local/share/icons"
 mkdir -p "$ICONS_DIR"
+rm -rf "$ICONS_DIR/Windows Vista Aero"
 tar -xf "$PWD/misc/icons/Windows Vista Aero.tar.gz" --directory "$ICONS_DIR"
 echo "Done."
 

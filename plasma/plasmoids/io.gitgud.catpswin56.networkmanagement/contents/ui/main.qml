@@ -92,12 +92,21 @@ PlasmoidItem {
     property bool uploading: txSpeed > 500
     property bool downloading: rxSpeed > 500
 
-    property string activityIcon: uploading && downloading ? "connected-activity" :
-                                  uploading ? "connected-uploading" :
-                                  downloading ? "connected-downloading" : "connected-noactivity"
-    property string state: networkStatus.connectivity === NMQt.NetworkManager.Portal ? "-limited" : ""
-    property string defaultIcon: Plasmoid.configuration.connectionState == PlasmaNM.Enums.Deactivated || !enabledConnections.wirelessEnabled ?
-                                 "network-wired-disconnected" : activityIcon + state
+    property string activityIcon: {
+        if(uploading && downloading)
+            return "connected-activity";
+        else if(uploading)
+            return "connected-uploading";
+        else if(downloading)
+            return "connected-downloading";
+        else
+            return "connected-noactivity";
+    }
+    readonly property bool limited: networkStatus.connectivity === NMQt.NetworkManager.Portal || networkStatus.connectivity === NMQt.NetworkManager.Limited
+    property string defaultIcon: {
+        if(networkStatus.connectivity == NMQt.NetworkManager.NoConnectivity) return "network-wired-disconnected";
+        return activityIcon + (limited ? "-limited" : "");
+    }
     property string alternateIcon: inPanel ? connectionIconProvider.connectionIcon + "-symbolic" : connectionIconProvider.connectionTooltipIcon
 
     Plasmoid.busy: connectionIconProvider.connecting
