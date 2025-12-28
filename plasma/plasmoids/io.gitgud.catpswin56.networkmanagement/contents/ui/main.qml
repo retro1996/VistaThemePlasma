@@ -92,25 +92,25 @@ PlasmoidItem {
     property bool uploading: txSpeed > 500
     property bool downloading: rxSpeed > 500
 
-    property string activityIcon: {
-        if(uploading && downloading)
-            return "connected-activity";
-        else if(uploading)
-            return "connected-uploading";
-        else if(downloading)
-            return "connected-downloading";
-        else
-            return "connected-noactivity";
-    }
     readonly property bool limited: networkStatus.connectivity === NMQt.NetworkManager.Portal || networkStatus.connectivity === NMQt.NetworkManager.Limited
-    property string defaultIcon: {
-        if(networkStatus.connectivity == NMQt.NetworkManager.NoConnectivity) return "network-wired-disconnected";
-        return activityIcon + (limited ? "-limited" : "");
+    property string activityIcon: {
+        var icon = "network";
+
+        if(networkStatus.connectivity !== NMQt.NetworkManager.NoConnectivity) {
+            if(limited) icon += "-limited";
+
+            if(uploading && downloading) icon += "-idle";
+            else if(uploading) icon += "-transmit";
+            else if(downloading) icon += "-receive";
+            else icon += "-transmit-receive";
+        } else icon += "-wired-disconnected"
+
+        return icon;
     }
     property string alternateIcon: inPanel ? connectionIconProvider.connectionIcon + "-symbolic" : connectionIconProvider.connectionTooltipIcon
 
     Plasmoid.busy: connectionIconProvider.connecting
-    Plasmoid.icon: Plasmoid.configuration.useAlternateIcon || PlasmaNM.Configuration.airplaneModeEnabled ? alternateIcon : defaultIcon
+    Plasmoid.icon: Plasmoid.configuration.useAlternateIcon || PlasmaNM.Configuration.airplaneModeEnabled ? alternateIcon : activityIcon
     switchWidth: Kirigami.Units.iconSizes.small * 10
     switchHeight: Kirigami.Units.iconSizes.small * 10
 

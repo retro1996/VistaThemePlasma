@@ -43,8 +43,9 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 - [Geckium](https://github.com/angelbruni/Geckium) by AngelBruni
 - [Aero UserChrome](https://gitgud.io/souris/aero-userchrome) by Souris (Geckium in combination with Aero UserChrome works well with AeroThemePlasma and VistaThemePlasma)
-- [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma/) by WackyIdeas
+- [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma/) by [WackyIdeas](https://gitgud.io/wackyideas)
 - [Ice2K.sys](https://toiletflusher.neocities.org/ice2k/) by 0penrc
+- [Sevulet](https://gitgud.io/snailatte/sevulet) by [snailatte](https://gitgud.io/snailatte)
 
 
 ## Screenshots

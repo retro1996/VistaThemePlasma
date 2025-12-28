@@ -104,7 +104,7 @@ void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std:
         qreal t = animationIt->second.timeLine.value();
         
         // Add a hefty frame skip.
-        constexpr qreal dwmFrameSkipFactor = 2/60.0;
+        constexpr qreal dwmFrameSkipFactor = 1/60.0;
         // This remaps t from [0, 1] to [dwmFrameSkipFactor, 1.0 - dwmFrameSkipFactor].
         t = dwmFrameSkipFactor + (t * (1.0 - (2.0 * dwmFrameSkipFactor)));
 
@@ -262,7 +262,7 @@ void GlideEffect::windowAdded(EffectWindow *w)
     animation.timeLine.setDuration(m_duration);
     // Windows 7 uses a simple ease-out curve for opening windows.
     // Note for Windows 8: Windows 8/8.1 uses a cubic ease-out curve.
-    animation.timeLine.setEasingCurve(QEasingCurve::OutCurve);
+    animation.timeLine.setEasingCurve(QEasingCurve::InQuad);
     animation.effect = ItemEffect(w->windowItem());
 
     redirect(w);

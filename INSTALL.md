@@ -17,7 +17,7 @@ Before installing VistaThemePlasma, it's important to know which display server 
 Required packages:
 
 ```bash
-pacman --needed -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat qt6-wayland sddm-kcm plasma-wayland-protocols plasma5support kvantum base-devel
+pacman --needed -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat qt6-wayland sddm sddm-kcm plasma-wayland-protocols plasma5support kvantum base-devel
 ```
 
 Since Plasma 6.4, the X11 session has been separated from the main codebase. On Arch Linux, additional dependencies for X11 include:
@@ -53,6 +53,17 @@ zypper install cmake make ninja gcc gcc-c++ gmp-ecm-devel kf6-extra-cmake-module
 In openSUSE, additional dependencies for X11 include:
 
 - `kwin6-x11-devel`
+
+### Kubuntu 25.10
+
+```bash
+apt install build-essential cmake ninja-build curl libqt6virtualkeyboard6 libqt6multimedia6 libqt6core5compat6 libplasma5support6 libkdecorations3-dev libkf6colorscheme-dev libkf6i18n-dev libkf6iconthemes-dev libkf6kcmutils-dev libkirigami-dev libkf6kio-dev libkf6notifications-dev libkf6svg-dev libkf6crash-dev libkf6globalaccel-dev libplasma-dev libplasmaactivities-dev libxcb-composite0-dev libxcb-randr0-dev libxcb-shm0-dev libxcb-damage0-dev libepoxy-dev libqt6svg6-dev kwin-dev plasma-wayland-protocols
+```
+
+On Kubuntu, additional dependencies for X11 include:
+
+- `kwin-x11`
+- `kwin-x11-dev`
 
 ## Getting started <a name="started"></a>
 
