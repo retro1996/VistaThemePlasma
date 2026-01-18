@@ -49,8 +49,6 @@ SimpleKCM {
     property alias cfg_displayTimezoneAsCode: timezoneCodeRadio.checked
     property alias cfg_showSeconds: showSeconds.checked
 
-    property alias cfg_showDate: showDate.checked
-    property alias cfg_shortTaskbarHideDate: shortTaskbarHideDate.checked
     property string cfg_dateFormat: "shortDate"
     property alias cfg_customFormat: customFormat.text
     property alias cfg_use24hFormat: use24hFormat.checkState
@@ -107,14 +105,6 @@ SimpleKCM {
             //flat: true
 
             QtLayouts.ColumnLayout {
-                QtControls.CheckBox {
-                    id: showDate
-                    text: i18n("Show date")
-                }
-                QtControls.CheckBox {
-                    id: shortTaskbarHideDate
-                    text: i18n("Hide date on shorter taskbars")
-                }
 
                 QtControls.CheckBox {
                     id: showSeconds
@@ -173,7 +163,6 @@ SimpleKCM {
 
                     QtControls.ComboBox {
                         id: dateFormat
-                        enabled: showDate.checked
                         textRole: "label"
                         model: [
                             {

@@ -38,7 +38,6 @@ Item {
 
     property bool showSeconds: Plasmoid.configuration.showSeconds
     property bool showLocalTimezone: Plasmoid.configuration.showLocalTimezone
-    property bool showDate: Plasmoid.configuration.showDate && !shortTaskbarHideDate
 
     property var dateFormat: {
         if(Plasmoid.configuration.dateFormat == "custom") return Plasmoid.configuration.customFormat
@@ -55,7 +54,6 @@ Item {
     property string lastSelectedTimezone: Plasmoid.configuration.lastSelectedTimezone
     property bool displayTimezoneAsCode: Plasmoid.configuration.displayTimezoneAsCode
     property int use24hFormat: Plasmoid.configuration.use24hFormat
-    property bool shortTaskbarHideDate: Plasmoid.configuration.shortTaskbarHideDate && main.height <= 30 && Plasmoid.formFactor == PlasmaCore.Types.Horizontal
 
     property string lastDate: ""
     property int tzOffset
@@ -86,17 +84,14 @@ Item {
     }
 
 
-    onDateFormatChanged: {
-        setupLabels();
-    }
+    onDateFormatChanged: { setupLabels(); }
 
     onDisplayTimezoneAsCodeChanged: { setupLabels(); }
-    onStateChanged: { setupLabels(); }
+    onStateChanged: { setupLabels(); timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)); }
 
     onLastSelectedTimezoneChanged: { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
     onShowSecondsChanged:          { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
     onShowLocalTimezoneChanged:    { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
-    onShowDateChanged:             { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
     onUse24hFormatChanged:         { timeFormatCorrection(Qt.locale().timeFormat(Locale.ShortFormat)) }
 
     Connections {
@@ -118,7 +113,7 @@ Item {
     states: [
         State {
             name: "horizontalBig"
-            when: Plasmoid.formFactor == PlasmaCore.Types.Horizontal && main.height >= 47
+            when: Plasmoid.formFactor == PlasmaCore.Types.Horizontal && main.height >= 40
 
             PropertyChanges {
                 target: main
@@ -131,13 +126,13 @@ Item {
             PropertyChanges {
                 target: mainContent
 
-                width: 0 + Math.max(timeLabel.implicitWidth, dayLabel.implicitWidth, dateLabel.implicitWidth) + ((Kirigami.Units.smallSpacing * 2) + 2)
+                width: 0 + Math.max(timeLabel.implicitWidth, dayLabel.implicitWidth, dateLabel.implicitWidth) + Kirigami.Units.smallSpacing * 3
                 height: main.height
             }
         },
         State {
             name: "horizontal"
-            when: Plasmoid.formFactor == PlasmaCore.Types.Horizontal && (main.height < 47 && main.height >= 37)
+            when: Plasmoid.formFactor == PlasmaCore.Types.Horizontal && (main.height < 40 && main.height >= 30)
 
             PropertyChanges {
                 target: main
@@ -150,7 +145,7 @@ Item {
             PropertyChanges {
                 target: mainContent
 
-                width: 0 + Math.max(timeLabel.implicitWidth, dateLabel.implicitWidth) + ((Kirigami.Units.smallSpacing * 2) + 2)
+                width: 0 + Math.max(timeLabel.implicitWidth, dateLabel.implicitWidth) + Kirigami.Units.smallSpacing * 3
                 height: main.height
             }
         },
@@ -169,7 +164,7 @@ Item {
             PropertyChanges {
                 target: mainContent
 
-                width: 0 + Math.max(timeLabel.implicitWidth, 0) + ((Kirigami.Units.smallSpacing * 2) + 1)
+                width: 0 + Math.max(timeLabel.implicitWidth, 0) + (Kirigami.Units.smallSpacing * 2) + 1
                 height: main.height
             }
         }
@@ -301,7 +296,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                visible: main.showDate
+                visible: main.state != "horizontalSmall"
             }
         }
     }
@@ -419,7 +414,6 @@ Item {
 
     function setupLabels() {
         dateLabel.text = Qt.formatDate(main.currentTime, main.dateFormat);
-        if(!main.showDate) dateLabel.text = dateLabel.text.slice(1) + " ";
 
         // find widest character between 0 and 9
         var maximumWidthNumber = 0;
@@ -439,8 +433,7 @@ Item {
         var advanceWidthAm = timeMetrics.advanceWidth(timeAm);
     }
 
-    function dateTimeChanged()
-    {
+    function dateTimeChanged() {
         var doCorrections = false;
 
         if (main.showDate) {
