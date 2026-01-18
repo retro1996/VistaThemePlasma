@@ -20,7 +20,8 @@ target_link_libraries(io.gitgud.catpswin56.vistastart
                       KF6::Svg
                       KF6::ConfigCore
                       KF6::ConfigGui
-                      KF6::CoreAddons)
+                      KF6::CoreAddons
+                      KF6::Service)
 
 
 #target_link_libraries(plasma_applet_seventasks KF5::WindowSystem)

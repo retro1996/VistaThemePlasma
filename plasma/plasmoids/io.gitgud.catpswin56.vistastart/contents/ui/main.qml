@@ -97,14 +97,14 @@ PlasmoidItem {
 
         autoPopulate: false
 
-        appNameFormat: Plasmoid.configuration.appNameFormat
+        appNameFormat: 0
         flat: true
         sorted: false
         showSeparators: false
         appletInterface: kicker
 
         paginate: false
-        pageSize: Plasmoid.configuration.numberColumns *  Plasmoid.configuration.numberRows
+        pageSize: 1 * Plasmoid.configuration.numberRows
 
         showTopLevelItems: true
         showAllApps: false
@@ -144,6 +144,11 @@ PlasmoidItem {
             } else {
                 favoritesModel.favorites = Plasmoid.configuration.favoriteApps;
             }
+
+            if(Plasmoid.configuration.showDefaultInternetApp)
+                globalFavorites.addFavorite(Plasmoid.defaultInternetEntry);
+            if(Plasmoid.configuration.showDefaultEmailApp)
+                globalFavorites.addFavorite(Plasmoid.defaultInternetEntry);
         }
     }
 
@@ -169,10 +174,27 @@ PlasmoidItem {
         function onFavoriteAppsChanged() {
             globalFavorites.favorites = Plasmoid.configuration.favoriteApps;
         }
-
         function onFavoriteSystemActionsChanged() {
             systemFavorites.favorites = Plasmoid.configuration.favoriteSystemActions;
         }
+
+        function onShowDefaultInternetAppChanged() {
+            if(Plasmoid.configuration.showDefaultInternetApp)
+                globalFavorites.addFavorite(Plasmoid.defaultInternetEntry);
+            else
+                globalFavorites.removeFavorite(Plasmoid.defaultInternetEntry);
+        }
+        function onShowDefaultEmailAppChanged() {
+            if(Plasmoid.configuration.showDefaultEmailApp)
+                globalFavorites.addFavorite(Plasmoid.defaultEmailEntry);
+            else
+                globalFavorites.removeFavorite(Plasmoid.defaultEmailEntry);
+        }
+    }
+
+    KSvg.Svg {
+        id: separatorSvg
+        imagePath: Qt.resolvedUrl("svgs/sidebarseparator.svg")
     }
 
     Kicker.DragHelper {
@@ -181,39 +203,6 @@ PlasmoidItem {
 
     Kicker.ProcessRunner {
         id: processRunner
-    }
-
-	// SVGs
-    KSvg.FrameSvgItem {
-        id : highlightItemSvg
-        visible: false
-        imagePath: Qt.resolvedUrl("svgs/menuitem.svg")
-        prefix: "hover"
-    }
-    KSvg.FrameSvgItem {
-        id : panelSvg
-        visible: false
-        imagePath: "widgets/panel-background"
-    }
-    KSvg.Svg {
-        id: arrowsSvg
-        imagePath: Qt.resolvedUrl("svgs/arrows.svgz")
-        size: "16x16"
-    }
-    KSvg.Svg {
-        id: separatorSvg
-        imagePath: Qt.resolvedUrl("svgs/sidebarseparator.svg")
-    }
-
-    PlasmaComponents.Label {
-        id: toolTipDelegate
-
-        width: contentWidth
-        height: contentHeight
-
-        property Item toolTip
-
-        text: (toolTip != null) ? toolTip.text : ""
     }
 
     function resetDragSource() {

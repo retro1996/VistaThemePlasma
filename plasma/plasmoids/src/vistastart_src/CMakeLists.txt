@@ -11,22 +11,24 @@ include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(FeatureSummary)
-find_package(KF6WindowSystem)
-find_package(KF6Svg)
-find_package(KF6Config)
-find_package(KF6Plasma)
 
-find_package(KF6 REQUIRED COMPONENTS
-    I18n
+find_package(KF6 REQUIRED REQUIRED
+    COMPONENTS
+        WindowSystem
+        Svg
+        Config
+        Service
+        I18n
+        CoreAddons
 )
 
-find_package(Qt6 CONFIG REQUIRED COMPONENTS
-    Quick
-    Core
+find_package(Qt6 CONFIG REQUIRED
+    COMPONENTS
+        Quick
+        Core
 )
 
 find_package(Plasma 6.0.0 REQUIRED)
-find_package(KF6CoreAddons)
 
 add_subdirectory(src)
 

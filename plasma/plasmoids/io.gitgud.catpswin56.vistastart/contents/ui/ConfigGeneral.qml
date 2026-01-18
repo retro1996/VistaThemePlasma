@@ -38,13 +38,8 @@ KCM.SimpleKCM {
     width: childrenRect.width
     height: childrenRect.height
 
-    property string cfg_icon: Plasmoid.configuration.icon
-
-    property bool cfg_useCustomButtonImage: Plasmoid.configuration.useCustomButtonImage
-
+    property bool   cfg_useCustomButtonImage: Plasmoid.configuration.useCustomButtonImage
     property string cfg_customButtonImage: Plasmoid.configuration.customButtonImage
-    property string cfg_customButtonImageHover: Plasmoid.configuration.customButtonImageHover
-    property string cfg_customButtonImageActive: Plasmoid.configuration.customButtonImageActive
     
     property alias cfg_offsetFloatingOrb: offsetFloatingOrb.checked
     property alias cfg_orbWidth: orbWidth.value
@@ -62,8 +57,8 @@ KCM.SimpleKCM {
 
     property alias cfg_numberRows: numberRows.value
 
-    property string cfg_defaultInternetApp
-    property string cfg_defaultEmailApp
+    property alias  cfg_showDefaultInternetApp: showDefaultInternetApp.checked
+    property alias  cfg_showDefaultEmailApp: showDefaultEmailApp.checked
     property string cfg_defaultRunnerApp
 
     component CustomGroupBox: GroupBox {
@@ -102,36 +97,71 @@ KCM.SimpleKCM {
         CustomGroupBox {
             id: orbGroup
 
+            Layout.fillWidth: true
 
             title: i18n("Orb texture")
 
-            Layout.fillWidth: true
-
             ColumnLayout {
                 anchors.fill: parent
+
                 IconPicker {
                     id: iconPickerNormal
+
+                    Layout.fillWidth: true
+
                     currentIcon: cfg_customButtonImage
                     defaultIcon: ""
-                        onIconChanged: iconName => { cfg_customButtonImage = iconName; }
-                        Layout.fillWidth: true
+
+                    onIconChanged: iconName => { cfg_customButtonImage = iconName; }
                 }
                 RowLayout {
+                    Text { text: i18n("Orb size (0 for default/no scaling):") }
 
-                    Text {
-                        text: i18n("Orb size (0 for default/no scaling):")
-                    }
-                    SpinBox{
+                    SpinBox {
                         id: orbWidth
+
                         from: 0
                         to: 500
                     }
                 }
 
             }
-
-
         }
+
+        CustomGroupBox {
+            Layout.fillWidth: true
+
+            title: i18n("Default Applications")
+
+            ColumnLayout {
+                CheckBox {
+                    id: showDefaultInternetApp
+                    text: i18n("Show default Internet app")
+                }
+
+                CheckBox {
+                    id: showDefaultEmailApp
+                    text: i18n("Show default E-mail app")
+                }
+
+                RowLayout {
+                    Label {
+                        text: i18n("Default run app:")
+                    }
+                    TextField {
+                        id: defaultRunnerApp
+
+                        Layout.fillWidth: true
+
+                        text: configGeneral.cfg_defaultRunnerApp
+                        onTextChanged: configGeneral.cfg_defaultRunnerApp = text;
+
+                        inputMethodHints: Qt.ImhNoPredictiveText
+                    }
+                }
+            }
+        }
+
         CustomGroupBox {
             Layout.fillWidth: true
 
@@ -203,66 +233,6 @@ KCM.SimpleKCM {
                 CheckBox {
                     id: hideLeaveMenuPadding
                     text: i18n("Remove extra more menu padding")
-                }
-            }
-        }
-        CustomGroupBox {
-            Layout.fillWidth: true
-
-            title: i18n("Default apps")
-
-            ColumnLayout {
-                RowLayout {
-                    Label {
-                        text: i18n("Internet:")
-                    }
-
-                    TextField {
-                        id: defaultInternetApp
-                        Layout.fillWidth: true
-
-                        placeholderText: configGeneral.cfg_defaultInternetApp
-
-                        inputMethodHints: Qt.ImhNoPredictiveText
-
-                        onTextChanged: {
-                            configGeneral.cfg_defaultInternetApp = text;
-                        }
-                    }
-                }
-                RowLayout {
-                    Label {
-                        text: i18n("E-Mail:")
-                    }
-                    TextField {
-                        id: defaultEmailApp
-                        Layout.fillWidth: true
-
-                        placeholderText: configGeneral.cfg_defaultEmailApp
-
-                        inputMethodHints: Qt.ImhNoPredictiveText
-
-                        onTextChanged: {
-                            configGeneral.cfg_defaultEmailApp = text;
-                        }
-                    }
-                }
-                RowLayout {
-                    Label {
-                        text: i18n("Run:")
-                    }
-                    TextField {
-                        id: defaultRunnerApp
-                        Layout.fillWidth: true
-
-                        placeholderText: configGeneral.cfg_defaultRunnerApp
-
-                        inputMethodHints: Qt.ImhNoPredictiveText
-
-                        onTextChanged: {
-                            configGeneral.cfg_defaultRunnerApp = text;
-                        }
-                    }
                 }
             }
         }

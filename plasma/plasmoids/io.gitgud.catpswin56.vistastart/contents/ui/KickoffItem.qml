@@ -74,8 +74,8 @@ Item {
     property var listView: listItem.ListView.view
 
     readonly property bool isFavorites: listView?.isFavorites ?? false
-    readonly property bool isDefaultInternetApp: isFavorites && Plasmoid.configuration.defaultInternetApp == model?.display
-    readonly property bool isDefaultEmailApp: isFavorites && Plasmoid.configuration.defaultEmailApp == model?.display
+    readonly property bool isDefaultInternetApp: isFavorites && Plasmoid.defaultInternetName == model?.display
+    readonly property bool isDefaultEmailApp: isFavorites && Plasmoid.defaultEmailName == model?.display
 
     readonly property string title: {
         if(isDefaultInternetApp)
@@ -117,10 +117,8 @@ Item {
         } else {
             view.model.trigger(model.index, "", null);
             listItem.reset();
-            //kicker.compactRepresentation.showMenu();
             Plasmoid.expanded = false;
         }
-        
     }
 
     function openActionMenu(x, y) {
@@ -144,6 +142,13 @@ Item {
         id: actionMenu
 
         onActionClicked: (actionId, actionArgument) => {
+            if(actionId == "_kicker_favorite_remove_from_activity") {
+                if(isDefaultInternetApp)
+                    Plasmoid.configuration.showDefaultInternetApp = false;
+                if(isDefaultEmailApp)
+                    Plasmoid.configuration.showDefaultEmailApp = false;
+            }
+
             actionTriggered(actionId, actionArgument);
         }
     }
@@ -274,7 +279,7 @@ Item {
                 anchors.fill: parent
                 active: titleElement.truncated
                 interactive: false
-                mainText: model ? model.display : ""
+                mainText: model?.display ?? ""
                 location: {
                     var result = PlasmaCore.Types.Floating
                     if(ma.containsMouse) result |= PlasmaCore.Types.Desktop;

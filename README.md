@@ -9,13 +9,13 @@ This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma]
 VTP is in constant development and testing. So far it has been tested on:
 
 1. Arch Linux x64 and other Arch derivatives
-2. Plasma 6.5.4, KDE Frameworks 6.20.0, Qt 6.10.1
+2. Plasma 6.5.5, KDE Frameworks 6.22.0, Qt 6.10.1
 3. 96 DPI scaling, single monitor
 4. X11, Wayland*
 
 *VistaThemePlasma currently lacks full Wayland support, which may result in Wayland-specific issues. 
 
-## This project overwrites a small number of [system](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/misc/libplasma) [files](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/extras/extra-components/uac-polkitagent), it's always recommended to make backups of your system just in case. I am not responsible for broken systems, please proceed with caution.
+## This project overwrites a small number of [system](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/misc/libplasma) [files](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/misc/uac-polkitagent), it's always recommended to make backups of your system just in case. I am not responsible for broken systems, please proceed with caution.
 
 [GitHub mirror](https://github.com/catpswin5/vistathemeplasma)
 

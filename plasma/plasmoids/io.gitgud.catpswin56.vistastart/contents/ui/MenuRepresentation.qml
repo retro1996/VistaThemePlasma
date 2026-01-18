@@ -46,7 +46,6 @@ PlasmaCore.Dialog {
     objectName: "popupWindow"
     location: "Floating" // To make the panel display all 4 borders, the panel will be positioned at a corner.
     flags: Qt.WindowStaysOnTopHint //| Qt.Popup // Set to popup so that it is still considered a plasmoid popup, despite being a floating dialog window.
-    type: "Dock"
 	hideOnWindowDeactivate: true
 
 	title: "sevenstart-menurepresentation"
@@ -57,9 +56,7 @@ PlasmaCore.Dialog {
     property int iconSizeSide: Kirigami.Units.iconSizes.smallMedium
     property int cellWidth: 254 // Width for left panel items.
     property int cellWidthSide: 139 // Width for right panel items.
-    property int cellHeight: iconSize + Kirigami.Units.smallSpacing
-							 + (Math.max(highlightItemSvg.margins.top + highlightItemSvg.margins.bottom, highlightItemSvg.margins.left + highlightItemSvg.margins.right))
-							 - Kirigami.Units.smallSpacing/2
+    property int cellHeight: iconSize + Kirigami.Units.smallSpacing - Kirigami.Units.smallSpacing/2
 
 	property int cellCount: Plasmoid.configuration.numberRows + faves.getFavoritesCount()
 
@@ -1223,7 +1220,7 @@ PlasmaCore.Dialog {
 				anchors.verticalCenter: parent.verticalCenter
 
 				KeyNavigation.tab: lock
-				KeyNavigation.backtab: Qt.binding(() => { return leaveButtons.findUpItem(); });
+				KeyNavigation.backtab: leaveButtons.findUpItem();
 
 				Keys.onPressed: event => {
 					if(event.key == Qt.Key_Return) {

@@ -33,9 +33,21 @@ class SevenStart : public Plasma::Applet
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString defaultInternetEntry READ defaultInternetEntry NOTIFY defaultsChanged)
+    Q_PROPERTY(QString defaultInternetName  READ defaultInternetName  NOTIFY defaultsChanged)
+
+    Q_PROPERTY(QString defaultEmailEntry READ defaultEmailEntry NOTIFY defaultsChanged)
+    Q_PROPERTY(QString defaultEmailName  READ defaultEmailName  NOTIFY defaultsChanged)
+
 public:
     SevenStart(QObject *parentObject, const KPluginMetaData &data, const QVariantList &args);
     ~SevenStart();
+
+    QString defaultInternetEntry();
+    QString defaultInternetName();
+
+    QString defaultEmailEntry();
+    QString defaultEmailName();
 
     QRect availableScreenGeometryForPosition(const QPoint &pos) const
     {
@@ -167,6 +179,10 @@ public:
         if(w == nullptr) return;
         KWindowEffects::enableBlurBehind(w, true, mask);
     }
+
+Q_SIGNALS:
+    void defaultsChanged();
+
 public Q_SLOTS:
     void onCompositingChanged(bool enabled)
     {
@@ -177,6 +193,7 @@ public Q_SLOTS:
         if(enabled && orb != nullptr)
             orb->raise();
     }
+
 protected:
     QBitmap* inputMaskCache = nullptr;
     QQuickWindow* orb = nullptr;
