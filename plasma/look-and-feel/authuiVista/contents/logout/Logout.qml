@@ -30,6 +30,7 @@ Image {
     }
 
     fillMode: Image.PreserveAspectCrop
+    source: Qt.resolvedUrl("/usr/share/sddm/themes/sddm-theme-mod/background")
 
     Plasma5Support.DataSource {
         id: executable
@@ -54,16 +55,7 @@ Image {
     Connections {
         target: executable
         function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if(root.source == "") {
-                if(stdout.length <= 1)
-                    executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
-                else {
-                    var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
-                    root.source = Qt.resolvedUrl(string.trim());
-                }
-            }
-            else
-                root.cancelRequested();
+            root.cancelRequested();
         }
     }
 
@@ -372,6 +364,4 @@ Image {
 
         source: "../images/watermark.png"
     }
-
-    Component.onCompleted: executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"")
 }
