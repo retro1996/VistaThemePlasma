@@ -1,8 +1,9 @@
 /*
-    SPDX-FileCopyrightText: 2014 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
-
-    SPDX-License-Identifier: GPL-2.0-or-later
-*/
+ *  SPDX-FileCopyrightText: 2026 catpswin56 <catpswin5@proton.me>
+ *  SPDX-FileCopyrightText: 2014 Aleix Pol Gonzalez <aleixpol@blue-systems.com>
+ *
+ *  SPDX-License-Identifier: GPL-2.0-or-later
+ */
 
 import QtQml 2.15
 import QtQuick
@@ -106,26 +107,13 @@ Item {
     Connections {
         target: executable
         function onExited(stdout, cmd) {
-            if(cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\""
-               || cmd == "kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"")
-            {
-                if(stdout.length <= 1)
-                    executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
-                else {
-                    var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
-                    backgroundWallpaper.source = Qt.resolvedUrl(string.trim());
+            soundsModel.theme = stdout.trim() ? stdout.trim() : "ocean";
+            for(var i = 0; i < soundsModel.rowCount(); i++) {
+                var str = soundsModel.initialSourceUrl(i);
+                if(str.includes("desktop-login") && !str.endsWith(".license")) {
+                    lockSuccess.source = str;
+                    break;
                 }
-
-            } else {
-                soundsModel.theme = stdout.trim() ? stdout.trim() : "ocean";
-                for(var i = 0; i < soundsModel.rowCount(); i++) {
-                    var str = soundsModel.initialSourceUrl(i);
-                    if(str.includes("desktop-login") && !str.endsWith(".license")) {
-                        lockSuccess.source = str;
-                        break;
-                    }
-                }
-
             }
         }
     }
@@ -221,8 +209,6 @@ Item {
         id: capsLockState
         key: Qt.Key_CapsLock
     }
-
-    Component.onCompleted: executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf.user\" --group \"General\" --key \"background\"")
 
     Loader {
         id: changeSessionComponent
@@ -356,10 +342,10 @@ Item {
             id: backgroundWallpaper
             anchors.fill: parent
             fillMode: Image.Stretch
+            source: Qt.resolvedUrl("/usr/share/sddm/themes/sddm-theme-mod/background")
         }
 
         Component.onCompleted: {
-            executable.exec("kreadconfig6 --file ~/.config/kdeglobals --group Sounds --key Theme");
             if (!calledUnlock) {
                 calledUnlock = true;
                 authenticator.startAuthenticating();

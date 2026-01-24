@@ -58,13 +58,18 @@ Item
             pages.currentIndex = Main.LoginPage.Login
     }
 
+    Rectangle {
+        color: "#1D5F7A"
+        anchors.fill: parent
+    }
+
     Background {
         id: background
 
         anchors.fill: parent
 
         fillMode: Image.Stretch
-        source: Qt.resolvedUrl(config.stringValue("background"))
+        source: Qt.resolvedUrl("background")
     }
 
     Timer {
@@ -681,7 +686,7 @@ Item
         anchors.bottomMargin: 23
         anchors.horizontalCenter: parent.horizontalCenter
 
-        source: config.stringValue("branding")
+        source: "Assets/branding-white.png"
         visible: pages.currentIndex != Main.LoginPage.Startup
     }
 

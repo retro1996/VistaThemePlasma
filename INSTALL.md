@@ -173,7 +173,7 @@ $ sh install.sh --ninja
 ```
 
 3. Move `sddm/sddm-theme-mod` to `/usr/share/sddm/themes`.
-4. Move `sddm/entries/aerothemeplasma.desktop` to `/usr/share/wayland-sessions`, and `sddm/entries/vistathemeplasmax11.desktop` to `/usr/share/xsessions`. This will install the SDDM entries required for VTP.
+4. Move `sddm/entries/vistathemeplasma.desktop` to `/usr/share/wayland-sessions`, and `sddm/entries/vistathemeplasmax11.desktop` to `/usr/share/xsessions`. This will install the SDDM entries required for VTP.
 5. Import and apply the color scheme through System Settings.
 
 ### KWin components

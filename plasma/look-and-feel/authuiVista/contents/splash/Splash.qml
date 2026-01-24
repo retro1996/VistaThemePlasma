@@ -48,42 +48,11 @@ Item {
 
     property int framenumber: 1
 
-    Plasma5Support.DataSource {
-        id: executable
-        engine: "executable"
-        connectedSources: []
-        onNewData: (sourceName, data) => {
-            var exitCode = data["exit code"]
-            var exitStatus = data["exit status"]
-            var stdout = data["stdout"]
-            var stderr = data["stderr"]
-            exited(sourceName, exitCode, exitStatus, stdout, stderr)
-            disconnectSource(sourceName)
-        }
-        function exec(cmd) {
-            if (cmd) {
-                connectSource(cmd)
-            }
-        }
-        signal exited(string cmd, int exitCode, int exitStatus, string stdout, string stderr)
-    }
-
-    Connections {
-        target: executable
-        function onExited(cmd, exitCode, exitStatus, stdout, stderr) {
-            if(stdout.length <= 1)
-                executable.exec("kreadconfig6 --file \"/usr/share/sddm/themes/sddm-theme-mod/theme.conf\" --group \"General\" --key \"background\"");
-            else {
-                var string = "/usr/share/sddm/themes/sddm-theme-mod/" + stdout;
-                bg.source = Qt.resolvedUrl(string.trim());
-            }
-        }
-    }
-
     Image {
         id: bg
         anchors.fill: parent
         fillMode: Image.Stretch
+        source: Qt.resolvedUrl("/usr/share/sddm/themes/sddm-theme-mod/background")
     }
 
     Status {
