@@ -60,7 +60,7 @@ Item {
     clip: false
 
     property real aspectRatio: buttonIconSizes.height === 0 ? 1 : (buttonIconSizes.width / buttonIconSizes.height)
-    property int scaledWidth: Plasmoid.configuration.orbWidth === 0 ? buttonIconSizes.width : Plasmoid.configuration.orbWidth
+    property int scaledWidth: Plasmoid.configuration.orbWidth === 1 ? buttonIconSizes.width : Plasmoid.configuration.orbWidth
     property int scaledHeight: scaledWidth / aspectRatio
 
     Image {

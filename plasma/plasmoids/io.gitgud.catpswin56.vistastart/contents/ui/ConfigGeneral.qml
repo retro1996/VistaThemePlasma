@@ -115,12 +115,12 @@ KCM.SimpleKCM {
                     onIconChanged: iconName => { cfg_customButtonImage = iconName; }
                 }
                 RowLayout {
-                    Text { text: i18n("Orb size (0 for default/no scaling):") }
+                    Text { text: i18n("Orb size (1 for default/no scaling):") }
 
                     SpinBox {
                         id: orbWidth
 
-                        from: 0
+                        from: 1
                         to: 500
                     }
                 }
