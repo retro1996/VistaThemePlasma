@@ -56,10 +56,10 @@ cp "$PWD/plasma/color_scheme/Aero.colors" "$COLOR_DIR"
 # Installs the SDDM theme, as well as the SDDM entries required for ATP and the KCM for customizing.
 echo -e "Installing SDDM SMOD KCM..."
 cd "plasma/sddm/kcm"
-sh install.sh
+bash install.sh
 echo -e "Installing login manager entries..."
 cd "$CUR_DIR/plasma/sddm/login-sessions"
-sh install.sh
+bash install.sh
 echo -e "Installing SDDM theme..."
 cd "$CUR_DIR/plasma/sddm"
 tar -zcvf "sddm-theme-mod.tar.gz" "sddm-theme-mod"
