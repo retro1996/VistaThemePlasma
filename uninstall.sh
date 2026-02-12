@@ -141,15 +141,15 @@ if [ "$?" == 1 ]; then
     echo "Done."
 fi
 
-uninstall_prompt "Sound themes" "$(echo "$HOME/.local/share/sounds/Windows") $(echo "$HOME/.local/share/sounds/Glass") $(echo "$HOME/.local/share/sounds/Pearl") $(echo "$HOME/.local/share/sounds/Tinker")"
+uninstall_prompt "Sound themes" "$(echo "$HOME/.local/share/sounds/Windows Vista"*)"
 if [ "$?" == 1 ]; then
     echo "Uninstalling sound themes..."
-    rm -r "$(echo "$HOME/.local/share/sounds/Windows")"
-    rm -r "$(echo "$HOME/.local/share/sounds/Glass")"
-    rm -r "$(echo "$HOME/.local/share/sounds/Pearl")"
-    rm -r "$(echo "$HOME/.local/share/sounds/Tinker")"
+    for filename in "$HOME/.local/share/sounds/Windows Vista"*; do
+        rm -r "$filename"
+    done
     echo "Done."
 fi
+
 
 ICONS_DIR="$HOME/.local/share/icons"
 uninstall_prompt "Icon theme" "$ICONS_DIR/Windows Vista Aero"
