@@ -1,19 +1,26 @@
 #!/bin/bash
 CUR_DIR=$(pwd)
+QDBUS_BIN="qdbus6"
 
 # Sanity check to see if the proper tools are installed.
 if [[ -z "$(command -v kpackagetool6)" ]]; then
     echo "kpackagetool6 not found. Stopping."
     exit
 fi
-if [[ -z "$(command -v qdbus6)" ]]; then
-    echo "qdbus6 not found. Stopping."
+if [[ -n "$(command -v qdbus6)" ]]; then # Arch
+    QDBUS_BIN=$(command -v qdbus6)
+elif [[ -n "$(command -v qdbus-qt6)" ]]; then # Fedora
+    QDBUS_BIN=$(command -v qdbus-qt6)
+else
+    echo "qdbus6 not found."
+    echo "qdbus-qt6 not found."
+    echo "Stopping."
     exit
 fi
 
-SHELL=$(qdbus6 org.kde.plasmashell /PlasmaShell shell)
+PLASMASHELL=$($QDBUS_BIN org.kde.plasmashell /PlasmaShell shell)
 
-if [ $SHELL == "io.gitgud.catpswin56.desktop" ]; then
+if [ $PLASMASHELL == "io.gitgud.catpswin56.desktop" ]; then
     echo -e "You shouldn't run the uninstall script from VistaThemePlasma itself."
     echo -e "Please run the uninstall script from the Plasma session or another session."
     exit
@@ -236,6 +243,18 @@ if [ "$?" == 1 ]; then
     echo "Done."
 fi
 
+LIBDIR="/usr/lib/x86_64-linux-gnu/"
+if [ ! -d ${LIBDIR} ]; then
+	LIBDIR="/usr/lib64/"
+fi
+APPLET_DIR="${LIBDIR}qt6/plugins/plasma/applets/"
+uninstall_prompt "Plasma applets (requires sudo privileges)" "${APPLET_DIR}io.gitgud.catpswin56."*
+if [ "$?" == 1 ]; then
+    echo "Uninstalling Plasma applet plugins..."
+    pkexec rm -r "${APPLET_DIR}/io.gitgud.catpswin56."*
+    echo "Done."
+fi
+
 echo "Uninstalling /opt/aerothemeplasma..."
 pkexec rm -r "/opt/aerothemeplasma"
 echo "Done."
@@ -243,4 +262,3 @@ echo "Done."
 
 echo -e "Uninstallation complete."
 echo -e "In order to uninstall the libplasma and polkit agent modifications, simply reinstall those packages using your distro's package manager."
-

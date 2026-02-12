@@ -220,7 +220,11 @@ Item {
                     hintingPreference: Font.PreferFullHinting
                 }
                 color: "white"
-                style: Text.Outline
+                style: {
+                    if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                    if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                    return Text.Raised;
+                }
                 styleColor: "transparent"
                 text: {
                     // get the time for the given timezone from the dataengine
@@ -266,7 +270,11 @@ Item {
                     hintingPreference: Font.PreferFullHinting
                 }
                 color: "white"
-                style: Text.Outline
+                style: {
+                    if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                    if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                    return Text.Raised;
+                }
                 styleColor: "transparent"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
@@ -291,7 +299,11 @@ Item {
                     hintingPreference: Font.PreferFullHinting
                 }
                 color: "white"
-                style: Text.Outline
+                style: {
+                    if(Screen.devicePixelRatio == 1.0) return Text.Outline;
+                    if(Screen.devicePixelRatio >= 2.0) return Text.Normal;
+                    return Text.Raised;
+                }
                 styleColor: "transparent"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter

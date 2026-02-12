@@ -207,18 +207,7 @@ Item {
                 active: impl.iconAndLabelsShouldlookSelected || model.selected
                 asynchronous: true
 
-                width: {
-                    if (root.useListViewMode) {
-                        if (main.GridView.view.overflowing) {
-                            return parent.width// - Kirigami.Units.smallSpacing;
-                        } else {
-                            return parent.width;
-                        }
-                    }
-
-                    return parent.width// - (Kirigami.Units.smallSpacing * 2);
-                }
-
+                width: parent.width
                 height: root.useListViewMode
                                 ? parent.height
                                 // the smallSpacings are for padding
@@ -324,6 +313,19 @@ Item {
                     renderType: Text.NativeRendering
                     font.hintingPreference: Font.PreferFullHinting
                     z: 2 // So it's always above the highlight effect
+                    font.kerning: Screen.devicePixelRatio == 1.0
+
+                    Timer {
+                        id: hidpi_hack
+                        interval: 50
+                        onTriggered: {
+                            front.anchors.rightMargin += 1;
+                            front.anchors.rightMargin -= 1;
+                            behind.anchors.rightMargin += 1;
+                            behind.anchors.rightMargin -= 1;
+
+                        }
+                    }
 
                     // Hacks to improve font rendering to increase contrast and text brightness
                     // This is done to get darker subpixel rendering, closer to ClearType
@@ -336,6 +338,7 @@ Item {
                         color: model.selected && Plasmoid.configuration.selectionStyle ? "black" : "#F9000000"
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: Screen.devicePixelRatio == 1.0
                         text: parent.text
                         elide: Text.ElideRight
                         maximumLineCount: parent.maximumLineCount
@@ -344,21 +347,6 @@ Item {
                         visible: Plasmoid.configuration.textShadows
 
                     }
-                    /*PlasmaComponents.Label { // One is enough
-                        id: behind_right
-                        z: -1
-                        anchors.fill: parent
-                        anchors.rightMargin: -1
-                        anchors.leftMargin: 1
-                        color: "#d9000000"
-                        renderType: Text.NativeRendering
-                        font.hintingPreference: Font.PreferFullHinting
-                        text: parent.text
-                        elide: Text.ElideRight
-                        maximumLineCount: parent.maximumLineCount
-                        wrapMode: (maximumLineCount === 1) ? Text.NoWrap : Text.Wrap
-                        horizontalAlignment: Text.AlignHCenter
-                    }*/
                     PlasmaComponents.Label {
                         id: front
                         z: -2
@@ -367,6 +355,8 @@ Item {
                         color: model.selected && Plasmoid.configuration.selectionStyle ? "black" : "#ffffffff"
                         renderType: Text.NativeRendering
                         font.hintingPreference: Font.PreferFullHinting
+                        font.kerning: Screen.devicePixelRatio == 1.0
+
                         text: parent.text
                         elide: Text.ElideRight
                         maximumLineCount: parent.maximumLineCount
@@ -379,17 +369,42 @@ Item {
                         State { // icon view
                             when: !root.useListViewMode
 
+                            PropertyChanges {
+                                target: label
+                                anchors.topMargin: Kirigami.Units.smallSpacing
+                                // Ffs
+                                width: Math.floor((parent.width - Kirigami.Units.smallSpacing + (Screen.devicePixelRatio != 1.0) * 2 * Screen.devicePixelRatio) * Screen.devicePixelRatio) / Screen.devicePixelRatio
+                                maximumLineCount: Plasmoid.configuration.textLines
+                                horizontalAlignment: Text.AlignHCenter
+                            }
                             AnchorChanges {
                                 target: label
                                 anchors.top: icon.bottom
                                 anchors.horizontalCenter: parent.horizontalCenter
                             }
+                            AnchorChanges {
+                                target: behind
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.bottom: parent.bottom
+                            }
+                            AnchorChanges {
+                                target: front
+                                anchors.top: parent.top
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.bottom: parent.bottom
+                            }
                             PropertyChanges {
-                                target: label
-                                anchors.topMargin: Kirigami.Units.smallSpacing
-                                width: parent.width - Kirigami.Units.smallSpacing
-                                maximumLineCount: Plasmoid.configuration.textLines
-                                horizontalAlignment: Text.AlignHCenter
+                                target: behind
+                                anchors.rightMargin: 1
+                                anchors.leftMargin: -1
+                            }
+                            StateChangeScript {
+                                script: {
+                                    hidpi_hack.start();
+                                }
                             }
                         },
                         State { // list view
@@ -536,7 +551,6 @@ Item {
                         source: icon
                     }
                 }
-
             }
 
             PlasmaCore.ToolTipArea {
