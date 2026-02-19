@@ -1,6 +1,6 @@
 # VISTATHEMEPLASMA FOR KDE 6
 
-## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2025 All rights reserved. All resources belong to Microsoft Corporation.
+## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2026 All rights reserved. All resources belong to Microsoft Corporation.
 
 ## Introduction
 
@@ -9,7 +9,7 @@ This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma]
 VTP is in constant development and testing. So far it has been tested on:
 
 1. Arch Linux x64 and other Arch derivatives
-2. Plasma 6.5.5, KDE Frameworks 6.22.0, Qt 6.10.1
+2. Plasma 6.6.0, KDE Frameworks 6.23.0, Qt 6.10.2
 3. 96 DPI scaling, single monitor
 4. X11, Wayland*
 
