@@ -85,19 +85,13 @@ void SmodGlowEffect::loadTextures()
     m_active = true;
 }
 
-void SmodGlowEffect::paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, QRegion region, WindowPaintData &data)
+void SmodGlowEffect::paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data)
 {
-    effects->paintWindow(renderTarget, viewport, w, mask, region, data);
+    effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
 
     bool scaled = !qFuzzyCompare(data.xScale(), 1.0) && !qFuzzyCompare(data.yScale(), 1.0);
     bool translated = data.xTranslation() || data.yTranslation();
     double hdr_brightness_correction = 1.0;
-
-    // HDR brightness must be handled by color management in the compositor.
-    if (w->screen()->highDynamicRange())
-    {
-        hdr_brightness_correction = w->screen()->brightnessSetting();
-    }
 
     if ((scaled || (translated || (mask & PAINT_WINDOW_TRANSFORMED))))
     {
