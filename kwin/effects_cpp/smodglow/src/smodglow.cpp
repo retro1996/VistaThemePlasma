@@ -321,9 +321,9 @@ void SmodGlowEffect::stopAllAnimations(const EffectWindow *w)
     }
 }
 
-void SmodGlowEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
+void SmodGlowEffect::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
 {
-    effects->prePaintWindow(w, data, presentTime);
+    effects->prePaintWindow(view, w, data, presentTime);
 
     if(w->isUserResize())
     {
@@ -409,7 +409,7 @@ void SmodGlowEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, s
     handler->m_max_rect   = QRect(origin + handler->m_max->pos,   m_texture_maximize.get()->size());
     handler->m_close_rect = QRect(origin + handler->m_close->pos, m_texture_close.get()->size());*/
 
-    QRegion newPaint = QRegion();
+    Region newPaint = Region();
     newPaint |= handler->m_menu_rect;
     newPaint |= handler->m_pin_rect;
     newPaint |= handler->m_shade_rect;
@@ -422,32 +422,32 @@ void SmodGlowEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, s
 
     if (newPaint != m_prevPaint)
     {
-        QRegion clearRegion = m_prevPaint - newPaint;
+        Region clearRegion = m_prevPaint.subtracted(newPaint);
 
         if (!clearRegion.isEmpty())
         {
-            data.paint |= clearRegion;
+            effects->addRepaint(clearRegion);
         }
     }
 
-    data.paint |= newPaint;
+    effects->addRepaint(newPaint);
     m_prevPaint = newPaint;
 }
 
-void SmodGlowEffect::postPaintWindow(EffectWindow *w)
-{
-    if (windows.contains(w))
-    {
-        GlowHandler *handler = windows.value(w);
-
-        if (handler->m_needsRepaint)
-        {
-            effects->addRepaint(m_prevPaint);
-        }
-    }
-
-    effects->postPaintWindow(w);
-}
+// void SmodGlowEffect::postPaintScreen()
+// {
+//     if (windows.contains(w))
+//     {
+//         GlowHandler *handler = windows.value(w);
+//
+//         if (handler->m_needsRepaint)
+//         {
+//             effects->addRepaint(m_prevPaint);
+//         }
+//     }
+//
+//     effects->postPaintScreen();
+// }
 
 void SmodGlowEffect::windowAdded(EffectWindow *w)
 {

@@ -96,7 +96,7 @@ void GlideEffect::reconfigure(ReconfigureFlags flags)
     m_outParams.opacity.to = GlideConfig::outOpacity();
 }
 
-void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
+void GlideEffect::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
 {
     auto animationIt = m_animations.find(w);
     if (animationIt != m_animations.end()) {
@@ -116,7 +116,7 @@ void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std:
         animationIt->second.timeLine.advance(presentTime);
         data.setTransformed(); // Mark the window as transformed
     }
-    effects->prePaintWindow(w, data, presentTime);
+    effects->prePaintWindow(view, w, data, presentTime);
 }
 
 QMatrix4x4 GlideEffect::calculateTransform(EffectWindow *window, const GlideParams &params, qreal t)
@@ -205,10 +205,11 @@ void GlideEffect::apply(EffectWindow *window, int mask, WindowPaintData &data, W
     data.multiplyOpacity(newOpacity);
 }
 
-void GlideEffect::postPaintWindow(EffectWindow *w)
+void GlideEffect::postPaintScreen()
 {
-    if (auto animationIt = m_animations.find(w); animationIt != m_animations.end()) {
-        w->addRepaintFull();
+    for (auto animationIt = m_animations.begin(); animationIt != m_animations.end();) {
+        EffectWindow *w = animationIt->first;
+		w->addRepaintFull();
 
         if (animationIt->second.timeLine.done()) {
             // Clear the data in case the last frame gets stuck in a transformed state, completing the animation
@@ -221,7 +222,7 @@ void GlideEffect::postPaintWindow(EffectWindow *w)
         }
     }
 
-    effects->postPaintWindow(w);
+    effects->postPaintScreen();
 }
 
 bool GlideEffect::isActive() const

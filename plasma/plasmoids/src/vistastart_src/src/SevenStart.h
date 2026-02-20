@@ -27,7 +27,6 @@
 #include <QFileInfo>
 #include <QUrl>
 #include "dialogshadows_p.h"
-#include <plasmaquick/dialog.h>
 
 class SevenStart : public Plasma::Applet
 {
