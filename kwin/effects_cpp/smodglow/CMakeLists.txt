@@ -119,6 +119,7 @@ target_link_libraries(${TARGET_NAME}
 else ()
 
 if(KWIN_BUILD_WAYLAND)
+    target_compile_definitions(${TARGET_NAME} PRIVATE "KWIN_BUILD_WAYLAND")
     target_link_libraries(${TARGET_NAME} PRIVATE KWin::kwin)
 else()
     target_link_libraries(${TARGET_NAME} PRIVATE KWinX11::kwin)

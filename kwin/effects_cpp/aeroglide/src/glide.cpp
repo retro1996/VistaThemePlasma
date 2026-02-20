@@ -96,7 +96,11 @@ void GlideEffect::reconfigure(ReconfigureFlags flags)
     m_outParams.opacity.to = GlideConfig::outOpacity();
 }
 
+#ifdef KWIN_BUILD_WAYLAND
 void GlideEffect::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
+#else
+void GlideEffect::prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime)
+#endif
 {
     auto animationIt = m_animations.find(w);
     if (animationIt != m_animations.end()) {
@@ -116,7 +120,11 @@ void GlideEffect::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePai
         animationIt->second.timeLine.advance(presentTime);
         data.setTransformed(); // Mark the window as transformed
     }
-    effects->prePaintWindow(view, w, data, presentTime);
+#ifdef KWIN_BUILD_WAYLAND
+effects->prePaintWindow(view, w, data, presentTime);
+#else
+effects->prePaintWindow(w, data, presentTime);
+#endif
 }
 
 QMatrix4x4 GlideEffect::calculateTransform(EffectWindow *window, const GlideParams &params, qreal t)
@@ -205,7 +213,11 @@ void GlideEffect::apply(EffectWindow *window, int mask, WindowPaintData &data, W
     data.multiplyOpacity(newOpacity);
 }
 
+#ifdef KWIN_BUILD_WAYLAND
 void GlideEffect::postPaintScreen()
+#else
+void GlideEffect::postPaintWindow(EffectWindow *w)
+#endif
 {
     for (auto animationIt = m_animations.begin(); animationIt != m_animations.end();) {
         EffectWindow *w = animationIt->first;
@@ -222,7 +234,11 @@ void GlideEffect::postPaintScreen()
         }
     }
 
+#ifdef KWIN_BUILD_WAYLAND
     effects->postPaintScreen();
+#else
+    effects->postPaintWindow(w);
+#endif
 }
 
 bool GlideEffect::isActive() const

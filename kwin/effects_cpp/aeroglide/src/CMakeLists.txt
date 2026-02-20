@@ -18,6 +18,7 @@ target_link_libraries(aeroglide PRIVATE
     KF6::ConfigGui
 )
 if (KWIN_BUILD_WAYLAND)
+    target_compile_definitions(aeroglide PRIVATE "KWIN_BUILD_WAYLAND")
     target_link_libraries(aeroglide PRIVATE
         KWin::kwin
     )

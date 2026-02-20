@@ -17,7 +17,7 @@ import org.kde.kirigami as Kirigami
 import org.kde.kitemmodels as KItemModels
 
 import org.kde.taskmanager as TaskManager
-import org.kde.plasma.private.taskmanager as TaskManagerApplet
+import aerothemeplasma.taskmanager as TaskManagerApplet
 import org.kde.plasma.workspace.dbus as DBus
 
 import org.kde.kquickcontrolsaddons

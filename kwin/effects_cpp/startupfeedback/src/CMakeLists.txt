@@ -19,6 +19,7 @@ target_link_libraries(launchfeedback PRIVATE
     KF6::WindowSystem
 )
 if(KWIN_BUILD_WAYLAND)
+    target_compile_definitions(launchfeedback PRIVATE "KWIN_BUILD_WAYLAND")
     target_link_libraries(launchfeedback PRIVATE
         KWin::kwin
     )

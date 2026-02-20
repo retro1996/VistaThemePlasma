@@ -2,6 +2,10 @@
 #include "smod.h"
 #include <QVector2D>
 
+#ifdef KWIN_BUILD_WAYLAND
+#include <core/backendoutput.h>
+#endif
+
 namespace KWin
 {
 
@@ -85,13 +89,30 @@ void SmodGlowEffect::loadTextures()
     m_active = true;
 }
 
-void SmodGlowEffect::paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data)
+#ifdef KWIN_BUILD_WAYLAND
+void SmodGlowEffect::paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const EffectRegion &deviceRegion, WindowPaintData &data)
+#else
+void SmodGlowEffect::paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, EffectRegion deviceRegion, WindowPaintData &data)
+#endif
 {
     effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
 
     bool scaled = !qFuzzyCompare(data.xScale(), 1.0) && !qFuzzyCompare(data.yScale(), 1.0);
     bool translated = data.xTranslation() || data.yTranslation();
     double hdr_brightness_correction = 1.0;
+
+#ifdef KWIN_BUILD_WAYLAND
+    if(w->screen()->backendOutput()->highDynamicRange())
+    {
+        hdr_brightness_correction = w->screen()->backendOutput()->brightnessSetting();
+    }
+#else
+    if(w->screen()->highDynamicRange())
+    {
+        hdr_brightness_correction = w->screen()->brightnessSetting();
+    }
+#endif
+
 
     if ((scaled || (translated || (mask & PAINT_WINDOW_TRANSFORMED))))
     {

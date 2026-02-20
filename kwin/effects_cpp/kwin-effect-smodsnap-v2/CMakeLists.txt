@@ -122,6 +122,7 @@ endif()
 endif ()
 
 if (KWIN_BUILD_WAYLAND)
+target_compile_definitions(${TARGET_NAME} PRIVATE "KWIN_BUILD_WAYLAND")
 install(
     TARGETS
         ${TARGET_NAME}

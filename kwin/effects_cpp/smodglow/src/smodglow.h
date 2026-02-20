@@ -30,6 +30,12 @@ typedef Breeze::Decoration SmodDecoration;
 #define CLOSEGLOW_SML  9.0f
 #define CLOSEGLOW_SMT  8.0f
 
+#ifdef KWIN_BUILD_WAYLAND
+typedef KWin::Region EffectRegion;
+#else
+typedef QRegion EffectRegion;
+#endif
+
 namespace KWin
 {
 
@@ -52,11 +58,18 @@ public:
     ~SmodGlowEffect() override;
 
     void reconfigure(ReconfigureFlags flags) override;
+#ifdef KWIN_BUILD_WAYLAND
     void prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime) override;
-#ifdef BUILD_KF6
-    void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data) override;
+    void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const EffectRegion &deviceRegion, WindowPaintData &data) override;
 #else
-    void paintWindow(EffectWindow *w, int mask, QRegion region, WindowPaintData &data) override;
+    void prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime) override;
+    void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, EffectRegion deviceRegion, WindowPaintData &data) override;
+#endif
+
+#ifdef KWIN_BUILD_WAYLAND
+    void postPaintScreen() override;
+#else
+    void postPaintWindow(EffectWindow *w) override;
 #endif
 
     static bool supported();
@@ -97,7 +110,7 @@ private:
     std::unique_ptr<GLTexture> m_texture_minimize, m_texture_maximize, m_texture_close;
     std::unique_ptr<GLShader> m_shader;
     QHash<const EffectWindow*, GlowHandler*> windows = QHash<const EffectWindow*, GlowHandler*>();
-    Region m_prevPaint = Region();
+    EffectRegion m_prevPaint = EffectRegion();
     QMatrix4x4 colorMatrix(const float &brightness, const float &saturation) const;
 
     WindowButtonsDPI m_current_dpi = DPI_100_PERCENT, m_next_dpi = DPI_100_PERCENT;
@@ -139,11 +152,7 @@ public:
         hoverAnimation->setEndValue(endValue);
         //hoverAnimation->setDuration(0.75 + qRound(100 * qAbs(m_hoverProgress - endValue)));
         hoverAnimation->setDuration( //(int)std::chrono::milliseconds(
-#ifdef BUILD_KF6
             (int)(0.75 + qRound(100 * qAbs(m_hoverProgress - endValue))) * effects->animationTimeFactor()
-#else
-            (int)SmodGlowEffect::animationTime(0.75 + qRound(100 * qAbs(m_hoverProgress - endValue)))
-#endif
         //)
         );
 
