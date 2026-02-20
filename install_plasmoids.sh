@@ -1,11 +1,15 @@
 #!/bin/bash
 
 # You can pass the following arguments to this script:
-# --ninja       Uses Ninja for faster compilation
-# --no-compile  Skips compilation entirely
+# --ninja          Uses Ninja for faster compilation
+# --no-compile     Skips compilation entirely
+# --skip-kpackages Skips the QML plasmoids themselves
+# --no-workspace   Skips AeroThemePlasma Workspace compilation
 
 CUR_DIR=$(pwd)
 USE_SCRIPT="install.sh"
+GENERATOR=""
+BUILD_COMMAND="make"
 
 # Sanity check to see if the proper tools are installed.
 if [[ -z "$(command -v kpackagetool6)" ]]; then
@@ -22,6 +26,28 @@ if [[ -z "$(command -v ninja)" ]]; then
         echo "Neither Ninja or GNU Make were found. Stopping"
         exit
     fi
+fi
+
+if [[ "$*" == *"--ninja"* ]]; then
+    echo "Using Ninja for compilation"
+    GENERATOR="-G Ninja"
+    BUILD_COMMAND="ninja"
+fi
+
+if [[ "$*" == *"--no-workspace"* ]]; then
+    echo "Skipping AeroThemePlasma Workspace compilation..."
+else
+    echo "Compiling AeroThemePlasma Workspace ..."
+
+    rm -rf "atp-workspace"
+    git clone --single-branch --branch Plasma/6.6 https://gitgud.io/wackyideas/aerothemeplasma-workspace.git atp-workspace
+    cd atp-workspace
+    mkdir build
+    cd build
+    cmake .. $GENERATOR
+    $BUILD_COMMAND
+    sudo $BUILD_COMMAND install
+    cd ../..
 fi
 
 # Skips the build process of plasmoids that have C++ components
