@@ -26,7 +26,9 @@ if [ $PLASMASHELL == "io.gitgud.catpswin56.desktop" ]; then
     exit
 fi
 
-BUILD_FILES=("kwin/decoration/build" 
+BUILD_FILES=("atp-workspace/build"
+   "kwin/decoration/build"
+   "plasma/sddm/kcm/build"
    "plasma/sddm/login-sessions/build" 
    "plasma/aerothemeplasma-kcmloader/build" 
    "plasma/plasmoids/src/systemtray_src/build" 
@@ -37,7 +39,7 @@ BUILD_FILES=("kwin/decoration/build"
    "plasma/plasmoids/src/desktop_src/build"
    "kwin/effects_cpp/kde-effects-aeroglassblur/build" 
    "kwin/effects_cpp/kwin-effect-smodsnap-v2/build" 
-   "kwin/effects_cpp/smodglow/build" 
+   "kwin/effects_cpp/smodglow/build"
    "kwin/effects_cpp/aeroglide/build" 
    "kwin/effects_cpp/startupfeedback/build" 
    "kwin/effects_cpp/kde-effects-aeroglassblur/build-wl" 
