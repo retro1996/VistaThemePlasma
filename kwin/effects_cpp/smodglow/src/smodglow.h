@@ -52,13 +52,12 @@ public:
     ~SmodGlowEffect() override;
 
     void reconfigure(ReconfigureFlags flags) override;
-    void prePaintWindow(EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime) override;
+    void prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data, std::chrono::milliseconds presentTime) override;
 #ifdef BUILD_KF6
-    void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, QRegion region, WindowPaintData &data) override;
+    void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport, EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data) override;
 #else
     void paintWindow(EffectWindow *w, int mask, QRegion region, WindowPaintData &data) override;
 #endif
-    void postPaintWindow(EffectWindow *w) override;
 
     static bool supported();
 
@@ -98,7 +97,7 @@ private:
     std::unique_ptr<GLTexture> m_texture_minimize, m_texture_maximize, m_texture_close;
     std::unique_ptr<GLShader> m_shader;
     QHash<const EffectWindow*, GlowHandler*> windows = QHash<const EffectWindow*, GlowHandler*>();
-    QRegion m_prevPaint = QRegion();
+    Region m_prevPaint = Region();
     QMatrix4x4 colorMatrix(const float &brightness, const float &saturation) const;
 
     WindowButtonsDPI m_current_dpi = DPI_100_PERCENT, m_next_dpi = DPI_100_PERCENT;
