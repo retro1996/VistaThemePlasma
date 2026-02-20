@@ -12,13 +12,6 @@ kconfig_add_kcfg_files(aeroglassblur_SOURCES
 
 add_library(aeroglassblur MODULE ${aeroglassblur_SOURCES})
 
-
-configure_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/config-effect.h.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/config-effect.h"
-    @ONLY
-)
-
 target_link_libraries(aeroglassblur PRIVATE
     KF6::ConfigGui
     KDecoration3::KDecoration
