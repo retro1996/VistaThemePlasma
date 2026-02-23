@@ -1,6 +1,6 @@
 # TODO: adapt "org.kde.plasma" here & elsewhere if needed (see README)
-add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_io.gitgud.catpswin56.volumemixer\")
-
+add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_io.gitgud.catpswin56.volume\")
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 
 set(volume_SRCS
@@ -9,15 +9,15 @@ set(volume_SRCS
 if (Qt6_VERSION VERSION_GREATER_EQUAL "6.8.0")
     set(private_code_option  "PRIVATE_CODE")
 endif()
-add_library(io.gitgud.catpswin56.volumemixer MODULE ${volume_SRCS})
-qt_generate_wayland_protocol_client_sources(io.gitgud.catpswin56.volumemixer
+add_library(io.gitgud.catpswin56.volume MODULE ${volume_SRCS})
+qt_generate_wayland_protocol_client_sources(io.gitgud.catpswin56.volume
     FILES
         "${PLASMA_WAYLAND_PROTOCOLS_DIR}/plasma-shell.xml"
         "${Wayland_DATADIR}/wayland.xml"
     ${private_code_option}
 )
 
-target_link_libraries(io.gitgud.catpswin56.volumemixer
+target_link_libraries(io.gitgud.catpswin56.volume
                       Qt6::Gui
                       Qt6::Quick
                       KF6::I18n
@@ -33,5 +33,5 @@ target_link_libraries(io.gitgud.catpswin56.volumemixer
 
 include_directories(/usr/include/Plasma /usr/include/PlasmaQuick /usr/include/KF6/KConfigCore/ /usr/include/KF6/KConfig/ /usr/include/KF6/KCoreAddons/)
 
-install(TARGETS io.gitgud.catpswin56.volumemixer DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/applets)
+install(TARGETS io.gitgud.catpswin56.volume DESTINATION ${KDE_INSTALL_PLUGINDIR}/plasma/applets)
 

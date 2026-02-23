@@ -1,3 +1,5 @@
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
+
 ecm_add_qml_module(quicklaunchplugin URI io.gitgud.catpswin56.private.quicklaunch)
 target_sources(quicklaunchplugin PRIVATE
     quicklaunch_p.cpp

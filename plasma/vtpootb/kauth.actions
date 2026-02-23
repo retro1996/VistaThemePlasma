@@ -1,0 +1,9 @@
+[Domain]
+Name=VistaThemePlasma OOTB Experience
+Icon=kauth-example
+URL=https://gitgud.io/catpswin56/vistathemeplasma
+
+[io.gitgud.catpswin56.ootb.apply]
+Name=Apply Cursor Theme
+Description=Set global default cursor theme required for SDDM
+Policy=auth_admin

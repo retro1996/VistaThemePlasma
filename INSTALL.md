@@ -3,14 +3,15 @@
 ## TABLE OF CONTENTS
 
 1. [Prerequisites](#preq)
-2. [Getting started](#started)
-3. [Using install scripts](#scripts)
-4. [Manual installation](#manual)
-5. [Configuring VistaThemePlasma](#conf)
-6. [Uninstalling VistaThemePlasma](#uninstall)
-
+2. [Migration notice](#migration)
+3. [Getting started](#started)
+4. [Optional](#optional)
+5. [GTK](#gtk)
+6. [Uninstalling VistaThemePlasma (old)](#uninstall_old)
 
 ## Prerequisites <a name="preq"></a>
+
+It's necessary to have KDE Plasma already installed on your system (plasma-workspace and plasma-desktop) in order to get all the Plasma-specific dependencies for VistaThemePlasma.
 
 Before installing VistaThemePlasma, it's important to know which display server you're running on (Wayland or X11). This can be checked using Plasma's Info Center page in the settings. It's recommended to run VistaThemePlasma on X11 for now, as it's generally the more stable and feature rich experience (certain restrictions on the Wayland session make some effects and features impossible to achieve, this should hopefully be addressed in the future).
 
@@ -19,7 +20,7 @@ Before installing VistaThemePlasma, it's important to know which display server 
 Required packages:
 
 ```bash
-pacman --needed -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat qt6-wayland sddm sddm-kcm plasma-wayland-protocols plasma5support kvantum base-devel
+pacman -S git cmake extra-cmake-modules ninja curl unzip qt6-virtualkeyboard qt6-multimedia qt6-5compat qt6-wayland plasma-wayland-protocols plasma5support kvantum sddm sddm-kcm base-devel plasma-nm plasma-pa plasma-workspace plasma-desktop kwin-x11 plasma-x11-session
 ```
 
 Since Plasma 6.4, the X11 session has been separated from the main codebase. On Arch Linux, additional dependencies for X11 include:
@@ -36,7 +37,7 @@ KSysGuard has been officially deprecated by KDE, however an unofficial [port](ht
 Required Packages:
 
 ```bash
-dnf install plasma-workspace-devel unzip kvantum qt6-qtmultimedia-devel qt6-qt5compat-devel libplasma-devel qt6-qtbase-devel qt6-qtwayland-devel plasma-activities-devel kf6-kpackage-devel kf6-kglobalaccel-devel qt6-qtsvg-devel wayland-devel plasma-wayland-protocols kf6-ksvg-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-kcmutils-devel kf6-kio-devel kdecoration-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kirigami-devel kf6-kiconthemes-devel cmake gmp-ecm-devel kf5-plasma-devel libepoxy-devel kwin-devel kf6-karchive kf6-karchive-devel plasma-wayland-protocols-devel qt6-qtbase-private-devel qt6-qtbase-devel kf6-knewstuff-devel kf6-knotifyconfig-devel kf6-attica-devel kf6-krunner-devel kf6-kdbusaddons-devel kf6-sonnet-devel plasma5support-devel plasma-activities-stats-devel polkit-qt6-1-devel qt-devel libdrm-devel kf6-kitemmodels-devel kf6-kstatusnotifieritem-devel layer-shell-qt-devel kf6-frameworkintegration-devel
+dnf install plasma-workspace-devel libksysguard-devel unzip kvantum qt6-qtmultimedia-devel qt6-qt5compat-devel libplasma-devel qt6-qtbase-devel qt6-qtwayland-devel plasma-activities-devel kf6-kpackage-devel kf6-kglobalaccel-devel qt6-qtsvg-devel wayland-devel plasma-wayland-protocols kf6-ksvg-devel kf6-kcrash-devel kf6-kguiaddons-devel kf6-kcmutils-devel kf6-kio-devel kdecoration-devel kf6-ki18n-devel kf6-knotifications-devel kf6-kirigami-devel kf6-kiconthemes-devel cmake gmp-ecm-devel kf5-plasma-devel libepoxy-devel kwin-devel kf6-karchive kf6-karchive-devel plasma-wayland-protocols-devel qt6-qtbase-private-devel qt6-qtbase-devel kf6-knewstuff-devel kf6-knotifyconfig-devel kf6-attica-devel kf6-krunner-devel kf6-kdbusaddons-devel kf6-sonnet-devel plasma5support-devel plasma-activities-stats-devel polkit-qt6-1-devel qt-devel libdrm-devel kf6-kitemmodels-devel kf6-kstatusnotifieritem-devel kf6-frameworkintegration-devel
 ```
 
 On Fedora, additional dependencies for X11 include:
@@ -67,9 +68,30 @@ On Ubuntu, additional dependencies for X11 include:
 - `kwin-x11`
 - `kwin-x11-dev`
 
+## Migration notice <a name="migration"></a>
+
+VistaThemePlasma has moved to an installation method based on CMake, meant to simplify the entire process, as well as make it easier for distro packaging in the future. The old install scripts are deprecated and no longer work. It's highly recommended to first uninstall the old instance of VistaThemePlasma following these steps:
+
+1. Run the uninstall script:
+
+```bash
+$ bash migration-uninstall.sh
+```
+
+2. To undo the font rendering modifications, delete the `~/.config/fontconfig/fonts.conf` file provided by the previous versions of VTP.
+3. Remove the line `QML_DISABLE_DISTANCEFIELD=1` from `/etc/environment`
+
+It's advisable to also consult [Uninstalling VistaThemePlasma (old)](#uninstall_old) for more details. 
+
 ## Getting started <a name="started"></a>
 
-To download this repository, clone it with `git`: 
+### Arch Linux 
+
+*AUR packages coming soon*
+
+### From source 
+
+To download this repository, clone it with `git`:
 
 ```bash
 $ git clone https://gitgud.io/catpswin56/vistathemeplasma.git vistathemeplasma
@@ -78,203 +100,68 @@ $ cd vistathemeplasma
 
 It's highly recommended to use git for downloading VistaThemePlasma as updating becomes much easier.
 
-There are two ways to install VistaThemePlasma: Using the provided install scripts, and manual installation. In both cases, further configuration is required by the user.
-
-## Using install scripts <a name="scripts"></a>
-
-This is the recommended way of installing VTP. The install scripts compile and deploy the components required for VTP to work. Run the install scripts in the terminal:
+Run the following script:
 
 ```sh
-$ bash compile.sh --ninja
-$ bash install_plasmoids.sh --ninja
-$ bash install_kwin_components.sh
-$ bash install_plasma_components.sh
-$ bash install_misc_components.sh
-```
+$ bash install.sh --ninja # Pass --ninja to reduce build times
+``` 
 
-During execution, some scripts may require admin privileges or other prompts from the user. Do **NOT** run any of the provided install scripts with sudo or as root.
+This will clone every repository needed for VistaThemePlasma and build everything from source.
 
-Wayland users need to additionally pass `--wayland` to `compile.sh`.
-
-### Install script details
-
-You can also run the install scripts like this:
+You can also run the install script like this:
 
 ```bash
-$ chmod +x compile.sh && ./compile.sh
+$ chmod +x install.sh && ./install.sh
 ```
 
-You can additionally pass `--ninja` to any of the following scripts in order to build using Ninja instead of GNU Make, which is recommended to reduce build times:
+## NOTE
 
-- `compile.sh`
-- `install_plasmoids.sh`
-- Any individual `install.sh` script
-
-Other notable flags include:
-
-1. `--skip-libplasma` in `compile.sh`, which skips libplasma patches from being compiled and installed
-2. `--skip-kpackages` in `install_plasmoids.sh`, which skips installing the QML components of plasmoids
-
-### Note for Wayland users
-
-The compile script must be run while passing the `--wayland` argument for KWin effects:
+The script relies on `LIBEXEC_DIR` in order to determine the location of `/usr/$LIBEXEC_DIR/plasma-dbus-run-session-if-needed`, needed for the Wayland session to properly start. By default, this is set to `lib`. If you're installing VTP on a distribution where this is different, such as Fedora, this needs to be set to the appropriate value for your specific distribution. For example, on Fedora, `LIBEXEC_DIR` should be `libexec`:
 
 ```bash
-$ bash compile.sh --wayland --ninja
+$ LIBEXEC_DIR=libexec bash install.sh --ninja
 ```
 
-If compiling individual KWin effects by running their respective `install.sh` scripts, you can also pass the `--wayland` argument there:
+The script will ask for admin privileges for file installation. Do **NOT** run any of the provided install scripts with sudo/doas or as root.
 
-```bash
-$ bash install.sh --wayland --ninja
-```
+**It's highly recommended** to keep the generated build files, so uninstalling VistaThemePlasma and its dependencies can be done using `sudo make uninstall` or `sudo ninja uninstall` in each build directory. A backup of all `install_manifest.txt` files (that list all files that have been installed on the system) is stored in the `manifest` folder.
 
 ### Updating VistaThemePlasma
 
-Update the downloaded repository by pulling the new changes:
+Update and do `git pull` on the cloned repository to get new changes:
 
 ```bash
 $ cd /path/to/vistathemeplasma
 $ git pull
 ```
 
-and re-run the install scripts:
+Re-run the install script as described in [Getting started](#started). The script will automatically pull changes for all cloned repositories and rebuild them. In case something needs to be rebuilt completely, simply delete the repository folder causing the build error, and re-run the install script.
 
-```sh
-$ bash compile.sh
-$ bash install_plasmoids.sh
-$ bash install_plasmoids.sh --no-compile # If there's no need to recompile the C++ parts of the plasmoids, you can pass this argument to speed things up
-$ bash install_kwin_components.sh
-$ bash install_plasma_components.sh
-$ bash install_misc_components.sh # Usually not required to run again
-```
+When doing a full system upgrade, KWin effects and `libplasma` modifications tend to stop working. Re-running the install script after a full system upgrade is required for them to work again (assuming no breaking upstream changes happen).
 
-Typically it's enough to run the first four scripts after VTP has been updated. It's highly recommended to check for new commits and read the extended descriptions in order to see what has actually changed and what's required when updating. 
+### Uninstalling VistaThemePlasma
 
-When doing a full system upgrade, KWin effects and `libplasma` modifications tend to stop working. Running `compile.sh` after a full system upgrade is required for them to work again (assuming no breaking upstream changes).
-
-## Manual installation <a name="manual"></a>
-
-If installing VTP manually, the only script that should be run is the compile script as described previously. 
-
-After that, follow these steps:
-
-### Plasma components
-
-1. Move the folders `desktoptheme`, `look-and-feel`, `plasmoids`, `layout-templates`, `shells` into `~/.local/share/plasma`. If the folder doesn't exist, create it. These folders contain the following:
-
-   - Plasma Style
-   - Global Theme (more accurately, just the lock screen)
-   - Plasmoids
-   - Plasma shell
-   - Preset panel layout that can be applied from Edit mode
-   
-### Note for VistaTasks:
-
-VistaTasks relies on modifications found in `misc/libplasma` in order to work properly. Make sure that they're compiled and installed correctly before enabling VistaTasks.
-
-2. Compile all the C++ components found in the `plasmoids/src` directory like this for each source directory:
+Uninstalling VistaThemePlasma can be done by running the following script:
 
 ```bash
-$ bash install.sh --ninja
+$ bash uninstall.sh
 ```
 
-3. Move `sddm/sddm-theme-mod` to `/usr/share/sddm/themes`.
-4. Move `sddm/entries/vistathemeplasma.desktop` to `/usr/share/wayland-sessions`, and `sddm/entries/vistathemeplasmax11.desktop` to `/usr/share/xsessions`. This will install the SDDM entries required for VTP.
-5. Import and apply the color scheme through System Settings.
-
-### KWin components
-
-1. Move the `smod` folder to `~/.local/share`, and/or `/usr/share/` for a system-wide installation. This will install the resources required by many other components.
-2. Move `effects`, `tabbox`, `outline`, `scripts` to `~/.local/share/kwin`.
-3. Run the following inside `~/.local/share/`:
-
+This will go through almost every build directory and run `sudo make uninstall` or `sudo ninja uninstall` in those directories. After this, the `libplasma` package should be reinstalled using your distro's package manager. 
 
 ```bash
-$ ln -s kwin kwin-x11
-$ ln -s kwin kwin-wayland
+# On Arch Linux
+$ sudo pacman -Sy libplasma
 ```
 
-### Miscellaneous components
+### Fonts 
 
-1. Move the `Kvantum` folder (the one inside the `kvantum` folder) to `~/.config`, then in Kvantum Manager select the theme.
-2. Unpack the sound archive and move the folders to `~/.local/share/sounds`, then select the sound theme in System Settings.
-3. Unpack the icon archive and move the folder to `~/.local/share/icons`, then select the icon theme in System Settings.
-4. Unpack the cursor archive and move the folder to `/usr/share/icons`, then follow [this](https://www.youtube.com/watch?v=Dj7co2R7RKw) guide to install the cursor theme.
-5. Move the files located in `mimetype` into `~/.local/share/mime/packages` and then run `update-mime-database ~/.local/share/mime` to fix DLLs and EXE files sharing the same icons.
-6. Segoe UI, Segoe UI Bold, Segoe UI Semibold and Segoe UI Italic are required for this theme and they should be installed as system-wide fonts.
+On Arch Linux, use [this script](https://gitgud.io/aeroshell/aeroshell-workspace/-/blob/Plasma/6.6/scripts/install_fonts_arch.sh) to extract fonts and install them as an Arch package from a valid Windows 7 ISO. A 32-bit Windows 7 ISO is recommended for faster download speeds.
 
-If SDDM fails to pick up on the cursor theme, go to System Settings -> Startup and Shutdown -> Login Screen (SDDM), and click on Apply Plasma Settings to enforce your current cursor theme, and other relevant settings. Do this _after_ installing everything else. If even that fails, change the default cursor theme in `/usr/share/icons/default/index.theme` to say `aero-drop`.
+## Optional <a name="optional"></a>
 
-### Font configuration
-
-To enable full font hinting just for Segoe UI, move the `fontconfig` folder to `~/.config`. This will enable full font hinting for Segoe UI while keeping slight font hinting for other fonts. Additionally, append `QML_DISABLE_DISTANCEFIELD=1` into `/etc/environment` in order for this to be properly applied. _While full font hinting makes the font rendering look sharper and somewhat closer to Windows 7's ClearType, on Linux this option causes noticeably faulty kerning. This has been a [prominent](https://github.com/OpenTTD/OpenTTD/issues/11765) [issue](https://gitlab.gnome.org/GNOME/pango/-/issues/656) [for](https://gitlab.gnome.org/GNOME/pango/-/issues/463) [several](https://gitlab.gnome.org/GNOME/pango/-/issues/404) [years](https://github.com/harfbuzz/harfbuzz/issues/2394) [now](https://www.phoronix.com/news/HarfBuzz-Hinting-Woe) and while the situation has improved from being unreadable to just being ugly, a complete solution for this doesn't seem to be coming anytime soon._
-
-### Custom branding
-
-To install custom branding for the Info Center, move `kcm-about-distrorc` from the `branding` folder to `~/.config/kdedefaults/`, then edit the file's `LogoPath` entry to point to the absolute path of `kcminfo.png`.
-
-
-### Plymouth theme
-
-Optionally, install [PlymouthVista](https://github.com/furkrn/PlymouthVista) which supports Windows Vista boot animations, and features a more detailed setup guide.
-
-### Polkit User Account Control modification
-
-### WARNING:
-
-### Installing random modifications to programs that deal with privilege escalation (giving sudo or root access to users) from unknown or untrustworthy sources is reckless and a giant security risk. Even though this modification to KDE's polkit authentication UI is purely cosmetic, it's generally not recommended to modify sensitive applications such as this. If you don't know what you're doing, or do not trust the modified source code, do not install this particular component of VistaThemePlasma.
-
-1. Navigate to the `uac-polkitagent` folder, and run `install.sh`:
-
-```bash
-$ chmod +x install.sh && ./install.sh --ninja
-```
-
-2. To remove the minimize and maximize buttons from the window, run `add_rule.sh` which will generate the appropriate KWin rule:
-
-```bash
-$ chmod +x add_rule.sh && ./add_rule.sh
-```
-
-## Configuring VistaThemePlasma <a name="conf"></a>
-
-1. After installing everything, restart the computer. In SDDM, make sure to select the appropriate session (VistaThemePlasma (X11) or VistaThemePlasma (Wayland)).
-2. Apply the Global Theme after logging into the VTP session. 
-3. Right click on the desktop and open "Desktop and Wallpaper", and select "Desktop (WinVista)" under Layout, and apply the changes.
-4. In System Settings, apply the following settings:
-
-- In Window Behavior -> Titlebar Actions:
-  - Mouse wheel: Do nothing
-- In Window Behavior -> Window Actions: (For Wayland users only)
-  - Inactive Inner Window Actions, Left click: Activate, raise and pass click
-- In Window Behavior -> Task Switcher:
-  - Main: Thumbnail Seven, Include "Show Desktop" entry
-  - Alternative: Flip 3D, Forward shortcut: Meta+Tab
-- In Window Behavior -> Desktop Effects, enable **all** effects in the VistaThemePlasma category. Additionally enable the "Desaturate Unresponsive Applications" effect.
-- In Window Behavior -> Desktop Effects, **disable** the following:
-  - Background Contrast
-  - Blur
-  - Dialog Parent
-  - Dim Inactive
-  - Dim Screen for Administrator Mode (From Focus category)
-  
-5. Configure KWin animations to the following:
-
-![animations](screenshots/animations.png)
-
-6. In System Settings -> Colors & Themes -> Colors, set "Accent color from color scheme"
-7. In System Settings -> Session -> Desktop Session, uncheck the "Ask for confirmation" option.
-8. In System Settings -> Keyboard -> Shortcuts, under KWin, disable the "Peek at Desktop" shortcut, and remap the "MinimizeAll" to Meta+D
-9. In System Settings -> Colors & Themes -> Cursors -> Configure Launch Feedback, set Cursor feedback to "None"
-10. In System Settings -> Fonts, configure the fonts as shown here:
-
-![fonts](screenshots/fontconfig.png)
-
-The following steps are optional:
-
-11. For Wine users it's recommended to install the [VistaVG Ultimate](https://www.deviantart.com/vishal-gupta/art/VistaVG-Ultimate-57715902) msstyles theme.
-12. Add the following to `~/.bashrc` to get bash to look more like the command prompt on Windows:
+1. For Wine users it's recommended to install the [VistaVG Ultimate](https://www.deviantart.com/vishal-gupta/art/VistaVG-Ultimate-57715902) msstyles theme.
+2. Add the following to `~/.bashrc` to get bash to look more like the command prompt on Windows:
 
 ```bash
 PS1='C:${PWD//\//\\\\}> '
@@ -282,9 +169,18 @@ PS1='C:${PWD//\//\\\\}> '
 echo -e "Microsoft Windows [Version 6.0.6003]\nCopyright (c) 2006 Microsoft Corporation.  All rights reserved.\n"
 ```
 
-13. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
+3. In the terminal emulator of your choice (e.g Konsole), set the font to [TerminalVector](https://www.yohng.com/software/terminalvector.html), size 9pt. Disable smooth font rendering and bold text, reduce the line spacing and margins to 0px, set the cursor shape to underline, and enable cursor blinking.
 
-## Uninstalling VistaThemePlasma <a name="uninstall"></a>
+4. Install [PlymouthVista](https://github.com/furkrn/PlymouthVista) which supports Windows Vista boot animations, and features a more detailed setup guide.
+
+## GTK <a name="gtk"></a>
+
+VistaThemePlasma officially doesn't have any kind of maintenance, development or support for GTK applications. Instead, check out
+[Windows 7 Better](https://gitgud.io/Gamer95875/Windows-7-Better) by [Gamer95875](https://gitgud.io/Gamer95875), which is the recommended set of themes that works best with VistaThemePlasma.
+
+## Uninstalling VistaThemePlasma (old) <a name="uninstall_old"></a>
+
+### This section is meant for users migrating away from older versions of VistaThemePlasma (Before Plasma 6.6). 
 
 VistaThemePlasma provides an uninstall script that undoes much of what's installed on the system. The script assumes that all of the CMake build files are still present in the repo, most importantly the `install_manifest.txt` files generated as a result of installing compiled parts of VTP. If these files are missing from the repo, they need to be regenerated by once again rerunning the necessary scripts like this:
 
@@ -317,8 +213,11 @@ The script performs the following steps in order to uninstall VTP. Uninstalling 
 
 ```
 kwin/decoration/build
+plasma/sddm/kcm/build
 plasma/sddm/login-sessions/build
 plasma/aerothemeplasma-kcmloader/build
+plasma/plasmoids/src/sidebar_src/build
+plasma/plasmoids/src/quicklaunch_src/build
 plasma/plasmoids/src/systemtray_src/build
 plasma/plasmoids/src/notifications_src/build
 plasma/plasmoids/src/volume_src/build
@@ -347,11 +246,14 @@ kwin/effects_cpp/startupfeedback/build-wl
 io.gitgud.catpswin56.battery
 io.gitgud.catpswin56.desktop
 io.gitgud.catpswin56.digitalclocklite
+io.gitgud.catpswin56.keyboardlayout
 io.gitgud.catpswin56.networkmanagement
 io.gitgud.catpswin56.panel
 io.gitgud.catpswin56.vistastart
 io.gitgud.catpswin56.vistatasks
 io.gitgud.catpswin56.volume
+io.gitgud.catpswin56.quicklaunch
+io.gitgud.catpswin56.sidebar
 ```
 
 ### Plasma components 
@@ -366,14 +268,14 @@ kpackagetool6 -t "Plasma/Shell" -r "io.gitgud.catpswin56.desktop"
 ```
 
 - Delete `~/.local/share/color-schemes/Aero.colors`
-- Delete `~/.config/Kvantum/WindowsVistaKvantum_Aero` 
+- Delete `~/.config/Kvantum/WindowsVistaAero` 
 - Delete the sound themes from `~/.local/share/sounds`:
 
 ```
-'Windows'
-'Glass'
-'Pearl'
-'Tinker'
+'Windows Vista Default'
+'Windows Vista Glass'
+'Windows Vista Pearl'
+'Windows Vista Tinker'
 ```
 
 - Delete the icon theme at `~/.local/share/icons/Windows Vista Aero`

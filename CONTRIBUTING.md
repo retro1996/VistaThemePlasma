@@ -19,4 +19,4 @@ Things that are helpful when writing an issue:
     
 ## Merge requests
 
-Merge requests should only be done on the [GitGud](https://gitgud.io/catpswin56/vistathemeplasma) repo as the GitHub repository is only a mirror.
+Merge requests should only be done on the [GitGud](https://gitgud.io/aeroshell/vtp/vistathemeplasma) repo as the GitHub repository is only a mirror.

@@ -189,7 +189,7 @@ ContainmentItem {
                 id: shownItemsModel
 
                 function filterItemId(itemId) {
-                    return itemId == "io.gitgud.catpswin56.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volumemixer"
+                    return itemId == "io.gitgud.catpswin56.battery" || itemId == "io.gitgud.catpswin56.networkmanagement" || itemId == "io.gitgud.catpswin56.volume"
                 }
 
                 sourceModel: Plasmoid.systemTrayModel
@@ -337,7 +337,7 @@ ContainmentItem {
                         function filterItemId(itemId) {
                             return (itemId == "io.gitgud.catpswin56.battery" && Plasmoid.configuration.batteryEnabled)
                                 || (itemId == "io.gitgud.catpswin56.networkmanagement" && Plasmoid.configuration.networkEnabled)
-                                || (itemId == "io.gitgud.catpswin56.volumemixer" && Plasmoid.configuration.soundEnabled)
+                                || (itemId == "io.gitgud.catpswin56.volume" && Plasmoid.configuration.soundEnabled)
                         }
 
                         sourceModel: Plasmoid.systemTrayModel
@@ -382,7 +382,7 @@ ContainmentItem {
                             if(item.itemId == "io.gitgud.catpswin56.networkmanagement")
                                 items.move(1, 1);
 
-                            if(item.itemId == "io.gitgud.catpswin56.volumemixer")
+                            if(item.itemId == "io.gitgud.catpswin56.volume")
                                 items.move(2, 2);
                         }
                     }

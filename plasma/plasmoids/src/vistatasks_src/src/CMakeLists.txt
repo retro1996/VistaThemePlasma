@@ -1,6 +1,6 @@
 # TODO: adapt "org.kde.plasma" here & elsewhere if needed (see README)
 add_definitions(-DTRANSLATION_DOMAIN=\"plasma_applet_io.gitgud.catpswin56.vistatasks\")
-
+remove_definitions(-DQT_NO_CAST_FROM_ASCII)
 
 
 set(vistatasks_SRCS

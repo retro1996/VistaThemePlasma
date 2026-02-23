@@ -10,7 +10,7 @@ import QtQuick.Layouts
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.extras as PlasmaExtras
 import org.kde.plasma.components as PlasmaComponents3
-import aerothemeplasma.taskmanager as TaskManagerApplet
+import aeroshell.taskmanager as TaskManagerApplet
 import org.kde.plasma.plasmoid
 
 import org.kde.ksvg as KSvg

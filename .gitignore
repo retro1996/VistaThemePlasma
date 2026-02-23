@@ -1,13 +1,12 @@
-testing/
-atp-workspace/
 PlymouthVista/
 misc/libplasma/build
 misc/uac-polkitagent/build
 plasma/aerothemeplasma-kcmloader/build
+plasma/atpootb/build
 plasma/sddm/login-sessions/build
 plasma/sddm/kcm/build
 plasma/plasmoids/src/sidebar_src/build
-plasma/plasmoids/src/desktop_src/build
+plasma/plasmoids/src/desktopcontainment_src/build
 plasma/plasmoids/src/vistastart_src/build
 plasma/plasmoids/src/vistatasks_src/build
 plasma/plasmoids/src/quicklaunch_src/build
@@ -25,4 +24,9 @@ kwin/effects_cpp/aeroglide/build
 kwin/effects_cpp/aeroglide/build-wl
 kwin/effects_cpp/startupfeedback/build
 kwin/effects_cpp/startupfeedback/build-wl
+testing/
+build
+repos
+manifest
+
 

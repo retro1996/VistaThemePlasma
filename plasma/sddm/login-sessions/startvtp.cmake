@@ -1,6 +1,8 @@
 #!/bin/sh
 
-export XDG_CONFIG_DIRS="$HOME/.config/vistathemeplasma:/etc/xdg:$XDG_CONFIG_DIRS"
+export XDG_CONFIG_DIRS="/etc/xdg/vistathemeplasma:/etc/xdg:$XDG_CONFIG_DIRS"
+export QML_DISABLE_DISTANCEFIELD=1
+export USE_UAC_AGENT=1
 export PLASMA_DEFAULT_SHELL=io.gitgud.catpswin56.desktop
 startplasma-x11
 

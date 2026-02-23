@@ -1,0 +1,5 @@
+add_subdirectory(kvantum)
+add_subdirectory(xdg)
+install(FILES ${CMAKE_SOURCE_DIR}/misc/branding/kcminfo.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/vistathemeplasma/branding)
+install(FILES ${CMAKE_SOURCE_DIR}/misc/smod-decoration/VistaAero.smod.rcc DESTINATION ${CMAKE_INSTALL_PREFIX}/share/smod/decorations)
+install(FILES ${CMAKE_SOURCE_DIR}/misc/reflection/reflection.png DESTINATION ${CMAKE_INSTALL_PREFIX}/share/vistathemeplasma/)

@@ -1,0 +1,8 @@
+add_subdirectory(sidebar_src)
+add_subdirectory(quicklaunch_src)
+add_subdirectory(notifications_src)
+add_subdirectory(volume_src)
+add_subdirectory(systemtray_src)
+add_subdirectory(vistatasks_src)
+add_subdirectory(vistastart_src)
+add_subdirectory(desktopcontainment_src)

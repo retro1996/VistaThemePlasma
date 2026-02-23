@@ -1,0 +1,8 @@
+add_subdirectory(vtpootb)
+add_subdirectory(shells)
+add_subdirectory(plasmoids)
+add_subdirectory(sddm)
+add_subdirectory(color_scheme)
+add_subdirectory(desktoptheme)
+add_subdirectory(look-and-feel)
+add_subdirectory(layout-templates)

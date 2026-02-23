@@ -1,21 +1,21 @@
-# VISTATHEMEPLASMA FOR KDE 6
+# VistaThemePlasma
 
 ## Microsoft® Windows™ is a registered trademark of Microsoft® Corporation. This name is used for referential use only, and does not aim to usurp copyrights from Microsoft. Microsoft Ⓒ 2026 All rights reserved. All resources belong to Microsoft Corporation.
 
 ## Introduction
 
-This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma) which aims to recreate the look and feel of Windows Vista as much as possible on KDE Plasma, whilst adapting the design to fit in with modern features provided by KDE Plasma and Linux.
+This is a fork of [WackyIdeas](https://gitgud.io/wackyideas/)' [AeroThemePlasma](https://gitgud.io/aeroshell/atp/aerothemeplasma) which aims to recreate the look and feel of Windows Vista as much as possible on KDE Plasma, whilst adapting the design to fit in with modern features provided by KDE Plasma and Linux.
 
 VTP is in constant development and testing. So far it has been tested on:
 
 1. Arch Linux x64 and other Arch derivatives
 2. Plasma 6.6.0, KDE Frameworks 6.23.0, Qt 6.10.2
 3. 96 DPI scaling, single monitor
-4. X11, Wayland*
+4. X11, Wayland
 
-*VistaThemePlasma currently lacks full Wayland support, which may result in Wayland-specific issues. 
+VistaThemePlasma currently lacks full Wayland support, which may result in Wayland-specific issues. 
 
-## This project overwrites a small number of [system](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/misc/libplasma) [files](https://gitgud.io/catpswin56/vistathemeplasma/-/tree/master/misc/uac-polkitagent), it's always recommended to make backups of your system just in case. I am not responsible for broken systems, please proceed with caution.
+## This software comes "as is" without warranty of any kind. It's always recommended to make backups of your system just in case. I am not responsible for broken systems, please proceed with caution.
 
 [GitHub mirror](https://github.com/catpswin5/vistathemeplasma)
 
@@ -28,7 +28,7 @@ For the sidebar gadgets, go [here](https://gitgud.io/catpswin56/win-gadgets).
 
 ## Credits 
 
-Many thanks to the people who helped out by testing and providing some suggestions for certain plasmoids and other stuff. Special thanks goes to [WackyIdeas](https://gitgud.io/wackyideas/) for making the original [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma) theme.
+Many thanks to the people who helped out by testing and providing some suggestions for certain plasmoids and other stuff. Special thanks goes to [WackyIdeas](https://gitgud.io/wackyideas/) for making the original [AeroThemePlasma](https://gitgud.io/aeroshell/atp/aerothemeplasma) theme.
 
 ### Contributors
 
@@ -43,7 +43,7 @@ Many thanks to the people who helped out by testing and providing some suggestio
 
 - [Geckium](https://github.com/angelbruni/Geckium) by AngelBruni
 - [Aero UserChrome](https://gitgud.io/souris/aero-userchrome) by Souris (Geckium in combination with Aero UserChrome works well with AeroThemePlasma and VistaThemePlasma)
-- [AeroThemePlasma](https://gitgud.io/wackyideas/aerothemeplasma/) by [WackyIdeas](https://gitgud.io/wackyideas)
+- [AeroThemePlasma](https://gitgud.io/aeroshell/atp/aerothemeplasma) by [WackyIdeas](https://gitgud.io/wackyideas)
 - [Ice2K.sys](https://toiletflusher.neocities.org/ice2k/) by 0penrc
 - [Sevulet](https://gitgud.io/snailatte/sevulet) by [snailatte](https://gitgud.io/snailatte)
 
@@ -111,9 +111,14 @@ Maximized opaque colorization:
 
 ![gadgets](screenshots/gadgets.png)
 
-### Floorp
+### Librewolf
 
 ![geckium](screenshots/geckium.png)
+
+### User Account Control (Polkit)
+
+![uac](screenshots/uac.png)
+![uac-trusted](screenshots/uac-trusted.png)
 
 ### Taskbar
 

@@ -1,5 +1,5 @@
 [Desktop]
-Containment=io.gitgud.catpswin56.desktop
+Containment=io.gitgud.catpswin56.desktopcontainment
 ToolBox=
 RuntimePlatform=Desktop
 

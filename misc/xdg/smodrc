@@ -1,0 +1,15 @@
+[Windeco]
+DecorationTheme=VistaAero
+InvertTextColor=true
+TitlebarSize=19
+
+[Windeco Exception 0]
+BorderSize=0
+Enabled=true
+ExceptionPattern=vtpootb
+ExceptionType=0
+HideCaption=true
+HideIcon=true
+HideInnerBorder=true
+HideTitleBar=false
+Mask=0

@@ -177,7 +177,7 @@ Item {
                 iconSource: "shell-aero-color"
                 text: i18nd("plasma_shell_org.kde.plasma.desktop", "Window Color")
                 description: "Fine tune the color of your windows"
-                command: "kstart aerothemeplasma-kcmloader kwin/effects/configs/kwin_aeroglassblur_config.so " + iconSource
+                command: "kstart aeroshell-kcmloader kwin/effects/configs/kwin_aeroglassblur_config.so " + iconSource
                 execHelper: menu_executable
             }
             FooterItem {
@@ -186,7 +186,7 @@ Item {
                 iconSource: "shell-decoration-themes"
                 text: i18nd("plasma_shell_org.kde.plasma.desktop", "Window Decorations")
                 description: "Change the way your window frames look"
-                command: "kstart aerothemeplasma-kcmloader org.kde.kdecoration3.kcm/kcm_smoddecoration.so " + iconSource
+                command: "kstart aeroshell-kcmloader org.kde.kdecoration3.kcm/kcm_smoddecoration.so " + iconSource
                 execHelper: menu_executable
             }
             FooterItem {

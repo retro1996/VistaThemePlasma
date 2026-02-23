@@ -1,0 +1,15 @@
+[Sounds]
+Theme=Windows Vista Default
+
+[General]
+AccentColor=0,0,0,0
+accentColorFromWallpaper=false
+ColorScheme=Aero
+
+[Icons]
+Theme=Windows Vista Aero
+
+[KDE]
+widgetStyle=kvantum
+
+
